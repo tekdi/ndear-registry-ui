@@ -35,8 +35,16 @@
     <!-- Navbar -->
 
     <!-- Jumbotron -->
-    <div class="p-5 text-center bg-light">
-        <!-- <jsonforms [data]="data" [schema]="schema" [uischema]="uischema" ></jsonforms> -->
-    </div>
+
     <!-- Jumbotron -->
 </header>
+<div class="p-5 text-center bg-light">
+    <jsonforms
+[data]="data"
+[schema]="schema"
+[uischema]="uischema"
+[renderers]="renderers"
+[locale]="'de-DE'"
+[ajv]="ajv"
+></jsonforms>
+</div>

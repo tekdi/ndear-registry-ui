@@ -1,33 +1,31 @@
-# Ndear Client
+# JSON Forms Angular Seed
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.11.
+JSONForms Angular Seed.
+
+## Installation
+
+Run `npm ci` to install the necessary dependencies.
 
 ## Development server
-install packages
-npm i
 
-install dependencies
-npm ci
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run `npm start` for a dev server. Navigate to [http://localhost:4200/](http://localhost:4200/). The app will automatically reload if you change any of the source files.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `npm build` to build the project. The build artifacts will be stored in the `dist` directory. Use the `-prod` flag for a production build.
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `npm test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Run `npm e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Further help
+## Customizations
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-# ndear-registry-ui
+For this showcase we hardcoded the schemas (`schema.json`, `uischema.json`) and the data (`data.ts`). You can replace them with your own or handle them completely dynamically.
+
+We implemented three custom controls (`custom.autocomplete.ts`, `lang.control.ts` and `data.control.ts`). If you don't need them just remove them! See also `store.ts` where these custom renderers are registered.
+
+In `app.module.ts` we customized the validation and executed a manual resolving step before handing the schemas over to JSON Forms. These steps are optional and can be skipped if needed.

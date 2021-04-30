@@ -1,19 +1,70 @@
 import { Component, OnInit } from '@angular/core';
-// import * as uischemaAsset from './data/uischema.json';
-// import * as schemaAsset from './data/schema.json';
-// import dataAsset from './data/data';
+import { angularMaterialRenderers } from '@jsonforms/angular-material';
+import { and, createAjv, isControl, optionIs, rankWith, schemaTypeIs, scopeEndsWith, Tester } from '@jsonforms/core';
+import { CustomAutocompleteControlRenderer } from '../../custom.autocomplete';
+import { DataDisplayComponent } from '../../data.control';
+import { LangComponent } from '../../lang.control';
+import uischemaAsset from '../../../assets/uischema.json';
+import schemaAsset from '../../../assets/schema.json';
+import dataAsset from '../../data';
+import AJV from 'ajv';
+import { parsePhoneNumber } from 'libphonenumber-js';
 
+const departmentTester: Tester = and(
+  schemaTypeIs('string'),
+  scopeEndsWith('department')
+);
 @Component({
   selector: 'app-student-teacher-signup',
   templateUrl: './student-teacher-signup.component.html',
   styleUrls: ['./student-teacher-signup.component.scss']
 })
 export class StudentTeacherSignupComponent implements OnInit {
-  // uischema = uischemaAsset;
-  // schema = schemaAsset;
-  // data = dataAsset;
+  renderers = [
+    ...angularMaterialRenderers,
+    { tester: rankWith(5, departmentTester), renderer: CustomAutocompleteControlRenderer },
+    {
+      renderer: DataDisplayComponent,
+      tester: rankWith(
+        6,
+        and(
+          isControl,
+          scopeEndsWith('___data')
+        )
+      )
+    },
+    {
+      renderer: LangComponent,
+      tester: rankWith(
+        6,
+        and(
+          isControl,
+          optionIs('lang', true)
+        )
+      )
+    },
+  ];
+  uischema = uischemaAsset;
+  schema = schemaAsset;
+  data = dataAsset;
+  ajv = createAjv({
+    schemaId: 'auto',
+    allErrors: true,
+    jsonPointers: true,
+    errorDataPath: 'property'
+  });
   
-  constructor() { }
+  constructor() { 
+    this.ajv.addFormat('time', '^([0-1][0-9]|2[0-3]):[0-5][0-9]$');
+    this.ajv.addFormat('tel', maybePhoneNumber => {
+      try {
+        parsePhoneNumber(maybePhoneNumber, 'DE');
+        return true;
+      } catch (_) {
+        return false;
+      }
+    });
+  }
 
   ngOnInit(): void {
   }

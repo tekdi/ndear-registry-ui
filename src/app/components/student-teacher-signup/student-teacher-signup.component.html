@@ -5,7 +5,7 @@
             <h4 class="card-title fw-bolder pb-2">Sign up / Create new account</h4>
             <form class="example-container" [formGroup]="form" (ngSubmit)="onSubmit()">
                 <label>Are you above 13? &nbsp;&nbsp;</label>
-                <div class="form-check form-check-inline pl-5" [formControl]="aboveControl">
+                <div class="form-check form-check-inline pl-5">
                     <input
                       mdbRadio
                       class="form-check-input"
@@ -13,11 +13,12 @@
                       name="inlineRadioOptions"
                       id="inlineRadio1"
                       [value]="true"
+                      [formControl]="aboveControl"
                     />
                     <label class="form-check-label" for="inlineRadio1">Yes</label>
                   </div>
                   
-                  <div class="form-check form-check-inline" [formControl]="aboveControl">
+                  <div class="form-check form-check-inline">
                     <input
                       mdbRadio
                       class="form-check-input"
@@ -25,6 +26,7 @@
                       name="inlineRadioOptions"
                       id="inlineRadio2"
                       [value]="false"
+                      [formControl]="aboveControl"
                     />
                     <label class="form-check-label" for="inlineRadio2">No</label>
                   </div>
@@ -37,10 +39,11 @@
                 </div> -->
                 <div class="row">
                     <div class="col-md-6 py-3">
-                        <label mdbLabel class="form-label fw-bold fs-7" for="form1" required>First Name</label>
+                        <label mdbLabel class="form-label fw-bold fs-7" for="form1" >First Name</label>
                         <mdb-form-control>
-                            <input mdbInput type="text" id="form1" class="form-control" placeholder="" formControlName="firstName" />
+                            <input mdbInput type="text" id="form1" class="form-control" placeholder="" formControlName="firstName" required/>
                         </mdb-form-control>
+                        
                     </div>
                     <div class="col-md-6 py-3">
                         <label mdbLabel class="form-label fw-bold fs-7" for="form2">Last Name</label>

@@ -1,5 +1,5 @@
 <div *ngIf="loged_in; else elseBlock">
-    <header style="margin-bottom: 45px;">
+    <header class="header" style="margin-bottom: 45px;">
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-white">
             <div class="container-fluid">
@@ -13,10 +13,13 @@
                         <a class="nav-link" aria-current="page" href="#" style="color: black;">NDEAR</a>
                     </div>
                     <ul class="navbar-nav  mb-2 mb-lg-0" style="margin-left: 50px;">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Profile</a>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">My Profile</a>
                             <hr>
                         </li>
+                        <!-- <mdb-tabs>
+                            <mdb-tab title="My Profile"></mdb-tab>
+                          </mdb-tabs> -->
                         <!-- <li class="nav-item">
                             <a class="nav-link" href="#">Pricing</a>
                         </li>

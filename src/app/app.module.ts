@@ -15,6 +15,7 @@ import { VerificationComponent } from './components/verification/verification.co
 import { NgOtpInputModule } from  'ng-otp-input';
 import { StudentProfileComponent } from './components/student-profile/student-profile.component';
 import { StudentTeacherLoginComponent } from './components/student-teacher-login/student-teacher-login.component';
+import { TestComponent } from './test/test.component';
 
 
 
@@ -27,7 +28,8 @@ import { StudentTeacherLoginComponent } from './components/student-teacher-login
     HeaderComponent,
     VerificationComponent,
     StudentProfileComponent,
-    StudentTeacherLoginComponent
+    StudentTeacherLoginComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import { StudentProfileComponent } from './components/student-profile/student-pr
 import { StudentTeacherLoginComponent } from './components/student-teacher-login/student-teacher-login.component';
 import { StudentTeacherSignupComponent } from './components/student-teacher-signup/student-teacher-signup.component';
 import { VerificationComponent } from './components/verification/verification.component';
+import { TestComponent } from './test/test.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'student-teacher-login', component: StudentTeacherLoginComponent },
   { path: 'verification', component: VerificationComponent },
   { path: 'student-profile', component: StudentProfileComponent },
+  { path: 'test', component: TestComponent },
 ];
 
 @NgModule({

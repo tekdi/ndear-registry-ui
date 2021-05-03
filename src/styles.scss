@@ -6,38 +6,36 @@
  
 @import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "https://fonts.googleapis.com/css2?family=Lato:wght@300@500@600&display=swap";
+
 
 $primary-color: #443df6;
 .primary-color {
     background-color: #efefef!important;
 }
 
-$primary-color-dark: #1b2124;
+.btn-primary{
+	background: $primary-color;
+}
+
+$primary-color-dark: #000;
 .primary-color-dark {
     background-color: #8d9091!important;
+}
+.form-label{
+	color: $primary-color-dark;
 }
 
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: "Lato", sans-serif;color: #000; }
 
-.footer {
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-	padding: 15px;
-	background-color: #212121;
-	text-align: center;
+.fs-7{
+	font-size: 0.8rem;
 }
-.footer > p {
-	margin-top: 0;
-    margin-bottom: 0rem;
+.fs-79{
+	font-size: 0.9rem;
 }
-
-.right{
-    float: right;
-}
-
-.left{
-    float: left;
+.w-70{
+	width: 70% !important;
 }

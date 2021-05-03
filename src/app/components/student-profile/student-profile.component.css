@@ -1,0 +1,40 @@
+.card{
+    max-width: 1000px;
+}
+.card-heading{
+    max-width: 1000px;
+    /* display: -webkit-inline-box; */
+}
+.card-heading h6{
+    text-align: left;
+    font-size: larger;
+}
+.card-heading a{
+    /* margin-left: 80%; */
+    color: #443df6;
+    font-size: revert;
+}
+.main-content{
+    text-align: -webkit-center;
+}
+.card-body {
+    text-align: start;
+    
+}
+
+.card-title {
+    font-size: x-large;
+}
+.main-content > * {
+    width: 100%;
+}
+.lable-title{
+    font-size: small;
+    color: grey;
+}
+p{
+    color: black;
+}
+.right-content{
+    max-width: 30%;
+}

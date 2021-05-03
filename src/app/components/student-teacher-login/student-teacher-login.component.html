@@ -1,0 +1,25 @@
+<app-header></app-header>
+<div class="main-content">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Sign up / Create new account</h5>
+            <form class="example-container" [formGroup]="form" (ngSubmit)="onSubmit()">
+                <!-- <mat-checkbox formControlName="hideRequired">Hide required marker</mat-checkbox> -->
+                <p>
+                    <mat-form-field appearance="outline" class="full" required>
+                        <mat-label>Email Id or Mobile Number</mat-label>
+                        <!-- <mat-icon matSuffix>phone email</mat-icon> -->
+                        <input matInput placeholder="Placeholder" formControlName="mobileEmail">
+
+                        <!-- <mat-icon matSuffix>email</mat-icon> -->
+                        <mat-hint>Mobile must include '+91'</mat-hint>
+                    </mat-form-field>
+                </p>
+                <button type="submit" mat-raised-button color="primary">Continue</button>
+            </form>
+
+            <!-- <pre>Status: {{form.status}}</pre>
+            <pre>Value:<br>{{form.value | json}}</pre> -->
+        </div>
+    </div>
+</div>

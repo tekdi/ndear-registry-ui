@@ -1,0 +1,16 @@
+<app-header></app-header>
+<div class="main-content">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Confirm your account</h5>
+                <p class="a-o-i">Enter verification code we sent to {{user_id}}</p>
+                <h6>Enter OTP</h6>
+                <ng-otp-input  (onInputChange)="onOtpChange($event)"  [config]="{length:4, allowNumbersOnly:true}"></ng-otp-input>
+                <mat-hint>Hint : 1234</mat-hint>
+                <br>
+                <mat-error *ngIf="error">invalid OTP</mat-error>
+                <br>
+                <button type="submit" [disabled]="enabled" (click)="onSubmit()" mat-raised-button color="primary">Sign Up</button>
+        </div>
+    </div>
+</div>

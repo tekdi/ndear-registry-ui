@@ -3,8 +3,7 @@
 }
 .main-content{
     text-align: -webkit-center;
-    // display: flex;
-    // flex-direction: column;
+
 }
 .card-body {
     text-align: start;
@@ -41,10 +40,6 @@ margin: 0 5px;
     margin-left: 8px;
 }
 
-// ::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
-// 	opacity: 0.5 !important;     /*click effect color change*/
-// 	background-color: blue !important;
-// }
 
 ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
 	background-color: blue!important;   /*inner circle color change*/

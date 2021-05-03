@@ -1,72 +1,60 @@
 import { Component, OnInit } from '@angular/core';
-import { angularMaterialRenderers } from '@jsonforms/angular-material';
-import { and, createAjv, isControl, optionIs, rankWith, schemaTypeIs, scopeEndsWith, Tester } from '@jsonforms/core';
-import { CustomAutocompleteControlRenderer } from '../../custom.autocomplete';
-import { DataDisplayComponent } from '../../data.control';
-import { LangComponent } from '../../lang.control';
-import uischemaAsset from '../../../assets/uischema.json';
-import schemaAsset from '../../../assets/schema.json';
-import dataAsset from '../../data';
-import AJV from 'ajv';
-import { parsePhoneNumber } from 'libphonenumber-js';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
 
-const departmentTester: Tester = and(
-  schemaTypeIs('string'),
-  scopeEndsWith('department')
-);
 @Component({
   selector: 'app-student-teacher-signup',
   templateUrl: './student-teacher-signup.component.html',
   styleUrls: ['./student-teacher-signup.component.scss']
 })
 export class StudentTeacherSignupComponent implements OnInit {
-  renderers = [
-    ...angularMaterialRenderers,
-    { tester: rankWith(5, departmentTester), renderer: CustomAutocompleteControlRenderer },
-    {
-      renderer: DataDisplayComponent,
-      tester: rankWith(
-        6,
-        and(
-          isControl,
-          scopeEndsWith('___data')
-        )
-      )
-    },
-    {
-      renderer: LangComponent,
-      tester: rankWith(
-        6,
-        and(
-          isControl,
-          optionIs('lang', true)
-        )
-      )
-    },
-  ];
-  uischema = uischemaAsset;
-  schema = schemaAsset;
-  data = dataAsset;
-  ajv = createAjv({
-    schemaId: 'auto',
-    allErrors: true,
-    jsonPointers: true,
-    errorDataPath: 'property'
-  });
-  
-  constructor() { 
-    this.ajv.addFormat('time', '^([0-1][0-9]|2[0-3]):[0-5][0-9]$');
-    this.ajv.addFormat('tel', maybePhoneNumber => {
-      try {
-        parsePhoneNumber(maybePhoneNumber, 'DE');
-        return true;
-      } catch (_) {
-        return false;
-      }
+  form: FormGroup;
+  aboveControl = new FormControl(false);
+  constructor(fb: FormBuilder, public router: Router) { 
+    this.form = fb.group({
+      above: this.aboveControl,
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      gaurdianFirstName: [''],
+      gaurdianLastName: [''],
+      relation: [''],
+      mobileEmail: ['', Validators.required],
+      accepted: false
     });
   }
 
   ngOnInit(): void {
+    this.setUserCategoryValidators()
+  }
+
+  onSubmit(){
+    console.log(this.form.value);
+    localStorage.setItem('user', JSON.stringify(this.form.value));
+    this.router.navigate(['verification']);
+  }
+
+  setUserCategoryValidators() {
+    const relationControl = this.form.get('relation');
+    const gaurdianFirstNameControl = this.form.get('gaurdianFirstName');
+    const gaurdianLastNameControl = this.form.get('gaurdianLastName');
+
+    this.form.get('above').valueChanges
+      .subscribe(above => {
+        console.log(above)
+        if (above) {
+          relationControl.setValidators([Validators.required]);
+          gaurdianFirstNameControl.setValidators([Validators.required]);
+          gaurdianLastNameControl.setValidators([Validators.required]);
+        }
+        if (!above){
+          relationControl.setErrors({ 'incorrect': true});
+          relationControl.clearValidators();
+          gaurdianFirstNameControl.setErrors({ 'incorrect': true});
+          gaurdianFirstNameControl.clearValidators();
+          gaurdianLastNameControl.setErrors({ 'incorrect': true});
+          gaurdianLastNameControl.clearValidators();
+        }
+      });
   }
 
 }

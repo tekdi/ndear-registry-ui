@@ -1,50 +1,72 @@
-<header>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarExample01"
-                aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarExample01">
-                <div class="nav-item active logo-text">
-                    <a class="nav-link" aria-current="page" href="#" style="color: black;">NDEAR</a>
+<app-header></app-header>
+<div class="main-content">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Sign up / Create new account</h5>
+            <form class="example-container" [formGroup]="form" (ngSubmit)="onSubmit()">
+                <!-- <mat-checkbox formControlName="hideRequired">Hide required marker</mat-checkbox> -->
+                <div>
+                    <label>Are you above 13? </label>
+                    <mat-radio-group [formControl]="aboveControl">
+                        <mat-radio-button [value]="true">yes</mat-radio-button>
+                        <mat-radio-button [value]="false">no</mat-radio-button>
+                    </mat-radio-group>
                 </div>
-                <!-- <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-          </ul> -->
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Sign up</a>
-                    </li>
-                </ul>
-            </div>
+
+                <p>
+                    <mat-form-field class="half" appearance="outline" required>
+                        <mat-label>First Name</mat-label>
+                        <input matInput placeholder="First Name" formControlName="firstName">
+                        <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                        <!-- <mat-hint>Hint</mat-hint>  -->
+                    </mat-form-field>
+                    <mat-form-field class="half" appearance="outline" required>
+                        <mat-label>Last Name</mat-label>
+                        <input matInput placeholder="Last Name" formControlName="lastName">
+                    </mat-form-field>
+                </p>
+                <ng-template [ngIf]="aboveControl.value">
+                    <p>
+                        <mat-form-field class="half" appearance="outline" required>
+                            <mat-label>Guardian's First Name</mat-label>
+                            <input matInput placeholder="First Name" formControlName="gaurdianFirstName">
+                        </mat-form-field>
+                        <mat-form-field class="half" appearance="outline" required>
+                            <mat-label>Guardian's Last Name</mat-label>
+                            <input matInput placeholder="Last Name" formControlName="gaurdianLastName">
+                        </mat-form-field>
+                        <mat-form-field class="half" appearance="outline" required>
+                            <mat-label>Relationship</mat-label>
+                            <mat-select formControlName="relation">
+                                <mat-option value="Father">Father</mat-option>
+                                <mat-option value="Mother">Mother</mat-option>
+                                <mat-option value="Brother">Brother</mat-option>
+                                <mat-option value="Sister">Sister</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </p>
+                </ng-template>
+
+                <p>
+                    <mat-form-field appearance="outline" class="full" required>
+                        <mat-label>Email Id or Mobile Number</mat-label>
+                        <!-- <mat-icon matSuffix>phone email</mat-icon> -->
+                        <input matInput placeholder="Placeholder" formControlName="mobileEmail">
+
+                        <!-- <mat-icon matSuffix>email</mat-icon> -->
+                        <mat-hint>Mobile must include '+91'</mat-hint>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <ng-template [ngIf]="form.status == 'VALID'">
+                    <mat-checkbox formControlName="accepted">Accept terms and conditions</mat-checkbox>
+                    </ng-template>
+                </p>
+                <button type="submit" [disabled]="!form.value.accepted" mat-raised-button color="primary">Continue</button>
+            </form>
+
+            <!-- <pre>Status: {{form.status}}</pre>
+            <pre>Value:<br>{{form.value | json}}</pre> -->
         </div>
-    </nav>
-    <!-- Navbar -->
-
-    <!-- Jumbotron -->
-
-    <!-- Jumbotron -->
-</header>
-<div class="p-5 text-center bg-light">
-    <jsonforms
-[data]="data"
-[schema]="schema"
-[uischema]="uischema"
-[renderers]="renderers"
-[locale]="'de-DE'"
-[ajv]="ajv"
-></jsonforms>
+    </div>
 </div>

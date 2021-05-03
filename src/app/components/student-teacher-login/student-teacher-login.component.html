@@ -1,21 +1,27 @@
 <app-header></app-header>
-<div class="main-content">
-    <div class="card">
+<div class="col-md-6 offset-md-3">
+    <div class="card p-4">
         <div class="card-body">
-            <h5 class="card-title">Sign up / Create new account</h5>
+            <h4 class="card-title fw-bolder pb-2">Login</h4>
             <form class="example-container" [formGroup]="form" (ngSubmit)="onSubmit()">
                 <!-- <mat-checkbox formControlName="hideRequired">Hide required marker</mat-checkbox> -->
-                <p>
+                <label mdbLabel class="form-label fw-bold fs-7" for="form1">Email Id or Mobile Number</label>
+                <mdb-form-control>
+                    <input mdbInput type="text" id="form1" class="form-control" placeholder="********91" formControlName="mobileEmail" />
+                  </mdb-form-control>
+                    <div id="textExample1" class="form-text my-2">
+                        Mobile must include '+91'                  
+                    </div>
+                <!-- <p>
                     <mat-form-field appearance="outline" class="full" required>
                         <mat-label>Email Id or Mobile Number</mat-label>
-                        <!-- <mat-icon matSuffix>phone email</mat-icon> -->
+                        <mat-icon matSuffix>phone email</mat-icon> 
                         <input matInput placeholder="Placeholder" formControlName="mobileEmail">
 
-                        <!-- <mat-icon matSuffix>email</mat-icon> -->
                         <mat-hint>Mobile must include '+91'</mat-hint>
                     </mat-form-field>
-                </p>
-                <button type="submit" mat-raised-button color="primary">Continue</button>
+                </p> -->
+                <button type="submit" class="btn btn-primary w-100 mt-3 fw-bold text-capitalize">Continue</button>
             </form>
 
             <!-- <pre>Status: {{form.status}}</pre>

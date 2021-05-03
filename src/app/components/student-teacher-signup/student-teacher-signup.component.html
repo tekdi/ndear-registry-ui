@@ -1,32 +1,89 @@
 <app-header></app-header>
-<div class="main-content">
-    <div class="card">
+<div class="col-md-6 offset-md-3">
+    <div class="card p4">
         <div class="card-body">
-            <h5 class="card-title">Sign up / Create new account</h5>
+            <h4 class="card-title fw-bolder pb-2">Sign up / Create new account</h4>
             <form class="example-container" [formGroup]="form" (ngSubmit)="onSubmit()">
-                <!-- <mat-checkbox formControlName="hideRequired">Hide required marker</mat-checkbox> -->
-                <div>
+                <label>Are you above 13? &nbsp;&nbsp;</label>
+                <div class="form-check form-check-inline pl-5" [formControl]="aboveControl">
+                    <input
+                      mdbRadio
+                      class="form-check-input"
+                      type="radio"
+                      name="inlineRadioOptions"
+                      id="inlineRadio1"
+                      [value]="true"
+                    />
+                    <label class="form-check-label" for="inlineRadio1">Yes</label>
+                  </div>
+                  
+                  <div class="form-check form-check-inline" [formControl]="aboveControl">
+                    <input
+                      mdbRadio
+                      class="form-check-input"
+                      type="radio"
+                      name="inlineRadioOptions"
+                      id="inlineRadio2"
+                      [value]="false"
+                    />
+                    <label class="form-check-label" for="inlineRadio2">No</label>
+                  </div>
+                <!-- <div>
                     <label>Are you above 13? </label>
                     <mat-radio-group [formControl]="aboveControl">
                         <mat-radio-button [value]="true">yes</mat-radio-button>
                         <mat-radio-button [value]="false">no</mat-radio-button>
                     </mat-radio-group>
+                </div> -->
+                <div class="row">
+                    <div class="col-md-6 py-3">
+                        <label mdbLabel class="form-label fw-bold fs-7" for="form1" required>First Name</label>
+                        <mdb-form-control>
+                            <input mdbInput type="text" id="form1" class="form-control" placeholder="" formControlName="firstName" />
+                        </mdb-form-control>
+                    </div>
+                    <div class="col-md-6 py-3">
+                        <label mdbLabel class="form-label fw-bold fs-7" for="form2">Last Name</label>
+                        <mdb-form-control>
+                            <input mdbInput type="text" id="form2" class="form-control" placeholder="" formControlName="lastName" />
+                        </mdb-form-control>
+                    </div>
                 </div>
-
-                <p>
+                <!-- <p>
                     <mat-form-field class="half" appearance="outline" required>
                         <mat-label>First Name</mat-label>
                         <input matInput placeholder="First Name" formControlName="firstName">
-                        <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
-                        <!-- <mat-hint>Hint</mat-hint>  -->
                     </mat-form-field>
                     <mat-form-field class="half" appearance="outline" required>
                         <mat-label>Last Name</mat-label>
                         <input matInput placeholder="Last Name" formControlName="lastName">
                     </mat-form-field>
-                </p>
+                </p> -->
                 <ng-template [ngIf]="aboveControl.value">
-                    <p>
+                    <div class="row">
+                        <div class="col-md-6 py-3" class="half" appearance="outline" required>
+                            <label mdbLabel class="form-label fw-bold fs-7">Guardian's First Name</label>
+                            <mdb-form-control>
+                                <input mdbInput type="text" class="form-control" formControlName="gaurdianFirstName" placeholder="First Name"/>
+                            </mdb-form-control>
+                        </div>
+                        <div class="col-md-6 py-3" class="half" appearance="outline" required>
+                            <label mdbLabel class="form-label fw-bold fs-7">Guardian's Last Name</label>
+                            <mdb-form-control>
+                                <input mdbInput type="text" class="form-control" placeholder="Last Name" formControlName="gaurdianLastName" />
+                            </mdb-form-control>
+                        </div>
+                        <div class="col-md-6 py-3" class="half" appearance="outline" required>
+                            <label mdbLabel class="form-label fw-bold fs-7">Relationship</label>
+                            <select class="browser-default custom-select">
+                                <option value="1" selected>Father</option>
+                                <option value="2">Mother</option>
+                                <option value="3">Brother</option>
+                                <option value="4">Sister</option>
+                              </select>                 
+                        </div>
+                    </div>
+                    <!-- <p>
                         <mat-form-field class="half" appearance="outline" required>
                             <mat-label>Guardian's First Name</mat-label>
                             <input matInput placeholder="First Name" formControlName="gaurdianFirstName">
@@ -44,25 +101,44 @@
                                 <mat-option value="Sister">Sister</mat-option>
                             </mat-select>
                         </mat-form-field>
-                    </p>
+                    </p> -->
                 </ng-template>
 
-                <p>
+                <!-- <p>
                     <mat-form-field appearance="outline" class="full" required>
                         <mat-label>Email Id or Mobile Number</mat-label>
-                        <!-- <mat-icon matSuffix>phone email</mat-icon> -->
                         <input matInput placeholder="Placeholder" formControlName="mobileEmail">
-
-                        <!-- <mat-icon matSuffix>email</mat-icon> -->
                         <mat-hint>Mobile must include '+91'</mat-hint>
                     </mat-form-field>
-                </p>
+                </p> -->
+                <div class="pb-3">
+                    <label mdbLabel class="form-label fw-bold fs-7" for="form1">Email Id or Mobile Number</label>
+                    <mdb-form-control>
+                        <input mdbInput type="text" id="form1" class="form-control" placeholder="********91" formControlName="mobileEmail" />
+                    </mdb-form-control>
+                        <div id="textExample1" class="form-text my-2">
+                            Mobile must include '+91'                  
+                        </div>
+                </div>
                 <p>
                     <ng-template [ngIf]="form.status == 'VALID'">
-                    <mat-checkbox formControlName="accepted">Accept terms and conditions</mat-checkbox>
+                        <!-- Default checkbox -->
+                        <div class="form-check">
+                            <input
+                            mdbCheckbox
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            formControlName="accepted"
+                            />
+                            <label class="form-check-label">
+                                Accept terms and conditions    
+                            </label>
+                        </div>
+                    <!-- <mat-checkbox formControlName="accepted">Accept terms and conditions</mat-checkbox> -->
                     </ng-template>
                 </p>
-                <button type="submit" [disabled]="!form.value.accepted" mat-raised-button color="primary">Continue</button>
+                <button type="submit" [disabled]="!form.value.accepted" class="btn btn-primary w-100 mt-3 fw-bold text-capitalize">Continue</button>
             </form>
 
             <!-- <pre>Status: {{form.status}}</pre>

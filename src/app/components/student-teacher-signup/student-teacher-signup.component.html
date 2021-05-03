@@ -41,14 +41,14 @@
                     <div class="col-md-6 py-3">
                         <label mdbLabel class="form-label fw-bold fs-7" for="form1" >First Name</label>
                         <mdb-form-control>
-                            <input mdbInput type="text" id="form1" class="form-control" placeholder="" formControlName="firstName" required/>
+                            <input mdbInput type="text" id="form1" class="form-control" mdbValidate placeholder="" formControlName="firstName"/>
                         </mdb-form-control>
                         
                     </div>
                     <div class="col-md-6 py-3">
                         <label mdbLabel class="form-label fw-bold fs-7" for="form2">Last Name</label>
                         <mdb-form-control>
-                            <input mdbInput type="text" id="form2" class="form-control" placeholder="" formControlName="lastName" />
+                            <input mdbInput type="text" id="form2" class="form-control" mdbValidate placeholder="" formControlName="lastName" />
                         </mdb-form-control>
                     </div>
                 </div>
@@ -64,21 +64,21 @@
                 </p> -->
                 <ng-template [ngIf]="aboveControl.value">
                     <div class="row">
-                        <div class="col-md-6 py-3" class="half" appearance="outline" required>
+                        <div class="col-md-6 py-3 half" appearance="outline">
                             <label mdbLabel class="form-label fw-bold fs-7">Guardian's First Name</label>
                             <mdb-form-control>
-                                <input mdbInput type="text" class="form-control" formControlName="gaurdianFirstName" placeholder="First Name"/>
+                                <input mdbInput type="text" class="form-control" mdbValidate formControlName="gaurdianFirstName" placeholder="First Name"/>
                             </mdb-form-control>
                         </div>
-                        <div class="col-md-6 py-3" class="half" appearance="outline" required>
+                        <div class="col-md-6 py-3 half"  appearance="outline">
                             <label mdbLabel class="form-label fw-bold fs-7">Guardian's Last Name</label>
                             <mdb-form-control>
-                                <input mdbInput type="text" class="form-control" placeholder="Last Name" formControlName="gaurdianLastName" />
+                                <input mdbInput type="text" class="form-control" mdbValidate placeholder="Last Name" formControlName="gaurdianLastName" />
                             </mdb-form-control>
                         </div>
-                        <div class="col-md-6 py-3" class="half" appearance="outline" required>
+                        <div class="col-md-6 py-3 half" appearance="outline">
                             <label mdbLabel class="form-label fw-bold fs-7">Relationship</label>
-                            <select class="browser-default custom-select">
+                            <select class="form-control" mdbValidate>
                                 <option value="1" selected>Father</option>
                                 <option value="2">Mother</option>
                                 <option value="3">Brother</option>
@@ -117,7 +117,7 @@
                 <div class="pb-3">
                     <label mdbLabel class="form-label fw-bold fs-7" for="form1">Email Id or Mobile Number</label>
                     <mdb-form-control>
-                        <input mdbInput type="text" id="form1" class="form-control" placeholder="********91" formControlName="mobileEmail" />
+                        <input mdbInput type="text" id="form1" class="form-control" placeholder="********91" formControlName="mobileEmail" mdbValidate />
                     </mdb-form-control>
                         <div id="textExample1" class="form-text my-2">
                             Mobile must include '+91'                  
@@ -133,6 +133,7 @@
                             type="checkbox"
                             value=""
                             formControlName="accepted"
+                            mdbValidate
                             />
                             <label class="form-check-label">
                                 Accept terms and conditions    

@@ -16,6 +16,7 @@ import { NgOtpInputModule } from  'ng-otp-input';
 import { StudentProfileComponent } from './components/student-profile/student-profile.component';
 import { StudentTeacherLoginComponent } from './components/student-teacher-login/student-teacher-login.component';
 import { TestComponent } from './test/test.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -41,7 +42,8 @@ import { TestComponent } from './test/test.component';
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
-    NgOtpInputModule
+    NgOtpInputModule,
+    NgbModule
   ],
   schemas: [],
   entryComponents: [],

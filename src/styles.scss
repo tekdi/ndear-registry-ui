@@ -5,6 +5,7 @@
 @import '~@fortawesome/fontawesome-free/scss/brands.scss';
  
 @import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 $primary-color: #443df6;
 .primary-color {
@@ -16,3 +17,27 @@ $primary-color-dark: #1b2124;
     background-color: #8d9091!important;
 }
 
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	padding: 15px;
+	background-color: #212121;
+	text-align: center;
+}
+.footer > p {
+	margin-top: 0;
+    margin-bottom: 0rem;
+}
+
+.right{
+    float: right;
+}
+
+.left{
+    float: left;
+}

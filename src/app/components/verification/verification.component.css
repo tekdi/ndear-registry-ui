@@ -1,9 +1,9 @@
 .card{
     max-width: 600px;
 }
-.main-content{
+/* .main-content{
     text-align: -webkit-center;
-}
+} */
 .card-body {
     text-align: start;
 }

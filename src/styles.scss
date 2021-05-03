@@ -51,5 +51,18 @@ button.calendar, button.calendar:active {
 }
 .btn-outline-secondary {
     color: #8d9091;
-    border-color: #443df6;
+    border-color: #8d9091;
+}
+
+.btn-outline-secondary:hover {
+    color: #8d9091;
+    border-color: #8d9091;
+}
+
+.main-content{
+    text-align: -webkit-center;
+	padding-bottom: 70px;
+}
+.card{
+	padding-bottom: 70px;
 }

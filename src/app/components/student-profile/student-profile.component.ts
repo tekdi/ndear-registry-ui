@@ -16,6 +16,7 @@ import {
 export class StudentProfileComponent implements OnInit {
   user;
   editform: FormGroup;
+  educationForm: FormGroup;
   model: NgbDateStruct;
   constructor(fb: FormBuilder, config: NgbInputDatepickerConfig, calendar: NgbCalendar) { 
     // customize default values of datepickers used by this component tree
@@ -40,13 +41,31 @@ export class StudentProfileComponent implements OnInit {
       accepted: true,
       gender: ['', Validators.required],
       dob: ['', Validators.required],
-      address: ['', Validators.required]
+      address: ['']
+    });
+
+    this.educationForm = fb.group({
+      degree: ['', Validators.required],
+      institute: ['', Validators.required],
+      working: [false],
+      startdate: [''],
+      enddate: [''],
+      send: true
     });
   }
 
   onSubmit(){
     console.log(this.editform.value);
+    // this.user.details = this.editform.value
     localStorage.setItem('user', JSON.stringify(this.editform.value));
+    // this.router.navigate(['verification']);
+  }
+
+
+  onEducationSubmit(){
+    console.log(this.educationForm.value);
+    // this.user.details = this.editform.value
+    localStorage.setItem('education', JSON.stringify(this.educationForm.value));
     // this.router.navigate(['verification']);
   }
 

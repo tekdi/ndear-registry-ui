@@ -5,7 +5,8 @@
             <h6 class="d-inline-block">Personal</h6>
             <a data-toggle="modal" data-target="#myModal2" class="pl-1 fs-7 text-primary-color">edit</a>
         </div>
-        <a class="text-end d-block text-primary-color">Preview Public Profile</a>
+        <a data-toggle="modal" data-target="#addPersonalDetails" class="fs-7 text-primary-color"><i class="fa fa-plus pr-1"></i>Personal Details</a>
+        <a class="text-end d-block text-primary-color blue-shade-btn" data-toggle="modal" data-target="#prewiewProfile">Preview Public Profile</a>
     </div>
     <div class="card">
         <div class="card-body">
@@ -110,49 +111,200 @@
         
 </div>
 
+<!-- Add Personal Details Modal -->
+<div class="modal right fade right-l-modal" id="addPersonalDetails" tabindex="-1" role="dialog" aria-labelledby="addPersonalDetails">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPersonalDetails">Add Personal Details to Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+                
+                <form class="example-container" [formGroup]="editform" (ngSubmit)="onSubmit()">
+                    <div class="" appearance="outline">
+                        <label mdbLabel class="form-label fw-normal fs-7">Gender</label>
+                        <div class="d-inline-block fs-8">(Optional)</div>
+                        <select class="form-control" mdbValidate formControlName="gender">
+                            <option value="1" selected>Male</option>
+                            <option value="2">Female</option>
+                            <option value="3">Other</option>
+                          </select>                 
+                    </div>
+
+                    <div class="form-group half">
+                        <label mdbLabel class="form-label fw-normal fs-7">Date of Birth</label>
+                      <div class="input-group">
+                        
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                              name="dp" [(ngModel)]="model" formControlName="dob" ngbDatepicker #d="ngbDatepicker" mdbValidate>
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <label mdbLabel class="form-label fw-normal fs-7" for="form1">Contact Number</label>
+                    <div class="d-inline-block fs-8">(Optional)</div>
+                    <mdb-form-control>
+                        <input mdbInput type="text" id="form1" class="form-control"  formControlName="mobileEmail" mdbValidate/>
+                      </mdb-form-control>
+                        <div id="textExample1" class="form-text my-2">
+                            Mobile must include '+91'                  
+                        </div>
+
+                    <div class="form-group">
+                    <label mdbLabel class="form-label fw-normal fs-7">Address</label>
+                    <div class="d-inline-block fs-8">(Optional)</div>
+                    <mdb-form-control>
+                        <textarea mdbInput class="form-control" id="textAreaExample" formControlName="address" rows="4"></textarea>
+                        <label mdbLabel class="form-label" for="textAreaExample">Full Address</label>
+                      </mdb-form-control>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary text-end mt-3 fw-bold text-capitalize" data-dismiss="modal">Save</button>
+                  </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 	<!-- Edit Personal Details Modal -->
-	<div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+	<div class="modal right fade right-l-modal" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 
 				<div class="modal-header">
-                    <h5 class="modal-title" id="myModalLabel2">Add Personal Details to profile</h5>
+                    <h5 class="modal-title" id="myModalLabel2">Edit Personal Details</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				</div>
+
+				<div class="modal-body h-100">
+                    
+                    <form class="example-container" [formGroup]="editform" (ngSubmit)="onSubmit()">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label mdbLabel class="form-label fw-normal fs-7" for="form1" >First Name</label>
+                                <mdb-form-control>
+                                    <input mdbInput type="text" id="form1" class="form-control" mdbValidate placeholder="" formControlName="firstName"/>
+                                </mdb-form-control>
+                                
+                            </div>
+                            <div class="col-md-12">
+                                <label mdbLabel class="form-label fw-normal fs-7" for="form2">Last Name</label>
+                                <mdb-form-control>
+                                    <input mdbInput type="text" id="form2" class="form-control" mdbValidate placeholder="" formControlName="lastName" />
+                                </mdb-form-control>
+                            </div>
+                            <div class="col-md-12">
+                                <label mdbLabel class="form-label fw-normal fs-7" for="form2">EmailID</label>
+                                <mdb-form-control>
+                                    <input mdbInput type="text" id="form2" class="form-control" mdbValidate placeholder="" formControlName="lastName" />
+                                </mdb-form-control>
+                            </div>
+                        </div>
+                      </form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+    <!-- Preview Profile Modal -->
+	<div class="modal right fade right-xl-modal" id="prewiewProfile" tabindex="-1" role="dialog" aria-labelledby="prewiewProfile">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<div class="modal-header">
+                    <h6 class="modal-title" id="prewiewProfile">Preview of Public Profile</h6>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				</div>
 
 				<div class="modal-body">
                     
-                    <form class="example-container" [formGroup]="editform" (ngSubmit)="onSubmit()">
-                        <div class="col-md-6 py-3 half" appearance="outline">
-                            <label mdbLabel class="form-label fw-bold fs-7">Gender</label>
-                            <select class="form-control" mdbValidate formControlName="gender">
-                                <option value="1" selected>Male</option>
-                                <option value="2">Female</option>
-                                <option value="3">Other</option>
-                              </select>                 
+                    <div class="card">
+                        <div class="card-body">
+                            <dl>
+                                <h6>{{user.firstName}} {{user.lastName}}</h6>
+                            </dl>
+                            <dl>
+                                <dt class="fs-7 text-grey-color">Gender</dt>
+                                <dd>Female</dd>
+                            </dl>
+                            <dl>
+                                <dt class="fs-7 text-grey-color">Contact Number</dt>
+                                <dd>{{user.mobileEmail}} 
+                                    <i class="fa fa-check-circle text-success"></i>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt class="fs-7 text-grey-color">Address</dt>
+                                <dd>Female</dd>
+                            </dl>
                         </div>
-                        <div class="form-group col-md-6 py-3 half">
-                            <label mdbLabel class="form-label fw-bold fs-7">Date of Birth</label>
-                          <div class="input-group">
-                            
-                            <input class="form-control" placeholder="yyyy-mm-dd"
-                                  name="dp" [(ngModel)]="model" formControlName="dob" ngbDatepicker #d="ngbDatepicker" mdbValidate>
-                            <div class="input-group-append">
-                              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-                            </div>
-                          </div>
+                    </div>
+                    <div class="mt-5">
+                            <h6>ID Details</h6>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <dl>
+                                <dt class="fs-7 text-grey-color">Aadhar Number</dt>
+                                <dd>*******91 <i class="fa fa-check-circle text-success"></i></dd>
+                                <dt class="fs-7 text-grey-color">PAN</dt>
+                                <dd>*******91 <i class="fa fa-check-circle text-success"></i></dd>
+                            </dl>
+                            <dl>
+                                <dt class="fs-7 text-grey-color">Professional License</dt>
+                                <dd>*******91 <i class="fa fa-check-circle text-success"></i></dd>
+                            </dl>
                         </div>
-                        <div class="form-group">
-                        <label mdbLabel class="form-label fw-bold fs-7">Address</label>
-                        <mdb-form-control>
-                           
-                            <textarea mdbInput class="form-control" id="textAreaExample" formControlName="address" rows="4"></textarea>
-                            <label mdbLabel class="form-label" for="textAreaExample">Full Address</label>
-                          </mdb-form-control>
+                    </div>
+                     
+                    <h6 class="mt-5">Experience</h6>
+                    <div class="card">
+                        <div class="card-body">
+                            <h6>Associate Professor <i class="fa fa-check-circle text-success"></i></h6> 
+                            <div>Pragati Institue <i class="fa fa-check-circle text-success"></i></div>
+                            <div>2015-Current</div>
+                            <div class="fs-7 text-grey-color">Class: ITI Diploma</div>
+                            <hr>
+                            <h6>Associate Professor <i class="fa fa-check-circle text-success"></i></h6> 
+                            <div>Pragati Institue <i class="fa fa-check-circle text-success"></i></div>
+                            <div>2015-Current</div>
+                            <div class="fs-7 text-grey-color">Class: ITI Diploma</div>
+                            <hr>
+                            <h6>Associate Professor <i class="fa fa-check-circle text-success"></i></h6> 
+                            <div>Pragati Institue <i class="fa fa-check-circle text-success"></i></div>
+                            <div>2015-Current</div>
+                            <div class="fs-7 text-grey-color">Class: ITI Diploma</div>
                         </div>
-
-                        <button type="submit" class="btn btn-primary w-100 mt-3 fw-bold text-capitalize" data-dismiss="modal">Save</button>
-                      </form>
+                    </div>
+                
+                    <h6 class="mt-5">Education</h6>
+                    <div class="card">
+                        <div class="card-body">
+                            <h6>Bachelor's Degree B.ED (English, Ecnomics)<i class="fa fa-check-circle text-success"></i></h6>
+                            <dl>
+                                <dt class="fs-7 text-grey-color">Bharitya Shiska Parishad</dt>
+                                <dd>2014</dd>
+                            </dl>
+                        </div>
+                    </div>
+                
+                    <h6 class="mt-5">Certification</h6>
+                    <div class="card">
+                        <div class="card-body">
+                            <h6>Google IT Automation with Python Professional Certificate</h6>
+                            <dl>
+                                <dt class="fs-7 text-grey-color">Coursera</dt>
+                                <dd>2019</dd>
+                            </dl>
+                        </div>
+                    </div>
 				</div>
 
 			</div>

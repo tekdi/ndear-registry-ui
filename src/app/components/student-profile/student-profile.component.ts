@@ -18,6 +18,9 @@ export class StudentProfileComponent implements OnInit {
   editform: FormGroup;
   educationForm: FormGroup;
   model: NgbDateStruct;
+  startdate: NgbDateStruct;
+  enddate: NgbDateStruct;
+  working: Boolean = true;
   constructor(fb: FormBuilder, config: NgbInputDatepickerConfig, calendar: NgbCalendar) { 
     // customize default values of datepickers used by this component tree
     config.minDate = {year: 1900, month: 1, day: 1};
@@ -47,7 +50,7 @@ export class StudentProfileComponent implements OnInit {
     this.educationForm = fb.group({
       degree: ['', Validators.required],
       institute: ['', Validators.required],
-      working: [false],
+      working: [true],
       startdate: [''],
       enddate: [''],
       send: true
@@ -72,6 +75,10 @@ export class StudentProfileComponent implements OnInit {
   ngOnInit(): void {
    
     
+  }
+  onWorkingChange(event){
+    console.log(event.checked)
+    this.working = event.checked;
   }
 
 }

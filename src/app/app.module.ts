@@ -17,7 +17,7 @@ import { StudentProfileComponent } from './components/student-profile/student-pr
 import { StudentTeacherLoginComponent } from './components/student-teacher-login/student-teacher-login.component';
 import { TestComponent } from './test/test.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import {SuiModule} from 'ng2-semantic-ui';
 
 
 
@@ -43,7 +43,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     NgOtpInputModule,
-    NgbModule
+    NgbModule,
+    SuiModule
   ],
   schemas: [],
   entryComponents: [],

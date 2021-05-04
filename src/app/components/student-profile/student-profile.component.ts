@@ -57,10 +57,11 @@ export class StudentProfileComponent implements OnInit {
     });
   }
 
-  onSubmit(){
+  onEditProfileSubmit(){
     console.log(this.editform.value);
     // this.user.details = this.editform.value
     localStorage.setItem('user', JSON.stringify(this.editform.value));
+    
     // this.router.navigate(['verification']);
   }
 
@@ -77,8 +78,10 @@ export class StudentProfileComponent implements OnInit {
     
   }
   onWorkingChange(event){
-    console.log(event.checked)
-    this.working = event.checked;
+    console.log(this.working)
+    // this.working = event.checked;
   }
+
+  
 
 }

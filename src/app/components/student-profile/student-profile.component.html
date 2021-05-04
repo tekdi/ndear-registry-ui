@@ -3,7 +3,7 @@
     <div class="d-flex flex-justify-between">
         <div>
             <h6 class="d-inline-block">Personal</h6>
-            <a data-toggle="modal" data-target="#myModal2" class="pl-1 fs-7 text-primary-color">edit</a>
+            <a data-toggle="modal" data-target="#editProfile" class="pl-1 fs-7 text-primary-color">edit</a>
         </div>
         <a class="text-end d-block text-primary-color">Preview Public Profile</a>
     </div>
@@ -16,8 +16,10 @@
                 <dd>{{user.lastName}}</dd>
             </dl>
             <dl>
-                <dt class="fs-7 text-grey-color">Gender</dt>
-                <dd>Female</dd>
+                <ng-template [ngIf]="user.gender && user.gender != ''">
+                    <dt class="fs-7 text-grey-color">Gender</dt>
+                    <dd>{{user.gender}}</dd>
+                </ng-template>
                 <dt class="fs-7 text-grey-color">Date of Birth</dt>
                 <dd>14th June 1992
                     <i class="fa fa-check-circle text-success"></i>
@@ -31,7 +33,7 @@
             </dl>
             <dl>
                 <dt class="fs-7 text-grey-color">Address</dt>
-                <dd>Female</dd>
+                <dd>Ahmedabad</dd>
             </dl>
         </div>
     </div>
@@ -82,7 +84,7 @@
 
     <div class="d-flex justify-content-between mt-5">
         <h6 class="d-inline-block">Education</h6>
-        <a href="#" class="fs-7 text-primary-color"><i class="fa fa-plus pr-1"></i>Education</a>
+        <a data-toggle="modal" data-target="#addEducation" class="fs-7 text-primary-color"><i class="fa fa-plus pr-1"></i>Education</a>
     </div>
     <div class="card">
         <div class="card-body">
@@ -111,7 +113,7 @@
 </div>
 
 <!-- Edit Personal Details Modal -->
-<div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+<div class="modal right fade" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
@@ -123,7 +125,7 @@
 
             <div class="modal-body">
 
-                <form class="example-container" [formGroup]="editform" (ngSubmit)="onSubmit()">
+                <form class="example-container" [formGroup]="editform" (ngSubmit)="onEditProfileSubmit()">
                     <div class="col-md-6 py-3 half" appearance="outline">
                         <label mdbLabel class="form-label fw-bold fs-7">Gender</label>
                         <select class="form-control" mdbValidate formControlName="gender">
@@ -165,7 +167,7 @@
 
 
 <!-- Add Education -->
-<div class="modal right fade" id="education" tabindex="-1" role="dialog" aria-labelledby="AddEducation">
+<div class="modal right fade" id="addEducation" tabindex="-1" role="dialog" aria-labelledby="AddEducation">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
@@ -203,13 +205,13 @@
                         </label>
                     </div>
                     <div class="form-group col-md-6 py-3 half">
-                        <label mdbLabel class="form-label fw-bold fs-7">End date</label>
+                        <label mdbLabel class="form-label fw-bold fs-7">Start date</label>
                         <div class="input-group">
 
-                            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="startdate"
-                                formControlName="startdate" ngbDatepicker #d="ngbDatepicker" mdbValidate>
+                            <input class="form-control" placeholder="yyyy-mm-dd" name="dp1" [(ngModel)]="startdate"
+                                formControlName="startdate" ngbDatepicker #d1="ngbDatepicker">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
+                                <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()"
                                     type="button"></button>
                             </div>
                         </div>
@@ -219,10 +221,10 @@
                             <label mdbLabel class="form-label fw-bold fs-7">End date</label>
                             <div class="input-group">
 
-                                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="enddate"
-                                    formControlName="enddate" ngbDatepicker #d="ngbDatepicker" mdbValidate>
+                                <input class="form-control" placeholder="yyyy-mm-dd" name="dp2" [(ngModel)]="enddate"
+                                    formControlName="enddate" ngbDatepicker #d2="ngbDatepicker">
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
+                                    <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()"
                                         type="button"></button>
                                 </div>
                             </div>

@@ -36,6 +36,7 @@
     "libphonenumber-js": "^1.6.8",
     "mdb-angular-ui-kit": "^1.0.0-beta3",
     "ng-otp-input": "^1.7.1",
+    "ng2-semantic-ui": "^0.9.7",
     "path": "^0.12.7",
     "random-words": "^1.1.0",
     "redux": "4.0.1",

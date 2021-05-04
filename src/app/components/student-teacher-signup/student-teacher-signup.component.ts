@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class StudentTeacherSignupComponent implements OnInit {
   form: FormGroup;
-  aboveControl = new FormControl(false);
+  aboveControl = new FormControl("true");
   constructor(fb: FormBuilder, public router: Router) { 
     this.form = fb.group({
       above: this.aboveControl,
@@ -41,12 +41,12 @@ export class StudentTeacherSignupComponent implements OnInit {
     this.form.get('above').valueChanges
       .subscribe(above => {
         console.log(above)
-        if (above) {
+        if (!above) {
           relationControl.setValidators([Validators.required]);
           gaurdianFirstNameControl.setValidators([Validators.required]);
           gaurdianLastNameControl.setValidators([Validators.required]);
         }
-        if (!above){
+        if (above){
           relationControl.setErrors({ 'incorrect': true});
           relationControl.clearValidators();
           gaurdianFirstNameControl.setErrors({ 'incorrect': true});

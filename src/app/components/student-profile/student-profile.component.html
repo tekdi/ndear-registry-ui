@@ -2,226 +2,226 @@
 
 <div class="main-content">
 
-        <div class="card-heading">
-            <h6>Personal Details</h6>
-            <a data-toggle="modal" data-target="#myModal2"> Edit</a>
-            <!-- <a class="text-right">+ Personal Details</a> -->
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <div class="right-content">
-                    <div class="lable-title">
-                        First Name
-                    </div>
-                    <p class="card-text">
-                        {{user.firstName}}
-                    </p>
+    <div class="card-heading">
+        <h6>Personal Details</h6>
+        <a data-toggle="modal" data-target="#myModal2"> Edit</a>
+        <!-- <a class="text-right">+ Personal Details</a> -->
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="right-content">
+                <div class="lable-title">
+                    First Name
                 </div>
-                <div class="right-content">
-                    <div class="lable-title">
-                        Last Name
-                    </div>
-                    <p class="card-text">
-                        {{user.lastName}}
-                    </p>
+                <p class="card-text">
+                    {{user.firstName}}
+                </p>
+            </div>
+            <div class="right-content">
+                <div class="lable-title">
+                    Last Name
                 </div>
-                <div class="right-content">
-                    <div class="lable-title">
-                        Mobile Or Email <img
-                            src="https://www.maxpixel.net/static/photo/1x/To-Do-Check-Ok-Gui-Symbol-Icon-Todo-Agenda-Tick-1976099.png"
-                            style="width: 24px;" />
-                    </div>
-                    <p class="card-text">
-                        {{user.mobileEmail}}
-                    </p>
+                <p class="card-text">
+                    {{user.lastName}}
+                </p>
+            </div>
+            <div class="right-content">
+                <div class="lable-title">
+                    Mobile Or Email <img
+                        src="https://www.maxpixel.net/static/photo/1x/To-Do-Check-Ok-Gui-Symbol-Icon-Todo-Agenda-Tick-1976099.png"
+                        style="width: 24px;" />
                 </div>
-
+                <p class="card-text">
+                    {{user.mobileEmail}}
+                </p>
             </div>
-        </div>
-        <br>
-        <div class="card-heading">
-            <h6>Education</h6>
-            <a data-toggle="modal" data-target="#education">+ Education</a>
-        </div>
-        <div class="card">
-            <div class="card-body">
 
-            </div>
         </div>
+    </div>
+    <br>
+    <div class="card-heading">
+        <h6>Education</h6>
+        <a data-toggle="modal" data-target="#education">+ Education</a>
+    </div>
+    <div class="card">
+        <div class="card-body">
 
-        <br>
-        <div class="card-heading">
-            <h6>ID Details</h6>
-            <a>+ ID Details</a>
         </div>
-        <div class="card">
-            <div class="card-body">
-         
-            </div>
-        </div>
-        <br>
-        <div class="card-heading">
-            <h6>Experience</h6>
-            <a>+ Experience</a>
-        </div>
-        <div class="card">
-            <div class="card-body">
-         
-            </div>
-        </div>
+    </div>
 
-        <br>
-        <div class="card-heading">
-            <h6>Certification</h6>
-            <a>+ Certification</a>
-        </div>
-        <div class="card">
-            <div class="card-body">
+    <br>
+    <div class="card-heading">
+        <h6>ID Details</h6>
+        <a>+ ID Details</a>
+    </div>
+    <div class="card">
+        <div class="card-body">
 
-            </div>
         </div>
-        
+    </div>
+    <br>
+    <div class="card-heading">
+        <h6>Experience</h6>
+        <a>+ Experience</a>
+    </div>
+    <div class="card">
+        <div class="card-body">
+
+        </div>
+    </div>
+
+    <br>
+    <div class="card-heading">
+        <h6>Certification</h6>
+        <a>+ Certification</a>
+    </div>
+    <div class="card">
+        <div class="card-body">
+
+        </div>
+    </div>
+
 </div>
 
-	<!-- Edit Personal Details Modal -->
-	<div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+<!-- Edit Personal Details Modal -->
+<div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
 
-				<div class="modal-header">
-                    <h5 class="modal-title" id="myModalLabel2">Add Personal Details to profile</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				</div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel2">Add Personal Details to profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
 
-				<div class="modal-body">
-                    
-                    <form class="example-container" [formGroup]="editform" (ngSubmit)="onSubmit()">
-                        <div class="col-md-6 py-3 half" appearance="outline">
-                            <label mdbLabel class="form-label fw-bold fs-7">Gender</label>
-                            <select class="form-control" mdbValidate formControlName="gender">
-                                <option value="1" selected>Male</option>
-                                <option value="2">Female</option>
-                                <option value="3">Other</option>
-                              </select>                 
-                        </div>
-                        <div class="form-group col-md-6 py-3 half">
-                            <label mdbLabel class="form-label fw-bold fs-7">Date of Birth</label>
-                          <div class="input-group">
-                            
-                            <input class="form-control" placeholder="yyyy-mm-dd"
-                                  name="dp" [(ngModel)]="model" formControlName="dob" ngbDatepicker #d="ngbDatepicker" mdbValidate>
+            <div class="modal-body">
+
+                <form class="example-container" [formGroup]="editform" (ngSubmit)="onSubmit()">
+                    <div class="col-md-6 py-3 half" appearance="outline">
+                        <label mdbLabel class="form-label fw-bold fs-7">Gender</label>
+                        <select class="form-control" mdbValidate formControlName="gender">
+                            <option value="1" selected>Male</option>
+                            <option value="2">Female</option>
+                            <option value="3">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6 py-3 half">
+                        <label mdbLabel class="form-label fw-bold fs-7">Date of Birth</label>
+                        <div class="input-group">
+
+                            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model"
+                                formControlName="dob" ngbDatepicker #d="ngbDatepicker" mdbValidate>
                             <div class="input-group-append">
-                              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
+                                    type="button"></button>
                             </div>
-                          </div>
                         </div>
-                        <div class="form-group">
+                    </div>
+                    <div class="form-group">
                         <label mdbLabel class="form-label fw-bold fs-7">Address</label>
                         <mdb-form-control>
-                           
-                            <textarea mdbInput class="form-control" id="textAreaExample" formControlName="address" rows="4"></textarea>
+
+                            <textarea mdbInput class="form-control" id="textAreaExample" formControlName="address"
+                                rows="4"></textarea>
                             <label mdbLabel class="form-label" for="textAreaExample">Full Address</label>
-                          </mdb-form-control>
-                        </div>
+                        </mdb-form-control>
+                    </div>
 
-                        <button type="submit" class="btn btn-primary w-100 mt-3 fw-bold text-capitalize" data-dismiss="modal">Save</button>
-                      </form>
-				</div>
+                    <button type="submit" class="btn btn-primary w-100 mt-3 fw-bold text-capitalize"
+                        data-dismiss="modal">Save</button>
+                </form>
+            </div>
 
-			</div>
-		</div>
-	</div>
-	
+        </div>
+    </div>
+</div>
 
-    	<!-- Add Education -->
-	<div class="modal right fade" id="education" tabindex="-1" role="dialog" aria-labelledby="AddEducation">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
 
-				<div class="modal-header">
-                    <h5 class="modal-title" id="myModalLabel2">Add Education</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				</div>
+<!-- Add Education -->
+<div class="modal right fade" id="education" tabindex="-1" role="dialog" aria-labelledby="AddEducation">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
 
-				<div class="modal-body">
-                    
-                    <form class="example-container" [formGroup]="educationForm" (ngSubmit)="onEducationSubmit()">
-                        <div class="pb-3">
-                            <label mdbLabel class="form-label fw-bold fs-7" for="form1">Degree</label>
-                            <mdb-form-control>
-                                <input mdbInput type="text" id="form1" class="form-control"  formControlName="degree" mdbValidate />
-                            </mdb-form-control>
-    
-                        </div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel2">Add Education</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
 
-                        <div class="pb-3">
-                            <label mdbLabel class="form-label fw-bold fs-7" for="form1">Institute</label>
-                            <mdb-form-control>
-                                <input mdbInput type="text" id="form1" class="form-control"  formControlName="institute" mdbValidate />
-                            </mdb-form-control>
-    
-                        </div>
-                        <div class="form-check">
-                            <input
-                            mdbCheckbox
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            formControlName="working"
-                            mdbValidate
-                            />
-                            <label class="form-check-label">
-                                I currently studying here   
-                            </label>
-                        </div>
-                        <!-- <div class="form-group col-md-6 py-3 half">
-                            <label mdbLabel class="form-label fw-bold fs-7">Start date</label>
-                          <div class="input-group">
-                            
-                            <input class="form-control" placeholder="yyyy-mm-dd"
-                                  name="dp" [(ngModel)]="model" formControlName="startdate" ngbDatepicker #d="ngbDatepicker" mdbValidate>
+            <div class="modal-body">
+
+                <form class="example-container" [formGroup]="educationForm" (ngSubmit)="onEducationSubmit()">
+                    <div class="pb-3">
+                        <label mdbLabel class="form-label fw-bold fs-7" for="form1">Degree</label>
+                        <mdb-form-control>
+                            <input mdbInput type="text" id="form1" class="form-control" formControlName="degree"
+                                mdbValidate />
+                        </mdb-form-control>
+
+                    </div>
+
+                    <div class="pb-3">
+                        <label mdbLabel class="form-label fw-bold fs-7" for="form1">Institute</label>
+                        <mdb-form-control>
+                            <input mdbInput type="text" id="form1" class="form-control" formControlName="institute"
+                                mdbValidate />
+                        </mdb-form-control>
+
+                    </div>
+                    <div class="form-check">
+                        <input mdbCheckbox class="form-check-input" type="checkbox" formControlName="working"
+                            (change)="onWorkingChange($event)" />
+                        <label class="form-check-label">
+                            I currently studying here
+                        </label>
+                    </div>
+                    <div class="form-group col-md-6 py-3 half">
+                        <label mdbLabel class="form-label fw-bold fs-7">End date</label>
+                        <div class="input-group">
+
+                            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="startdate"
+                                formControlName="startdate" ngbDatepicker #d="ngbDatepicker" mdbValidate>
                             <div class="input-group-append">
-                              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
+                                    type="button"></button>
                             </div>
-                          </div>
                         </div>
+                    </div>
+                    <ng-template [ngIf]="!working">
                         <div class="form-group col-md-6 py-3 half">
                             <label mdbLabel class="form-label fw-bold fs-7">End date</label>
-                          <div class="input-group">
-                            
-                            <input class="form-control" placeholder="yyyy-mm-dd"
-                                  name="dp" [(ngModel)]="model" formControlName="enddate" ngbDatepicker #d="ngbDatepicker" mdbValidate>
-                            <div class="input-group-append">
-                              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-                            </div>
-                          </div>
-                        </div> -->
-                        <div class="form-check">
-                            <input
-                            mdbCheckbox
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            formControlName="send"
-                            mdbValidate
-                            />
-                            <label class="form-check-label">
-                                Send for verification 
-                            </label>
-                        </div>
-                        <button  class="btn btn-primary w-100 mt-3 fw-bold text-capitalize" data-dismiss="modal">Save to draft</button>
-                        <button type="submit" class="btn btn-primary w-100 mt-3 fw-bold text-capitalize" data-dismiss="modal">Save</button>
-                      </form>
-				</div>
+                            <div class="input-group">
 
-			</div>
-		</div>
-	</div>
-	
+                                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="enddate"
+                                    formControlName="enddate" ngbDatepicker #d="ngbDatepicker" mdbValidate>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
+                                        type="button"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <div class="form-check">
+                        <input mdbCheckbox class="form-check-input" type="checkbox" value="" formControlName="send"
+                            mdbValidate />
+                        <label class="form-check-label">
+                            Send for verification
+                        </label>
+                    </div>
+                    <button class="btn btn-primary w-100 mt-3 fw-bold text-capitalize" data-dismiss="modal">Save to
+                        draft</button>
+                    <button type="submit" class="btn btn-primary w-100 mt-3 fw-bold text-capitalize"
+                        data-dismiss="modal">Save</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 
 
 <!-- partial -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
-

@@ -1,119 +1,112 @@
 <app-header></app-header>
-<div class="col-md-6 offset-md-3">
-    <mdb-tabs>
-        <mdb-tab title="personal">
-            <div class="card">
-                <div class="card-body">
-                    <div class="right-content">
-                        <div class="lable-title">
-                            First Name
-                        </div>
-                        <p class="card-text">
-                            {{user.firstName}}
-                        </p>
-                    </div>
-                    <div class="right-content">
-                        <div class="lable-title">
-                            Last Name
-                        </div>
-                        <p class="card-text">
-                            {{user.lastName}}
-                        </p>
-                    </div>
-                    <div class="right-content">
-                        <div class="lable-title">
-                            Mobile Or Email <img
-                                src="https://www.maxpixel.net/static/photo/1x/To-Do-Check-Ok-Gui-Symbol-Icon-Todo-Agenda-Tick-1976099.png"
-                                style="width: 24px;" />
-                        </div>
-                        <p class="card-text">
-                            {{user.mobileEmail}}
-                        </p>
-                    </div>
-    
-                </div>
-            </div>
-            </mdb-tab>
-      </mdb-tabs>
-      
+<div class="container">
+    <div class="d-flex flex-justify-between">
+        <div>
+            <h6 class="d-inline-block">Personal</h6>
+            <a data-toggle="modal" data-target="#myModal2" class="pl-1 fs-7 text-primary-color">edit</a>
+        </div>
+        <a class="text-end d-block text-primary-color">Preview Public Profile</a>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <dl>
+                <dt class="fs-7 text-grey-color">First Name</dt>
+                <dd>{{user.firstName}}</dd>
+                <dt class="fs-7 text-grey-color">Last Name</dt>
+                <dd>{{user.lastName}}</dd>
+            </dl>
+            <dl>
+                <dt class="fs-7 text-grey-color">Gender</dt>
+                <dd>Female</dd>
+                <dt class="fs-7 text-grey-color">Date of Birth</dt>
+                <dd>14th June 1992
+                    <i class="fa fa-check-circle text-success"></i>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="fs-7 text-grey-color">Contact Number</dt>
+                <dd>{{user.mobileEmail}} 
+                    <i class="fa fa-check-circle text-success"></i>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="fs-7 text-grey-color">Address</dt>
+                <dd>Female</dd>
+            </dl>
+        </div>
+    </div>
+    <div class="d-flex flex-justify-between mt-5">
+        <div>
+            <h6 class="d-inline-block">ID Details</h6>
+            <a data-toggle="modal" data-target="#myModal2" class="pl-1 fs-7 text-primary-color">edit</a>
+        </div>
+        <a href="#" class="fs-7 text-primary-color"><i class="fa fa-plus pr-1"></i>ID</a>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <dl>
+                <dt class="fs-7 text-grey-color">Aadhar Number</dt>
+                <dd>*******91 <i class="fa fa-check-circle text-success"></i></dd>
+                <dt class="fs-7 text-grey-color">PAN</dt>
+                <dd>*******91 <i class="fa fa-check-circle text-success"></i></dd>
+            </dl>
+            <dl>
+                <dt class="fs-7 text-grey-color">Professional License</dt>
+                <dd>*******91 <i class="fa fa-check-circle text-success"></i></dd>
+            </dl>
+        </div>
+    </div>
+     
+    <div class="d-flex justify-content-between mt-5">
+        <h6 class="d-inline-block">Experience</h6>
+        <a href="#" class="fs-7 text-primary-color"><i class="fa fa-plus pr-1"></i>Experience</a>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h6>Associate Professor <i class="fa fa-check-circle text-success"></i></h6> 
+            <div>Pragati Institue <i class="fa fa-check-circle text-success"></i></div>
+            <div>2015-Current</div>
+            <div class="fs-7 text-grey-color">Class: ITI Diploma</div>
+            <hr>
+            <h6>Associate Professor <i class="fa fa-check-circle text-success"></i></h6> 
+            <div>Pragati Institue <i class="fa fa-check-circle text-success"></i></div>
+            <div>2015-Current</div>
+            <div class="fs-7 text-grey-color">Class: ITI Diploma</div>
+            <hr>
+            <h6>Associate Professor <i class="fa fa-check-circle text-success"></i></h6> 
+            <div>Pragati Institue <i class="fa fa-check-circle text-success"></i></div>
+            <div>2015-Current</div>
+            <div class="fs-7 text-grey-color">Class: ITI Diploma</div>
+        </div>
+    </div>
 
-        <div class="card-heading">
-            <a data-toggle="modal" data-target="#myModal2"> Edit</a>
-            <!-- <a class="text-right">+ Personal Details</a> -->
+    <div class="d-flex justify-content-between mt-5">
+        <h6 class="d-inline-block">Education</h6>
+        <a href="#" class="fs-7 text-primary-color"><i class="fa fa-plus pr-1"></i>Education</a>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h6>Bachelor's Degree B.ED (English, Ecnomics)<i class="fa fa-check-circle text-success"></i></h6>
+            <dl>
+                <dt class="fs-7 text-grey-color">Bharitya Shiska Parishad</dt>
+                <dd>2014</dd>
+            </dl>
         </div>
-        <div class="card">
-            <div class="card-body">
-                <div class="right-content">
-                    <div class="lable-title">
-                        First Name
-                    </div>
-                    <p class="card-text">
-                        {{user.firstName}}
-                    </p>
-                </div>
-                <div class="right-content">
-                    <div class="lable-title">
-                        Last Name
-                    </div>
-                    <p class="card-text">
-                        {{user.lastName}}
-                    </p>
-                </div>
-                <div class="right-content">
-                    <div class="lable-title">
-                        Mobile Or Email <img
-                            src="https://www.maxpixel.net/static/photo/1x/To-Do-Check-Ok-Gui-Symbol-Icon-Todo-Agenda-Tick-1976099.png"
-                            style="width: 24px;" />
-                    </div>
-                    <p class="card-text">
-                        {{user.mobileEmail}}
-                    </p>
-                </div>
+    </div>
 
-            </div>
+    <div class="d-flex justify-content-between mt-5">
+        <h6 class="d-inline-block">Certification</h6>
+        <a href="#" class="fs-7 text-primary-color"><i class="fa fa-plus pr-1"></i>Certification</a>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h6>Google IT Automation with Python Professional Certificate</h6>
+            <dl>
+                <dt class="fs-7 text-grey-color">Coursera</dt>
+                <dd>2019</dd>
+            </dl>
         </div>
-        <br>
-        <div class="card-heading">
-            <h6>Education</h6>
-            <a data-toggle="modal" data-target="#education">+ Education</a>
-        </div>
-        <div class="card">
-            <div class="card-body">
-
-            </div>
-        </div>
-
-        <br>
-        <div class="card-heading">
-            <h6>ID Details</h6>
-            <a>+ ID Details</a>
-        </div>
-        <div class="card">
-            <div class="card-body">
-         
-            </div>
-        </div>
-        <br>
-        <div class="card-heading">
-            <h6>Experience</h6>
-            <a>+ Experience</a>
-        </div>
-        <div class="card">
-            <div class="card-body">
-         
-            </div>
-        </div>
-
-        <br>
-        <div class="card-heading">
-            <h6>Certification</h6>
-            <a>+ Certification</a>
-        </div>
-        <div class="card">
-            <div class="card-body">
-
-            </div>
-        </div>
+    </div>
         
 </div>
 
@@ -255,7 +248,4 @@
 
 
 
-<!-- partial -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
 

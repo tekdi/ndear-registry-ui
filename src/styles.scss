@@ -7,9 +7,12 @@
 @import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "https://fonts.googleapis.com/css2?family=Lato:wght@300@500@600&display=swap";
+@import "//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css";
+
 
 
 $primary-color: #443df6;
+$gray-color: #8d9091;
 .primary-color {
     background-color: #efefef!important;
 }
@@ -20,7 +23,15 @@ $primary-color: #443df6;
 
 $primary-color-dark: #000;
 .primary-color-dark {
-    background-color: #8d9091!important;
+    background-color: $gray-color!important;
+}
+
+.text-primary-color{
+    color: $primary-color;
+}
+
+.text-grey-color{
+    color: $gray-color;
 }
 .form-label{
 	color: $primary-color-dark;
@@ -59,10 +70,11 @@ button.calendar, button.calendar:active {
     border-color: #8d9091;
 }
 
-.main-content{
-    text-align: -webkit-center;
-	padding-bottom: 70px;
+.d-flex{
+    display: flex;
 }
-.card{
-	padding-bottom: 70px;
+.flex-justify-between{
+    justify-content: space-between;
 }
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

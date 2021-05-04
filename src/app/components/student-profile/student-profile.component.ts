@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-student-profile',
@@ -9,7 +10,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 export class StudentProfileComponent implements OnInit {
   user;
   form: FormGroup;
-  constructor(fb: FormBuilder) { 
+  constructor(fb: FormBuilder, public router: Router) { 
     // this.form = fb.group({
     //   firstName: this.user.firstName,
     //   lastName: this.user.lastName,

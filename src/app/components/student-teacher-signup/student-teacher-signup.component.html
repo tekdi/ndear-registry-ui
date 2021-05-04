@@ -18,7 +18,7 @@
                     <label class="form-check-label" for="inlineRadio1">Yes</label>
                   </div>
                   
-                  <div class="form-check form-check-inline">
+                  <div class="form-check form-check-inline pl-4">
                     <input
                       mdbRadio
                       class="form-check-input"
@@ -78,7 +78,7 @@
                         </div>
                         <div class="col-md-6 py-3 half" appearance="outline">
                             <label mdbLabel class="form-label fw-bold fs-7">Relationship</label>
-                            <select class="form-control" mdbValidate>
+                            <select class="form-control" formControlName="relation" mdbValidate>
                                 <option value="1" selected>Father</option>
                                 <option value="2">Mother</option>
                                 <option value="3">Brother</option>
@@ -117,7 +117,7 @@
                 <div class="pb-3">
                     <label mdbLabel class="form-label fw-bold fs-7" for="form1">Email Id or Mobile Number</label>
                     <mdb-form-control>
-                        <input mdbInput type="text" id="form1" class="form-control" placeholder="********91" formControlName="mobileEmail" mdbValidate />
+                        <input mdbInput type="text" id="form1" class="form-control"  formControlName="mobileEmail" mdbValidate />
                     </mdb-form-control>
                         <div id="textExample1" class="form-text my-2">
                             Mobile must include '+91'                  

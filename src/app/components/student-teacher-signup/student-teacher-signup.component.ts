@@ -30,6 +30,7 @@ export class StudentTeacherSignupComponent implements OnInit {
   onSubmit(){
     console.log(this.form.value);
     localStorage.setItem('user', JSON.stringify(this.form.value));
+    localStorage.setItem('education','[]');
     this.router.navigate(['verification']);
   }
 

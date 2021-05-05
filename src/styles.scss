@@ -44,11 +44,14 @@ body { margin: 0; font-family: "Lato", sans-serif;color: #000; }
 .fs-7{
 	font-size: 0.8rem;
 }
-.fs-79{
-	font-size: 0.9rem;
+.fs-8{
+	font-size: 0.7rem;
 }
 .w-70{
 	width: 70% !important;
+}
+a{
+    text-decoration: none !important;
 }
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';

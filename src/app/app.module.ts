@@ -18,8 +18,8 @@ import { StudentTeacherLoginComponent } from './components/student-teacher-login
 import { TestComponent } from './test/test.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {SuiModule} from 'ng2-semantic-ui';
-
-
+// import { MaterialDesignFrameworkModule } from 'angular6-json-schema-form';
+import { Bootstrap4FrameworkModule } from 'angular6-json-schema-form'; 
 
 @NgModule({
   declarations: [
@@ -44,7 +44,9 @@ import {SuiModule} from 'ng2-semantic-ui';
     ReactiveFormsModule,
     NgOtpInputModule,
     NgbModule,
-    SuiModule
+    SuiModule,
+    // MaterialDesignFrameworkModule,
+    Bootstrap4FrameworkModule
   ],
   schemas: [],
   entryComponents: [],

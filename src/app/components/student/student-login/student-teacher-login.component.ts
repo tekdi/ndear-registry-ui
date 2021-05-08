@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './student-teacher-login.component.html',
   styleUrls: ['./student-teacher-login.component.css']
 })
-export class StudentTeacherLoginComponent implements OnInit {
+export class StudentLoginComponent implements OnInit {
   form: FormGroup;
   aboveControl = new FormControl(false);
   constructor(fb: FormBuilder, public router: Router) { 
@@ -30,7 +30,7 @@ export class StudentTeacherLoginComponent implements OnInit {
     console.log(this.form.value);
     localStorage.setItem('user', JSON.stringify(this.form.value));
     localStorage.setItem('education','[]');
-    this.router.navigate(['verification']);
+    this.router.navigate(['verification',{'for':'student'}]);
   }
 
   

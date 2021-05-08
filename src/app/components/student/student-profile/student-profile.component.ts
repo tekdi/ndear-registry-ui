@@ -23,6 +23,62 @@ export class StudentProfileComponent implements OnInit {
   startdate: NgbDateStruct;
   enddate: NgbDateStruct;
   working: Boolean = true;
+  schema = {
+    "type": "object",
+    "title": "Comment",
+    "properties": {
+      "degree": {
+        "title": "degree",
+        "type": "string"
+      },
+      "institute": {
+        "title": "institute",
+        "type": "string",
+      },
+      "working": {
+        "title": " I currently studying here",
+        "type": "boolean",
+        "default": true
+      },
+      "startdate": {
+        "title": "Start date",
+        "type": "string",
+        "format": "date"
+      },
+      "enddate": {
+        "title": "End date",
+        "type": "string",
+        "format": "date",
+      },
+      "send": {
+        "title": " Send for verification?",
+        "type": "boolean",
+        "default": true
+      }
+    },
+    "required": [
+      "degree",
+      "working",
+      "startdate"
+    ],
+    "if": {
+      "properties": { "working": false }
+    },
+    "then": {
+      "properties": { "enddate": { "type": "string" } }
+    },
+    "else": {
+      "properties": { "enddate": { "type": "string" } }
+    }
+  };
+  form: [
+    "*",
+    {
+      "type": "submit",
+      "style": "btn-info",
+      "title": "save"
+    }
+  ]
   constructor(fb: FormBuilder, config: NgbInputDatepickerConfig, calendar: NgbCalendar, public router: Router) { 
     // customize default values of datepickers used by this component tree
     config.minDate = {year: 1900, month: 1, day: 1};
@@ -72,10 +128,10 @@ export class StudentProfileComponent implements OnInit {
 
   }
 
-  onEducationSubmit(){
-    console.log(this.educationForm.value);
+  onEducationSubmit(event){
+    console.log(event);
     // this.user.details = this.editform.value
-    this.education.push(this.educationForm.value)
+    this.education.push(event)
     console.log(this.education)
     localStorage.setItem('education', JSON.stringify(this.education));
     this.educationForm.reset();

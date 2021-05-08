@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="d-flex flex-justify-between">
+        <div>
+            <h6 class="d-inline-block">From : registery@ourdomain.com</h6>
+            <br>
+            <h6 class="d-inline-block">To : {{institute.WhoIsAdmin.emailOrMobile}}</h6>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <p>Hi,</p>
+            <br>
+            <br>
+            <p>You have recieved invite form {{user.firstName}} {{user.lastName}} to register for institute {{institute.BasicDetails.instituteName}}.</p>
+            <p>Click below to complete registration of your institute/school.</p>
+            <button [routerLink]="['/institute-profile']" class="btn btn-primary text-end mt-3 fw-bold text-capitalize">Complete Registration</button>
+        </div>
+    </div>
+
+</div>

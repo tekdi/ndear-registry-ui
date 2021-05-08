@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-verification',
@@ -11,11 +11,17 @@ export class VerificationComponent implements OnInit {
   user_id: "paras@gmail.com";
   enabled: boolean = true;
   error: boolean = false;
-  constructor(public router: Router) { }
+  for: any;
+  constructor(public router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     var user = localStorage.getItem('user');
-    this.user_id = JSON.parse(user).mobileEmail
+    this.user_id = JSON.parse(user).mobileEmail;
+    // console.log("route", this.route)
+    this.route.params.subscribe(params => {
+      console.log("route", params)
+      this.for = params['for'];
+    });
   }
   onOtpChange(otp) {
     this.otp = otp;
@@ -28,7 +34,17 @@ export class VerificationComponent implements OnInit {
     if(this.otp == 1234){
       this.error = false
       localStorage.setItem('is_logedin', "true")
-      this.router.navigate(['student-profile']);
+      console.log(this.for)
+      if(this.for == 'student'){
+        this.router.navigate(['student-profile']);
+      }
+      else if(this.for == 'institute'){
+        this.router.navigate(['institute-profile']);
+      }
+      else if(this.for == 'instituteS2'){
+        this.router.navigate(['institute-profile-setup'])
+      }
+      
     }else{
       this.error = true
     }

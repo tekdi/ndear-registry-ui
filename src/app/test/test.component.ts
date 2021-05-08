@@ -1,11 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+// import { HiddenComponent } from 'angular6-json-schema-form/lib/widget-library/hidden.component';
+// import { WidgetLibraryService } from 'angular6-json-schema-form';
+
 
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
   styleUrls: ['./test.component.css']
 })
+
+
+
 export class TestComponent implements OnInit {
+  
   schema = {
     "type": "object",
     "title": "Teacher",
@@ -237,10 +244,11 @@ export class TestComponent implements OnInit {
     },
     "properties": {
       "serialNum": {
-        "type": "integer"
+        "type": "integer",
+        "widget": "hidden"
       },
       "teacherCode": {
-        "type": "string"
+        "type": "string",
       },
       "nationalIdentifier": {
         "type": "string"
@@ -256,7 +264,8 @@ export class TestComponent implements OnInit {
         "$ref": "#/definitions/Date"
       },
       "socialCategory": {
-        "$ref": "#/definitions/SocialCategory"
+        "$ref": "#/definitions/SocialCategory",
+        
       },
       "highestAcademicQualification": {
         "$ref": "#/definitions/AcademicQualification"
@@ -286,7 +295,10 @@ export class TestComponent implements OnInit {
         "$ref": "#/definitions/NonTeachingAssignments"
       },
       
-    }
+    },
+    "hidden": [
+      "serialNum"
+    ]
   };
  
  
@@ -300,7 +312,10 @@ export class TestComponent implements OnInit {
   ]
   constructor() { }
 
+  
+
   ngOnInit(): void {
+    // this.widgetLibrary.registerWidget('hidden', HiddenComponent);
 
   }
   yourOnSubmitFn(data){

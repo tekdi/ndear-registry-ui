@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { StudentTeacherSignupComponent } from './components/student-teacher-signup/student-teacher-signup.component';
+import { StudentSignupComponent } from './components/student/student-signup/student-teacher-signup.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MdbModule } from 'mdb-angular-ui-kit';
 import { HeaderComponent } from './components/header/header.component';
@@ -13,24 +13,34 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VerificationComponent } from './components/verification/verification.component';
 import { NgOtpInputModule } from  'ng-otp-input';
-import { StudentProfileComponent } from './components/student-profile/student-profile.component';
-import { StudentTeacherLoginComponent } from './components/student-teacher-login/student-teacher-login.component';
+import { StudentProfileComponent } from './components/student/student-profile/student-profile.component';
+import { StudentLoginComponent } from './components/student/student-login/student-teacher-login.component';
 import { TestComponent } from './test/test.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {SuiModule} from 'ng2-semantic-ui';
 // import { MaterialDesignFrameworkModule } from 'angular6-json-schema-form';
-import { Bootstrap4FrameworkModule } from 'angular6-json-schema-form'; 
+import { Bootstrap4FrameworkModule } from 'angular6-json-schema-form';
+import { InstituteSignupComponent } from './components/institute/institute-signup/institute-signup.component';
+import { InstituteLoginComponent } from './components/institute/institute-login/institute-login.component';
+import { InstituteProfileComponent } from './components/institute/institute-profile/institute-profile.component';
+import { InstituteProfileSetupComponent } from './components/institute/institute-profile-setup/institute-profile-setup.component';
+import { MailComponent } from './test/mail/mail.component'; 
 
 @NgModule({
   declarations: [
     AppComponent,
+    TestComponent,
     HomeComponent,
-    StudentTeacherSignupComponent,
     HeaderComponent,
     VerificationComponent,
+    StudentSignupComponent,
     StudentProfileComponent,
-    StudentTeacherLoginComponent,
-    TestComponent
+    StudentLoginComponent,
+    InstituteSignupComponent,
+    InstituteLoginComponent,
+    InstituteProfileComponent,
+    InstituteProfileSetupComponent,
+    MailComponent
   ],
   imports: [
     BrowserModule,

@@ -17,6 +17,7 @@ import {
 export class StudentProfileComponent implements OnInit {
   user;
   education;
+  institute
   editUserform: FormGroup;
   educationForm: FormGroup;
   model: NgbDateStruct;
@@ -28,12 +29,13 @@ export class StudentProfileComponent implements OnInit {
     "title": "Comment",
     "properties": {
       "degree": {
-        "title": "degree",
+        "title": "Degree",
         "type": "string"
       },
       "institute": {
-        "title": "institute",
+        "title": "Institute",
         "type": "string",
+        "enum": []
       },
       "working": {
         "title": " I currently studying here",
@@ -43,12 +45,15 @@ export class StudentProfileComponent implements OnInit {
       "startdate": {
         "title": "Start date",
         "type": "string",
-        "format": "date"
+        "format": "date",
+        "widget": {
+          "id": "date"
+        },
       },
       "enddate": {
         "title": "End date",
         "type": "string",
-        "format": "date",
+        "format": "date"
       },
       "send": {
         "title": " Send for verification?",
@@ -58,21 +63,13 @@ export class StudentProfileComponent implements OnInit {
     },
     "required": [
       "degree",
+      "institute",
       "working",
       "startdate"
-    ],
-    "if": {
-      "properties": { "working": false }
-    },
-    "then": {
-      "properties": { "enddate": { "type": "string" } }
-    },
-    "else": {
-      "properties": { "enddate": { "type": "string" } }
-    }
+    ]
   };
   form: [
-    "*",
+    '*',
     {
       "type": "submit",
       "style": "btn-info",
@@ -90,7 +87,7 @@ export class StudentProfileComponent implements OnInit {
     // setting datepicker popup to open above the input
     // config.placement = ['top-left', 'top-right'];
     localStorage.setItem('is_logedin', "true")
-    
+    // localStorage.setItem('admin', 'false')
     this.user = JSON.parse(localStorage.getItem('user'))
     this.editUserform = fb.group({
       firstName: this.user.firstName,
@@ -112,7 +109,8 @@ export class StudentProfileComponent implements OnInit {
       working: [true],
       startdate: [{'day':'','month':'', 'year': ''}],
       enddate: [{'day':'','month':'', 'year': ''}],
-      send: true
+      send: true,
+      attested: false
     });
   }
 
@@ -125,12 +123,21 @@ export class StudentProfileComponent implements OnInit {
   }
 
   onSubmit(){
-
+    
   }
-
+  // onEducationChange(event){
+  //   console.log(event)
+  //   if(!event.working){
+  //     this.schema.properties.enddate.type = 'string'
+  //   }
+  //   else{
+  //     this.schema.properties.enddate.type = 'hidden'
+  //   }
+  // }
   onEducationSubmit(event){
     console.log(event);
     // this.user.details = this.editform.value
+    event.attested = false
     this.education.push(event)
     console.log(this.education)
     localStorage.setItem('education', JSON.stringify(this.education));
@@ -139,7 +146,8 @@ export class StudentProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   
+    this.institute = JSON.parse(localStorage.getItem('institute-detail')).BasicDetails.instituteName;
+    this.schema.properties.institute.enum.push(this.institute)
     
   }
   onWorkingChange(){

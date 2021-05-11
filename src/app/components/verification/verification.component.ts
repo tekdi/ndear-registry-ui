@@ -17,10 +17,14 @@ export class VerificationComponent implements OnInit {
   ngOnInit(): void {
     var user = localStorage.getItem('user');
     this.user_id = JSON.parse(user).mobileEmail;
+    
     // console.log("route", this.route)
     this.route.params.subscribe(params => {
       console.log("route", params)
       this.for = params['for'];
+      if(this.for == 'admin'){
+        this.user_id = JSON.parse(localStorage.getItem('institute-detail')).WhoIsAdmin.emailOrMobile;
+      }
     });
   }
   onOtpChange(otp) {
@@ -43,6 +47,11 @@ export class VerificationComponent implements OnInit {
       }
       else if(this.for == 'instituteS2'){
         this.router.navigate(['institute-profile-setup'])
+      }
+      else if(this.for == 'admin'){
+        localStorage.setItem('admin', "true")
+        this.user_id = JSON.parse(localStorage.getItem('institute-detail')).WhoIsAdmin.emailOrMobile;
+        this.router.navigate(['admin-institute-setup'])
       }
       
     }else{

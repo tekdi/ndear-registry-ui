@@ -25,7 +25,7 @@ export class InstituteSignupComponent implements OnInit {
   onSubmit(){
     console.log(this.form.value);
     localStorage.setItem('user', JSON.stringify(this.form.value));
-    localStorage.setItem('education','[]');
+    // localStorage.setItem('education','[]');
     localStorage.setItem('experience','[]');
     this.router.navigate(['verification',{'for':'instituteS2'}]);
   }

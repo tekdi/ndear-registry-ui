@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./institute-profile.component.css']
 })
 export class InstituteProfileComponent implements OnInit {
-
-  constructor() { }
+  user;
+  ids;
+  attestations;
+  constructor() {  }
 
   ngOnInit(): void {
+    this.user = JSON.parse(localStorage.getItem('institute-detail')).BasicDetails;
+    this.ids = JSON.parse(localStorage.getItem('institute-detail')).IDDetails;
+    this.attestations = JSON.parse(localStorage.getItem('education'));
   }
 
 }

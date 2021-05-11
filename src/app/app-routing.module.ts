@@ -11,6 +11,9 @@ import { InstituteLoginComponent } from './components/institute/institute-login/
 import { InstituteProfileComponent } from './components/institute/institute-profile/institute-profile.component';
 import { InstituteProfileSetupComponent } from './components/institute/institute-profile-setup/institute-profile-setup.component';
 import { MailComponent } from './test/mail/mail.component';
+import { AdminInstituteSetupComponent } from './components/institute/admin/admin-institute-setup/admin-institute-setup.component';
+import { InstituteAttestationsComponent } from './components/institute/institute-attestations/institute-attestations.component';
+import { InstituteAttestationDetailComponent } from './components/institute/institute-attestation-detail/institute-attestation-detail.component';
 
 
 const routes: Routes = [
@@ -25,6 +28,9 @@ const routes: Routes = [
   { path: 'institute-login', component: InstituteLoginComponent },
   { path: 'institute-profile', component: InstituteProfileComponent },
   { path: 'institute-profile-setup', component: InstituteProfileSetupComponent },
+  { path: 'admin-institute-setup', component: AdminInstituteSetupComponent },
+  { path: 'institute-attestation', component: InstituteAttestationsComponent },
+  { path: 'institute-attestation-detail/:id', component: InstituteAttestationDetailComponent },
 
   { path: 'test', component: TestComponent },
   { path: 'mail', component: MailComponent },

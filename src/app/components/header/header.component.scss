@@ -3,6 +3,11 @@
     // font-weight: bold;
 }
 .navbar-light .navbar-nav .nav-link {
+    color: #050505;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.navbar-light .navbar-nav .active{
     color: #443df6;
 }
 .card-body {
@@ -22,14 +27,14 @@
 }
 hr{
     margin: 0;
-    margin-bottom: -14px;
+    margin-bottom: -20px;
     color: #443df6;
     opacity: 1;
     height: 2px;
 }
 
 .nav-tabs .nav-item {
-    margin-bottom: -28px;
+    margin-bottom: -25px;
 }
 
 // .header {

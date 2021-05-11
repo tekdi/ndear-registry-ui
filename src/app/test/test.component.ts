@@ -18,6 +18,8 @@ export class TestComponent implements OnInit {
     "title": "Teacher",
     "definitions": {
       "TeacherGender": {
+        
+        "widget": "hidden",
         "type": "string",
         "enum": [
           "GenderTypeCode-MALE",
@@ -245,7 +247,8 @@ export class TestComponent implements OnInit {
     "properties": {
       "serialNum": {
         "type": "integer",
-        "widget": "hidden"
+        "description": "Serial"
+
       },
       "teacherCode": {
         "type": "string",
@@ -258,6 +261,7 @@ export class TestComponent implements OnInit {
         "title": "Full name"
       },
       "gender": {
+        "widget": "hidden",
         "$ref": "#/definitions/TeacherGender"
       },
       "birthDate": {
@@ -302,12 +306,13 @@ export class TestComponent implements OnInit {
   };
  
  
-  form: [
-    "*",
+  form:[
+    "birthDate",
+    "gender",
     {
       "type": "submit",
       "style": "btn-info",
-      "title": "save"
+      "title": "OK"
     }
   ]
   constructor() { }

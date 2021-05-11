@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-institute-profile-setup',
-  templateUrl: './institute-profile-setup.component.html',
-  styleUrls: ['./institute-profile-setup.component.scss']
+  selector: 'app-admin-institute-setup',
+  templateUrl: './admin-institute-setup.component.html',
+  styleUrls: ['./admin-institute-setup.component.css']
 })
-export class InstituteProfileSetupComponent implements OnInit {
+export class AdminInstituteSetupComponent implements OnInit {
   schema = {
     "type": "object",
     "title": "Teacher",
@@ -16,22 +16,32 @@ export class InstituteProfileSetupComponent implements OnInit {
         "required": [
           "instituteName",
           "Address",
-          "pincode",
-          "instututeType"
+          "pincode"
         ],
         "properties": {
           "instituteName": {
             "type": "string"
           },
           "logoUrl": {
-            "type": "string"
+            "type": "string",
           },
           "Address": {
             "type": "string"
           },
           "pincode": {
             "type": "number"
-          },
+          }
+          
+        }
+      },
+
+      "IDDetails": {
+        "type": "object",
+        "required": [
+          "instututeType",
+          "AffiliationNumber"
+        ],
+        "properties": {
           "instututeType": {
             "type": "string",
             "enum": [
@@ -39,36 +49,13 @@ export class InstituteProfileSetupComponent implements OnInit {
               "Collage",
               "Coaching"
             ]
-          }
-        }
-      },
-
-      "WhatIsYourRole": {
-        "type": "object",
-        "required": [
-          "role",
-          "soul"
-        ],
-        "properties": {
-          "role":{
-            "type": "string",
-            "enum": [
-              "Head of department",
-              "Principle"
-            ]
           },
-          "soul": {
-            "title": " I am Admin",
-            "type": "boolean",
-            "default": true
-          }
-        }
-      },
-      "WhoIsAdmin": {
-        "type": "object",
-        "properties": {
-          "emailOrMobile":{
-            "title": "Email id or Mobile",
+          "AffiliationNumber": {
+            "title": "Affiliation Number",
+            "type": "number"
+          },
+          "ABCIdNUmber": {
+            "title": "ABC ID NUmber",
             "type": "string"
           }
         }
@@ -78,13 +65,9 @@ export class InstituteProfileSetupComponent implements OnInit {
       "BasicDetails": {
         "$ref": "#/definitions/BasicDetails"
       },
-      "WhatIsYourRole": {
-        "title": "What is your role?",
-        "$ref": "#/definitions/WhatIsYourRole"
-      },
-      "WhoIsAdmin": {
-        "title": " Who is the admin of your institute?",
-        "$ref": "#/definitions/WhoIsAdmin"
+      "IDDetails": {
+        "title": "ID Details",
+        "$ref": "#/definitions/IDDetails"
       }
     }
   };
@@ -97,16 +80,16 @@ export class InstituteProfileSetupComponent implements OnInit {
       "title": "save"
     }
   ]
+  data;
   constructor(public router: Router) { }
 
   ngOnInit(): void {
-
+    this.data = JSON.parse(localStorage.getItem('institute-detail'))
   }
   yourOnSubmitFn(data){
     console.log(data)
-    localStorage.setItem('admin-setup',"true");
     localStorage.setItem('institute-detail',JSON.stringify(data));
-    this.router.navigate(['mail']);
+    this.router.navigate(['institute-profile']);
   }
 
 }

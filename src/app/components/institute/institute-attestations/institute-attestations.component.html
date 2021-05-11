@@ -1,0 +1,21 @@
+<app-header></app-header>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Submitted</th>
+            <th scope="col">Name</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+            <ng-template ngFor let-item [ngForOf]="education" let-i="index">
+                <tr *ngIf="!education.attested">
+                    <td>11 May 2021</td>
+                    <td>{{user.firstName}} {{user.lastName}}</td>
+                    <td><a [routerLink]="['/institute-attestation-detail', i]" class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td>
+                </tr>
+            </ng-template>
+        </tbody>
+      </table>
+</div>

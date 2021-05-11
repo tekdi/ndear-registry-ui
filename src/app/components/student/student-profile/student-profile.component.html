@@ -68,7 +68,7 @@
         </div>
     </div>
 
-    <div class="d-flex justify-content-between mt-5">
+    <!-- <div class="d-flex justify-content-between mt-5">
         <h6 ata-toggle="modal" data-target="#addExperience" class="d-inline-block">Experience</h6>
         <a href="#" class="fs-7 text-primary-color"><i class="fa fa-plus pr-1"></i>Experience</a>
     </div>
@@ -89,7 +89,7 @@
             <div>2015-Current</div>
             <div class="fs-7 text-grey-color">Class: ITI Diploma</div>
         </div>
-    </div>
+    </div> -->
 
     <div class="d-flex justify-content-between mt-5">
         <h6 class="d-inline-block">Education</h6>
@@ -100,7 +100,11 @@
         <div class="card-body">
             <ng-template ngFor let-item [ngForOf]="education" let-i="index" >
                 <!-- <a data-toggle="modal" data-target="#editEducation" (click)="modelchange(i)" class="pl-1 fs-7 text-primary-color">edit</a> -->
-                <h6>{{item.degree}}<i class="fa fa-check-circle text-success"></i>
+                <h6>{{item.degree}} 
+                    <!-- <ng-template [ngIf]="item.attested; else pending"> -->
+                        <i [ngClass]="item.attested ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle text-warning'" ></i>
+                    <!-- </ng-template> -->
+                    
                 </h6>
                 
                 <dl>
@@ -387,7 +391,7 @@
 
             <div class="modal-body">
 
-                <json-schema-form [schema]="schema" [layout]="form" framework="bootstrap-4"
+                <json-schema-form [schema]="schema"  [layout]="form" framework="bootstrap-4"
                 (onSubmit)="onEducationSubmit($event)">
             </json-schema-form>
 

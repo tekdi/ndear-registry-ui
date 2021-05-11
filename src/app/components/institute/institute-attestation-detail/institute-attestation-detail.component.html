@@ -1,0 +1,120 @@
+<div class="container">
+    <div class="mt-5">
+        <h5>Claims by {{user.firstName}} {{user.lastName}}</h5>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <dl>
+                <dt class="fs-7 text-grey-color">Degree</dt>
+                <dd>{{educationDetail.degree}}</dd>
+                <dt class="fs-7 text-grey-color"></dt>
+                <dd><button class="btn btn-primary text-end pr-20 fw-bold text-capitalize"><i class="fa fa-check-circle text-success"></i>Approve</button> 
+                    <button class="btn btn-primary text-end fw-bold pr-20 text-capitalize"><i
+                            class="fa fa-exclamation-circle text-warning"></i>Deny</button></dd>
+            </dl>
+            <dl>
+                <dd>{{educationDetail.institute}}
+                </dd>
+            </dl>
+            <dl>
+                <dd *ngIf="!educationDetail.working; else elseBlock">{{educationDetail.startdate}} -
+                    {{educationDetail.enddate}}</dd>
+                <ng-template #elseBlock>
+                    <dd>{{educationDetail.startdate}} - Current</dd>
+                </ng-template>
+            </dl>
+        </div>
+    </div>
+    <hr>
+    <!-- Preview Profile Modal -->
+    <div class="mt-5">
+        <h5>Public Profile of {{user.firstName}} {{user.lastName}}</h5>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <dl>
+                <dt class="fs-7 text-grey-color">First Name</dt>
+                <dd>{{user.firstName}}</dd>
+                <dt class="fs-7 text-grey-color">Last Name</dt>
+                <dd>{{user.lastName}}</dd>
+            </dl>
+            <ng-template [ngIf]="user.gender || user.dob">
+                <dl>
+                    <ng-template [ngIf]="user.gender">
+                        <dt class="fs-7 text-grey-color">Gender</dt>
+                        <dd>{{user.gender}}</dd>
+                    </ng-template>
+                    <ng-template [ngIf]="user.dob">
+                        <dt class="fs-7 text-grey-color">Date of Birth</dt>
+                        <dd>{{user.dob.day}}/{{user.dob.month}}/{{user.dob.year}}
+                            <i class="fa fa-check-circle text-success"></i>
+                        </dd>
+                    </ng-template>
+                </dl>
+            </ng-template>
+            <dl>
+                <dt class="fs-7 text-grey-color">Email/Mobile</dt>
+                <dd>{{user.mobileEmail}}
+                    <i class="fa fa-check-circle text-success"></i>
+                </dd>
+            </dl>
+            <ng-template [ngIf]="user.address">
+                <dl>
+                    <dt class="fs-7 text-grey-color">Address</dt>
+                    <dd>{{user.address}}</dd>
+                </dl>
+            </ng-template>
+        </div>
+    </div>
+    <div class="mt-5">
+        <h6>ID Details</h6>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <dl>
+                <dt class="fs-7 text-grey-color">Aadhar Number</dt>
+                <dd>*******91 <i class="fa fa-check-circle text-success"></i></dd>
+                <dt class="fs-7 text-grey-color">PAN</dt>
+                <dd>*******91 <i class="fa fa-check-circle text-success"></i></dd>
+            </dl>
+            <dl>
+                <dt class="fs-7 text-grey-color">Professional License</dt>
+                <dd>*******91 <i class="fa fa-check-circle text-success"></i></dd>
+            </dl>
+        </div>
+    </div>
+
+
+    <h6 class="mt-5">Education</h6>
+    <div class="card">
+        <ng-template ngFor let-item [ngForOf]="education">
+            <div class="card-body">
+                <h6>{{item.degree}}<i class="fa fa-check-circle text-success"></i></h6>
+                <dl>
+                    <dt class="fs-7 text-grey-color">{{item.institute}}</dt>
+
+                    <dd *ngIf="!item.working; else elseBlock">
+                        {{item.startdate}} -
+                        {{item.enddate}}</dd>
+                    <ng-template #elseBlock>
+                        <dd>{{item.startdate}}</dd>
+                    </ng-template>
+                </dl>
+            </div>
+        </ng-template>
+    </div>
+
+    <h6 class="mt-5">Certification</h6>
+    <div class="card">
+        <div class="card-body">
+            <h6>Google IT Automation with Python Professional Certificate</h6>
+            <dl>
+                <dt class="fs-7 text-grey-color">Coursera</dt>
+                <dd>2019</dd>
+            </dl>
+        </div>
+    </div>
+
+
+</div>

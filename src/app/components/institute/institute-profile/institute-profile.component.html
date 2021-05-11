@@ -1,1 +1,55 @@
-<p>institute-profile works!</p>
+<app-header></app-header>
+<div class="container">
+    <div class="d-flex flex-justify-between">
+        <div>
+            <h6 class="d-inline-block">Details</h6>
+            <!-- <a data-toggle="modal" data-target="#editProfile" class="pl-1 fs-7 text-primary-color">edit</a> -->
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <dl>
+                <dt class="fs-7 text-grey-color">Institute Name</dt>
+                <dd>{{user.instituteName}}</dd>
+                <ng-template [ngIf]="user.logoUrl">
+                    
+                    <dd><img style="width: 200px;" src="{{user.logoUrl}}"></dd>
+                </ng-template>
+                
+            </dl>
+            <dl>
+                <dt class="fs-7 text-grey-color">Address</dt>
+                <dd>{{user.Address}}</dd>
+            </dl>
+            <dl>
+                <dt class="fs-7 text-grey-color">Pincode</dt>
+                <dd>{{user.pincode}}
+                    <!-- <i class="fa fa-check-circle text-success"></i> -->
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="d-flex flex-justify-between mt-5">
+        <div>
+            <h6 class="d-inline-block">ID Details</h6>
+            <!-- <a class="pl-1 fs-7 text-primary-color">edit</a> -->
+        </div>
+        <!-- <a href="#" class="fs-7 text-primary-color"><i class="fa fa-plus pr-1"></i>ID</a> -->
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <dl>
+                <dt class="fs-7 text-grey-color">Institute Type</dt>
+                <dd>{{ids.instututeType}} 
+                    <!-- <i class="fa fa-check-circle text-success"></i></dd> -->
+                <dt class="fs-7 text-grey-color">Affiliation Number</dt>
+                <dd>{{ids.AffiliationNumber}}
+                    <i class="fa fa-check-circle text-success"></i></dd>
+            </dl>
+            <dl>
+                <dt class="fs-7 text-grey-color">ABC ID Number</dt>
+                <dd>{{ids.ABCIdNUmber}} <i class="fa fa-check-circle text-success"></i></dd>
+            </dl>
+        </div>
+    </div>
+</div>

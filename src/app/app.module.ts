@@ -24,7 +24,15 @@ import { InstituteSignupComponent } from './components/institute/institute-signu
 import { InstituteLoginComponent } from './components/institute/institute-login/institute-login.component';
 import { InstituteProfileComponent } from './components/institute/institute-profile/institute-profile.component';
 import { InstituteProfileSetupComponent } from './components/institute/institute-profile-setup/institute-profile-setup.component';
-import { MailComponent } from './test/mail/mail.component'; 
+import { MailComponent } from './test/mail/mail.component';
+import { AdminInstituteSetupComponent } from './components/institute/admin/admin-institute-setup/admin-institute-setup.component'; 
+import {
+  SchemaFormModule,
+  WidgetRegistry,
+  DefaultWidgetRegistry,
+} from "ngx-schema-form";
+import { InstituteAttestationsComponent } from './components/institute/institute-attestations/institute-attestations.component';
+import { InstituteAttestationDetailComponent } from './components/institute/institute-attestation-detail/institute-attestation-detail.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +48,10 @@ import { MailComponent } from './test/mail/mail.component';
     InstituteLoginComponent,
     InstituteProfileComponent,
     InstituteProfileSetupComponent,
-    MailComponent
+    MailComponent,
+    AdminInstituteSetupComponent,
+    InstituteAttestationsComponent,
+    InstituteAttestationDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -56,11 +67,13 @@ import { MailComponent } from './test/mail/mail.component';
     NgbModule,
     SuiModule,
     // MaterialDesignFrameworkModule,
-    Bootstrap4FrameworkModule
+    Bootstrap4FrameworkModule,
+    SchemaFormModule.forRoot()
   ],
   schemas: [],
   entryComponents: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [{ provide: WidgetRegistry, useClass: DefaultWidgetRegistry }]
 })
 export class AppModule {
 }

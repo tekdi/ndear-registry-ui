@@ -7,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+    localStorage.setItem('is_logedin', 'false')
+  }
 
   ngOnInit(): void {
-    localStorage.clear()
+    // localStorage.clear()
     // if(Boolean(localStorage.getItem('is_logedin'))){
     //   localStorage.clear()
     //   localStorage.setItem('is_logedin', "false")

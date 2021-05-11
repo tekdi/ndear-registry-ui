@@ -47,14 +47,14 @@ export class StudentSignupComponent implements OnInit {
           gaurdianFirstNameControl.setValidators([Validators.required]);
           gaurdianLastNameControl.setValidators([Validators.required]);
         }
-        if (above){
-          relationControl.setErrors({ 'incorrect': true});
-          relationControl.clearValidators();
-          gaurdianFirstNameControl.setErrors({ 'incorrect': true});
-          gaurdianFirstNameControl.clearValidators();
-          gaurdianLastNameControl.setErrors({ 'incorrect': true});
-          gaurdianLastNameControl.clearValidators();
-        }
+        // if (above){
+        //   relationControl.setErrors({ 'incorrect': true});
+        //   relationControl.clearValidators();
+        //   gaurdianFirstNameControl.setErrors({ 'incorrect': true});
+        //   gaurdianFirstNameControl.clearValidators();
+        //   gaurdianLastNameControl.setErrors({ 'incorrect': true});
+        //   gaurdianLastNameControl.clearValidators();
+        // }
       });
   }
 

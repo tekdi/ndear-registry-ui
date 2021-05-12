@@ -28,19 +28,10 @@ export class StudentProfileComponent implements OnInit {
     "type": "object",
     "title": "Comment",
     "properties": {
-      "degree": {
-        "title": "Degree",
-        "type": "string"
-      },
       "institute": {
         "title": "Institute",
         "type": "string",
         "enum": []
-      },
-      "working": {
-        "title": " I currently studying here",
-        "type": "boolean",
-        "default": true
       },
       "startdate": {
         "title": "Start date",
@@ -62,9 +53,7 @@ export class StudentProfileComponent implements OnInit {
       }
     },
     "required": [
-      "degree",
       "institute",
-      "working",
       "startdate"
     ]
   };
@@ -104,7 +93,6 @@ export class StudentProfileComponent implements OnInit {
     
     this.education = JSON.parse(localStorage.getItem('education'))
     this.educationForm = fb.group({
-      degree: ['', Validators.required],
       institute: ['', Validators.required],
       working: [true],
       startdate: [{'day':'','month':'', 'year': ''}],

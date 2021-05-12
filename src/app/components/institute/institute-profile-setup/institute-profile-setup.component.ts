@@ -16,14 +16,10 @@ export class InstituteProfileSetupComponent implements OnInit {
         "required": [
           "instituteName",
           "Address",
-          "pincode",
-          "instututeType"
+          "pincode"
         ],
         "properties": {
           "instituteName": {
-            "type": "string"
-          },
-          "logoUrl": {
             "type": "string"
           },
           "Address": {
@@ -32,35 +28,22 @@ export class InstituteProfileSetupComponent implements OnInit {
           "pincode": {
             "type": "number"
           },
-          "instututeType": {
-            "type": "string",
-            "enum": [
-              "School",
-              "Collage",
-              "Coaching"
-            ]
-          }
+          
         }
       },
 
       "WhatIsYourRole": {
         "type": "object",
         "required": [
-          "role",
-          "soul"
+          "role"
         ],
         "properties": {
           "role":{
             "type": "string",
             "enum": [
               "Head of department",
-              "Principle"
+              "Principal"
             ]
-          },
-          "soul": {
-            "title": " I am Admin",
-            "type": "boolean",
-            "default": true
           }
         }
       },

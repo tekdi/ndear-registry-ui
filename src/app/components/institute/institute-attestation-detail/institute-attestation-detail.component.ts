@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-institute-attestation-detail',
@@ -11,7 +11,7 @@ export class InstituteAttestationDetailComponent implements OnInit {
   education;
   educationDetail;
   id;
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, public router: Router) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -22,6 +22,13 @@ export class InstituteAttestationDetailComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('user'));
     this.educationDetail = JSON.parse(localStorage.getItem('education'))[this.id];
     this.education = JSON.parse(localStorage.getItem('education'));
+  }
+
+  onAttestApprove(){
+    this.educationDetail.attested = true;
+    this.education[this.id] = this.educationDetail;
+    localStorage.setItem('education', JSON.stringify(this.education))
+    this.router.navigate(['institute-attestation']);
   }
 
 }

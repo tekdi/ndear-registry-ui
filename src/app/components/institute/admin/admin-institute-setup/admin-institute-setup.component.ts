@@ -16,21 +16,106 @@ export class AdminInstituteSetupComponent implements OnInit {
         "required": [
           "instituteName",
           "Address",
-          "pincode"
+          "pincode",
+          "Village",
+          "InstitueDistrict",
+          "InstitueState",
+          "ContactNumber",
+          "Email",
+          "instututeType",
+          "SchoolType",
+          "ManagementOfInstitute",
+          "YearOfEstablishmentOfInstitute"
         ],
         "properties": {
           "instituteName": {
             "type": "string"
           },
           "logoUrl": {
-            "type": "string",
+            "type": "string"
           },
           "Address": {
             "type": "string"
           },
           "pincode": {
             "type": "number"
-          }
+          },
+          "Village": {
+            "type": "string"
+          },
+          "InstitueDistrict": {
+            "type": "string"
+          },
+          "InstitueState": {
+            "type": "string"
+          },
+          "ContactNumber": {
+            "type": "number"
+          },
+          "Email": {
+            "type": "string"
+          },
+          "Website": {
+            "type": "string"
+          },
+          "instututeType": {
+            "title": "Institute Category",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Primary only with grades 1 to 5",
+                "Upper Primary with grades 1 to 8",
+                "Higher Secondary with grades 1 to 12",
+                "Upper Primary only with grades 6 to 8",
+                "Higher Secondary with grades 6 to 12",
+                "Secondary/Sr. Sec. with grades 1 to 10",
+                "Secondary/Sr. Sec. with grades 6 to 10",
+                "Secondary/Sr. Sec. only with grades 9 & 10",
+                "Higher Secondary with grades 9 to 12",
+                "Hr. Sec. /Jr. College only with grades 11 & 12"
+              ]
+            }
+            
+          },
+          "SchoolType": {
+            "title": "School Type",
+            "type": "string",
+            "enum": [
+              "Boys",
+              "Girls",
+              "Co-ed"
+            ]
+          },
+          "ManagementOfInstitute": {
+            "title": "Management Of Institute",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Department of Education",
+                "Tribal Welfare Department",
+                "Local Body",
+                "Government Aided",
+                "Private Unaided (Recognized)",
+                "Other Govt. managed schools",
+                "Unrecognized",
+                "Social Welfare Department",
+                "Other Central Govt. Schools",
+                "Ministry of Labour",
+                "Kendriya Vidyalaya / Central School",
+                "Jawahar Navodaya Vidyalaya",
+                "Sainik School",
+                "Railway School",
+                "Central Tibetan School",
+                "Madarsa Recognized (by Wakf board /Madarsa)",
+                "Madarsa Unrecognized",
+              ]
+            }
+          },
+          "YearOfEstablishmentOfInstitute": {
+            "type": "number"
+          },
           
         }
       },
@@ -38,25 +123,12 @@ export class AdminInstituteSetupComponent implements OnInit {
       "IDDetails": {
         "type": "object",
         "required": [
-          "instututeType",
           "AffiliationNumber"
         ],
         "properties": {
-          "instututeType": {
-            "type": "string",
-            "enum": [
-              "School",
-              "Collage",
-              "Coaching"
-            ]
-          },
           "AffiliationNumber": {
             "title": "Affiliation Number",
             "type": "number"
-          },
-          "ABCIdNUmber": {
-            "title": "ABC ID NUmber",
-            "type": "string"
           }
         }
       }

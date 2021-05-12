@@ -8,11 +8,13 @@ import { Component, OnInit } from '@angular/core';
 export class InstituteAttestationsComponent implements OnInit {
   education;
   user;
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor() { 
     this.user = JSON.parse(localStorage.getItem('user'));
     this.education = JSON.parse(localStorage.getItem('education'));
+  }
+
+  ngOnInit(): void {
+   
   }
 
 }

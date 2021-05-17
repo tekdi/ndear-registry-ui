@@ -12,6 +12,7 @@ export class VerificationComponent implements OnInit {
   enabled: boolean = true;
   error: boolean = false;
   for: any;
+  header1: string = 'plain';
   constructor(public router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -24,6 +25,9 @@ export class VerificationComponent implements OnInit {
       this.for = params['for'];
       if(this.for == 'admin'){
         this.user_id = JSON.parse(localStorage.getItem('institute-detail')).WhoIsAdmin.emailOrMobile;
+      }
+      if(this.for == 'teacher'){
+        this.user_id = JSON.parse(localStorage.getItem('teachers'))[0].email;
       }
     });
   }
@@ -41,6 +45,9 @@ export class VerificationComponent implements OnInit {
       console.log(this.for)
       if(this.for == 'student'){
         this.router.navigate(['student-profile']);
+      }
+      if(this.for == 'teacher'){
+        this.router.navigate(['teacher-profile']);
       }
       else if(this.for == 'institute'){
         this.router.navigate(['institute-profile']);

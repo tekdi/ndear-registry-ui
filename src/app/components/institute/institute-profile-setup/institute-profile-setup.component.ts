@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./institute-profile-setup.component.scss']
 })
 export class InstituteProfileSetupComponent implements OnInit {
+  header1: string = 'plain';
   schema = {
     "type": "object",
     "title": "Teacher",

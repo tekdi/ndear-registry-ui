@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header [headerFor]='header1' [tab]='tab'></app-header>
 <div class="container">
     <table class="table table-striped">
         <thead>
@@ -12,7 +12,7 @@
             <ng-template ngFor let-item [ngForOf]="education" let-i="index">
                 <tr *ngIf="!item.attested">
                     <td>11 May 2021</td>
-                    <td>{{user.firstName}} {{user.lastName}}</td>
+                    <td>{{user.fullName}}</td>
                     <td><a [routerLink]="['/institute-attestation-detail', i]" class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td>
                 </tr>
             </ng-template>

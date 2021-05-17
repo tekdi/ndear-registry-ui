@@ -15,6 +15,8 @@ import {
   providers: [NgbInputDatepickerConfig]
 })
 export class StudentProfileComponent implements OnInit {
+  header1: string = 'student';
+  tab: string = 'profile';
   user;
   education;
   institute
@@ -79,10 +81,8 @@ export class StudentProfileComponent implements OnInit {
     // localStorage.setItem('admin', 'false')
     this.user = JSON.parse(localStorage.getItem('user'))
     this.editUserform = fb.group({
-      firstName: this.user.firstName,
-      lastName: this.user.lastName,
-      gaurdianFirstName: this.user.gaurdianFirstName,
-      gaurdianLastName: this.user.gaurdianLastName,
+      fullName: this.user.fullName,
+      gaurdianfullName: this.user.gaurdianfullName,
       relation: this.user.relation,
       mobileEmail: this.user.mobileEmail,
       accepted: true,
@@ -134,10 +134,12 @@ export class StudentProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.institute = JSON.parse(localStorage.getItem('institute-detail')).BasicDetails.instituteName;
-    this.schema.properties.institute.enum.push(this.institute)
-    
+    if(localStorage.getItem('institute-detail')){
+      this.institute = JSON.parse(localStorage.getItem('institute-detail')).BasicDetails.instituteName;
+      this.schema.properties.institute.enum.push(this.institute)
+    } 
   }
+
   onWorkingChange(){
     console.log(this.educationForm.value.working)
     this.working = this.educationForm.value.working;

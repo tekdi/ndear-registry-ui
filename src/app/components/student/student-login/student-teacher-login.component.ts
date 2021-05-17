@@ -10,13 +10,12 @@ import { Router } from '@angular/router';
 export class StudentLoginComponent implements OnInit {
   form: FormGroup;
   aboveControl = new FormControl(false);
+  header1: string = 'plain';
   constructor(fb: FormBuilder, public router: Router) { 
     this.form = fb.group({
       above: this.aboveControl,
-      firstName: ['Paras'],
-      lastName: ['Patel'],
-      gaurdianFirstName: [''],
-      gaurdianLastName: [''],
+      fullName: ['Paras Patel'],
+      gaurdianfullName: [''],
       relation: [''],
       mobileEmail: ['', Validators.required],
       accepted: true

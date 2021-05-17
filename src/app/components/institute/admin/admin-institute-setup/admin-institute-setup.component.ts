@@ -153,6 +153,7 @@ export class AdminInstituteSetupComponent implements OnInit {
     }
   ]
   data;
+  header1: string = 'plain';
   constructor(public router: Router) { }
 
   ngOnInit(): void {

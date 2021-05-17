@@ -10,13 +10,12 @@ import { Router } from '@angular/router';
 export class StudentSignupComponent implements OnInit {
   form: FormGroup;
   aboveControl = new FormControl("true");
+  header1: string = 'plain';
   constructor(fb: FormBuilder, public router: Router) { 
     this.form = fb.group({
       above: this.aboveControl,
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      gaurdianFirstName: [''],
-      gaurdianLastName: [''],
+      fullName: ['', Validators.required],
+      gaurdianfullName: [''],
       relation: [''],
       mobileEmail: ['', Validators.required],
       accepted: false
@@ -36,24 +35,20 @@ export class StudentSignupComponent implements OnInit {
 
   setUserCategoryValidators() {
     const relationControl = this.form.get('relation');
-    const gaurdianFirstNameControl = this.form.get('gaurdianFirstName');
-    const gaurdianLastNameControl = this.form.get('gaurdianLastName');
+    const gaurdianfullNameControl = this.form.get('gaurdianfullName');
 
     this.form.get('above').valueChanges
       .subscribe(above => {
         console.log(above)
         if (!above) {
           relationControl.setValidators([Validators.required]);
-          gaurdianFirstNameControl.setValidators([Validators.required]);
-          gaurdianLastNameControl.setValidators([Validators.required]);
+          gaurdianfullNameControl.setValidators([Validators.required]);
         }
         // if (above){
         //   relationControl.setErrors({ 'incorrect': true});
         //   relationControl.clearValidators();
-        //   gaurdianFirstNameControl.setErrors({ 'incorrect': true});
-        //   gaurdianFirstNameControl.clearValidators();
-        //   gaurdianLastNameControl.setErrors({ 'incorrect': true});
-        //   gaurdianLastNameControl.clearValidators();
+        //   gaurdianfullNameControl.setErrors({ 'incorrect': true});
+        //   gaurdianfullNameControl.clearValidators();
         // }
       });
   }

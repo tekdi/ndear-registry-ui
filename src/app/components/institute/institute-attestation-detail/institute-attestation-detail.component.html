@@ -1,6 +1,6 @@
 <div class="container">
     <div class="mt-5">
-        <h5>Claims by {{user.firstName}} {{user.lastName}}</h5>
+        <h5>Claims by {{user.fullName}}</h5>
     </div>
 
     <div class="card">
@@ -25,15 +25,13 @@
     <hr>
     <!-- Preview Profile Modal -->
     <div class="mt-5">
-        <h5>Public Profile of {{user.firstName}} {{user.lastName}}</h5>
+        <h5>Public Profile of {{user.fullName}}</h5>
     </div>
     <div class="card">
         <div class="card-body">
             <dl>
-                <dt class="fs-7 text-grey-color">First Name</dt>
-                <dd>{{user.firstName}}</dd>
-                <dt class="fs-7 text-grey-color">Last Name</dt>
-                <dd>{{user.lastName}}</dd>
+                <dt class="fs-7 text-grey-color">Full Name</dt>
+                <dd>{{user.fullName}}</dd>
             </dl>
             <ng-template [ngIf]="user.gender || user.dob">
                 <dl>

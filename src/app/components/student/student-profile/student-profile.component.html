@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header [headerFor]='header1' [tab]='tab'></app-header>
 <div class="container">
     <div class="d-flex flex-justify-between">
         <div>
@@ -13,10 +13,8 @@
     <div class="card">
         <div class="card-body">
             <dl>
-                <dt class="fs-7 text-grey-color">First Name</dt>
-                <dd>{{user.firstName}}</dd>
-                <dt class="fs-7 text-grey-color">Last Name</dt>
-                <dd>{{user.lastName}}</dd>
+                <dt class="fs-7 text-grey-color">Full Name</dt>
+                <dd>{{user.fullName}}</dd>
             </dl>
             <ng-template [ngIf]="user.gender || user.dob">
                 <dl>
@@ -220,20 +218,14 @@
                 <form class="example-container" [formGroup]="editUserform">
                     <div class="row">
                         <div class="col-md-12">
-                            <label mdbLabel class="form-label fw-normal fs-7" for="firstName">First Name</label>
+                            <label mdbLabel class="form-label fw-normal fs-7" for="fullName">Full Name</label>
                             <mdb-form-control>
-                                <input mdbInput type="text" id="firstName" class="form-control" mdbValidate
-                                    placeholder="" formControlName="firstName" />
+                                <input mdbInput type="text" id="fullName" class="form-control" mdbValidate
+                                    placeholder="" formControlName="fullName" />
                             </mdb-form-control>
 
                         </div>
-                        <div class="col-md-12">
-                            <label mdbLabel class="form-label fw-normal fs-7" for="lastName">Last Name</label>
-                            <mdb-form-control>
-                                <input mdbInput type="text" id="lastName" class="form-control" mdbValidate
-                                    placeholder="" formControlName="lastName" />
-                            </mdb-form-control>
-                        </div>
+
                         <div class="col-md-12">
                             <label mdbLabel class="form-label fw-normal fs-7" for="form2">EmailID</label>
                             <mdb-form-control>
@@ -268,10 +260,9 @@
                 <div class="card">
                     <div class="card-body">
                         <dl>
-                            <dt class="fs-7 text-grey-color">First Name</dt>
-                            <dd>{{user.firstName}}</dd>
-                            <dt class="fs-7 text-grey-color">Last Name</dt>
-                            <dd>{{user.lastName}}</dd>
+                            <dt class="fs-7 text-grey-color">Full Name</dt>
+                            <dd>{{user.fullName}}</dd>
+                        
                         </dl>
                         <ng-template [ngIf]="user.gender || user.dob">
                             <dl>

@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
+  header1: string = 'main';
   constructor() { 
     localStorage.setItem('is_logedin', 'false')
   }

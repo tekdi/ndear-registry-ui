@@ -66,28 +66,25 @@
         </div>
     </div>
 
-    <!-- <div class="d-flex justify-content-between mt-5">
-        <h6 ata-toggle="modal" data-target="#addExperience" class="d-inline-block">Experience</h6>
-        <a href="#" class="fs-7 text-primary-color"><i class="fa fa-plus pr-1"></i>Experience</a>
+    <div class="d-flex justify-content-between mt-5">
+        <h6  class="d-inline-block">Experience</h6>
+        <a data-toggle="modal" data-target="#addExperience" class="fs-7 text-primary-color"><i class="fa fa-plus pr-1"></i>Experience</a>
     </div>
     <div class="card">
-        <div class="card-body">
-            <h6>Associate Professor <i class="fa fa-check-circle text-success"></i></h6>
-            <div>Pragati Institue <i class="fa fa-check-circle text-success"></i></div>
-            <div>2015-Current</div>
-            <div class="fs-7 text-grey-color">Class: ITI Diploma</div>
-            <hr>
-            <h6>Associate Professor <i class="fa fa-check-circle text-success"></i></h6>
-            <div>Pragati Institue <i class="fa fa-check-circle text-success"></i></div>
-            <div>2015-Current</div>
-            <div class="fs-7 text-grey-color">Class: ITI Diploma</div>
-            <hr>
-            <h6>Associate Professor <i class="fa fa-check-circle text-success"></i></h6>
-            <div>Pragati Institue <i class="fa fa-check-circle text-success"></i></div>
-            <div>2015-Current</div>
-            <div class="fs-7 text-grey-color">Class: ITI Diploma</div>
-        </div>
-    </div> -->
+        <ng-template ngFor let-item [ngForOf]="experience">
+            <div class="card-body">
+                <h6>Associate Professor <i class="fa fa-check-circle text-success"></i></h6>
+                <div>{{item.institute}} <i class="fa fa-check-circle text-success"></i></div>
+                <div *ngIf="!item.working; else elseBlock1">{{item.startdate}} -
+                    {{item.enddate}}</div>
+                <ng-template #elseBlock1>
+                    <div>{{item.startdate}} - Current</div>
+                </ng-template>
+                <div class="fs-7 text-grey-color">Class: ITI Diploma</div>
+                <hr>
+            </div>
+        </ng-template>
+    </div>
 
     <div class="d-flex justify-content-between mt-5">
         <h6 class="d-inline-block">Education</h6>
@@ -98,16 +95,12 @@
         <div class="card-body">
             <ng-template ngFor let-item [ngForOf]="education" let-i="index" >
                 <!-- <a data-toggle="modal" data-target="#editEducation" (click)="modelchange(i)" class="pl-1 fs-7 text-primary-color">edit</a> -->
-                <h6>{{item.institute}}
-                        <img *ngIf="item.attested == 'pending'; else icons" style="width: 16px;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
-                    <ng-template #icons>
-                        <i [ngClass]="item.attested == true ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle text-warning'" ></i>
-                    </ng-template>
-                    
+                <h6>{{item.institute}} 
+                    <i [ngClass]="item.attested ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle text-warning'" ></i>
                 </h6>
                 
                 <dl>
-                    <dt class="fs-7 text-grey-color">{{item.grade}}</dt>
+                    <!-- <dt class="fs-7 text-grey-color">{{item.institute}}</dt> -->
                     
                     <dd *ngIf="item.enddate; else elseBlock">{{item.startdate}} -
                         {{item.enddate}}</dd>
@@ -314,25 +307,22 @@
                     </div> -->
                 </div>
 
-                <!-- <h6 class="mt-5">Experience</h6>
+                <h6 class="mt-5">Experience</h6>
                 <div class="card">
-                    <div class="card-body">
-                        <h6>Associate Professor <i class="fa fa-check-circle text-success"></i></h6>
-                        <div>Pragati Institue <i class="fa fa-check-circle text-success"></i></div>
-                        <div>2015-Current</div>
-                        <div class="fs-7 text-grey-color">Class: ITI Diploma</div>
-                        <hr>
-                        <h6>Associate Professor <i class="fa fa-check-circle text-success"></i></h6>
-                        <div>Pragati Institue <i class="fa fa-check-circle text-success"></i></div>
-                        <div>2015-Current</div>
-                        <div class="fs-7 text-grey-color">Class: ITI Diploma</div>
-                        <hr>
-                        <h6>Associate Professor <i class="fa fa-check-circle text-success"></i></h6>
-                        <div>Pragati Institue <i class="fa fa-check-circle text-success"></i></div>
-                        <div>2015-Current</div>
-                        <div class="fs-7 text-grey-color">Class: ITI Diploma</div>
-                    </div>
-                </div> -->
+                    <ng-template ngFor let-item [ngForOf]="experience">
+                        <div class="card-body">
+                            <h6>Associate Professor <i [ngClass]="item.attested ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle text-warning'" ></i></h6>
+                            <div>{{item.institute}} <i [ngClass]="item.attested ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle text-warning'" ></i></div>
+                            <div *ngIf="!item.working; else elseBlock1">{{item.startdate}} -
+                                {{item.enddate}}</div>
+                            <ng-template #elseBlock1>
+                                <div>{{item.startdate}} - Current</div>
+                            </ng-template>
+                            <div class="fs-7 text-grey-color">Class: ITI Diploma</div>
+                            <hr>
+                        </div>
+                    </ng-template>
+                </div>
 
                 <h6 class="mt-5">Education</h6>
                 <div class="card">
@@ -463,19 +453,91 @@
 </div>
 
 <!-- Add Experience -->
-<div class="modal right fade" id="addEducation" tabindex="-1" role="dialog" aria-labelledby="AddEducation">
+<div class="modal right fade" id="addExperience" tabindex="-1" role="dialog" aria-labelledby="AddExperience">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel2">Add Education</h5>
+                <h5 class="modal-title" id="myModalLabel2">Add Experience</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
             </div>
 
             <div class="modal-body">
 
-              
+                <json-schema-form [schema]="schema"  [layout]="form" framework="bootstrap-4"
+                (onSubmit)="onExperienceSubmit($event)">
+            </json-schema-form>
+
+                <!-- <form class="example-container" [formGroup]="educationForm">
+                    <div class="pb-3">
+                        <label mdbLabel class="form-label fw-bold fs-7" for="form1">Degree</label>
+                        <mdb-form-control>
+                            <input mdbInput type="text" id="form1" class="form-control" formControlName="degree"
+                                mdbValidate />
+                        </mdb-form-control>
+
+                    </div>
+
+                    <div class="pb-3">
+                        <label mdbLabel class="form-label fw-bold fs-7" for="form1">Institute</label>
+                        <mdb-form-control>
+                            <input mdbInput type="text" id="form1" class="form-control" formControlName="institute"
+                                mdbValidate />
+                        </mdb-form-control>
+
+                    </div>
+                    <div class="form-check">
+                        <input mdbCheckbox class="form-check-input" type="checkbox" value=true formControlName="working"
+                            mdbValidate (change)="onWorkingChange()" />
+                        <label class="form-check-label">
+                            I currently studying here
+                        </label>
+                    </div>
+
+                    <div class="form-group half">
+                        <label mdbLabel class="form-label fw-normal fs-7">Start Date</label>
+                        <div class="input-group">
+
+                            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="startdate"
+                                ngbDatepicker #startdate="ngbDatepicker">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary calendar" (click)="startdate.toggle()"
+                                    type="button"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-template [ngIf]="!working">
+                        <div class="form-group half">
+                            <label mdbLabel class="form-label fw-normal fs-7">End Date</label>
+                            <div class="input-group">
+
+                                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="enddate"
+                                    ngbDatepicker #enddate="ngbDatepicker">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="enddate.toggle()"
+                                        type="button"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <div class="form-check">
+                        <input mdbCheckbox class="form-check-input" type="checkbox" value="" formControlName="send"
+                            mdbValidate />
+                        <label class="form-check-label">
+                            Send for verification
+                        </label>
+                    </div>
+
+
+
+                    <button class="btn btn-primary text-end mt-3 fw-bold text-capitalize mr-2" data-dismiss="modal">Save
+                        to
+                        draft</button>
+                    <button type="submit" (click)="onEducationSubmit()"
+                        class="btn btn-primary text-end mt-3 fw-bold text-capitalize" data-dismiss="modal">Save</button>
+                </form> -->
             </div>
 
         </div>

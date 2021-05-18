@@ -7,18 +7,18 @@ import {
   NgbDateStruct,
   NgbInputDatepickerConfig
 } from '@ng-bootstrap/ng-bootstrap';
-
 @Component({
-  selector: 'app-student-profile',
-  templateUrl: './student-profile.component.html',
-  styleUrls: ['./student-profile.component.scss'],
-  providers: [NgbInputDatepickerConfig]
+  selector: 'app-teacher-profile',
+  templateUrl: './teacher-profile.component.html',
+  styleUrls: ['./teacher-profile.component.scss']
 })
-export class StudentProfileComponent implements OnInit {
-  header1: string = 'student';
+export class TeacherProfileComponent implements OnInit {
+
+  header1: string = 'teacher';
   tab: string = 'profile';
   user;
   education;
+  experience;
   institute
   editUserform: FormGroup;
   educationForm: FormGroup;
@@ -28,7 +28,7 @@ export class StudentProfileComponent implements OnInit {
   working: Boolean = true;
   schema = {
     "type": "object",
-    "title": "Comment",
+    "title": "Experience",
     "properties": {
       "institute": {
         "title": "Institute",
@@ -47,27 +47,6 @@ export class StudentProfileComponent implements OnInit {
         "title": "End date",
         "type": "string",
         "format": "date"
-      },
-      "grade": {
-        "title": "Grade",
-        "type": "array",
-        "items": {
-          "type": "string",
-          "enum": [
-            "Grade 1",
-            "Grade 2",
-            "Grade 3",
-            "Grade 4",
-            "Grade 5",
-            "Grade 6",
-            "Grade 7",
-            "Grade 8",
-            "Grade 9",
-            "Grade 10",
-            "Grade 11",
-            "Grade 12"
-          ]
-        }
       },
       "send": {
         "title": " Send for verification?",
@@ -113,6 +92,7 @@ export class StudentProfileComponent implements OnInit {
     });
     
     this.education = JSON.parse(localStorage.getItem('education'))
+    this.experience = JSON.parse(localStorage.getItem('experience'))
     this.educationForm = fb.group({
       institute: ['', Validators.required],
       working: [true],
@@ -146,10 +126,21 @@ export class StudentProfileComponent implements OnInit {
   onEducationSubmit(event){
     console.log(event);
     // this.user.details = this.editform.value
-    event.attested = "pending"
+    event.attested = false
     this.education.push(event)
     console.log(this.education)
     localStorage.setItem('education', JSON.stringify(this.education));
+    this.educationForm.reset();
+    // this.education = this.educationForm.value
+  }
+
+  onExperienceSubmit(event){
+    console.log(event);
+    // this.user.details = this.editform.value
+    event.attested = false
+    this.experience.push(event)
+    console.log(this.experience)
+    localStorage.setItem('experience', JSON.stringify(this.experience));
     this.educationForm.reset();
     // this.education = this.educationForm.value
   }
@@ -170,7 +161,4 @@ export class StudentProfileComponent implements OnInit {
     console.log(id)
     this.education[id] = this.educationForm
   }
-
-  
-
 }

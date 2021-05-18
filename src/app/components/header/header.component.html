@@ -1,6 +1,5 @@
-<div *ngIf="loged_in; else elseBlock">
-    <header class="header" style="margin-bottom: 45px;">
-        <!-- Navbar -->
+<ng-template [ngIf]="headerFor == 'main'">
+    <header style="margin-bottom: 45px;">
         <nav class="navbar navbar-expand-lg navbar-light bg-white">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
@@ -12,31 +11,41 @@
                     <div class="nav-item active logo-text">
                         <a class="nav-link" aria-current="page" href="#" style="color: black;">NDEAR</a>
                     </div>
-                    <ul *ngIf="admin; else others" class="navbar-nav  mb-2 mb-lg-0" style="margin-left: 50px;">
-                        <li *ngIf="admin_setup" class="nav-item active">
-                            <a class="nav-link active" [routerLink]="['/institute-profile']">Home</a>
-                            <hr>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLink]="['/student-login']">Login</a>
                         </li>
-                        <li *ngIf="admin_setup" class="nav-item active">
-                            <a class="nav-link" [routerLink]="['/institute-attestation']">Attestations</a>
-                            
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLink]="['/student-signup']">Sign up</a>
                         </li>
-                        <li *ngIf="admin_setup" class="nav-item active">
-                            <a class="nav-link" [routerLink]="['/institute-profile']">Consents</a>
-                            
-                        </li>
-                     
-                        
                     </ul>
-                    <ng-template #others>
+                </div>
+            </div>
+        </nav>
+    </header>
+</ng-template>
+<ng-template [ngIf]="headerFor == 'student'">
+    <header class="header" style="margin-bottom: 45px;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                    data-mdb-target="#navbarExample01" aria-controls="navbarExample01" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarExample01">
+                    <div class="nav-item active logo-text">
+                        <a class="nav-link" aria-current="page" href="#" style="color: black;">NDEAR</a>
+                    </div>
                     <ul>
-                        <li class="nav-item active">
-                            <a class="nav-link active" href="#">My Profile</a>
-                            <hr>
+                        <li class="nav-item active" >
+                            <a class="nav-link active" [routerLink]="['/student-profile']">My Profile</a>
+                            <ng-template [ngIf]="tab === 'profile'">
+                                <hr>
+                            </ng-template>
+
                         </li>
                     </ul>
-                    
-                </ng-template>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a class="nav-link active" href="#">{{user_name}}</a>
@@ -50,10 +59,9 @@
             </div>
         </nav>
     </header>
-</div>
-<ng-template #elseBlock>
-    <header style="margin-bottom: 45px;">
-        <!-- Navbar -->
+</ng-template>
+<ng-template [ngIf]="headerFor == 'teacher'">
+    <header class="header" style="margin-bottom: 45px;">
         <nav class="navbar navbar-expand-lg navbar-light bg-white">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
@@ -65,25 +73,101 @@
                     <div class="nav-item active logo-text">
                         <a class="nav-link" aria-current="page" href="#" style="color: black;">NDEAR</a>
                     </div>
-                    <!-- <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-          </ul> -->
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['/student-login']">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['/student-signup']">Sign up</a>
+                    <ul>
+                        <li class="nav-item active" >
+                            <a class="nav-link active" [routerLink]="['/student-profile']">My Profile</a>
+                            <ng-template [ngIf]="tab === 'profile'">
+                                <hr>
+                            </ng-template>
+
                         </li>
                     </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">{{user_name}}</a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="#">Sign up</a>
+                        </li> -->
+                    </ul>
+                    
+                </div>
+            </div>
+        </nav>
+    </header>
+</ng-template>
+<ng-template [ngIf]="headerFor == 'institute'">
+    <header class="header" style="margin-bottom: 45px;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                    data-mdb-target="#navbarExample01" aria-controls="navbarExample01" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarExample01">
+                    <div class="nav-item active logo-text">
+                        <a class="nav-link" aria-current="page" href="#" style="color: black;">NDEAR</a>
+                    </div>
+                    <ul class="navbar-nav  mb-2 mb-lg-0" style="margin-left: 50px;">
+                        <li class="nav-item active">
+                            <a class="nav-link active" [routerLink]="['/institute-profile']">Home</a>
+                            <ng-template [ngIf]="tab === 'home'">
+                                <hr>
+                            </ng-template>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" [routerLink]="['/institute-attestation']">Attestations</a>
+                            <ng-template [ngIf]="tab === 'attestation'">
+                                <hr>
+                            </ng-template>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" [routerLink]="['/institute-profile']">Consents</a>
+                            <ng-template [ngIf]="tab === 'consent'">
+                                <hr>
+                            </ng-template>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" [routerLink]="['/institute-teachers']">Teachers</a>
+                            <ng-template [ngIf]="tab === 'teachers'">
+                                <hr>
+                            </ng-template>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" [routerLink]="['/institute-profile']">Students</a>
+                            <ng-template [ngIf]="tab === 'students'">
+                                <hr>
+                            </ng-template>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">{{user_name}}</a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="#">Sign up</a>
+                        </li> -->
+                    </ul>
+                    
+                </div>
+            </div>
+        </nav>
+    </header>
+</ng-template>
+<ng-template [ngIf]="headerFor == 'plain'">
+    <header class="header" style="margin-bottom: 45px;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                    data-mdb-target="#navbarExample01" aria-controls="navbarExample01" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarExample01">
+                    <div class="nav-item active logo-text">
+                        <a class="nav-link" aria-current="page" href="#" style="color: black;">NDEAR</a>
+                    </div>   
                 </div>
             </div>
         </nav>

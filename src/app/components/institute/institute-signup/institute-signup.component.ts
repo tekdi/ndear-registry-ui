@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
 })
 export class InstituteSignupComponent implements OnInit {
   form: FormGroup;
+  header1: string = 'plain';
   constructor(fb: FormBuilder, public router: Router) { 
     this.form = fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      fullName: ['', Validators.required],
       mobileEmail: ['', Validators.required],
       accepted: false
     });

@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header [headerFor]='header1'></app-header>
 <div class="col-md-6 offset-md-3">
     <div class="card p-4">
         <div class="card-body">
@@ -39,43 +39,24 @@
                 </div> -->
                 <div class="row">
                     <div class="col-md-6 py-3">
-                        <label mdbLabel class="form-label fw-bold fs-7" for="form1" >First Name</label>
+                        <label mdbLabel class="form-label fw-bold fs-7" for="form1" >Full Name</label>
                         <mdb-form-control>
-                            <input mdbInput type="text" id="form1" class="form-control" mdbValidate placeholder="" formControlName="firstName"/>
+                            <input mdbInput type="text" id="form1" class="form-control" mdbValidate placeholder="" formControlName="fullName"/>
                         </mdb-form-control>
                         
                     </div>
-                    <div class="col-md-6 py-3">
-                        <label mdbLabel class="form-label fw-bold fs-7" for="form2">Last Name</label>
-                        <mdb-form-control>
-                            <input mdbInput type="text" id="form2" class="form-control" mdbValidate placeholder="" formControlName="lastName" />
-                        </mdb-form-control>
-                    </div>
+
                 </div>
-                <!-- <p>
-                    <mat-form-field class="half" appearance="outline" required>
-                        <mat-label>First Name</mat-label>
-                        <input matInput placeholder="First Name" formControlName="firstName">
-                    </mat-form-field>
-                    <mat-form-field class="half" appearance="outline" required>
-                        <mat-label>Last Name</mat-label>
-                        <input matInput placeholder="Last Name" formControlName="lastName">
-                    </mat-form-field>
-                </p> -->
+
                 <ng-template [ngIf]="!aboveControl.value">
                     <div class="row">
                         <div class="col-md-6 py-3 half" appearance="outline">
-                            <label mdbLabel class="form-label fw-bold fs-7">Guardian's First Name</label>
+                            <label mdbLabel class="form-label fw-bold fs-7">Guardian's Full Name</label>
                             <mdb-form-control>
-                                <input mdbInput type="text" class="form-control" mdbValidate formControlName="gaurdianFirstName" placeholder="First Name"/>
+                                <input mdbInput type="text" class="form-control" mdbValidate formControlName="gaurdianfullName" placeholder="Full Name"/>
                             </mdb-form-control>
                         </div>
-                        <div class="col-md-6 py-3 half"  appearance="outline">
-                            <label mdbLabel class="form-label fw-bold fs-7">Guardian's Last Name</label>
-                            <mdb-form-control>
-                                <input mdbInput type="text" class="form-control" mdbValidate placeholder="Last Name" formControlName="gaurdianLastName" />
-                            </mdb-form-control>
-                        </div>
+                        
                         <div class="col-md-6 py-3 half" appearance="outline">
                             <label mdbLabel class="form-label fw-bold fs-7">Relationship</label>
                             <select class="form-control" formControlName="relation" mdbValidate>
@@ -86,25 +67,6 @@
                               </select>                 
                         </div>
                     </div>
-                    <!-- <p>
-                        <mat-form-field class="half" appearance="outline" required>
-                            <mat-label>Guardian's First Name</mat-label>
-                            <input matInput placeholder="First Name" formControlName="gaurdianFirstName">
-                        </mat-form-field>
-                        <mat-form-field class="half" appearance="outline" required>
-                            <mat-label>Guardian's Last Name</mat-label>
-                            <input matInput placeholder="Last Name" formControlName="gaurdianLastName">
-                        </mat-form-field>
-                        <mat-form-field class="half" appearance="outline" required>
-                            <mat-label>Relationship</mat-label>
-                            <mat-select formControlName="relation">
-                                <mat-option value="Father">Father</mat-option>
-                                <mat-option value="Mother">Mother</mat-option>
-                                <mat-option value="Brother">Brother</mat-option>
-                                <mat-option value="Sister">Sister</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </p> -->
                 </ng-template>
 
                 <!-- <p>

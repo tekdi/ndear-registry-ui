@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header [headerFor]='header1'></app-header>
 <div class="col-md-6 offset-md-3">
     <div class="card p-4">
         <div class="card-body">
@@ -7,28 +7,22 @@
            
                 <div class="row">
                     <div class="col-md-6 py-3">
-                        <label mdbLabel class="form-label fw-bold fs-7" for="form1" >First Name</label>
+                        <label mdbLabel class="form-label fw-bold fs-7" for="form1" >Full Name</label>
                         <mdb-form-control>
-                            <input mdbInput type="text" id="form1" class="form-control" mdbValidate placeholder="" formControlName="firstName"/>
+                            <input mdbInput type="text" id="form1" class="form-control" mdbValidate placeholder="" formControlName="fullName"/>
                         </mdb-form-control>
                         
                     </div>
                     <div class="col-md-6 py-3">
-                        <label mdbLabel class="form-label fw-bold fs-7" for="form2">Last Name</label>
+                        <label mdbLabel class="form-label fw-bold fs-7" for="form1">Email Id or Mobile Number</label>
                         <mdb-form-control>
-                            <input mdbInput type="text" id="form2" class="form-control" mdbValidate placeholder="" formControlName="lastName" />
+                            <input mdbInput type="text" id="form1" class="form-control"  formControlName="mobileEmail" mdbValidate />
                         </mdb-form-control>
-                    </div>
-                </div>
+                            <!-- <div id="textExample1" class="form-text my-2">
+                                Mobile must include '+91'                  
+                            </div> -->
+                        </div>
 
-                <div class="pb-3">
-                    <label mdbLabel class="form-label fw-bold fs-7" for="form1">Email Id or Mobile Number</label>
-                    <mdb-form-control>
-                        <input mdbInput type="text" id="form1" class="form-control"  formControlName="mobileEmail" mdbValidate />
-                    </mdb-form-control>
-                        <!-- <div id="textExample1" class="form-text my-2">
-                            Mobile must include '+91'                  
-                        </div> -->
                 </div>
                 <p>
                     <ng-template [ngIf]="form.status == 'VALID'">

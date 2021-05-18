@@ -9,6 +9,8 @@ export class InstituteProfileComponent implements OnInit {
   user;
   ids;
   attestations;
+  header1: string = 'institute';
+  tab: string = 'home';
   constructor() {  }
 
   ngOnInit(): void {

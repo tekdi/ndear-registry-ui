@@ -24,8 +24,8 @@ export class InstituteAttestationDetailComponent implements OnInit {
     this.education = JSON.parse(localStorage.getItem('education'));
   }
 
-  onAttestApprove(){
-    this.educationDetail.attested = true;
+  onAttestApprove(action){
+    this.educationDetail.attested = action;
     this.education[this.id] = this.educationDetail;
     localStorage.setItem('education', JSON.stringify(this.education))
     this.router.navigate(['institute-attestation']);

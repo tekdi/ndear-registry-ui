@@ -10,8 +10,8 @@
         </thead>
         <tbody>
             <ng-template ngFor let-item [ngForOf]="education" let-i="index">
-                <tr *ngIf="!item.attested">
-                    <td>11 May 2021</td>
+                <tr *ngIf="item.attested == 'pending'">
+                    <td>12 May 2021</td>
                     <td>{{user.firstName}} {{user.lastName}}</td>
                     <td><a [routerLink]="['/institute-attestation-detail', i]" class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td>
                 </tr>

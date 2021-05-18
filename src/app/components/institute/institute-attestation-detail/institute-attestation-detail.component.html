@@ -6,15 +6,21 @@
     <div class="card">
         <div class="card-body">
             <dl>
+                <dt class="fs-7 text-grey-color">Institute</dt>
                 <dd>{{educationDetail.institute}}
                 </dd>
-                <dd><button class="btn btn-primary text-end pr-20 fw-bold text-capitalize" (click)="onAttestApprove()"><i class="fa fa-check-circle text-success"></i>Approve</button> 
-                    <button class="btn btn-primary text-end fw-bold pr-20 text-capitalize"><i
+                <dd style="text-align-last: right;"><button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize" (click)="onAttestApprove(true)"><i class="fa fa-check-circle text-success"></i>Approve</button> 
+                    <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize" (click)="onAttestApprove(false)"><i
                             class="fa fa-exclamation-circle text-warning"></i>Deny</button></dd>
      
             </dl>
             <dl>
-                <dd *ngIf="!educationDetail.working; else elseBlock">{{educationDetail.startdate}} -
+                <dt class="fs-7 text-grey-color">Grade</dt>
+                <dd>{{educationDetail.grade}}</dd>
+            </dl>
+            <dl>
+                <dt class="fs-7 text-grey-color">Duration</dt>
+                <dd *ngIf="educationDetail.enddate; else elseBlock">{{educationDetail.startdate}} -
                     {{educationDetail.enddate}}</dd>
                 <ng-template #elseBlock>
                     <dd>{{educationDetail.startdate}} - Current</dd>

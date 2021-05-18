@@ -32,7 +32,7 @@ export class AdminInstituteSetupComponent implements OnInit {
             "type": "string"
           },
           "logoUrl": {
-            "type": "string"
+            "type": "file"
           },
           "Address": {
             "type": "string"

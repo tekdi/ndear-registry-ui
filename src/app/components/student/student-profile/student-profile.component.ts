@@ -46,6 +46,27 @@ export class StudentProfileComponent implements OnInit {
         "type": "string",
         "format": "date"
       },
+      "grade": {
+        "title": "Grade",
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "Grade 1",
+            "Grade 2",
+            "Grade 3",
+            "Grade 4",
+            "Grade 5",
+            "Grade 6",
+            "Grade 7",
+            "Grade 8",
+            "Grade 9",
+            "Grade 10",
+            "Grade 11",
+            "Grade 12"
+          ]
+        }
+      },
       "send": {
         "title": " Send for verification?",
         "type": "boolean",
@@ -125,7 +146,7 @@ export class StudentProfileComponent implements OnInit {
   onEducationSubmit(event){
     console.log(event);
     // this.user.details = this.editform.value
-    event.attested = false
+    event.attested = "pending"
     this.education.push(event)
     console.log(this.education)
     localStorage.setItem('education', JSON.stringify(this.education));

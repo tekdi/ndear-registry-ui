@@ -126,7 +126,7 @@ export class TeacherProfileComponent implements OnInit {
   onEducationSubmit(event){
     console.log(event);
     // this.user.details = this.editform.value
-    event.attested = false
+    event.attested = "pending"
     this.education.push(event)
     console.log(this.education)
     localStorage.setItem('education', JSON.stringify(this.education));
@@ -137,7 +137,7 @@ export class TeacherProfileComponent implements OnInit {
   onExperienceSubmit(event){
     console.log(event);
     // this.user.details = this.editform.value
-    event.attested = false
+    event.attested = "pending"
     this.experience.push(event)
     console.log(this.experience)
     localStorage.setItem('experience', JSON.stringify(this.experience));

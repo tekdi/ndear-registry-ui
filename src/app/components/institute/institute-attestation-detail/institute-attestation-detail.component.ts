@@ -11,6 +11,7 @@ export class InstituteAttestationDetailComponent implements OnInit {
   education;
   educationDetail;
   id;
+  type;
   constructor(private route: ActivatedRoute, public router: Router) { }
 
   ngOnInit(): void {
@@ -18,16 +19,27 @@ export class InstituteAttestationDetailComponent implements OnInit {
       console.log(params) //log the entire params object
       console.log(params['id']) //log the value of id
       this.id = params['id']
+      this.type = params['type']
     });
     this.user = JSON.parse(localStorage.getItem('user'));
-    this.educationDetail = JSON.parse(localStorage.getItem('education'))[this.id];
-    this.education = JSON.parse(localStorage.getItem('education'));
+    if(this.type == 'experience'){
+      this.educationDetail = JSON.parse(localStorage.getItem('experience'))[this.id];
+      this.education = JSON.parse(localStorage.getItem('experience'));
+    }else{
+      this.educationDetail = JSON.parse(localStorage.getItem('education'))[this.id];
+      this.education = JSON.parse(localStorage.getItem('education'));
+    }
+    
   }
 
   onAttestApprove(action){
     this.educationDetail.attested = action;
     this.education[this.id] = this.educationDetail;
-    localStorage.setItem('education', JSON.stringify(this.education))
+    if(this.type == 'experience'){
+      localStorage.setItem('experience', JSON.stringify(this.education))
+    }else{
+      localStorage.setItem('education', JSON.stringify(this.education))
+    }
     this.router.navigate(['institute-attestation']);
   }
 

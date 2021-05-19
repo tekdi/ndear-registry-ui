@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 // import { HiddenComponent } from 'angular6-json-schema-form/lib/widget-library/hidden.component';
 // import { WidgetLibraryService } from 'angular6-json-schema-form';
-
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-test',
@@ -15,304 +15,24 @@ export class TestComponent implements OnInit {
   
   schema = {
     "type": "object",
-    "title": "Teacher",
-    "definitions": {
-      "TeacherGender": {
-        
-        "widget": "hidden",
-        "type": "string",
-        "enum": [
-          "GenderTypeCode-MALE",
-          "GenderTypeCode-FEMALE"
-        ]
-      },
-      "Gender": {
-        "type": "string",
-        "enum": [
-          "MALE",
-          "FEMALE",
-          "OTHER"
-        ]
-      },
-      "Date": {
-        "type": "string",
-        "format": "date"
-      },
-      "Year": {
-        "type": "string",
-        "pattern": "(^[0-9]{4}$)"
-      },
-      "SocialCategory": {
-        "type": "string",
-        "enum": [
-          "SocialCategoryTypeCode-GENERAL",
-          "SocialCategoryTypeCode-SC",
-          "SocialCategoryTypeCode-ST",
-          "SocialCategoryTypeCode-OBC",
-          "SocialCategoryTypeCode-ORC",
-          "SocialCategoryTypeCode-OTHERS"
-        ]
-      },
-      "AcademicQualification": {
-        "type": "string",
-        "enum": [
-          "AcademicQualificationTypeCode-BELOWSECONDARY",
-          "AcademicQualificationTypeCode-SECONDARY",
-          "AcademicQualificationTypeCode-HIGHERSECONDARY",
-          "AcademicQualificationTypeCode-GRADUATE",
-          "AcademicQualificationTypeCode-POSTGRADUATE",
-          "AcademicQualificationTypeCode-MPHIL",
-          "AcademicQualificationTypeCode-POSTDOC",
-          "AcademicQualificationTypeCode-PHD"
-        ]
-      },
-      "Qualification": {
-        "type": "string",
-        "enum": [
-          "TeacherQualificationTypeCode-DIPLOMAORBASIC",
-          "TeacherQualificationTypeCode-BELED",
-          "TeacherQualificationTypeCode-MED",
-          "TeacherQualificationTypeCode-OTHERS",
-          "TeacherQualificationTypeCode-NONE",
-          "TeacherQualificationTypeCode-SPECIAL"
-        ]
-      },
-      "TeacherType": {
-        "type": "string",
-        "enum": [
-          "TeacherTypeCode-HEAD",
-          "TeacherTypeCode-ACTINGHEAD",
-          "TeacherTypeCode-TEACHER",
-          "TeacherTypeCode-RTEINSTRUCTOR",
-          "TeacherTypeCode-PRINCIPAL",
-          "TeacherTypeCode-VICEPRINCIPAL",
-          "TeacherTypeCode-LECTURER"
-        ]
-      },
-      "AppointmentType": {
-        "type": "string",
-        "enum": [
-          "TeacherAppointmentTypeCode-REGULAR",
-          "TeacherAppointmentTypeCode-CONTRACT",
-          "TeacherAppointmentTypeCode-PARTTIME"
-        ]
-      },
-      "ClassType": {
-        "type": "string",
-        "enum": [
-          "ClassTypeCode-PRIMARY",
-          "ClassTypeCode-UPPERPRIMARY",
-          "ClassTypeCode-PRIMARYANDUPPERPRIMARY",
-          "ClassTypeCode-SECONDARY",
-          "ClassTypeCode-HIGHERSECONDARY",
-          "ClassTypeCode-UPPERPRIMARYANDSECONDARY",
-          "ClassTypeCode-SECONDARYANDHIGHERSECONDARY"
-        ]
-      },
-      "Subjects": {
-        "type": "string",
-        "enum": [
-          "SubjectCode-ALL",
-          "SubjectCode-LANGUAGE",
-          "SubjectCode-ENGLISH",
-          "SubjectCode-MATH",
-          "SubjectCode-ENVSTUDIES",
-          "SubjectCode-SPORTS",
-          "SubjectCode-MUSIC",
-          "SubjectCode-SCIENCE",
-          "SubjectCode-SOCIALSTUDIES",
-          "SubjectCode-ACCOUNTANCY",
-          "SubjectCode-BIOLOGY",
-          "SubjectCode-BUSINESSSTUDIES",
-          "SubjectCode-CHEMISTRY",
-          "SubjectCode-COMPSC",
-          "SubjectCode-ECONOMICS",
-          "SubjectCode-FINEARTS",
-          "SubjectCode-ENGDRAWING",
-          "SubjectCode-GEOGRAPHY",
-          "SubjectCode-HISTORY",
-          "SubjectCode-HOMESCIENCE",
-          "SubjectCode-PHILOSOPHY",
-          "SubjectCode-PHYSICS",
-          "SubjectCode-POLITICALSCIENCE",
-          "SubjectCode-FOREIGNLANG",
-          "SubjectCode-BOTONY",
-          "SubjectCode-ZOOLOGY",
-          "SubjectCode-HINDI",
-          "SubjectCode-MARATHI",
-          "SubjectCode-SANSKRIT",
-          "SubjectCode-SINDHI",
-          "SubjectCode-URDU",
-          "SubjectCode-ENLISH",
-          "SubjectCode-REGIONALLANGUAGE",
-          "SubjectCode-ARTEDUCATION",
-          "SubjectCode-PHYSICALEDUCATION",
-          "SubjectCode-WORKEDUCATION",
-          "SubjectCode-OTHER"
-        ]
-      },
-      "DisabilityType": {
-        "type": "string",
-        "enum": [
-          "DisabilityCode-NA",
-          "DisabilityCode-LOCOMOTOR",
-          "DisabilityCode-VISUAL",
-          "DisabilityCode-OTHERDISABILITY"
-        ]
-      },
-      "YesNoCode": {
-        "type": "string",
-        "enum": [
-          "YesNoCode-YES",
-          "YesNoCode-NO"
-        ]
-      },
-      "TeachingRole": {
-        "type": "object",
-        "required": [
-          "teacherType",
-          "appointmentType",
-          "classesTaught",
-          "appointedForSubjects",
-          "mainSubjectsTaught",
-          "appointmentYear"
-        ],
-        "properties": {
-          "teacherType": {
-            "$ref": "#/definitions/TeacherType"
-          },
-          "appointmentType": {
-            "$ref": "#/definitions/AppointmentType"
-          },
-          "classesTaught": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/ClassType"
-            }
-          },
-          "appointedForSubjects": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/Subjects"
-            }
-          },
-          "mainSubjectsTaught": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/Subjects"
-            }
-          },
-          "appointmentYear": {
-            "$ref": "#/definitions/Year"
-          }
-        }
-      },
-      "NonTeachingAssignments": {
-        "type": "object",
-        "required": [
-          "daysOfNonTeachingAssignments"
-        ],
-        "properties": {
-          "daysOfNonTeachingAssignments": {
-            "type": "number"
-          }
-        }
-      },
-      "BasicProficiencyLevel": {
-        "required": [
-          "proficiencySubject",
-          "proficiencyAcademicQualification"
-        ],
-        "properties": {
-          "proficiencySubject": {
-            "$ref": "#/definitions/Subjects"
-          },
-          "proficiencyAcademicQualification": {
-            "$ref": "#/definitions/AcademicQualification"
-          }
-        }
-      },
-      "InServiceTeacherTraining": {
-        "type": "object",
-        "required": [
-          "daysOfInServiceTeacherTraining"
-        ],
-        "properties": {
-          "daysOfInServiceTeacherTraining": {
-            "type": "string"
-          }
-        }
-      }
-    },
+    "title": "Comment",
     "properties": {
-      "serialNum": {
-        "type": "integer",
-        "description": "Serial"
-
-      },
-      "teacherCode": {
+      "state": {
         "type": "string",
+        "enum": ['india','USA','Canada']
       },
-      "nationalIdentifier": {
-        "type": "string"
-      },
-      "teacherName": {
+      "city": {
         "type": "string",
-        "title": "Full name"
+        "enum": ['--']
       },
-      "gender": {
-        "widget": "hidden",
-        "$ref": "#/definitions/TeacherGender"
-      },
-      "birthDate": {
-        "$ref": "#/definitions/Date"
-      },
-      "socialCategory": {
-        "$ref": "#/definitions/SocialCategory",
-        
-      },
-      "highestAcademicQualification": {
-        "$ref": "#/definitions/AcademicQualification"
-      },
-      "highestTeacherQualification": {
-        "$ref": "#/definitions/Qualification"
-      },
-      "yearOfJoiningService": {
-        "$ref": "#/definitions/Year"
-      },
-      "teachingRole": {
-        "$ref": "#/definitions/TeachingRole"
-      },
-      "inServiceTeacherTrainingFromBRC": {
-        "$ref": "#/definitions/InServiceTeacherTraining"
-      },
-      "inServiceTeacherTrainingFromCRC": {
-        "$ref": "#/definitions/InServiceTeacherTraining"
-      },
-      "inServiceTeacherTrainingFromDIET": {
-        "$ref": "#/definitions/InServiceTeacherTraining"
-      },
-      "inServiceTeacherTrainingFromOthers": {
-        "$ref": "#/definitions/InServiceTeacherTraining"
-      },
-      "nonTeachingAssignmentsForAcademicCalendar": {
-        "$ref": "#/definitions/NonTeachingAssignments"
-      },
-      
     },
-    "hidden": [
-      "serialNum"
-    ]
   };
- 
- 
-  form:[
-    "birthDate",
-    "gender",
+  form: [
+    '*',
     {
       "type": "submit",
       "style": "btn-info",
-      "title": "OK"
+      "title": "save"
     }
   ]
   constructor() { }
@@ -320,11 +40,57 @@ export class TestComponent implements OnInit {
   
 
   ngOnInit(): void {
+   
     // this.widgetLibrary.registerWidget('hidden', HiddenComponent);
 
   }
   yourOnSubmitFn(data){
     console.log(data)
+  }
+  yourOnChangesFn(data){
+    console.log(data)
+    if(data.state){
+      console.log(this.getCities(data.state))
+      this.schema.properties.city.enum = this.getCities(data.state)
+    }
+  }
+
+
+  getCities(nationId: string = null) {
+     var cities = [
+        {
+          label: 'Bolzano',
+          nationId: 'india'
+        },
+        {
+          label: 'Rome',
+          nationId: 'india'
+        },
+        {
+          label: 'Berlin',
+          nationId: 'USA'
+        },
+        {
+          label: 'Munich',
+          nationId: 'USA'
+        },
+        {
+          label: 'San Francisco',
+          nationId: 'Canada'
+        }
+      ]
+      var data = cities.filter(entry => {
+        if (nationId) {
+          return entry.nationId === nationId;
+        } else {
+          return true;
+        }
+      })
+      var city_list = [];
+      data.forEach(element => {
+          city_list.push(element.label)
+      });
+      return city_list;
   }
 
 }

@@ -1,21 +1,44 @@
 <app-header [headerFor]='header1' [tab]='tab'></app-header>
 <div class="container">
-    <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Submitted</th>
-            <th scope="col">Name</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-            <ng-template ngFor let-item [ngForOf]="education" let-i="index">
-                <tr *ngIf="!item.attested">
-                    <td>11 May 2021</td>
-                    <td>{{user.fullName}}</td>
-                    <td><a [routerLink]="['/institute-attestation-detail', i]" class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td>
-                </tr>
-            </ng-template>
-        </tbody>
-      </table>
+  <h6 class="d-inline-block">Education</h6>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Submitted</th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-item [ngForOf]="education" let-i="index">
+        <tr *ngIf="item.attested == 'pending'">
+          <td>11 May 2021</td>
+          <td>{{user.fullName}}</td>
+          <td><a [routerLink]="['/institute-attestation-detail', i, {type:'education'}]"
+              class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+  <hr>
+  <h6 class="d-inline-block">Experience</h6>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Submitted</th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-item [ngForOf]="experience" let-i="index">
+        <tr *ngIf="item.attested == 'pending'">
+          <td>11 May 2021</td>
+          <td>{{user.fullName}}</td>
+          <td><a [routerLink]="['/institute-attestation-detail', i, {type:'experience'}]"
+              class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
 </div>

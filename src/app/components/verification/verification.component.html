@@ -8,6 +8,7 @@
                 <ng-otp-input  (onInputChange)="onOtpChange($event)"  [config]="{length:4, allowNumbersOnly:true}"></ng-otp-input>
                 <mat-hint>Hint : 1234</mat-hint>
                 <br>
+                <p class="my-3">Didn't receive code? <a class="text-primary">Send Again</a> </p>
                 <mat-error *ngIf="error">invalid OTP</mat-error>
                 <br>
                 <button type="submit" [disabled]="enabled" (click)="onSubmit()" mat-raised-button color="primary">Submit</button>

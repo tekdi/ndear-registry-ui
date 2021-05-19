@@ -31,6 +31,9 @@ import { InstituteAttestationDetailComponent } from './components/institute/inst
 import { InstituteTeachersComponent } from './components/institute/institute-teachers/institute-teachers.component';
 import { TeacherMailComponent } from './test/mail/teacher-mail/teacher-mail.component';
 import { TeacherProfileComponent } from './components/teacher/teacher-profile/teacher-profile.component';
+import { AdminFormService } from '../app/services/admin-form.service';
+import { ConsentLoginComponent } from './components/diksha/consent-login/consent-login.component';
+import { DikshaComponent } from './components/diksha/diksha/diksha.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,9 @@ import { TeacherProfileComponent } from './components/teacher/teacher-profile/te
     InstituteAttestationDetailComponent,
     InstituteTeachersComponent,
     TeacherMailComponent,
-    TeacherProfileComponent
+    TeacherProfileComponent,
+    ConsentLoginComponent,
+    DikshaComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +78,7 @@ import { TeacherProfileComponent } from './components/teacher/teacher-profile/te
   schemas: [],
   entryComponents: [],
   bootstrap: [AppComponent],
-  providers: []
+  providers: [ AdminFormService]
 })
 export class AppModule {
 }

@@ -17,10 +17,15 @@ import { InstituteAttestationDetailComponent } from './components/institute/inst
 import { InstituteTeachersComponent } from './components/institute/institute-teachers/institute-teachers.component';
 import { TeacherMailComponent } from './test/mail/teacher-mail/teacher-mail.component';
 import { TeacherProfileComponent } from './components/teacher/teacher-profile/teacher-profile.component';
+import { StudentMailComponent } from './test/mail/student-mail/student-mail.component';
+import { InstiituteStudentsComponent } from './components/institute/instiitute-students/instiitute-students.component';
+import { InstituteMailComponent } from './test/mail/institute-mail/institute-mail.component';
+import { InstituteProfileSelectComponent } from './components/institute/institute-profile-select/institute-profile-select.component';
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  // { path: '', component: HomeComponent },
+  { path: '', component: InstituteMailComponent },
   { path: 'verification', component: VerificationComponent },
 
   { path: 'student-signup', component: StudentSignupComponent },
@@ -33,14 +38,17 @@ const routes: Routes = [
   { path: 'institute-login', component: InstituteLoginComponent },
   { path: 'institute-profile', component: InstituteProfileComponent },
   { path: 'institute-profile-setup', component: InstituteProfileSetupComponent },
+  { path: 'institute-profile-select', component: InstituteProfileSelectComponent },
   { path: 'admin-institute-setup', component: AdminInstituteSetupComponent },
   { path: 'institute-attestation', component: InstituteAttestationsComponent },
   { path: 'institute-attestation-detail/:id', component: InstituteAttestationDetailComponent },
   { path: 'institute-teachers', component: InstituteTeachersComponent },
+  { path: 'institute-students', component: InstiituteStudentsComponent },
 
   { path: 'test', component: TestComponent },
   { path: 'mail', component: MailComponent },
   { path: 'teacher-invite', component: TeacherMailComponent },
+  { path: 'student-invite', component: StudentMailComponent },
 ];
 
 @NgModule({

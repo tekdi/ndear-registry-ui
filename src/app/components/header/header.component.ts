@@ -9,7 +9,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
   @Input() headerFor: string;
   @Input() tab: string;
-  loged_in: boolean = false;;
+  loged_in: boolean = false;institute: any;
+;
   user_name;
   admin: boolean = false;
   admin_setup: boolean = false;
@@ -23,6 +24,7 @@ export class HeaderComponent implements OnInit {
       this.admin = JSON.parse(localStorage.getItem('admin'))
       this.admin_setup = JSON.parse(localStorage.getItem('admin-setup'))
       this.user_name = JSON.parse(localStorage.getItem('user')).fullName;
+      this.institute = JSON.parse(localStorage.getItem('institute-detail'));
     }
   }
 

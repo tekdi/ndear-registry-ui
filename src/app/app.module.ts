@@ -31,6 +31,10 @@ import { InstituteAttestationDetailComponent } from './components/institute/inst
 import { InstituteTeachersComponent } from './components/institute/institute-teachers/institute-teachers.component';
 import { TeacherMailComponent } from './test/mail/teacher-mail/teacher-mail.component';
 import { TeacherProfileComponent } from './components/teacher/teacher-profile/teacher-profile.component';
+import { InstiituteStudentsComponent } from './components/institute/instiitute-students/instiitute-students.component';
+import { StudentMailComponent } from './test/mail/student-mail/student-mail.component';
+import { InstituteMailComponent } from './test/mail/institute-mail/institute-mail.component';
+import { InstituteProfileSelectComponent } from './components/institute/institute-profile-select/institute-profile-select.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +56,11 @@ import { TeacherProfileComponent } from './components/teacher/teacher-profile/te
     InstituteAttestationDetailComponent,
     InstituteTeachersComponent,
     TeacherMailComponent,
-    TeacherProfileComponent
+    TeacherProfileComponent,
+    InstiituteStudentsComponent,
+    StudentMailComponent,
+    InstituteMailComponent,
+    InstituteProfileSelectComponent
   ],
   imports: [
     BrowserModule,

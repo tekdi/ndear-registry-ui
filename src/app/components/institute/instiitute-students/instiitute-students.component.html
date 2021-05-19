@@ -1,0 +1,51 @@
+<app-header [headerFor]='header1' [tab]='tab'></app-header>
+<div class="container">
+    <div class="d-flex flex-justify-between">
+        <div>
+            <h6 class="d-inline-block">Students</h6>
+        </div>
+        <button class="btn btn-primary text-end mb-3 fw-bold text-capitalize"><a data-toggle="modal"
+            data-target="#inviteTeacher">Send Invite</a>
+        </button>
+    </div>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Send invite on</th>
+            <th scope="col">Email Id</th>
+            <th scope="col">Mobile Number</th>
+          </tr>
+        </thead>
+        <tbody>
+            <ng-template ngFor let-item [ngForOf]="students" let-i="index">
+                <tr>
+                    <td>17 May 2021</td>
+                    <td>{{item.email}}</td>
+                    <td>{{item.mobile}}</td>
+                    <!-- <td><a [routerLink]="['/institute-attestation-detail', i]" class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td> -->
+                </tr>
+            </ng-template>
+        </tbody>
+      </table>
+</div>
+
+<!-- Invite Modal -->
+<div class="modal right fade" id="inviteTeacher" tabindex="-1" role="dialog" aria-labelledby="inviteTeacher">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel2">Send Invite</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+                <json-schema-form [schema]="schema"  [layout]="form" framework="bootstrap-4"
+                (onSubmit)="oninviteSubmit($event)">
+                </json-schema-form>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -11,11 +11,40 @@ dl,dt{
     flex-basis: 30%;
     margin-bottom: 0 !important;
 }
-.modal{
-    right: 0 !important;
-    width: 40% !important;
-    left: inherit !important;
+.right-xl-modal{
+    &.modal{
+        right: 0 !important;
+        width: 70% !important;
+        left: inherit !important;
+    }
+    .modal-dialog{
+        max-width: 997px !important;
+        margin: 0 auto !important;
+    }
 }
+.right-l-modal{
+    &.modal{
+        right: 0 !important;
+        width: 55% !important;
+        left: inherit !important;
+    }
+    .modal-dialog{
+        max-width: 800px !important;
+        margin: 0 auto !important;
+    }
+}
+.h-100vh{
+    height: 100vh;
+}
+.blue-shade-btn{
+    background: #7f6ae245;
+    padding: 0.6rem;
+    border-radius: 5px;
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+}
+
+
 
 .modal.left .modal-dialog,
 .modal.right .modal-dialog {
@@ -113,4 +142,8 @@ text-decoration: none;
 font-weight: bold;
 font-size: 16px;
 color: #fff;
+}
+
+.mt-20{
+    margin-top: 20px;
 }

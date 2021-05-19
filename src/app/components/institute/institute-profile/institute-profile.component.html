@@ -1,8 +1,15 @@
 <app-header [headerFor]='header1' [tab]='tab'></app-header>
+<div *ngIf="affiliations == null" class="col-md-4 offset-md-4">
+    <div class="alert alert-warning alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <span class="fw-bold"><i class="fa fa-exclamation-circle pr-1"></i>Setup not complete</span><br> Please add
+        affliation details to complete setup
+    </div>
+</div>
 <div class="container">
     <div class="d-flex flex-justify-between">
         <div>
-            <h6 class="d-inline-block">Details</h6>
+            <h6 class="d-inline-block">Institute Details</h6>
             <!-- <a data-toggle="modal" data-target="#editProfile" class="pl-1 fs-7 text-primary-color">edit</a> -->
         </div>
     </div>
@@ -10,46 +17,100 @@
         <div class="card-body">
             <dl>
                 <dt class="fs-7 text-grey-color">Institute Name</dt>
-                <dd>{{user.instituteName}}</dd>
-                <ng-template [ngIf]="user.logoUrl">
-                    
-                    <dd><img style="width: 200px;" src="{{user.logoUrl}}"></dd>
+                <dd>{{institute.instituteName}}</dd>
+                <ng-template [ngIf]="institute.logoUrl">
+                    <dd><img style="width: 200px;" src="{{institute.logoUrl}}"></dd>
                 </ng-template>
-                
+
             </dl>
             <dl>
                 <dt class="fs-7 text-grey-color">Address</dt>
-                <dd>{{user.Address}}</dd>
+                <dd>{{institute.Address}}</dd>
+
             </dl>
             <dl>
+                <dt class="fs-7 text-grey-color">Village</dt>
+                <dd>{{institute.Village}}
+                    <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
+                </dd>
+                <dt class="fs-7 text-grey-color">District</dt>
+                <dd>{{institute.InstitueDistrict}}
+                    <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
+                </dd>
+            </dl>
+            <dl>
+                <dt class="fs-7 text-grey-color">State</dt>
+                <dd>{{institute.InstitueState}}
+                    <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
+                </dd>
                 <dt class="fs-7 text-grey-color">Pincode</dt>
-                <dd>{{user.pincode}}
-                    <!-- <i class="fa fa-check-circle text-success"></i> -->
+                <dd>{{institute.pincode}}
+                    <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
                 </dd>
             </dl>
         </div>
     </div>
-    <div class="d-flex flex-justify-between mt-5">
-        <div>
-            <h6 class="d-inline-block">ID Details</h6>
-            <!-- <a class="pl-1 fs-7 text-primary-color">edit</a> -->
-        </div>
-        <!-- <a href="#" class="fs-7 text-primary-color"><i class="fa fa-plus pr-1"></i>ID</a> -->
+
+    <div *ngIf="affiliations == null; else affiliationBlock" class="d-flex flex-justify-between mt-20">
+        <a class="text-end d-block text-primary-color blue-shade-btn" data-toggle="modal"
+            data-target="#addAffiliation"><i class="fa fa-plus pr-1"></i> Affiliation Details</a>
     </div>
-    <div class="card">
-        <div class="card-body">
-            <dl>
-                <!-- <dt class="fs-7 text-grey-color">Institute Type</dt>
-                <dd>{{ids.instututeType}}  -->
-                    <!-- <i class="fa fa-check-circle text-success"></i></dd> -->
-                <dt class="fs-7 text-grey-color">Affiliation Number</dt>
-                <dd>{{ids.AffiliationNumber}}
-                    <i class="fa fa-check-circle text-success"></i></dd>
-            </dl>
-            <!-- <dl>
-                <dt class="fs-7 text-grey-color">ABC ID Number</dt>
-                <dd>{{ids.ABCIdNUmber}} <i class="fa fa-check-circle text-success"></i></dd>
-            </dl> -->
+    <ng-template #affiliationBlock>
+        <div class="d-flex flex-justify-between mt-5">
+            <div>
+                <h6 class="d-inline-block">ID Details</h6>
+                <!-- <a class="pl-1 fs-7 text-primary-color">edit</a> -->
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <dl>
+                    <dt class="fs-7 text-grey-color">Affiliation Type</dt>
+                    <dd>{{affiliations.affiliationType}}
+                        <img *ngIf="affiliations.attested == 'pending'; else icons" style="width: 16px;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
+                        <ng-template #icons>
+                            <i [ngClass]="affiliations.attested == true ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle text-warning'" ></i>
+                        </ng-template>
+                    </dd>
+                    <dt class="fs-7 text-grey-color">Affiliation Number</dt>
+                    <dd>{{affiliations.affiliationNumber}}
+                        <img *ngIf="affiliations.attested == 'pending'; else icons" style="width: 16px;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
+                        <ng-template #icons>
+                            <i [ngClass]="affiliations.attested == true ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle text-warning'" ></i>
+                        </ng-template>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt class="fs-7 text-grey-color">Grant Year</dt>
+                    <dd>{{affiliations.grantYear}}
+                    </dd>
+                    <dt class="fs-7 text-grey-color">Expiry Year</dt>
+                    <dd>{{affiliations.expiryYear}}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </ng-template>
+</div>
+
+<!-- Add Affiliation -->
+<div class="modal right fade" id="addAffiliation" tabindex="-1" role="dialog" aria-labelledby="AddAffiliation">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel2">Add Affiliation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+
+                <json-schema-form [schema]="schema" [layout]="form" framework="bootstrap-4"
+                    (onSubmit)="onAffiliationSubmit($event)">
+                </json-schema-form>
+            </div>
+
         </div>
     </div>
 </div>

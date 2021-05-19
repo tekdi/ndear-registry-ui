@@ -84,13 +84,15 @@ export class InstituteProfileSetupComponent implements OnInit {
   constructor(public router: Router) { }
 
   ngOnInit(): void {
-
+    
   }
   yourOnSubmitFn(data){
     console.log(data)
     localStorage.setItem('admin-setup',"true");
     localStorage.setItem('institute-detail',JSON.stringify(data));
-    this.router.navigate(['mail']);
+    const url = this.router.createUrlTree(['/mail'])
+    window.open(url.toString(), '_blank')
+    this.router.navigate(['institute-profile-select']);
   }
 
 }

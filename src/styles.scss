@@ -79,6 +79,18 @@ button.calendar, button.calendar:active {
 .flex-justify-between{
     justify-content: space-between;
 }
+
+.alert-warning{
+    color: #0e0e0e !important;
+    background-color: #f7efe0 !important;
+    border-color: #f7efe0 !important;
+    font-size: 0.8rem;
+    padding: 1rem;
+}
+.alert-success{
+    color: #0e0e0e !important;  
+    font-size: 0.8rem;
+}
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
 

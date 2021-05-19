@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="d-flex flex-justify-between">
+        <div>
+            <h6 class="d-inline-block">From : registery@ourdomain.com</h6>
+            <br>
+            <h6 class="d-inline-block">To : {{student.email}}</h6>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <p>Hi,</p>
+            <br>
+            <br>
+            <p>You have recieved invite form {{institute.BasicDetails.instituteName}} to register as a student.</p>
+            <p>Click below to complete registration.</p>
+            <button [routerLink]="['/verification',{'for':'student'}]" class="btn btn-primary text-end mt-3 fw-bold text-capitalize">Complete Registration</button>
+        </div>
+    </div>
+
+</div>

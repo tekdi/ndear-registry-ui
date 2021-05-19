@@ -136,10 +136,6 @@ export class AdminInstituteSetupComponent implements OnInit {
     "properties": {
       "BasicDetails": {
         "$ref": "#/definitions/BasicDetails"
-      },
-      "IDDetails": {
-        "title": "ID Details",
-        "$ref": "#/definitions/IDDetails"
       }
     }
   };

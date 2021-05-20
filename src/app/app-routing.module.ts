@@ -25,6 +25,7 @@ import { StudentMailComponent } from './test/mail/student-mail/student-mail.comp
 import { InstiituteStudentsComponent } from './components/institute/instiitute-students/instiitute-students.component';
 import { InstituteMailComponent } from './test/mail/institute-mail/institute-mail.component';
 import { InstituteProfileSelectComponent } from './components/institute/institute-profile-select/institute-profile-select.component';
+import { BoardInstitutesComponent } from './components/board/board-institutes/board-institutes.component';
 
 const routes: Routes = [
   // { path: '', component: HomeComponent },
@@ -56,6 +57,8 @@ const routes: Routes = [
   { path: 'diksha', component: DikshaComponent },
 
   { path: 'student-invite', component: StudentMailComponent },
+  { path: 'board-search', component: BoardInstitutesComponent },
+
 
 ];
 

@@ -1,1 +1,42 @@
-<p>board-institutes works!</p>
+<div class="m-5">
+    <h6>Search Institute</h6>
+
+    <div>
+        <div class="card p-2">
+            <div class="card-body d-inline-flex ">
+                <div class="d-flex flex-column">
+                    <span>Name</span>
+                    <input type="text" />
+                </div>
+                <div class="d-flex flex-column  ml-4">
+                    <span>State</span>
+                    <select name="cars" id="cars"  class="p-1">
+                        <option value="volvo">  Select State  </option>
+                        <option value="saab">Maharashtra</option>
+                        <option value="mercedes">Kerala</option>
+                        <option value="audi">Karnataka</option>
+                      </select>
+                </div>
+                <div class="d-flex flex-column  ml-4">
+                    <span>District</span>
+                    <select name="cars" id="cars" class="p-1">
+                        <option value="volvo">  Select District      </option>
+                        <option value="saab">Pune</option>
+                        <option value="mercedes">Buldhana</option>
+                        <option value="audi">Nashik</option>
+                        <option value="audi">Mumbai</option>
+
+                      </select>
+                </div>
+                <div class="d-flex flex-column  ml-4 mt-4">
+                <button (click)="showResult()" type="button" class="btn btn-primary  btn-sm">Search</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div [hidden]="!displayResult">
+        List
+    </div>
+</div>

@@ -24,7 +24,7 @@ export class ConsentLoginComponent implements OnInit {
    onSubmit(){
     console.log(this.form.value);
     localStorage.setItem('user', JSON.stringify(this.form.value));
-    this.router.navigate(['verification',{'for':'student'}]);
+    this.router.navigate(['verification',{'for':'consent-login'}]);
   }
 
 }

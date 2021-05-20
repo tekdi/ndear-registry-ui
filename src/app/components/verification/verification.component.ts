@@ -66,6 +66,10 @@ export class VerificationComponent implements OnInit {
       else if(this.for == 'board'){
         this.router.navigate(['board-institutes'])
       }
+
+      if(this.for == 'consent-login'){
+        this.router.navigate(['consent-auth']);
+      }
       
     }else{
       this.error = true

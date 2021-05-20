@@ -46,6 +46,7 @@ import { BoardAttestationsComponent } from './components/board/board-attestation
 import { BoardInstitutesComponent } from './components/board/board-institutes/board-institutes.component';
 import { BoardRolesComponent } from './components/board/board-roles/board-roles.component';
 import { InstituteConsentComponent } from './components/institute/institute-consent/institute-consent.component';
+import { ConsentAuthorizeComponent } from './components/diksha/consent-authorize/consent-authorize.component';
 
 
 @NgModule({
@@ -81,7 +82,11 @@ import { InstituteConsentComponent } from './components/institute/institute-cons
     BoardAttestationsComponent,
     BoardInstitutesComponent,
     BoardRolesComponent,
+<<<<<<< HEAD
     InstituteConsentComponent,
+=======
+    ConsentAuthorizeComponent
+>>>>>>> a3f0bbe966789b7feaae636a29ef4a7ed3e782c2
 
   ],
   imports: [

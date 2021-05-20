@@ -10,33 +10,53 @@
                 </div>
                 <div class="d-flex flex-column  ml-4">
                     <span>State</span>
-                    <select name="cars" id="cars"  class="p-1">
-                        <option value="volvo">  Select State  </option>
+                    <select name="cars" id="cars" class="p-1">
+                        <option value="volvo"> Select State </option>
                         <option value="saab">Maharashtra</option>
                         <option value="mercedes">Kerala</option>
                         <option value="audi">Karnataka</option>
-                      </select>
+
+                    </select>
                 </div>
                 <div class="d-flex flex-column  ml-4">
                     <span>District</span>
                     <select name="cars" id="cars" class="p-1">
-                        <option value="volvo">  Select District      </option>
+                        <option value="volvo"> Select District </option>
                         <option value="saab">Pune</option>
-                        <option value="mercedes">Buldhana</option>
+                        <option value="mercedes">bengaluru</option>
                         <option value="audi">Nashik</option>
                         <option value="audi">Mumbai</option>
 
-                      </select>
+                    </select>
                 </div>
                 <div class="d-flex flex-column  ml-4 mt-4">
-                <button (click)="showResult()" type="button" class="btn btn-primary  btn-sm">Search</button>
+                    <button (click)="showResult()" type="button" class="btn btn-primary  btn-sm">Search</button>
                 </div>
 
             </div>
         </div>
     </div>
 
-    <div [hidden]="!displayResult">
-        List
+    <div [hidden]="displayResult" class="mt-5">
+        <p class="small"><b>2 Results</b></p>
+        <div class="card p-2">
+            <div class="card-body ">
+                <span>Pragati Institute</span><br />
+                <span class="small text-muted">Bengaluru karnataka</span> <br />
+                <span>Contact: 080 9823667878</span><br />
+                <span>Affliction No: 1156921 | UDISE: 29200108409</span><br />
+            </div>
+        </div>
+
+        <div class="card p-2">
+            <div class="card-body ">
+                <span>Bhartiya Shiksha Parishad</span><br />
+                <span class="small text-muted">Bengaluru karnataka</span> <br />
+                <span>Contact: 080 982369098</span><br />
+                <span>Affliction No: 12323921 | UDISE: 292108409</span><br />
+            </div>
+        </div>
     </div>
+
+
 </div>

@@ -10,10 +10,13 @@ export class HeaderComponent implements OnInit {
   @Input() headerFor: string;
   @Input() tab: string;
   loged_in: boolean = false;institute: any;
+  education: any;
+  experience: any;
 ;
   user_name;
   admin: boolean = false;
   admin_setup: boolean = false;
+  attestation_count: number = 0
   constructor() { }
 
   ngOnInit(): void {
@@ -25,6 +28,27 @@ export class HeaderComponent implements OnInit {
       this.admin_setup = JSON.parse(localStorage.getItem('admin-setup'))
       this.user_name = JSON.parse(localStorage.getItem('user')).fullName;
       this.institute = JSON.parse(localStorage.getItem('institute-detail'));
+      if(this.headerFor == 'institute'){
+        this.education = JSON.parse(localStorage.getItem('education'));
+        if(this.education != null && this.education.length > 0){
+          this.education.forEach(element => {
+            if(element.attested == "pending"){
+              this.attestation_count += 1
+            }
+          });
+          // this.attestation_count = this.attestation_count + this.education.length
+        }
+        this.experience = JSON.parse(localStorage.getItem('experience'));
+        if(this.experience != null && this.experience.length > 0){
+          this.experience.forEach(element => {
+            if(element.attested == "pending"){
+              this.attestation_count += 1
+            }
+          });
+          // this.attestation_count = this.attestation_count + this.experience.length
+        }
+        console.log("this.attestation_count",this.attestation_count)
+      }
     }
   }
 

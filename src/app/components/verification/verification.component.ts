@@ -23,6 +23,9 @@ export class VerificationComponent implements OnInit {
     this.route.params.subscribe(params => {
       console.log("route", params)
       this.for = params['for'];
+      if(this.for == 'board'){
+        this.user_id = JSON.parse(localStorage.getItem('board')).mobileEmail;
+      }
       if(this.for == 'admin'){
         this.user_id = JSON.parse(localStorage.getItem('institute-detail')).WhoIsAdmin.emailOrMobile;
       }
@@ -59,6 +62,9 @@ export class VerificationComponent implements OnInit {
         localStorage.setItem('admin', "true")
         this.user_id = JSON.parse(localStorage.getItem('institute-detail')).WhoIsAdmin.emailOrMobile;
         this.router.navigate(['admin-institute-setup'])
+      }
+      else if(this.for == 'board'){
+        this.router.navigate(['board-institutes'])
       }
       
     }else{

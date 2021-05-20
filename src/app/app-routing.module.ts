@@ -10,20 +10,20 @@ import { InstituteSignupComponent } from './components/institute/institute-signu
 import { InstituteLoginComponent } from './components/institute/institute-login/institute-login.component';
 import { InstituteProfileComponent } from './components/institute/institute-profile/institute-profile.component';
 import { InstituteProfileSetupComponent } from './components/institute/institute-profile-setup/institute-profile-setup.component';
-import { MailComponent } from './test/mail/mail.component';
+import { MailComponent } from './components/mail/mail.component';
 import { AdminInstituteSetupComponent } from './components/institute/admin/admin-institute-setup/admin-institute-setup.component';
 import { InstituteAttestationsComponent } from './components/institute/institute-attestations/institute-attestations.component';
 import { InstituteAttestationDetailComponent } from './components/institute/institute-attestation-detail/institute-attestation-detail.component';
 import { InstituteTeachersComponent } from './components/institute/institute-teachers/institute-teachers.component';
-import { TeacherMailComponent } from './test/mail/teacher-mail/teacher-mail.component';
+import { TeacherMailComponent } from './components/mail/teacher-mail/teacher-mail.component';
 import { TeacherProfileComponent } from './components/teacher/teacher-profile/teacher-profile.component';
 
 import { ConsentLoginComponent } from './components/diksha/consent-login/consent-login.component';
 import { DikshaComponent } from './components/diksha/diksha/diksha.component';
 
-import { StudentMailComponent } from './test/mail/student-mail/student-mail.component';
+import { StudentMailComponent } from './components/mail/student-mail/student-mail.component';
 import { InstiituteStudentsComponent } from './components/institute/instiitute-students/instiitute-students.component';
-import { InstituteMailComponent } from './test/mail/institute-mail/institute-mail.component';
+import { InstituteMailComponent } from './components/mail/institute-mail/institute-mail.component';
 import { InstituteProfileSelectComponent } from './components/institute/institute-profile-select/institute-profile-select.component';
 
 const routes: Routes = [

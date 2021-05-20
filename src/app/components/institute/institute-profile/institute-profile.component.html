@@ -10,18 +10,28 @@
     <div class="d-flex flex-justify-between">
         <div>
             <h6 class="d-inline-block">Institute Details</h6>
-            <!-- <a data-toggle="modal" data-target="#editProfile" class="pl-1 fs-7 text-primary-color">edit</a> -->
+            <a data-toggle="modal" data-target="#editProfile" class="pl-1 fs-7 text-primary-color">edit</a>
         </div>
     </div>
     <div class="card">
         <div class="card-body">
             <dl>
                 <dt class="fs-7 text-grey-color">Institute Name</dt>
-                <dd>{{institute.instituteName}}</dd>
+                <dd><b>{{institute.instituteName}}</b></dd>
                 <ng-template [ngIf]="institute.logoUrl">
                     <dd><img style="width: 200px;" src="{{institute.logoUrl}}"></dd>
                 </ng-template>
 
+            </dl>
+            <dl>
+                <dt class="fs-7 text-grey-color">Email</dt>
+                <dd>{{institute.Email}}
+                    <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
+                </dd>
+                <dt class="fs-7 text-grey-color">Contact Number</dt>
+                <dd>{{institute.ContactNumber}}
+                    <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
+                </dd>
             </dl>
             <dl>
                 <dt class="fs-7 text-grey-color">Address</dt>
@@ -109,6 +119,29 @@
                 <json-schema-form [schema]="schema" [layout]="form" framework="bootstrap-4"
                     (onSubmit)="onAffiliationSubmit($event)">
                 </json-schema-form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Edit Personal Details Modal -->
+<div class="modal right fade right-l-modal" id="editProfile" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content h-100vh">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel2">Edit Personal Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body h-100">
+
+                <json-schema-form [schema]="editschema" [(data)]="personalData" [layout]="form" framework="bootstrap-4"
+                (onSubmit)="onEditProfileSubmit($event)">
+            </json-schema-form>
             </div>
 
         </div>

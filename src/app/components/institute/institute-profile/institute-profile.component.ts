@@ -9,6 +9,9 @@ export class InstituteProfileComponent implements OnInit {
   institute;
   affiliations;
   attestations;
+  education;
+  experience;
+  user;
   header1: string = 'institute';
   tab: string = 'home';
 
@@ -65,13 +68,35 @@ export class InstituteProfileComponent implements OnInit {
     }
   ]
 
+  editschema = {
+    "type": "object",
+    "title": "Comment",
+    "properties": {
+      "Email": {
+        "title": "Email",
+        "type": "string",
+      },
+      "ContactNumber": {
+        "title": "Contact Number",
+        "type": "string",
+      }
+    }
+  };
+  institutedetail: any;
+  personalData;
+
   constructor() {  }
 
   ngOnInit(): void {
     this.institute = JSON.parse(localStorage.getItem('institute-detail')).BasicDetails;
+    this.institutedetail = JSON.parse(localStorage.getItem('institute-detail'));
     this.affiliations = JSON.parse(localStorage.getItem('affiliations'));
     this.attestations = JSON.parse(localStorage.getItem('education'));
     console.log(this.affiliations)
+    this.personalData = {
+      'Email':this.institute.Email,
+      'ContactNumber': this.institute.ContactNumber
+    }
   }
 
   onAffiliationSubmit(event){
@@ -81,6 +106,13 @@ export class InstituteProfileComponent implements OnInit {
     this.affiliations = event;
     localStorage.setItem('affiliations', JSON.stringify(this.affiliations));
     // this.education = this.educationForm.value
+  }
+  onEditProfileSubmit(event){
+    this.institute.Email = event.Email;
+    this.institute.ContactNumber = event.ContactNumber;
+    this.institutedetail.BasicDetails.Email = event.Email;
+    this.institutedetail.BasicDetails.ContactNumber = event.ContactNumber;
+    localStorage.setItem('institute-detail', JSON.stringify(this.institutedetail));
   }
 
 }

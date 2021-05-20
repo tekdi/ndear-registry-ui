@@ -117,7 +117,12 @@
                             </ng-template>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" [routerLink]="['/institute-attestation']">Attestations</a>
+                            <a class="nav-link notification" [routerLink]="['/institute-attestation']">Attestations
+                                <ng-template [ngIf]="tab != 'attestation' && attestation_count != 0">
+                                    <span class="badge">{{attestation_count}}</span>
+                                </ng-template>
+
+                            </a>
                             <ng-template [ngIf]="tab === 'attestation'">
                                 <hr>
                             </ng-template>
@@ -137,6 +142,59 @@
                         <li class="nav-item active">
                             <a class="nav-link" [routerLink]="['/institute-students']">Students</a>
                             <ng-template [ngIf]="tab === 'students'">
+                                <hr>
+                            </ng-template>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">{{institute.BasicDetails.instituteName}}</a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="#">Sign up</a>
+                        </li> -->
+                    </ul>
+                    
+                </div>
+            </div>
+        </nav>
+    </header>
+</ng-template>
+<ng-template [ngIf]="headerFor == 'board'">
+    <header class="header" style="margin-bottom: 45px;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                    data-mdb-target="#navbarExample01" aria-controls="navbarExample01" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarExample01">
+                    <div class="nav-item active logo-text">
+                        <a class="nav-link" aria-current="page" href="#" style="color: black;">NDEAR</a>
+                    </div>
+                    <ul class="navbar-nav  mb-2 mb-lg-0" style="margin-left: 50px;">
+                        <li class="nav-item active">
+                            <a class="nav-link active" [routerLink]="['/board-profile']">Home</a>
+                            <ng-template [ngIf]="tab === 'home'">
+                                <hr>
+                            </ng-template>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" [routerLink]="['/board-attestations']">Attestations</a>
+                            <ng-template [ngIf]="tab === 'attestation'">
+                                <hr>
+                            </ng-template>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" [routerLink]="['/board-institutes']">Institutes</a>
+                            <ng-template [ngIf]="tab === 'institutes'">
+                                <hr>
+                            </ng-template>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link">Roles</a>
+                            <ng-template [ngIf]="tab === 'roles'">
                                 <hr>
                             </ng-template>
                         </li>

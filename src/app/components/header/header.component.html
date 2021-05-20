@@ -128,7 +128,11 @@
                             </ng-template>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" [routerLink]="['/institute-profile']">Consents</a>
+                            <a class="nav-link" [routerLink]="['/institute-consent']">Consents
+                                <!-- <ng-template [ngIf]="tab != 'consent' && consent_count != 0">
+                                    <span class="badge">{{consent_count}}</span>
+                                </ng-template> -->
+                            </a>
                             <ng-template [ngIf]="tab === 'consent'">
                                 <hr>
                             </ng-template>
@@ -175,7 +179,7 @@
                     </div>
                     <ul class="navbar-nav  mb-2 mb-lg-0" style="margin-left: 50px;">
                         <li class="nav-item active">
-                            <a class="nav-link active" [routerLink]="['/board-profile']">Home</a>
+                            <a class="nav-link active">Home</a>
                             <ng-template [ngIf]="tab === 'home'">
                                 <hr>
                             </ng-template>

@@ -1,6 +1,13 @@
-<div class="m-5">
-    <h6>Search Institute</h6>
+<app-header [headerFor]='header1' [tab]='tab'></app-header>
 
+
+
+<div class="m-5">
+    <button class="btn btn-primary text-end mb-3 fw-bold text-capitalize"><a data-toggle="modal"
+        data-target="#inviteTeacher">Invite Institute</a>
+</button>
+    <h6>Search Institute</h6>
+    
     <div>
         <div class="card p-2">
             <div class="card-body d-inline-flex ">
@@ -41,22 +48,49 @@
         <p class="small"><b>2 Results</b></p>
         <div class="card p-2">
             <div class="card-body ">
-                <span>Pragati Institute</span><br />
-                <span class="small text-muted">Bengaluru karnataka</span> <br />
-                <span>Contact: 080 9823667878</span><br />
-                <span>Affliction No: 1156921 | UDISE: 29200108409</span><br />
+                <span>Pragati Institute <i class="fa fa-check-circle text-success"></i></span><br />
+                <span class="small text-muted">Bengaluru karnataka <i
+                        class="fa fa-check-circle text-success"></i></span> <br />
+                <span>Contact: 080 9823667878 <i class="fa fa-check-circle text-success"></i></span><br />
+                <span>Affliction No: 1156921 | UDISE: 29200108409 <i
+                        class="fa fa-check-circle text-success"></i></span><br />
             </div>
         </div>
 
         <div class="card p-2">
             <div class="card-body ">
-                <span>Bhartiya Shiksha Parishad</span><br />
-                <span class="small text-muted">Bengaluru karnataka</span> <br />
-                <span>Contact: 080 982369098</span><br />
-                <span>Affliction No: 12323921 | UDISE: 292108409</span><br />
+                <span>Bhartiya Shiksha Parishad <i class="fa fa-exclamation-circle text-warning"></i></span><br />
+                <span class="small text-muted">Bengaluru karnataka <i
+                        class="fa fa-exclamation-circle text-warning"></i></span> <br />
+                <span>Contact: 080 982369098 <i class="fa fa-exclamation-circle text-warning"></i></span><br />
+                <span>Affliction No: 12323921 | UDISE: 292108409 <i
+                        class="fa fa-exclamation-circle text-warning"></i></span><br />
             </div>
         </div>
     </div>
 
 
 </div>
+
+<!-- Invite Modal -->
+<div class="modal right fade" id="inviteTeacher" tabindex="-1" role="dialog" aria-labelledby="inviteTeacher">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel2">Send Invite</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+                <json-schema-form [schema]="schema"  [layout]="form" framework="bootstrap-4"
+                (onSubmit)="oninviteSubmit($event)">
+                </json-schema-form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

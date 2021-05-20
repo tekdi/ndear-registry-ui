@@ -32,6 +32,9 @@ export class VerificationComponent implements OnInit {
       if(this.for == 'teacher'){
         this.user_id = JSON.parse(localStorage.getItem('teachers'))[0].email;
       }
+      if(this.for == 'diksha'){
+        this.user_id = JSON.parse(localStorage.getItem('consent'))[0].mobileEmail;
+      }
     });
   }
   onOtpChange(otp) {
@@ -65,6 +68,9 @@ export class VerificationComponent implements OnInit {
       }
       else if(this.for == 'board'){
         this.router.navigate(['board-institutes'])
+      }
+      else if(this.for == 'diksha'){
+        this.router.navigate(['diksha'])
       }
       
     }else{

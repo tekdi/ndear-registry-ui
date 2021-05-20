@@ -1,1 +1,24 @@
-<p>board-attestations works!</p>
+<app-header [headerFor]='header1' [tab]='tab'></app-header>
+<div class="container">
+  <h6 class="d-inline-block">Affiliation Attestation</h6>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Submitted</th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-item [ngForOf]="affiliations" let-i="index">
+        <tr *ngIf="item.attested == 'pending'">
+          <td>11 May 2021</td>
+          <td>Pragati Institute</td>
+          <td><a
+              class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+  <hr>
+</div>

@@ -6,10 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./board-attestations.component.css']
 })
 export class BoardAttestationsComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+  affiliations;
+  experience;
+  user;
+  header1: string = 'board';
+  tab: string = 'attestation';
+  constructor() { 
+    // this.user = JSON.parse(localStorage.getItem('user'));
+    this.affiliations = JSON.parse(localStorage.getItem('affiliations'));
+    // this.experience = JSON.parse(localStorage.getItem('experience'));
   }
 
+  ngOnInit(): void {
+   
+  }
 }

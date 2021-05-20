@@ -153,6 +153,7 @@ export class AdminInstituteSetupComponent implements OnInit {
   constructor(public router: Router) { }
 
   ngOnInit(): void {
+    localStorage.setItem('consent','[]');
     this.data = JSON.parse(localStorage.getItem('institute-detail'))
   }
   yourOnSubmitFn(data){

@@ -11,10 +11,13 @@ export class ConsentLoginComponent implements OnInit {
   header1: string = 'main';
   form: FormGroup;
   aboveControl = new FormControl(false);
+  consent: any;
 
   constructor(fb: FormBuilder, public router: Router) {
+    this.consent = JSON.parse(localStorage.getItem('consent'));
     this.form = fb.group({
       mobileEmail: ['', Validators.required],
+      granted: false
     });
    }
 
@@ -23,8 +26,9 @@ export class ConsentLoginComponent implements OnInit {
 
    onSubmit(){
     console.log(this.form.value);
-    localStorage.setItem('user', JSON.stringify(this.form.value));
-    this.router.navigate(['verification',{'for':'student'}]);
+    this.consent.push(this.form.value)
+    localStorage.setItem('consent', JSON.stringify(this.consent));
+    this.router.navigate(['verification',{'for':'diksha'}]);
   }
 
 }

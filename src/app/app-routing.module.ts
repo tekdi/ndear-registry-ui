@@ -26,10 +26,13 @@ import { InstiituteStudentsComponent } from './components/institute/instiitute-s
 import { InstituteMailComponent } from './components/mail/institute-mail/institute-mail.component';
 import { InstituteProfileSelectComponent } from './components/institute/institute-profile-select/institute-profile-select.component';
 import { BoardInstitutesComponent } from './components/board/board-institutes/board-institutes.component';
+import { InstituteConsentComponent } from './components/institute/institute-consent/institute-consent.component';
+import { BoardLoginComponent } from './components/board/board-login/board-login.component';
+import { BoardAttestationsComponent } from './components/board/board-attestations/board-attestations.component';
 
 const routes: Routes = [
-  // { path: '', component: HomeComponent },
-  { path: '', component: InstituteMailComponent },
+  { path: 'signup', component: HomeComponent },
+  { path: 'institute-mail', component: InstituteMailComponent },
   { path: 'verification', component: VerificationComponent },
 
   { path: 'student-signup', component: StudentSignupComponent },
@@ -46,8 +49,13 @@ const routes: Routes = [
   { path: 'admin-institute-setup', component: AdminInstituteSetupComponent },
   { path: 'institute-attestation', component: InstituteAttestationsComponent },
   { path: 'institute-attestation-detail/:id', component: InstituteAttestationDetailComponent },
+  { path: 'institute-consent', component: InstituteConsentComponent },
   { path: 'institute-teachers', component: InstituteTeachersComponent },
   { path: 'institute-students', component: InstiituteStudentsComponent },
+
+  { path: '', component: BoardLoginComponent },
+  { path: 'board-institutes', component: BoardInstitutesComponent },
+  { path: 'board-Attestation', component: BoardAttestationsComponent },
 
   { path: 'test', component: TestComponent },
   { path: 'mail', component: MailComponent },

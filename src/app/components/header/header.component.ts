@@ -26,7 +26,9 @@ export class HeaderComponent implements OnInit {
     if(this.loged_in){
       this.admin = JSON.parse(localStorage.getItem('admin'))
       this.admin_setup = JSON.parse(localStorage.getItem('admin-setup'))
-      this.user_name = JSON.parse(localStorage.getItem('user')).fullName;
+      if(JSON.parse(localStorage.getItem('user')) != null){
+        this.user_name = JSON.parse(localStorage.getItem('user')).fullName;
+      }
       this.institute = JSON.parse(localStorage.getItem('institute-detail'));
       if(this.headerFor == 'institute'){
         this.education = JSON.parse(localStorage.getItem('education'));

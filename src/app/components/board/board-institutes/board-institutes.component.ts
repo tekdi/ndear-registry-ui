@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./board-institutes.component.css']
 })
 export class BoardInstitutesComponent implements OnInit {
-displayResult : boolean = true;
+displayResult : boolean = false;
 header1: string = 'board';
 institutes = [];
 tab: string = 'institutes';

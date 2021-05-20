@@ -16,14 +16,14 @@ export class VerificationComponent implements OnInit {
   constructor(public router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    var user = localStorage.getItem('user');
-    this.user_id = JSON.parse(user).mobileEmail;
+    
     
     // console.log("route", this.route)
     this.route.params.subscribe(params => {
       console.log("route", params)
       this.for = params['for'];
       if(this.for == 'board'){
+        console.log("board", JSON.parse(localStorage.getItem('board')))
         this.user_id = JSON.parse(localStorage.getItem('board')).mobileEmail;
       }
       if(this.for == 'admin'){
@@ -34,6 +34,9 @@ export class VerificationComponent implements OnInit {
       }
       if(this.for == 'diksha'){
         this.user_id = JSON.parse(localStorage.getItem('consent'))[0].mobileEmail;
+      }else{
+        var user = localStorage.getItem('user');
+        this.user_id = JSON.parse(user).mobileEmail;
       }
     });
   }

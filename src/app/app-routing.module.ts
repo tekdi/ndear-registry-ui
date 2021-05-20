@@ -53,7 +53,7 @@ const routes: Routes = [
   { path: 'teacher-invite', component: TeacherMailComponent },
 
   { path: 'consent-login', component: ConsentLoginComponent },
-  { path: 'diksha', component: DikshaComponent }
+  { path: 'diksha', component: DikshaComponent },
 
   { path: 'student-invite', component: StudentMailComponent },
 

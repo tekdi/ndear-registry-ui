@@ -40,6 +40,11 @@ import { InstiituteStudentsComponent } from './components/institute/instiitute-s
 import { StudentMailComponent } from './test/mail/student-mail/student-mail.component';
 import { InstituteMailComponent } from './test/mail/institute-mail/institute-mail.component';
 import { InstituteProfileSelectComponent } from './components/institute/institute-profile-select/institute-profile-select.component';
+import { BoardLoginComponent } from './components/board/board-login/board-login.component';
+import { BoardProfileComponent } from './components/board/board-profile/board-profile.component';
+import { BoardAttestationsComponent } from './components/board/board-attestations/board-attestations.component';
+import { BoardInstitutesComponent } from './components/board/board-institutes/board-institutes.component';
+import { BoardRolesComponent } from './components/board/board-roles/board-roles.component';
 
 
 @NgModule({
@@ -56,6 +61,7 @@ import { InstituteProfileSelectComponent } from './components/institute/institut
     InstituteLoginComponent,
     InstituteProfileComponent,
     InstituteProfileSetupComponent,
+    InstituteProfileSelectComponent,
     MailComponent,
     AdminInstituteSetupComponent,
     InstituteAttestationsComponent,
@@ -64,11 +70,16 @@ import { InstituteProfileSelectComponent } from './components/institute/institut
     TeacherMailComponent,
     TeacherProfileComponent,
     ConsentLoginComponent,
-    DikshaComponent
+    DikshaComponent,
 
     InstiituteStudentsComponent,
     StudentMailComponent,
     InstituteMailComponent,
+    BoardLoginComponent,
+    BoardProfileComponent,
+    BoardAttestationsComponent,
+    BoardInstitutesComponent,
+    BoardRolesComponent,
 
   ],
   imports: [

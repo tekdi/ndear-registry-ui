@@ -31,10 +31,16 @@ import { InstituteAttestationDetailComponent } from './components/institute/inst
 import { InstituteTeachersComponent } from './components/institute/institute-teachers/institute-teachers.component';
 import { TeacherMailComponent } from './test/mail/teacher-mail/teacher-mail.component';
 import { TeacherProfileComponent } from './components/teacher/teacher-profile/teacher-profile.component';
+
+import { AdminFormService } from '../app/services/admin-form.service';
+import { ConsentLoginComponent } from './components/diksha/consent-login/consent-login.component';
+import { DikshaComponent } from './components/diksha/diksha/diksha.component';
+
 import { InstiituteStudentsComponent } from './components/institute/instiitute-students/instiitute-students.component';
 import { StudentMailComponent } from './test/mail/student-mail/student-mail.component';
 import { InstituteMailComponent } from './test/mail/institute-mail/institute-mail.component';
 import { InstituteProfileSelectComponent } from './components/institute/institute-profile-select/institute-profile-select.component';
+
 
 @NgModule({
   declarations: [
@@ -57,10 +63,13 @@ import { InstituteProfileSelectComponent } from './components/institute/institut
     InstituteTeachersComponent,
     TeacherMailComponent,
     TeacherProfileComponent,
+    ConsentLoginComponent,
+    DikshaComponent
+
     InstiituteStudentsComponent,
     StudentMailComponent,
     InstituteMailComponent,
-    InstituteProfileSelectComponent
+
   ],
   imports: [
     BrowserModule,
@@ -81,7 +90,7 @@ import { InstituteProfileSelectComponent } from './components/institute/institut
   schemas: [],
   entryComponents: [],
   bootstrap: [AppComponent],
-  providers: []
+  providers: [ AdminFormService]
 })
 export class AppModule {
 }

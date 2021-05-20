@@ -17,11 +17,14 @@ import { InstituteAttestationDetailComponent } from './components/institute/inst
 import { InstituteTeachersComponent } from './components/institute/institute-teachers/institute-teachers.component';
 import { TeacherMailComponent } from './test/mail/teacher-mail/teacher-mail.component';
 import { TeacherProfileComponent } from './components/teacher/teacher-profile/teacher-profile.component';
+
+import { ConsentLoginComponent } from './components/diksha/consent-login/consent-login.component';
+import { DikshaComponent } from './components/diksha/diksha/diksha.component';
+
 import { StudentMailComponent } from './test/mail/student-mail/student-mail.component';
 import { InstiituteStudentsComponent } from './components/institute/instiitute-students/instiitute-students.component';
 import { InstituteMailComponent } from './test/mail/institute-mail/institute-mail.component';
 import { InstituteProfileSelectComponent } from './components/institute/institute-profile-select/institute-profile-select.component';
-
 
 const routes: Routes = [
   // { path: '', component: HomeComponent },
@@ -48,7 +51,12 @@ const routes: Routes = [
   { path: 'test', component: TestComponent },
   { path: 'mail', component: MailComponent },
   { path: 'teacher-invite', component: TeacherMailComponent },
+
+  { path: 'consent-login', component: ConsentLoginComponent },
+  { path: 'diksha', component: DikshaComponent }
+
   { path: 'student-invite', component: StudentMailComponent },
+
 ];
 
 @NgModule({

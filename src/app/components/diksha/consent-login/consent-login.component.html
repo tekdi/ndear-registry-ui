@@ -1,0 +1,20 @@
+<app-header [headerFor]='header1'></app-header>
+<div class="col-md-6 offset-md-3">
+    <div class="card p-4">
+        <div class="card-body">
+            <h5 class="card-title fw-bolder pb-2">Login To NDEAR Portal</h5>
+            <form class="example-container" [formGroup]="form" (ngSubmit)="onSubmit()">
+                <label mdbLabel class="form-label fw-bold fs-7" for="form1">Email Id or Mobile Number</label>
+                <mdb-form-control>
+                    <input mdbInput type="text" id="form1" class="form-control"  formControlName="mobileEmail" mdbValidate/>
+                  </mdb-form-control>
+                 
+                <button type="submit" class="btn btn-primary w-100 mt-3 fw-bold text-capitalize">Continue</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="text-center my-5 text-primary">
+    <a>Not registered? Register</a>
+</div>

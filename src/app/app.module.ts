@@ -82,11 +82,8 @@ import { ConsentAuthorizeComponent } from './components/diksha/consent-authorize
     BoardAttestationsComponent,
     BoardInstitutesComponent,
     BoardRolesComponent,
-<<<<<<< HEAD
     InstituteConsentComponent,
-=======
     ConsentAuthorizeComponent
->>>>>>> a3f0bbe966789b7feaae636a29ef4a7ed3e782c2
 
   ],
   imports: [

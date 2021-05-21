@@ -18,7 +18,7 @@
     <div class="modal-body">
      <app-consent-login *ngIf="page == 'page1'" (modalPage)="getModalPage($event);"></app-consent-login>
      <app-consent-verification *ngIf="page == 'page2'"  (modalPage1)="getModalPage($event)"></app-consent-verification>
-        <app-consent-authorize  *ngIf="page == 'page3'" (acceptAuthorize)="acceptAuth();modal.close('cancel');" (cancelAuthorize)="cancelAuth($event);modal.close('appect');"></app-consent-authorize>
+        <app-consent-authorize  *ngIf="page == 'page3'" (acceptAuthorize)="acceptAuth();modal.close('cancel');" (cancelAuthorize)="cancelAuth();modal.close('appect');"></app-consent-authorize>
     </div>
     <!-- <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>

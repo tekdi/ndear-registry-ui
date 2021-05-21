@@ -1,3 +1,28 @@
-<app-header [headerFor]='header1'></app-header>
+<!-- <app-header [headerFor]='header1'></app-header> -->
+<div class="card p-1">
+  <div class="card-body">
+   <a class="nav-link" aria-current="page" *ngIf="!isLoggedIn" (click)="open(content)">Login with NDEAR ID</a>
+   <a class="nav-link float-right" aria-current="page" *ngIf="isLoggedIn" >{{loggedInUser}}</a>
+
+  </div>
+</div>
 <img src="assets/images/diksha.png" class="rounded"> 
 
+<ng-template #content let-modal>
+    <!-- <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div> -->
+    <div class="modal-body">
+     <app-consent-login *ngIf="page == 'page1'" (modalPage)="getModalPage($event);"></app-consent-login>
+     <app-consent-verification *ngIf="page == 'page2'"  (modalPage1)="getModalPage($event)"></app-consent-verification>
+        <app-consent-authorize  *ngIf="page == 'page3'" (acceptAuthorize)="acceptAuth();modal.close('cancel');" (cancelAuthorize)="cancelAuth($event);modal.close('appect');"></app-consent-authorize>
+    </div>
+    <!-- <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div> -->
+  </ng-template>
+  
+  

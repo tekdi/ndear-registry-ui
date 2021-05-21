@@ -31,6 +31,7 @@ import { BoardLoginComponent } from './components/board/board-login/board-login.
 import { BoardAttestationsComponent } from './components/board/board-attestations/board-attestations.component';
 import { ConsentAuthorizeComponent } from './components/diksha/consent-authorize/consent-authorize.component';
 import { ConsentVerificationComponent } from './components/diksha/consent-verification/consent-verification.component';
+import { TeacherConsentComponent } from './components/teacher/teacher-consent/teacher-consent.component';
 
 const routes: Routes = [
   { path: 'signup', component: HomeComponent },
@@ -42,6 +43,7 @@ const routes: Routes = [
   { path: 'student-profile', component: StudentProfileComponent },
 
   { path: 'teacher-profile', component: TeacherProfileComponent },
+  { path: 'teacher-consent', component: TeacherConsentComponent },
 
   { path: 'institute-signup', component: InstituteSignupComponent },
   { path: 'institute-login', component: InstituteLoginComponent },

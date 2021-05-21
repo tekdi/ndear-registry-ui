@@ -1,0 +1,26 @@
+<app-header [headerFor]='header1' [tab]='tab'></app-header>
+<div class="container">
+  <h6 class="d-inline-block">Consents</h6>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Date of Request</th>
+        <th scope="col">Consent Request from</th>
+        <th scope="col"></th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <ng-template ngFor let-item [ngForOf]="consent" let-i="index"> -->
+        <tr *ngIf="user.consent === true">
+          <td>{{currentDate | date:'dd-MM-yyyy'}}</td>
+          <td>{{user.fullName}} ({{user.mobileEmail}})</td>
+          <td><button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize" (click)="onConsentApprove('granted')"><i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>Grant</button>
+            <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize" (click)="onConsentApprove('denied')"><i
+                class="fa fa-exclamation-circle text-warning" ></i>Deny</button>
+        </td>
+        </tr>
+      <!-- </ng-template> -->
+    </tbody>
+  </table>
+</div>

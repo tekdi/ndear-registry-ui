@@ -12,11 +12,13 @@ export class HeaderComponent implements OnInit {
   loged_in: boolean = false;institute: any;
   education: any;
   experience: any;
+  user: any;
 ;
   user_name;
   admin: boolean = false;
   admin_setup: boolean = false;
   attestation_count: number = 0
+  consent_count: number = 0
   constructor() { }
 
   ngOnInit(): void {
@@ -27,7 +29,8 @@ export class HeaderComponent implements OnInit {
       this.admin = JSON.parse(localStorage.getItem('admin'))
       this.admin_setup = JSON.parse(localStorage.getItem('admin-setup'))
       if(JSON.parse(localStorage.getItem('user')) != null){
-        this.user_name = JSON.parse(localStorage.getItem('user')).fullName;
+        this.user = JSON.parse(localStorage.getItem('user'))
+        this.user_name = this.user.fullName;
       }
       this.institute = JSON.parse(localStorage.getItem('institute-detail'));
       if(this.headerFor == 'institute'){
@@ -49,8 +52,15 @@ export class HeaderComponent implements OnInit {
           });
           // this.attestation_count = this.attestation_count + this.experience.length
         }
+        
         console.log("this.attestation_count",this.attestation_count)
       }
+      if(this.headerFor == 'teacher'){
+        if(this.user.consent  === true){
+          this.consent_count = 1
+        }
+          // this.attestation_count = this.attestation_count + this.education.length
+        }
     }
   }
 

@@ -1,6 +1,6 @@
 <app-header [headerFor]='header1' [tab]='tab'></app-header>
 <div class="container">
-  <h6 class="d-inline-block">Education</h6>
+  <h6 class="d-inline-block">Attestations</h6>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -10,35 +10,15 @@
       </tr>
     </thead>
     <tbody>
-      <ng-template ngFor let-item [ngForOf]="education" let-i="index">
+      <ng-template ngFor let-item [ngForOf]="attestation" let-i="index">
         <tr *ngIf="item.attested == 'pending'">
           <td>11 May 2021</td>
           <td>{{user.fullName}}</td>
-          <td><a [routerLink]="['/institute-attestation-detail', i, {type:'education'}]"
+          <td><a [routerLink]="['/institute-attestation-detail', item.index, {type:item.type}]"
               class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td>
         </tr>
       </ng-template>
     </tbody>
   </table>
-  <hr>
-  <h6 class="d-inline-block">Experience</h6>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Submitted</th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-template ngFor let-item [ngForOf]="experience" let-i="index">
-        <tr *ngIf="item.attested == 'pending'">
-          <td>11 May 2021</td>
-          <td>{{user.fullName}}</td>
-          <td><a [routerLink]="['/institute-attestation-detail', i, {type:'experience'}]"
-              class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td>
-        </tr>
-      </ng-template>
-    </tbody>
-  </table>
+
 </div>

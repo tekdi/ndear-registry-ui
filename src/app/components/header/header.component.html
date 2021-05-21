@@ -73,13 +73,24 @@
                     <div class="nav-item active logo-text">
                         <a class="nav-link" aria-current="page" href="#" style="color: black;">NDEAR</a>
                     </div>
-                    <ul>
+                    <ul class="navbar-nav  mb-2 mb-lg-0" style="margin-left: 50px;">
                         <li class="nav-item active" >
-                            <a class="nav-link active" [routerLink]="['/student-profile']">My Profile</a>
+                            <a class="nav-link active" [routerLink]="['/teacher-profile']">Home</a>
                             <ng-template [ngIf]="tab === 'profile'">
                                 <hr>
                             </ng-template>
 
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link notification" [routerLink]="['/teacher-consent']">Consents
+                                <ng-template [ngIf]="tab != 'consent' && consent_count != 0">
+                                    <span class="badge">{{consent_count}}</span>
+                                </ng-template>
+
+                            </a>
+                            <ng-template [ngIf]="tab === 'consent'">
+                                <hr>
+                            </ng-template>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">

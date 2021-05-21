@@ -114,3 +114,18 @@ font-weight: bold;
 font-size: 16px;
 color: #fff;
 }
+
+
+.h-100vh{
+    height: 100vh;
+}
+.blue-shade-btn{
+    background: #7f6ae245;
+    padding: 0.6rem;
+    border-radius: 5px;
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+}
+.mb-10{
+    margin-bottom: 10px;
+}

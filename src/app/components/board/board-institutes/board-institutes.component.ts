@@ -18,10 +18,6 @@ schema = {
     "emails": {
       "title": "Enter email Id",
       "type": "string",
-    },
-    "mobiles": {
-      "title": "Enter mobile number",
-      "type": "string",
     }
   }
 }
@@ -31,11 +27,6 @@ form = [
     "key": "emails",
     "type": "textarea",
     "placeholder": "Enter Email Ids seperated by comma"
-  },
-  {
-    "key": "mobiles",
-    "type": "textarea",
-    "placeholder": "Enter Mobile Numbers seperated by comma"
   },
   {
     "type": "submit",
@@ -55,22 +46,33 @@ form = [
   oninviteSubmit(event){
     // console.log(event);
     // this.user.details = this.editform.value
-    event.emails = event.emails.split(',');
-    event.mobiles = event.mobiles.split(',');
-    event.emails.forEach(email => {
+    if (event.emails.indexOf(',') > -1) { 
+      event.emails = event.emails.split(',');
+      event.emails.forEach(email => {
+        var teacher = {
+          'email': email,
+          'mobile': '-'
+        }
+        this.institutes.push(teacher)
+      });
+     }
+     else{
       var teacher = {
-        'email': email,
+        'email': event.emails,
         'mobile': '-'
       }
       this.institutes.push(teacher)
-    });
-    event.mobiles.forEach(mobile => {
-      var teacher = {
-        'email': '-',
-        'mobile': mobile
-      }
-      this.institutes.push(teacher)
-    });
+     }
+    
+    // event.mobiles = event.mobiles.split(',');
+
+    // event.mobiles.forEach(mobile => {
+    //   var teacher = {
+    //     'email': '-',
+    //     'mobile': mobile
+    //   }
+    //   this.institutes.push(teacher)
+    // });
     // this.institutes = event;
     // this.institutes.mobiles.concat(event.emails);
     console.log(this.institutes)

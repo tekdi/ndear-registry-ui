@@ -11,14 +11,27 @@ export class InstituteAttestationsComponent implements OnInit {
   user;
   header1: string = 'institute';
   tab: string = 'attestation';
+  attestation;
   constructor() { 
-    this.user = JSON.parse(localStorage.getItem('user'));
-    this.education = JSON.parse(localStorage.getItem('education'));
-    this.experience = JSON.parse(localStorage.getItem('experience'));
   }
 
   ngOnInit(): void {
-   
+    this.attestation = [];
+    this.user = JSON.parse(localStorage.getItem('user'));
+    this.education = JSON.parse(localStorage.getItem('education'));
+    console.log(this.attestation)
+    this.education.forEach((element, i) => {
+      element.index = i
+      element.type = 'education'
+      this.attestation.push(element)
+
+    });
+    this.experience = JSON.parse(localStorage.getItem('experience'));
+    this.experience.forEach((element, i) =>{
+      element.index = i
+      element.type = 'experience'
+      this.attestation.push(element)
+    });
   }
 
 }

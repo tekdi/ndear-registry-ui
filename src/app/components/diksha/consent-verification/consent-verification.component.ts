@@ -18,6 +18,7 @@ export class ConsentVerificationComponent implements OnInit {
   constructor(public router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.user_id = JSON.parse(localStorage.getItem('consent-user'));
     
   }
   

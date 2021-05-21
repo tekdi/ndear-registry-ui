@@ -30,6 +30,7 @@ import { InstituteConsentComponent } from './components/institute/institute-cons
 import { BoardLoginComponent } from './components/board/board-login/board-login.component';
 import { BoardAttestationsComponent } from './components/board/board-attestations/board-attestations.component';
 import { ConsentAuthorizeComponent } from './components/diksha/consent-authorize/consent-authorize.component';
+import { ConsentVerificationComponent } from './components/diksha/consent-verification/consent-verification.component';
 
 const routes: Routes = [
   { path: 'signup', component: HomeComponent },

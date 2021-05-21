@@ -47,6 +47,7 @@ import { BoardInstitutesComponent } from './components/board/board-institutes/bo
 import { BoardRolesComponent } from './components/board/board-roles/board-roles.component';
 import { InstituteConsentComponent } from './components/institute/institute-consent/institute-consent.component';
 import { ConsentAuthorizeComponent } from './components/diksha/consent-authorize/consent-authorize.component';
+import { ConsentVerificationComponent } from './components/diksha/consent-verification/consent-verification.component';
 
 
 @NgModule({
@@ -73,7 +74,6 @@ import { ConsentAuthorizeComponent } from './components/diksha/consent-authorize
     TeacherProfileComponent,
     ConsentLoginComponent,
     DikshaComponent,
-
     InstiituteStudentsComponent,
     StudentMailComponent,
     InstituteMailComponent,
@@ -83,7 +83,8 @@ import { ConsentAuthorizeComponent } from './components/diksha/consent-authorize
     BoardInstitutesComponent,
     BoardRolesComponent,
     InstituteConsentComponent,
-    ConsentAuthorizeComponent
+    ConsentAuthorizeComponent,
+    ConsentVerificationComponent
 
   ],
   imports: [

@@ -33,7 +33,7 @@ import { ConsentAuthorizeComponent } from './components/diksha/consent-authorize
 
 const routes: Routes = [
   { path: 'signup', component: HomeComponent },
-  { path: 'institute-mail', component: InstituteMailComponent },
+  { path: 'hod-mail', component: InstituteMailComponent },
   { path: 'verification', component: VerificationComponent },
 
   { path: 'student-signup', component: StudentSignupComponent },
@@ -59,7 +59,7 @@ const routes: Routes = [
   { path: 'board-Attestation', component: BoardAttestationsComponent },
 
   { path: 'test', component: TestComponent },
-  { path: 'mail', component: MailComponent },
+  { path: 'admin-mail', component: MailComponent },
   { path: 'teacher-invite', component: TeacherMailComponent },
 
   { path: 'consent-login', component: ConsentLoginComponent },

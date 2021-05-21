@@ -1,10 +1,16 @@
 <app-header [headerFor]='header1' [tab]='tab'></app-header>
-<div *ngIf="affiliations == null" class="col-md-4 offset-md-4">
-    <div class="alert alert-warning alert-dismissible">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <span class="fw-bold"><i class="fa fa-exclamation-circle pr-1"></i>Setup not complete</span><br> Please add
-        affliation details to complete setup
+<div *ngIf="affiliations == null && institute.BasicDetails.ContactNumber" class="col-md-4 offset-md-4">
+    <div class="alert alert-warning alert-dismissible my-3">
+        <div class="d-flex">
+        <!-- <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> -->
+        <i class="fas fa-info-circle me-3"></i>
+        <div class="flex-column d-flex text-left">
+            <span class="fw-bold mb-2">Setup not complete!</span> 
+            Please edit institute details and add
+            affliation details to complete setup.
+          </div>
     </div>
+</div>
 </div>
 <div class="container">
     <div class="d-flex flex-justify-between">
@@ -17,46 +23,75 @@
         <div class="card-body">
             <dl>
                 <dt class="fs-7 text-grey-color">Institute Name</dt>
-                <dd><b>{{institute.instituteName}}</b></dd>
-                <ng-template [ngIf]="institute.logoUrl">
-                    <dd><img style="width: 200px;" src="{{institute.logoUrl}}"></dd>
+                <dd><b>{{institute.BasicDetails.instituteName}}</b></dd>
+                <ng-template [ngIf]="institute.BasicDetails.trust">
+                    <dt class="fs-7 text-grey-color">Trust / Society / Managing Committee</dt>
+                    <dd>{{institute.BasicDetails.trust}}</dd>
                 </ng-template>
 
             </dl>
             <dl>
-                <dt class="fs-7 text-grey-color">Email</dt>
-                <dd>{{institute.Email}}
-                    <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
-                </dd>
-                <dt class="fs-7 text-grey-color">Contact Number</dt>
-                <dd>{{institute.ContactNumber}}
-                    <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
-                </dd>
+                <ng-template [ngIf]="institute.BasicDetails.Email">
+                    <dt class="fs-7 text-grey-color">Email</dt>
+                    <dd>{{institute.BasicDetails.Email}}</dd>
+                </ng-template>
+                <ng-template [ngIf]="institute.BasicDetails.ContactNumber">
+                    <dt class="fs-7 text-grey-color">Landline / Mobile</dt>
+                    <dd>{{institute.BasicDetails.ContactNumber}}</dd>
+                </ng-template>
             </dl>
             <dl>
-                <dt class="fs-7 text-grey-color">Address</dt>
-                <dd>{{institute.Address}}</dd>
+                <ng-template [ngIf]="institute.Address.Plot">
+                    <dt class="fs-7 text-grey-color">Plot</dt>
+                    <dd>{{institute.Address.Plot}}</dd>
+                </ng-template>
+                <ng-template [ngIf]="institute.Address.Street">
+                    <dt class="fs-7 text-grey-color">Street</dt>
+                    <dd>{{institute.Address.Street}}</dd>
+                </ng-template>
 
             </dl>
             <dl>
-                <dt class="fs-7 text-grey-color">Village</dt>
-                <dd>{{institute.Village}}
+                <dt class="fs-7 text-grey-color">Landmark</dt>
+                <dd>{{institute.Address.Landmark}}
                     <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
                 </dd>
-                <dt class="fs-7 text-grey-color">District</dt>
-                <dd>{{institute.InstitueDistrict}}
+                <dt class="fs-7 text-grey-color">Locality</dt>
+                <dd>{{institute.Address.Locality}}
                     <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
                 </dd>
             </dl>
             <dl>
+                <dt class="fs-7 text-grey-color">District</dt>
+                <dd>{{institute.Address.District}}
+                    <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
+                </dd>
+                <dt class="fs-7 text-grey-color">City</dt>
+                <dd>{{institute.Address.City}}
+                    <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
+                </dd>
+
+            </dl>
+            <dl>
                 <dt class="fs-7 text-grey-color">State</dt>
-                <dd>{{institute.InstitueState}}
+                <dd>{{institute.Address.State}}
                     <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
                 </dd>
-                <dt class="fs-7 text-grey-color">Pincode</dt>
-                <dd>{{institute.pincode}}
+                <dt class="fs-7 text-grey-color">PIN Code</dt>
+                <dd>{{institute.Address.pincode}}
                     <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
                 </dd>
+               
+            </dl>
+            <dl>
+                <ng-template [ngIf]="institute.gstin">
+                    <dt class="fs-7 text-grey-color">GST IN</dt>
+                    <dd>{{institute.gstin}}</dd>
+                </ng-template>
+                <ng-template [ngIf]="institute.BasicDetails.Website">
+                    <dt class="fs-7 text-grey-color">Website</dt>
+                    <dd><a href="{{institute.BasicDetails.Website}}">{{institute.BasicDetails.Website}}</a></dd>
+                </ng-template>
             </dl>
         </div>
     </div>
@@ -132,14 +167,14 @@
         <div class="modal-content h-100vh">
 
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel2">Edit Personal Details</h5>
+                <h5 class="modal-title" id="myModalLabel2">Edit Institute Details</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
             </div>
 
             <div class="modal-body h-100">
 
-                <json-schema-form [schema]="editschema" [(data)]="personalData" [layout]="form" framework="bootstrap-4"
+                <json-schema-form [schema]="editschema" [(data)]="institute" [layout]="form" framework="bootstrap-4"
                 (onSubmit)="onEditProfileSubmit($event)">
             </json-schema-form>
             </div>

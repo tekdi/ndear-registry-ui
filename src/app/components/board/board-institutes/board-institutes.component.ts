@@ -75,7 +75,7 @@ form = [
     // this.institutes.mobiles.concat(event.emails);
     console.log(this.institutes)
     localStorage.setItem('institutes-invite', JSON.stringify(this.institutes));
-    const url = this.router.createUrlTree(['/institute-mail'])
+    const url = this.router.createUrlTree(['/hod-mail'])
     window.open(url.toString(), '_blank')
         // this.educationForm.reset();
       }

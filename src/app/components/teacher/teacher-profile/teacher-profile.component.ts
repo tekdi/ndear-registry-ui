@@ -26,27 +26,50 @@ export class TeacherProfileComponent implements OnInit {
   startdate: NgbDateStruct;
   enddate: NgbDateStruct;
   working: Boolean = true;
-  schema = {
+  experianceSchema = {
     "type": "object",
     "title": "Experience",
     "properties": {
       "institute": {
-        "title": "Institute",
+        "title": "Institute Name",
         "type": "string",
         "enum": []
+      },
+      "EmploymentType": {
+        "title": "Employment Type",
+        "type": "string",
+        "enum": ['Permanant','Contract']
       },
       "startdate": {
         "title": "Start date",
         "type": "string",
-        "format": "date",
-        "widget": {
-          "id": "date"
-        },
+        "format": "date"
       },
       "enddate": {
         "title": "End date",
         "type": "string",
         "format": "date"
+      },
+      "TeacherType": {
+        "title": "Teacher Type",
+        "type": "string",
+        "enum": ['Assistant teacher PS',
+                'Assistant teacher UPS Head teacher primary school',
+                'Shiksha Mitra',
+                'Anudeshak (UPS)',
+                'Assistant teacher (AidedPS)',
+                'Assistant teacher (Aided UPS)',
+                'Teacher (KGBV)',
+                'Itinerant Teacher (CWSN)',
+                'Govt. LT (TGT) ',
+                'Govt. Lecturer (PGT)',
+                'Aided School LT (TGT)',
+                'Aided School Lecturer (PGT)',
+                'ICT teacher',
+                'Vocational teachers',
+                'Attached Primary Teacher',
+                'Sanskrit aided school'
+                ]
       },
       "send": {
         "title": " Send for verification?",
@@ -56,7 +79,44 @@ export class TeacherProfileComponent implements OnInit {
     },
     "required": [
       "institute",
-      "startdate"
+      "EmploymentType",
+      "startdate",
+      "TeacherType"
+    ]
+  };
+  educationSchema = {
+    "type": "object",
+    "title": "Experience",
+    "properties": {
+      "institute": {
+        "title": "Institute Name",
+        "type": "string",
+        "enum": []
+      },
+      "Qualification": {
+        "title": "Qualification",
+        "type": "string",
+        "enum": ['Below secondary','Secondary','Higher secondary','Graduate','Post graduate', 'M.Phil','Ph.D','PostDoctoral']
+      },
+      "year": {
+        "title": "Year of Graduation",
+        "type": "string"
+      },
+      "marks": {
+        "title": "Marks / Ranking / GPA, etc",
+        "type": "string"
+      },
+      "send": {
+        "title": " Send for verification?",
+        "type": "boolean",
+        "default": true
+      }
+    },
+    "required": [
+      "institute",
+      "Qualification",
+      "year",
+      "marks"
     ]
   };
   form: [
@@ -99,7 +159,8 @@ export class TeacherProfileComponent implements OnInit {
       startdate: [{'day':'','month':'', 'year': ''}],
       enddate: [{'day':'','month':'', 'year': ''}],
       send: true,
-      attested: false
+      attested: false,
+      consent: false
     });
   }
 
@@ -127,6 +188,7 @@ export class TeacherProfileComponent implements OnInit {
     console.log(event);
     // this.user.details = this.editform.value
     event.attested = "pending"
+    event.consent= false
     this.education.push(event)
     console.log(this.education)
     localStorage.setItem('education', JSON.stringify(this.education));
@@ -138,6 +200,7 @@ export class TeacherProfileComponent implements OnInit {
     console.log(event);
     // this.user.details = this.editform.value
     event.attested = "pending"
+    event.consent= false
     this.experience.push(event)
     console.log(this.experience)
     localStorage.setItem('experience', JSON.stringify(this.experience));
@@ -148,7 +211,8 @@ export class TeacherProfileComponent implements OnInit {
   ngOnInit(): void {
     if(localStorage.getItem('institute-detail')){
       this.institute = JSON.parse(localStorage.getItem('institute-detail')).BasicDetails.instituteName;
-      this.schema.properties.institute.enum.push(this.institute)
+      this.experianceSchema.properties.institute.enum.push(this.institute)
+      this.educationSchema.properties.institute.enum.push(this.institute)
     } 
   }
 

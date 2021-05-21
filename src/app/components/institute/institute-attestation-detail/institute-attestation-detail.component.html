@@ -3,32 +3,36 @@
         <h5>Claims by {{user.fullName}}</h5>
     </div>
 
-    <div class="card">
-        <div class="card-body">
-            <dl>
-                <dt class="fs-7 text-grey-color">Institute</dt>
-                <dd>{{educationDetail.institute}}
+    <ng-template [ngIf]="type == 'experience'">
+        <h6>Experience</h6>
+        <div class="card">
+            <div class="card-body" style="height: 128px;">
+                <dl>
+                    <dd>
+                        <div><b>{{experienceDetail.TeacherType}}</b></div>
+                        <div>{{experienceDetail.institute}}</div>
+                        <div *ngIf="!experienceDetail.working; else elseBlock1">{{experienceDetail.startdate}} -
+                            {{experienceDetail.enddate}}</div>
+                        <ng-template #elseBlock1>
+                            <div>{{experienceDetail.startdate}} - Current</div>
+                        </ng-template>
+                        <div class="fs-7 text-grey-color">{{experienceDetail.EmploymentType}}</div>
+                    </dd>
+                    <dd style="text-align-last: right;"><button style="margin: 8px;"
+                        class="btn btn-primary text-end pr-20 fw-bold text-capitalize"
+                        (click)="onAttestApprove(true)"><i class="fa fa-check-circle text-success"
+                            data-mdb-toggle="tooltip" title="Attested"></i>Approve</button>
+                    <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize"
+                        (click)="onAttestApprove(false)"><i
+                            class="fa fa-exclamation-circle text-warning"></i>Deny</button>
                 </dd>
-                <dd style="text-align-last: right;"><button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize" (click)="onAttestApprove(true)"><i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>Approve</button> 
-                    <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize" (click)="onAttestApprove(false)"><i
-                            class="fa fa-exclamation-circle text-warning" ></i>Deny</button></dd>
-     
-            </dl>
-            <dl>
-                <dt class="fs-7 text-grey-color">Grade</dt>
-                <dd>{{educationDetail.grade}}</dd>
-            </dl>
-            <dl>
-                <dt class="fs-7 text-grey-color">Duration</dt>
-                <dd *ngIf="educationDetail.enddate; else elseBlock">{{educationDetail.startdate}} -
-                    {{educationDetail.enddate}}</dd>
-                <ng-template #elseBlock>
-                    <dd>{{educationDetail.startdate}} - Current</dd>
-                </ng-template>
-            </dl>
+                </dl>
+            </div>
         </div>
-    </div>
-    <hr>
+        <hr>
+    </ng-template>
+
+
     <!-- Preview Profile Modal -->
     <div class="mt-5">
         <h5>Public Profile of {{user.fullName}}</h5>
@@ -67,24 +71,6 @@
             </ng-template>
         </div>
     </div>
-    <div class="mt-5">
-        <h6>ID Details</h6>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <!-- <dl>
-                <dt class="fs-7 text-grey-color">Aadhar Number</dt>
-                <dd>*******91 <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i></dd>
-                <dt class="fs-7 text-grey-color">PAN</dt>
-                <dd>*******91 <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i></dd>
-            </dl>
-            <dl>
-                <dt class="fs-7 text-grey-color">Professional License</dt>
-                <dd>*******91 <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i></dd>
-            </dl> -->
-        </div>
-    </div>
-
 
     <h6 class="mt-5">Education</h6>
     <div class="card">
@@ -104,16 +90,33 @@
         </ng-template>
     </div>
 
-    <h6 class="mt-5">Certification</h6>
-    <div class="card">
-        <div class="card-body">
-            <!-- <h6>Google IT Automation with Python Professional Certificate</h6>
-            <dl>
-                <dt class="fs-7 text-grey-color">Coursera</dt>
-                <dd>2019</dd>
-            </dl> -->
-        </div>
+    <ng-template [ngIf]="experience?.length > 0">
+        <h6>Experience</h6>
+        <div class="card">
+            <ng-template ngFor let-item [ngForOf]="experience">
+            <div class="card-body" *ngIf="item.attested === true">
+
+                <h6>{{item.institute}}
+                    <img *ngIf="item.attested == 'pending'; else icons" style="width: 16px;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
+                    <ng-template #icons>
+                        <i [ngClass]="item.attested == true ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle text-warning'" ></i>
+                    </ng-template>
+                
+                </h6>
+                <div>{{item.TeacherType}}</div>
+                <div *ngIf="!item.working; else elseBlock1">{{item.startdate}} -
+                    {{item.enddate}}</div>
+                <ng-template #elseBlock1>
+                    <div>{{item.startdate}} - Current</div>
+                </ng-template>
+                <div class="fs-7 text-grey-color">{{item.EmploymentType}}</div>
+                <hr>
+            
+            </div>
+        </ng-template>
     </div>
+    </ng-template>
+
 
 
 </div>

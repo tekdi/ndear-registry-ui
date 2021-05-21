@@ -10,6 +10,8 @@ export class InstituteAttestationDetailComponent implements OnInit {
   user;
   education;
   educationDetail;
+  experience;
+  experienceDetail;
   id;
   type;
   constructor(private route: ActivatedRoute, public router: Router) { }
@@ -23,8 +25,8 @@ export class InstituteAttestationDetailComponent implements OnInit {
     });
     this.user = JSON.parse(localStorage.getItem('user'));
     if(this.type == 'experience'){
-      this.educationDetail = JSON.parse(localStorage.getItem('experience'))[this.id];
-      this.education = JSON.parse(localStorage.getItem('experience'));
+      this.experienceDetail = JSON.parse(localStorage.getItem('experience'))[this.id];
+      this.experience = JSON.parse(localStorage.getItem('experience'));
     }else{
       this.educationDetail = JSON.parse(localStorage.getItem('education'))[this.id];
       this.education = JSON.parse(localStorage.getItem('education'));

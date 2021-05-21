@@ -15,24 +15,52 @@ export class InstituteProfileSetupComponent implements OnInit {
       "BasicDetails": {
         "type": "object",
         "required": [
-          "instituteName",
-          "Address",
-          "pincode"
+          "instituteName"
         ],
         "properties": {
           "instituteName": {
             "type": "string"
+          }     
+        }
+      },
+      "Address": {
+        "type": "object",
+        "required": [
+          "Landmark",
+          "Locality",
+          "State",
+          "District",
+          "City",
+          "pincode"
+        ],
+        "properties": {
+          "Plot": {
+            "type": "string"
           },
-          "Address": {
+          "Street": {
+            "type": "string"
+          },
+          "Landmark": {
+            "type": "string"
+          },
+          "Locality": {
+            "type": "string"
+          },
+          "State": {
+            "type": "string"
+          },
+          "District": {
+            "type": "string"
+          },
+          "City": {
+            "title":"Village/Town/City",
             "type": "string"
           },
           "pincode": {
             "type": "number"
           },
-          
         }
       },
-
       "WhatIsYourRole": {
         "type": "object",
         "required": [
@@ -50,6 +78,9 @@ export class InstituteProfileSetupComponent implements OnInit {
       },
       "WhoIsAdmin": {
         "type": "object",
+        "required": [
+          "emailOrMobile"
+        ],
         "properties": {
           "emailOrMobile":{
             "title": "Email id or Mobile",
@@ -62,14 +93,22 @@ export class InstituteProfileSetupComponent implements OnInit {
       "BasicDetails": {
         "$ref": "#/definitions/BasicDetails"
       },
+      "Address": {
+        "title": "Address",
+        "$ref": "#/definitions/Address"
+      },
       "WhatIsYourRole": {
         "title": "What is your role?",
         "$ref": "#/definitions/WhatIsYourRole"
       },
       "WhoIsAdmin": {
-        "title": " Who is the admin of your institute?",
+        "title": "Invite admin to complete the setup",
         "$ref": "#/definitions/WhoIsAdmin"
-      }
+      },
+      "gstin": {
+        "title": "GSTIN ID",
+        "type": "string"
+      },
     }
   };
  
@@ -90,9 +129,10 @@ export class InstituteProfileSetupComponent implements OnInit {
     console.log(data)
     localStorage.setItem('admin-setup',"true");
     localStorage.setItem('institute-detail',JSON.stringify(data));
-    const url = this.router.createUrlTree(['/mail'])
-    window.open(url.toString(), '_blank')
-    this.router.navigate(['institute-profile-select']);
+    // const url = this.router.createUrlTree(['/admin-mail'])
+    // window.open(url.toString(), '_blank')
+    // this.router.navigate(['institute-profile-select']);
+    this.router.navigate(['admin-mail']);
   }
 
 }

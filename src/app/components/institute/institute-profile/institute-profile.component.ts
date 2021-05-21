@@ -70,33 +70,170 @@ export class InstituteProfileComponent implements OnInit {
 
   editschema = {
     "type": "object",
-    "title": "Comment",
-    "properties": {
-      "Email": {
-        "title": "Email",
-        "type": "string",
+    "title": "Teacher",
+    "definitions": {
+      "BasicDetails": {
+        "type": "object",
+        "required": [
+          "instituteName",
+          "ContactNumber",
+          "Email",
+          "instututeType",
+          "SchoolType",
+          "ManagementOfInstitute",
+          "YearOfEstablishmentOfInstitute",
+          "headPerson",
+          "trust"
+        ],
+        "properties": {
+          "instituteName": {
+            "type": "string"
+          },
+          "logoUrl": {
+            "type": "string"
+          },
+          "ContactNumber": {
+            "title":"Landline / Mobile",
+            "type": "number"
+          },
+          "Email": {
+            "type": "string"
+          },
+          "Website": {
+            "type": "string"
+          },
+          "Social": {
+            "type": "string"
+          },
+          "headPerson": {
+            "title":"Principal / Dean / Head - Full Name",
+            "type": "string"
+          },
+          "trust": {
+            "title":"Name of Trust / Society / Managing Committee",
+            "type": "string"
+          },
+          "instututeType": {
+            "title": "Institute Category",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Primary only with grades 1 to 5",
+                "Upper Primary with grades 1 to 8",
+                "Higher Secondary with grades 1 to 12",
+                "Upper Primary only with grades 6 to 8",
+                "Higher Secondary with grades 6 to 12",
+                "Secondary/Sr. Sec. with grades 1 to 10",
+                "Secondary/Sr. Sec. with grades 6 to 10",
+                "Secondary/Sr. Sec. only with grades 9 & 10",
+                "Higher Secondary with grades 9 to 12",
+                "Hr. Sec. /Jr. College only with grades 11 & 12"
+              ]
+            }
+            
+          },
+          "SchoolType": {
+            "title": "School Type",
+            "type": "string",
+            "enum": [
+              "Boys",
+              "Girls",
+              "Co-ed"
+            ]
+          },
+          "ManagementOfInstitute": {
+            "title": "Management Of Institute",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Department of Education",
+                "Tribal Welfare Department",
+                "Local Body",
+                "Government Aided",
+                "Private Unaided (Recognized)",
+                "Other Govt. managed schools",
+                "Unrecognized",
+                "Social Welfare Department",
+                "Other Central Govt. Schools",
+                "Ministry of Labour",
+                "Kendriya Vidyalaya / Central School",
+                "Jawahar Navodaya Vidyalaya",
+                "Sainik School",
+                "Railway School",
+                "Central Tibetan School",
+                "Madarsa Recognized (by Wakf board /Madarsa)",
+                "Madarsa Unrecognized",
+              ]
+            }
+          },
+          "YearOfEstablishmentOfInstitute": {
+            "type": "number"
+          },     
+        }
       },
-      "ContactNumber": {
-        "title": "Contact Number",
-        "type": "string",
-      }
+      "Address": {
+        "type": "object",
+        "required": [
+          "Landmark",
+          "Locality",
+          "State",
+          "District",
+          "City",
+          "pincode"
+        ],
+        "properties": {
+          "Plot": {
+            "type": "string"
+          },
+          "Street": {
+            "type": "string"
+          },
+          "Landmark": {
+            "type": "string"
+          },
+          "Locality": {
+            "type": "string"
+          },
+          "State": {
+            "type": "string"
+          },
+          "District": {
+            "type": "string"
+          },
+          "City": {
+            "title":"Village/Town/City",
+            "type": "string"
+          },
+          "pincode": {
+            "type": "number"
+          },
+        }
+      },
+    },
+    "properties": {
+      "BasicDetails": {
+        "$ref": "#/definitions/BasicDetails"
+      },
+      "Address": {
+        "title": "Address",
+        "$ref": "#/definitions/Address"
+      },
+      "gstin": {
+        "title": "GSTIN ID",
+        "type": "string"
+      },
     }
   };
-  institutedetail: any;
-  personalData;
 
   constructor() {  }
 
   ngOnInit(): void {
-    this.institute = JSON.parse(localStorage.getItem('institute-detail')).BasicDetails;
-    this.institutedetail = JSON.parse(localStorage.getItem('institute-detail'));
+    this.institute = JSON.parse(localStorage.getItem('institute-detail'));
     this.affiliations = JSON.parse(localStorage.getItem('affiliations'));
     this.attestations = JSON.parse(localStorage.getItem('education'));
     console.log(this.affiliations)
-    this.personalData = {
-      'Email':this.institute.Email,
-      'ContactNumber': this.institute.ContactNumber
-    }
   }
 
   onAffiliationSubmit(event){
@@ -108,11 +245,8 @@ export class InstituteProfileComponent implements OnInit {
     // this.education = this.educationForm.value
   }
   onEditProfileSubmit(event){
-    this.institute.Email = event.Email;
-    this.institute.ContactNumber = event.ContactNumber;
-    this.institutedetail.BasicDetails.Email = event.Email;
-    this.institutedetail.BasicDetails.ContactNumber = event.ContactNumber;
-    localStorage.setItem('institute-detail', JSON.stringify(this.institutedetail));
+    this.institute = event;
+    localStorage.setItem('institute-detail', JSON.stringify(this.institute));
   }
 
 }

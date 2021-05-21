@@ -67,7 +67,8 @@ export class VerificationComponent implements OnInit {
       else if(this.for == 'admin'){
         localStorage.setItem('admin', "true")
         this.user_id = JSON.parse(localStorage.getItem('institute-detail')).WhoIsAdmin.emailOrMobile;
-        this.router.navigate(['admin-institute-setup'])
+        // this.router.navigate(['admin-institute-setup'])
+        this.router.navigate(['institute-profile'])
       }
       else if(this.for == 'board'){
         this.router.navigate(['board-institutes'])

@@ -109,7 +109,10 @@ export class StudentProfileComponent implements OnInit {
       accepted: true,
       gender: ['', Validators.required],
       dob: ['', Validators.required],
-      address: ['']
+      address: [''],
+      mobile: this.user.mobile,
+      aadhaarNo: this.user.aadhaarNo,
+      idType:  this.user.idType
     });
     
     this.education = JSON.parse(localStorage.getItem('education'))

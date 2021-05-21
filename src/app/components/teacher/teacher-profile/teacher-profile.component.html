@@ -5,8 +5,8 @@
             <h6 class="d-inline-block">Personal</h6>
             <a data-toggle="modal" data-target="#editProfile" class="pl-1 fs-7 text-primary-color">edit</a>
         </div>
-        <a data-toggle="modal" data-target="#addPersonalDetails" class="fs-7 text-primary-color"><i
-                class="fa fa-plus pr-1"></i>Personal Details</a>
+        <!-- <a data-toggle="modal" data-target="#addPersonalDetails" class="fs-7 text-primary-color"><i
+                class="fa fa-plus pr-1"></i>Personal Details</a> -->
         <a class="text-end d-block text-primary-color blue-shade-btn" data-toggle="modal"
             data-target="#prewiewProfile">Preview Public Profile</a>
     </div>
@@ -24,24 +24,51 @@
                     </ng-template>
                     <ng-template [ngIf]="user.dob">
                         <dt class="fs-7 text-grey-color">Date of Birth</dt>
-                        <dd>{{user.dob.day}}/{{user.dob.month}}/{{user.dob.year}}
+                        <dd>{{user.dob}}
                             <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>
                         </dd>
                     </ng-template>
                 </dl>
             </ng-template>
-            <dl>
-                <dt class="fs-7 text-grey-color">Email/Mobile</dt>
-                <dd>{{user.mobileEmail}}
-                    <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>
-                </dd>
-            </dl>
-            <ng-template [ngIf]="user.address">
+
+            <ng-template [ngIf]="user.mobileEmail || user.mobile">
                 <dl>
-                    <dt class="fs-7 text-grey-color">Address</dt>
-                    <dd>{{user.address}}</dd>
+                    <ng-template [ngIf]="user.mobileEmail">
+                        <dt class="fs-7 text-grey-color">Email ID</dt>
+                        <dd>{{user.mobileEmail}}</dd>
+                    </ng-template>
+                    <ng-template [ngIf]="user.mobile">
+                        <dt class="fs-7 text-grey-color">Mobile Number</dt>
+                        <dd>{{user.mobile}}
+                            <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>
+                        </dd>
+                    </ng-template>
                 </dl>
             </ng-template>
+
+            <ng-template [ngIf]="user.idType || user.aadhaarNo">
+                <dl>
+                    <ng-template [ngIf]="user.idType">
+                        <dt class="fs-7 text-grey-color">ID Type</dt>
+                        <dd>{{user.idType}}</dd>
+                    </ng-template>
+                    <ng-template [ngIf]="user.aadhaarNo">
+                        <dt class="fs-7 text-grey-color">Aadhaar Number</dt>
+                        <dd>{{user.aadhaarNo}}
+                            <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>
+                        </dd>
+                    </ng-template>
+                </dl>
+            </ng-template>
+
+
+            <dl>
+                <ng-template [ngIf]="user.address">
+                    <dt class="fs-7 text-grey-color">Address</dt>
+                    <dd>{{user.address}}</dd>
+                </ng-template>
+
+            </dl>
         </div>
     </div>
     <!-- <div class="d-flex flex-justify-between mt-5">
@@ -67,24 +94,21 @@
     </div> -->
 
     <div class="d-flex justify-content-between mt-5">
-        <h6 class="d-inline-block">Experience</h6>
-        <a data-toggle="modal" data-target="#addExperience" class="fs-7 text-primary-color"><i
-                class="fa fa-plus pr-1"></i>Experience</a>
+        <h6  class="d-inline-block">Experience</h6>
+        <a data-toggle="modal" data-target="#addExperience" class="fs-7 text-primary-color"><i class="fa fa-plus pr-1"></i>Experience</a>
     </div>
     <div class="card">
-        <div class="card-body">
-            <ng-template ngFor let-item [ngForOf]="experience">
+            <div class="card-body">
+                <ng-template ngFor let-item [ngForOf]="experience">
                 <h6>{{item.institute}}
-                    <img *ngIf="item.attested == 'pending'; else icons" style="width: 16px;"
-                        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
+                    <img *ngIf="item.attested == 'pending'; else icons" style="width: 16px;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
                     <ng-template #icons>
-                        <i [ngClass]="item.attested == true ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle red'" data-mdb-toggle="tooltip"
-                        title={{item.note}}></i>
+                        <i [ngClass]="item.attested == true ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle text-warning'" ></i>
                     </ng-template>
-
+                
                 </h6>
                 <div>{{item.TeacherType}}</div>
-                <div *ngIf="item.enddate; else elseBlock1">{{item.startdate}} -
+                <div *ngIf="!item.working; else elseBlock1">{{item.startdate}} -
                     {{item.enddate}}</div>
                 <ng-template #elseBlock1>
                     <div>{{item.startdate}} - Current</div>
@@ -92,7 +116,7 @@
                 <div class="fs-7 text-grey-color">{{item.EmploymentType}}</div>
                 <hr>
             </ng-template>
-        </div>
+            </div>
     </div>
 
     <div class="d-flex justify-content-between mt-5">
@@ -102,21 +126,21 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <ng-template ngFor let-item [ngForOf]="education">
-                <h6>{{item.institute}}
-                    <img *ngIf="item.attested == 'pending'; else icons" style="width: 16px;"
-                        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
-                    <ng-template #icons>
-                        <i
-                            [ngClass]="item.attested == true ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle text-warning'" data-mdb-toggle="tooltip"
-                            title={{item.note}}></i>
-                    </ng-template>
-
+            <ng-template ngFor let-item [ngForOf]="education" let-i="index" >
+                <!-- <a data-toggle="modal" data-target="#editEducation" (click)="modelchange(i)" class="pl-1 fs-7 text-primary-color">edit</a> -->
+                <h6>{{item.institute}} 
+                    <i [ngClass]="item.attested ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle text-warning'" ></i>
                 </h6>
-                <div>{{item.Qualification}}</div>
-                <div>{{item.year}}</div>
-                <div class="fs-7 text-grey-color">Marks/Ranking/GPA : {{item.marks}}</div>
-                <hr>
+                
+                <dl>
+                    <!-- <dt class="fs-7 text-grey-color">{{item.institute}}</dt> -->
+                    
+                    <dd *ngIf="item.enddate; else elseBlock">{{item.startdate}} -
+                        {{item.enddate}}</dd>
+                    <ng-template #elseBlock>
+                        <dd>{{item.startdate}} - Current</dd>
+                    </ng-template>
+                </dl>
             </ng-template>
         </div>
     </div>
@@ -154,9 +178,9 @@
                         <div class="input-group">
 
                             <input class="form-control" id="dob" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model"
-                                formControlName="dob" ngbDatepicker #d="ngbDatepicker" mdbValidate>
+                                formControlName="dob" mdbValidate>
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
+                                <button class="btn btn-outline-secondary calendar" 
                                     type="button"></button>
                             </div>
                         </div>
@@ -210,11 +234,49 @@
                         <div class="col-md-12">
                             <label mdbLabel class="form-label fw-normal fs-7" for="fullName">Full Name</label>
                             <mdb-form-control>
-                                <input mdbInput type="text" id="fullName" class="form-control" mdbValidate
+                                <input mdbInput required="required" type="text" id="fullName" class="form-control" mdbValidate
                                     placeholder="" formControlName="fullName" />
                             </mdb-form-control>
 
                         </div>
+
+                        <div class="" appearance="outline">
+                            <label mdbLabel class="form-label fw-normal fs-7" for="gender">Gender</label>
+                            <div class="d-inline-block fs-8">(Optional)</div>
+                            <select class="form-control" id="gender" mdbValidate formControlName="gender">
+                                <option value="Male" selected>Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label mdbLabel class="form-label fw-normal fs-7" for="dob">Date Of Birth</label>
+                            <mdb-form-control>
+                                <input mdbInput type="date" id="dob" class="form-control" mdbValidate
+                                    placeholder="" formControlName="dob" />
+                            </mdb-form-control>
+    
+                        </div>
+
+                        <div class="" appearance="outline">
+                            <label mdbLabel class="form-label fw-normal fs-7" for="idType">ID Type</label>
+                            <div class="d-inline-block fs-8">(Optional)</div>
+                            <select class="form-control" id="idType" mdbValidate formControlName="idType">
+                                <option value="voter" selected>Voter</option>
+                                <option value="aadhaar">Aadhaar</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label mdbLabel class="form-label fw-normal fs-7" for="aadhaarNo">Aadhaar Number</label>
+                            <mdb-form-control>
+                                <input mdbInput type="text" id="aadhaarNo" class="form-control" mdbValidate
+                                    placeholder="" formControlName="aadhaarNo" />
+                            </mdb-form-control>
+
+                        </div>
+
 
                         <div class="col-md-12">
                             <label mdbLabel class="form-label fw-normal fs-7" for="form2">EmailID</label>
@@ -223,7 +285,27 @@
                                     placeholder="" formControlName="mobileEmail" />
                             </mdb-form-control>
                         </div>
+
+                        <div class="col-md-12">
+                            <label mdbLabel class="form-label fw-normal fs-7" for="fullName">Mobile Number</label>
+                            <mdb-form-control>
+                                <input mdbInput type="text" id="mobile" class="form-control" mdbValidate
+                                    placeholder="" formControlName="mobile" />
+                            </mdb-form-control>
+    
+                        </div>
+
+                        <div class="col-md-12">
+                            <label mdbLabel class="form-label fw-normal fs-7" for="fullName">Address</label>
+                            <mdb-form-control>
+                                <input mdbInput type="textarea" id="address" class="form-control" mdbValidate
+                                    placeholder="" formControlName="address" />
+                            </mdb-form-control>
+    
+                        </div>
                     </div>
+
+                  
                     <button type="submit" (click)="onEditProfileSubmit()"
                         class="btn btn-primary text-end mt-3 fw-bold text-capitalize" data-dismiss="modal">Save</button>
                 </form>
@@ -252,7 +334,7 @@
                         <dl>
                             <dt class="fs-7 text-grey-color">Full Name</dt>
                             <dd>{{user.fullName}}</dd>
-
+                        
                         </dl>
                         <ng-template [ngIf]="user.gender || user.dob">
                             <dl>
@@ -262,26 +344,49 @@
                                 </ng-template>
                                 <ng-template [ngIf]="user.dob">
                                     <dt class="fs-7 text-grey-color">Date of Birth</dt>
-                                    <dd>{{user.dob.day}}/{{user.dob.month}}/{{user.dob.year}}
-                                        <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
-                                            title="Attested"></i>
+                                    <dd>{{user.dob}}
+                                        <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>
                                     </dd>
                                 </ng-template>
                             </dl>
                         </ng-template>
-                        <dl>
-                            <dt class="fs-7 text-grey-color">Email/Mobile</dt>
-                            <dd>{{user.mobileEmail}}
-                                <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
-                                    title="Attested"></i>
-                            </dd>
-                        </dl>
-                        <ng-template [ngIf]="user.address">
+            
+                        <ng-template [ngIf]="user.mobileEmail || user.mobile">
                             <dl>
-                                <dt class="fs-7 text-grey-color">Address</dt>
-                                <dd>{{user.address}}</dd>
+                                <ng-template [ngIf]="user.mobileEmail">
+                                    <dt class="fs-7 text-grey-color">Email ID</dt>
+                                    <dd>{{user.mobileEmail}}</dd>
+                                </ng-template>
+                                <ng-template [ngIf]="user.mobile">
+                                    <dt class="fs-7 text-grey-color">Mobile Number</dt>
+                                    <dd>{{user.mobile}}
+                                        <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>
+                                    </dd>
+                                </ng-template>
                             </dl>
                         </ng-template>
+                        <ng-template [ngIf]="user.idType || user.aadhaarNo">
+                            <dl>
+                                <ng-template [ngIf]="user.idType">
+                                    <dt class="fs-7 text-grey-color">ID Type</dt>
+                                    <dd>{{user.idType}}</dd>
+                                </ng-template>
+                                <ng-template [ngIf]="user.aadhaarNo">
+                                    <dt class="fs-7 text-grey-color">Aadhaar Number</dt>
+                                    <dd>{{user.aadhaarNo}}
+                                        <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>
+                                    </dd>
+                                </ng-template>
+                            </dl>
+                        </ng-template>
+
+                        <dl>
+                            <ng-template [ngIf]="user.address">
+                                <dt class="fs-7 text-grey-color">Address</dt>
+                                <dd>{{user.address}}</dd>
+                            </ng-template>
+            
+                        </dl>
                     </div>
                 </div>
                 <div class="mt-5">
@@ -307,13 +412,11 @@
                     <ng-template ngFor let-item [ngForOf]="experience">
                         <div class="card-body">
                             <h6>{{item.institute}}
-                                <img *ngIf="item.attested == 'pending'; else icons" style="width: 16px;"
-                                    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
+                                <img *ngIf="item.attested == 'pending'; else icons" style="width: 16px;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
                                 <ng-template #icons>
-                                    <i
-                                        [ngClass]="item.attested == true ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle text-warning'"></i>
+                                    <i [ngClass]="item.attested == true ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle text-warning'" ></i>
                                 </ng-template>
-
+                            
                             </h6>
                             <div>Associate Professor</div>
                             <div *ngIf="!item.working; else elseBlock1">{{item.startdate}} -
@@ -376,9 +479,9 @@
 
             <div class="modal-body">
 
-                <json-schema-form [schema]="educationSchema" [layout]="form" framework="bootstrap-4"
-                    (onSubmit)="onEducationSubmit($event)">
-                </json-schema-form>
+                <json-schema-form [schema]="educationSchema"  [layout]="form" framework="bootstrap-4"
+                (onSubmit)="onEducationSubmit($event)">
+            </json-schema-form>
 
                 <!-- <form class="example-container" [formGroup]="educationForm">
                     <div class="pb-3">
@@ -468,9 +571,9 @@
 
             <div class="modal-body">
 
-                <json-schema-form [schema]="experianceSchema" [layout]="form" framework="bootstrap-4"
-                    (onSubmit)="onExperienceSubmit($event)">
-                </json-schema-form>
+                <json-schema-form [schema]="experianceSchema"  [layout]="form" framework="bootstrap-4"
+                (onSubmit)="onExperienceSubmit($event)">
+            </json-schema-form>
 
                 <!-- <form class="example-container" [formGroup]="educationForm">
                     <div class="pb-3">
@@ -561,8 +664,8 @@
             <div class="modal-body">
 
                 <json-schema-form [schema]="educationSchema" [layout]="form" framework="bootstrap-4"
-                    (onSubmit)="onEducationSubmit($event)">
-                </json-schema-form>
+                (onSubmit)="onEducationSubmit($event)">
+            </json-schema-form>
 
                 <!-- <form class="example-container" [formGroup]="educationForm">
                     <div class="pb-3">

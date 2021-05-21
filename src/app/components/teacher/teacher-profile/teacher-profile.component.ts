@@ -139,16 +139,20 @@ export class TeacherProfileComponent implements OnInit {
     // config.placement = ['top-left', 'top-right'];
     localStorage.setItem('is_logedin', "true")
     // localStorage.setItem('admin', 'false')
-    this.user = JSON.parse(localStorage.getItem('user'))
+    this.user = JSON.parse(localStorage.getItem('user'));
+
     this.editUserform = fb.group({
       fullName: this.user.fullName,
       gaurdianfullName: this.user.gaurdianfullName,
       relation: this.user.relation,
       mobileEmail: this.user.mobileEmail,
+      mobile: this.user.mobile,
       accepted: true,
-      gender: ['', Validators.required],
-      dob: ['', Validators.required],
-      address: ['']
+      gender: this.user.gender,
+      address: this.user.address,
+      aadhaarNo: this.user.aadhaarNo,
+      idType:  this.user.idType,
+      dob:  this.user.dob
     });
     
     this.education = JSON.parse(localStorage.getItem('education'))
@@ -168,6 +172,7 @@ export class TeacherProfileComponent implements OnInit {
     console.log(this.editUserform.value);
     // this.user.details = this.editform.value
     localStorage.setItem('user', JSON.stringify(this.editUserform.value));
+    this.user = JSON.parse(localStorage.getItem('user'));
     this.user = this.editUserform.value
     // this.router.navigate(['student-profile']);
   }
@@ -175,15 +180,7 @@ export class TeacherProfileComponent implements OnInit {
   onSubmit(){
     
   }
-  // onEducationChange(event){
-  //   console.log(event)
-  //   if(!event.working){
-  //     this.schema.properties.enddate.type = 'string'
-  //   }
-  //   else{
-  //     this.schema.properties.enddate.type = 'hidden'
-  //   }
-  // }
+  
   onEducationSubmit(event){
     console.log(event);
     // this.user.details = this.editform.value
@@ -226,3 +223,4 @@ export class TeacherProfileComponent implements OnInit {
     this.education[id] = this.educationForm
   }
 }
+

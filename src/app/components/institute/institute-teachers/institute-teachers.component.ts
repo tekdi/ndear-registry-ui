@@ -19,10 +19,6 @@ export class InstituteTeachersComponent implements OnInit {
       "emails": {
         "title": "Enter email Id",
         "type": "string",
-      },
-      "mobiles": {
-        "title": "Enter mobile number",
-        "type": "string",
       }
     }
   }
@@ -33,11 +29,7 @@ export class InstituteTeachersComponent implements OnInit {
       "type": "textarea",
       "placeholder": "Enter Email Ids seperated by comma"
     },
-    {
-      "key": "mobiles",
-      "type": "textarea",
-      "placeholder": "Enter Mobile Numbers seperated by comma"
-    },
+
     {
       "type": "submit",
       "style": "btn btn-primary text-end mb-3 fw-bold text-capitalize",
@@ -56,22 +48,41 @@ export class InstituteTeachersComponent implements OnInit {
   oninviteSubmit(event){
     // console.log(event);
     // this.user.details = this.editform.value
-    event.emails = event.emails.split(',');
-    event.mobiles = event.mobiles.split(',');
-    event.emails.forEach(email => {
+
+    if (event.emails.indexOf(',') > -1) { 
+      event.emails = event.emails.split(',');
+      event.emails.forEach(email => {
+        var teacher = {
+          'email': email,
+          'mobile': '-'
+        }
+        this.teachers.push(teacher)
+      });
+     }
+     else{
       var teacher = {
-        'email': email,
+        'email': event.emails,
         'mobile': '-'
       }
       this.teachers.push(teacher)
-    });
-    event.mobiles.forEach(mobile => {
-      var teacher = {
-        'email': '-',
-        'mobile': mobile
-      }
-      this.teachers.push(teacher)
-    });
+     }
+
+    // event.emails = event.emails.split(',');
+    // event.mobiles = event.mobiles.split(',');
+    // event.emails.forEach(email => {
+    //   var teacher = {
+    //     'email': email,
+    //     'mobile': '-'
+    //   }
+    //   this.teachers.push(teacher)
+    // });
+    // event.mobiles.forEach(mobile => {
+    //   var teacher = {
+    //     'email': '-',
+    //     'mobile': mobile
+    //   }
+    //   this.teachers.push(teacher)
+    // });
     // this.teachers = event;
     // this.teachers.mobiles.concat(event.emails);
     console.log(this.teachers)

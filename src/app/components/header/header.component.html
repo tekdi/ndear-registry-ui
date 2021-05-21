@@ -200,7 +200,11 @@
                             </ng-template>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" [routerLink]="['/board-attestations']">Attestations</a>
+                            <a class="nav-link" [routerLink]="['/board-attestation']">Attestations
+                                <ng-template [ngIf]="tab != 'attestation' && attestation_count != 0">
+                                    <span class="badge">{{attestation_count}}</span>
+                                </ng-template>
+                            </a>
                             <ng-template [ngIf]="tab === 'attestation'">
                                 <hr>
                             </ng-template>

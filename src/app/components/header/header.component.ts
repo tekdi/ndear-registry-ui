@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   education: any;
   experience: any;
   user: any;
+  affiliations: any;
 ;
   user_name;
   admin: boolean = false;
@@ -61,6 +62,16 @@ export class HeaderComponent implements OnInit {
         }
           // this.attestation_count = this.attestation_count + this.education.length
         }
+
+        if(this.headerFor == 'teacher'){
+          this.affiliations = JSON.parse(localStorage.getItem('affiliations'));
+          if(this.affiliations && this.affiliations.attested  === "pending"){
+            this.consent_count = 1
+          }
+            // this.attestation_count = this.attestation_count + this.education.length
+          }
+
+        
     }
   }
 

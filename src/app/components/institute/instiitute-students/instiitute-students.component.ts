@@ -19,10 +19,6 @@ export class InstiituteStudentsComponent implements OnInit {
       "emails": {
         "title": "Enter email Id",
         "type": "string",
-      },
-      "mobiles": {
-        "title": "Enter mobile number",
-        "type": "string",
       }
     }
   }
@@ -32,11 +28,6 @@ export class InstiituteStudentsComponent implements OnInit {
       "key": "emails",
       "type": "textarea",
       "placeholder": "Enter Email Ids seperated by comma"
-    },
-    {
-      "key": "mobiles",
-      "type": "textarea",
-      "placeholder": "Enter Mobile Numbers seperated by comma"
     },
     {
       "type": "submit",
@@ -56,22 +47,41 @@ export class InstiituteStudentsComponent implements OnInit {
   oninviteSubmit(event){
     // console.log(event);
     // this.user.details = this.editform.value
-    event.emails = event.emails.split(',');
-    event.mobiles = event.mobiles.split(',');
-    event.emails.forEach(email => {
-      var student = {
-        'email': email,
+
+    if (event.emails.indexOf(',') > -1) { 
+      event.emails = event.emails.split(',');
+      event.emails.forEach(email => {
+        var teacher = {
+          'email': email,
+          'mobile': '-'
+        }
+        this.students.push(teacher)
+      });
+     }
+     else{
+      var teacher = {
+        'email': event.emails,
         'mobile': '-'
       }
-      this.students.push(student)
-    });
-    event.mobiles.forEach(mobile => {
-      var student = {
-        'email': '-',
-        'mobile': mobile
-      }
-      this.students.push(student)
-    });
+      this.students.push(teacher)
+     }
+
+    // event.emails = event.emails.split(',');
+    // event.mobiles = event.mobiles.split(',');
+    // event.emails.forEach(email => {
+    //   var student = {
+    //     'email': email,
+    //     'mobile': '-'
+    //   }
+    //   this.students.push(student)
+    // });
+    // event.mobiles.forEach(mobile => {
+    //   var student = {
+    //     'email': '-',
+    //     'mobile': mobile
+    //   }
+    //   this.students.push(student)
+    // });
     // this.students = event;
     // this.students.mobiles.concat(event.emails);
     console.log(this.students)

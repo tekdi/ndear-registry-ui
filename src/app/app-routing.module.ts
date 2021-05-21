@@ -59,7 +59,7 @@ const routes: Routes = [
 
   { path: '', component: BoardLoginComponent },
   { path: 'board-institutes', component: BoardInstitutesComponent },
-  { path: 'board-Attestation', component: BoardAttestationsComponent },
+  { path: 'board-attestation', component: BoardAttestationsComponent },
 
   { path: 'test', component: TestComponent },
   { path: 'admin-mail', component: MailComponent },

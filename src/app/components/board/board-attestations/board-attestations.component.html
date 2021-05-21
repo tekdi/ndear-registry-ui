@@ -6,18 +6,19 @@
       <tr>
         <th scope="col">Submitted</th>
         <th scope="col">Name</th>
-        <th scope="col"></th>
+        <th scope="col">Affiliation Number</th>
       </tr>
     </thead>
     <tbody>
-      <ng-template ngFor let-item [ngForOf]="affiliations" let-i="index">
-        <tr *ngIf="item.attested == 'pending'">
-          <td>11 May 2021</td>
-          <td>Pragati Institute</td>
-          <td><a
+      <!-- <ng-template ngFor let-item [ngForOf]="affiliations" let-i="index"> -->
+        <tr *ngIf="affiliations.attested == 'pending'">
+          <td>{{currentDate | date:'dd-MM-yyyy'}}</td>
+          <td>{{institute.BasicDetails.instituteName}}</td>
+          <td>{{affiliations.affiliationNumber}}</td>
+          <td><a (click)="onAttest()"
               class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td>
         </tr>
-      </ng-template>
+      <!-- </ng-template> -->
     </tbody>
   </table>
   <hr>

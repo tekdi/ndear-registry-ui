@@ -42,10 +42,6 @@ export class InstituteProfileComponent implements OnInit {
         "title": "Affiliation Number",
         "type": "string"
       },
-      "classes": {
-        "title": "Classes/Grades",
-        "type": "string"
-      },
       "send": {
         "title": " Send for verification?",
         "type": "boolean",
@@ -55,7 +51,6 @@ export class InstituteProfileComponent implements OnInit {
     "required": [
       "affiliationType",
       "grantYear",
-      "expiryYear",
       "affiliationNumber"
     ]
   };

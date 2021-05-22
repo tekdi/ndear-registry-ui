@@ -20,9 +20,9 @@ export class InstituteProfileComponent implements OnInit {
     "title": "Affliliation",
     "properties": {
       "affiliationType": {
-        "title": "Affiliation Type",
+        "title": "Affiliation Board",
         "type": "string",
-        "enum": ['CBSC Board', 'State Board']
+        "enum": ['CBSE Board', 'State Board']
       },
       "grantYear": {
         "title": "Grant Year",

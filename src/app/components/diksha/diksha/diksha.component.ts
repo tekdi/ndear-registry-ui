@@ -1,3 +1,4 @@
+
 import { Component, OnInit , ViewChild } from '@angular/core';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
@@ -13,6 +14,9 @@ export class DikshaComponent implements OnInit {
   page: string = 'page1';
   loggedInUser : string = '';
   isLoggedIn : boolean = false;
+  showLogin : boolean = false;
+  showCourse :boolean = false;
+
   constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -46,13 +50,22 @@ export class DikshaComponent implements OnInit {
     this.closeResult = `Dismissed ${this.getDismissReason('Cross click')}`;
     this.isLoggedIn = true;
     this.loggedInUser =  JSON.parse(localStorage.getItem('consent-user'));
-
+    this.showCourse = true;
     this.page = '';
    }
 
    cancelAuth(){
     this.closeResult = `Dismissed ${this.getDismissReason('Cross click')}`;
     this.page = '';
+    this.showCourse = false;
+  }
+
+  loginPage(){
+    this.showLogin = true;
+  }
+
+  loginPage1(){
+    this.showCourse = true;
   }
 
 }

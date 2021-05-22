@@ -1,12 +1,16 @@
 <!-- <app-header [headerFor]='header1'></app-header> -->
-<div class="card p-1">
+<div class="card p-1" class="isLoggedIn">
   <div class="card-body">
-   <a class="nav-link" aria-current="page" *ngIf="!isLoggedIn" (click)="open(content)">Login with NDEAR ID</a>
+   <!-- <a class="nav-link" aria-current="page" *ngIf="!isLoggedIn" (click)="open(content)">Login with NDEAR ID</a> -->
    <a class="nav-link float-right" aria-current="page" *ngIf="isLoggedIn" >{{loggedInUser}}</a>
 
   </div>
 </div>
-<img src="assets/images/diksha.png" class="rounded"> 
+<!-- <img class="bg" src="assets/images/diksha.png" class="rounded">  -->
+<div *ngIf="!showLogin" (click)="loginPage()" class="bg"></div>
+<div *ngIf="showLogin && !showCourse"  (click)="open(content); loginPage1();" class="login"></div>
+<div *ngIf="showCourse"  class="course"></div>
+
 
 <ng-template #content let-modal>
     <!-- <div class="modal-header">

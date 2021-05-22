@@ -32,6 +32,7 @@ import { BoardAttestationsComponent } from './components/board/board-attestation
 import { ConsentAuthorizeComponent } from './components/diksha/consent-authorize/consent-authorize.component';
 import { ConsentVerificationComponent } from './components/diksha/consent-verification/consent-verification.component';
 import { TeacherConsentComponent } from './components/teacher/teacher-consent/teacher-consent.component';
+import { BoardAttestationDetailsComponent } from './components/board/board-attestation-details/board-attestation-details.component';
 
 const routes: Routes = [
   { path: 'signup', component: HomeComponent },
@@ -60,6 +61,7 @@ const routes: Routes = [
   { path: '', component: BoardLoginComponent },
   { path: 'board-institutes', component: BoardInstitutesComponent },
   { path: 'board-attestation', component: BoardAttestationsComponent },
+  { path: 'board-attestation-detail', component: BoardAttestationDetailsComponent },
 
   { path: 'test', component: TestComponent },
   { path: 'admin-mail', component: MailComponent },

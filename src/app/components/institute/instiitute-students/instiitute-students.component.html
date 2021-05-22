@@ -19,7 +19,7 @@
         <tbody>
             <ng-template ngFor let-item [ngForOf]="students" let-i="index">
                 <tr>
-                    <td>17 May 2021</td>
+                    <td>{{currentDate | date:'dd-MM-yyyy'}}</td>
                     <td>{{item.email}}</td>
                     <td>{{item.mobile}}</td>
                     <!-- <td><a [routerLink]="['/institute-attestation-detail', i]" class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td> -->

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./institute-teachers.component.css']
 })
 export class InstituteTeachersComponent implements OnInit {
+  currentDate = new Date();
   teachers = [];
   user;
   header1: string = 'institute';
@@ -37,12 +38,16 @@ export class InstituteTeachersComponent implements OnInit {
     }
   ]
   constructor(public router: Router) { 
-    this.user = JSON.parse(localStorage.getItem('user'));
-    // this.teachers = JSON.parse(localStorage.getItem('teachers'));
+    
+    
   }
 
   ngOnInit(): void {
-   
+    this.user = JSON.parse(localStorage.getItem('user'));
+    if(JSON.parse(localStorage.getItem('teachers')) != null){
+      this.teachers = JSON.parse(localStorage.getItem('teachers'));
+    }
+    
   }
 
   oninviteSubmit(event){

@@ -13,7 +13,7 @@
     <tbody>
       <ng-template ngFor let-item [ngForOf]="consent" let-i="index">
         <tr *ngIf="!item.granted">
-          <td>11 May 2021</td>
+          <td>{{currentDate | date:'dd-MM-yyyy'}}</td>
           <td>{{item.mobileEmail}}</td>
           <td><button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize" (click)="onConsentApprove(true, i)"><i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>Grant</button>
             <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize" (click)="onConsentApprove(false, i)"><i

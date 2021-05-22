@@ -49,6 +49,7 @@ import { InstituteConsentComponent } from './components/institute/institute-cons
 import { ConsentAuthorizeComponent } from './components/diksha/consent-authorize/consent-authorize.component';
 import { ConsentVerificationComponent } from './components/diksha/consent-verification/consent-verification.component';
 import { TeacherConsentComponent } from './components/teacher/teacher-consent/teacher-consent.component';
+import { BoardAttestationDetailsComponent } from './components/board/board-attestation-details/board-attestation-details.component';
 
 
 @NgModule({
@@ -86,7 +87,8 @@ import { TeacherConsentComponent } from './components/teacher/teacher-consent/te
     InstituteConsentComponent,
     ConsentAuthorizeComponent,
     ConsentVerificationComponent,
-    TeacherConsentComponent
+    TeacherConsentComponent,
+    BoardAttestationDetailsComponent
 
   ],
   imports: [

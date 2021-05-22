@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./institute-attestations.component.css']
 })
 export class InstituteAttestationsComponent implements OnInit {
+  currentDate = new Date();
   education;
   experience;
   user;

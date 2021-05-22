@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./institute-consent.component.css']
 })
 export class InstituteConsentComponent implements OnInit {
+  currentDate = new Date();
   consent: any;
   header1: string = 'institute';
   tab: string = 'consent';

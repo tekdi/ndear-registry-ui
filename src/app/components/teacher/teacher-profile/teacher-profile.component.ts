@@ -185,6 +185,7 @@ export class TeacherProfileComponent implements OnInit {
     console.log(event);
     // this.user.details = this.editform.value
     event.attested = "pending"
+    event.note = "Attestation pending"
     event.consent= false
     this.education.push(event)
     console.log(this.education)
@@ -197,6 +198,7 @@ export class TeacherProfileComponent implements OnInit {
     console.log(event);
     // this.user.details = this.editform.value
     event.attested = "pending"
+    event.note = "Attestation pending"
     event.consent= false
     this.experience.push(event)
     console.log(this.experience)

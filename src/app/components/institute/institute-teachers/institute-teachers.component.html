@@ -13,15 +13,13 @@
           <tr>
             <th scope="col">Send invite on</th>
             <th scope="col">Email Id</th>
-            <th scope="col">Mobile Number</th>
           </tr>
         </thead>
         <tbody>
             <ng-template ngFor let-item [ngForOf]="teachers" let-i="index">
                 <tr>
-                    <td>17 May 2021</td>
+                    <td>{{currentDate | date:'dd-MM-yyyy'}}</td>
                     <td>{{item.email}}</td>
-                    <td>{{item.mobile}}</td>
                     <!-- <td><a [routerLink]="['/institute-attestation-detail', i]" class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td> -->
                 </tr>
             </ng-template>

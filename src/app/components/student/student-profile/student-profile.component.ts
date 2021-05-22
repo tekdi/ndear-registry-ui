@@ -35,39 +35,33 @@ export class StudentProfileComponent implements OnInit {
         "type": "string",
         "enum": []
       },
-      "startdate": {
-        "title": "Start date",
+      "board": {
+        "title": "Board of Education",
         "type": "string",
-        "format": "date",
-        "widget": {
-          "id": "date"
-        },
+        "enum": ['CBSE', "State Board"]
       },
-      "enddate": {
-        "title": "End date",
+      "medium": {
+        "title": "Medium of Education",
         "type": "string",
-        "format": "date"
+        "enum": ['English', 'Hindi', 'Marathi', 'Gujarati']
       },
-      "grade": {
-        "title": "Grade",
-        "type": "array",
-        "items": {
-          "type": "string",
-          "enum": [
-            "Grade 1",
-            "Grade 2",
-            "Grade 3",
-            "Grade 4",
-            "Grade 5",
-            "Grade 6",
-            "Grade 7",
-            "Grade 8",
-            "Grade 9",
-            "Grade 10",
-            "Grade 11",
-            "Grade 12"
-          ]
-        }
+      "class": {
+        "title": "Enrollment Class/Std.",
+        "type": "string",
+        "enum": [
+          "Grade 1",
+          "Grade 2",
+          "Grade 3",
+          "Grade 4",
+          "Grade 5",
+          "Grade 6",
+          "Grade 7",
+          "Grade 8",
+          "Grade 9",
+          "Grade 10",
+          "Grade 11",
+          "Grade 12"
+        ]
       },
       "send": {
         "title": " Send for verification?",
@@ -77,7 +71,9 @@ export class StudentProfileComponent implements OnInit {
     },
     "required": [
       "institute",
-      "startdate"
+      "board",
+      "medium",
+      "class"
     ]
   };
   form: [
@@ -150,6 +146,7 @@ export class StudentProfileComponent implements OnInit {
     console.log(event);
     // this.user.details = this.editform.value
     event.attested = "pending"
+    event.note = "Attestation pending"
     this.education.push(event)
     console.log(this.education)
     localStorage.setItem('education', JSON.stringify(this.education));
@@ -161,7 +158,7 @@ export class StudentProfileComponent implements OnInit {
     if(localStorage.getItem('institute-detail')){
       this.institute = JSON.parse(localStorage.getItem('institute-detail')).BasicDetails.instituteName;
       this.schema.properties.institute.enum.push(this.institute)
-    } 
+    }
   }
 
   onWorkingChange(){

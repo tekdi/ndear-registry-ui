@@ -16,12 +16,12 @@ export class InstituteAttestationDetailComponent implements OnInit {
   type;
   contact;
   consent: any = false;
+  noteAdded: boolean = false;
   approveNoteSchema = {
     "type": "object",
     "title": "Invite",
     "properties": {
       "note": {
-        "title": "Approve note",
         "type": "string",
       },
     }
@@ -35,7 +35,7 @@ export class InstituteAttestationDetailComponent implements OnInit {
     ],
     "properties": {
       "note": {
-        "title": "Reason for deniel",
+        "title": "Reason for deny",
         "type": "string",
       },
     }
@@ -83,7 +83,38 @@ export class InstituteAttestationDetailComponent implements OnInit {
     
   }
 
+  onAttest(){
+    if(this.type == 'experience'){
+      this.experienceDetail.attested = true;
+      this.experience[this.id] = this.experienceDetail;
+      localStorage.setItem('experience', JSON.stringify(this.experience))
+    }else{
+      this.educationDetail.attested = true;
+      this.education[this.id] = this.educationDetail;
+      localStorage.setItem('education', JSON.stringify(this.education))
+    }
+    this.router.navigate(['institute-attestation']);
+  }
+
   onAttestApprove(action,event){
+    
+    if(this.type == 'experience'){
+      // this.experienceDetail.attested = action;
+      this.experienceDetail.note = event.note;
+      this.experience[this.id] = this.experienceDetail;
+      localStorage.setItem('experience', JSON.stringify(this.experience))
+    }else{
+      this.educationDetail.note = event.note;
+      // this.educationDetail.attested = action;
+      this.education[this.id] = this.educationDetail;
+      localStorage.setItem('education', JSON.stringify(this.education))
+    }
+    this.noteAdded = true;
+    // this.router.navigate(['institute-attestation']);
+    // window.location.reload();
+  }
+
+  onAttestDeny(action,event){
     
     if(this.type == 'experience'){
       this.experienceDetail.attested = action;

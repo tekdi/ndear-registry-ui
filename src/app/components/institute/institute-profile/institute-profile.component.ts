@@ -211,14 +211,15 @@ export class InstituteProfileComponent implements OnInit {
       "BasicDetails": {
         "$ref": "#/definitions/BasicDetails"
       },
-      "Address": {
-        "title": "Address",
-        "$ref": "#/definitions/Address"
-      },
       "gstin": {
         "title": "GSTIN ID",
         "type": "string"
       },
+      "Address": {
+        "title": "Address",
+        "$ref": "#/definitions/Address"
+      }
+
     }
   };
 
@@ -235,6 +236,7 @@ export class InstituteProfileComponent implements OnInit {
     console.log(event);
     // this.user.details = this.editform.value
     event.attested = "pending"
+    event.note = "Attestation pending"
     this.affiliations = event;
     localStorage.setItem('affiliations', JSON.stringify(this.affiliations));
     // this.education = this.educationForm.value

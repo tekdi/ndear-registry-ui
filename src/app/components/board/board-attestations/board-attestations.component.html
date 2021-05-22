@@ -4,7 +4,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">Submitted</th>
+        <th scope="col">Submitted Date</th>
         <th scope="col">Name</th>
         <th scope="col">Affiliation Number</th>
       </tr>
@@ -15,7 +15,7 @@
           <td>{{currentDate | date:'dd-MM-yyyy'}}</td>
           <td>{{institute.BasicDetails.instituteName}}</td>
           <td>{{affiliations.affiliationNumber}}</td>
-          <td><a (click)="onAttest()"
+          <td><a [routerLink]="['/board-attestation-detail']"
               class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td>
         </tr>
       <!-- </ng-template> -->

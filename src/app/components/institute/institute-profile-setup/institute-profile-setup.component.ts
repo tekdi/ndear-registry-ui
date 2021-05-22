@@ -93,6 +93,10 @@ export class InstituteProfileSetupComponent implements OnInit {
       "BasicDetails": {
         "$ref": "#/definitions/BasicDetails"
       },
+      "gstin": {
+        "title": "GSTIN ID",
+        "type": "string"
+      },
       "Address": {
         "title": "Address",
         "$ref": "#/definitions/Address"
@@ -104,11 +108,7 @@ export class InstituteProfileSetupComponent implements OnInit {
       "WhoIsAdmin": {
         "title": "Invite admin to complete the setup",
         "$ref": "#/definitions/WhoIsAdmin"
-      },
-      "gstin": {
-        "title": "GSTIN ID",
-        "type": "string"
-      },
+      }
     }
   };
  

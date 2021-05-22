@@ -11,7 +11,7 @@
                     <dd>
                         <div><b>{{experienceDetail.TeacherType}}</b></div>
                         <div>{{experienceDetail.institute}}</div>
-                        <div *ngIf="!experienceDetail.working; else elseBlock1">{{experienceDetail.startdate}} -
+                        <div *ngIf="experienceDetail.enddate; else elseBlock1">{{experienceDetail.startdate}} -
                             {{experienceDetail.enddate}}</div>
                         <ng-template #elseBlock1>
                             <div>{{experienceDetail.startdate}} - Current</div>
@@ -20,8 +20,7 @@
                     </dd>
                     <dd style="text-align-last: right;">
                         <button style="margin: 8px;"
-                            class="btn btn-primary text-end pr-20 fw-bold text-capitalize" data-toggle="modal"
-                            data-target="#approve"><i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
+                            class="btn btn-primary text-end pr-20 fw-bold text-capitalize" (click)="onAttest()"><i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
                                 title="Attested"></i>Approve</button>
                         <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize"
                             data-toggle="modal" data-target="#deny"><i
@@ -169,10 +168,21 @@
         </ng-template>
     </div>
 
-
-
-
+    <div class="card">
+        <div class="card-body">
+            <h5>Note for {{user.fullName}}</h5>
+            <ng-template [ngIf]="noteAdded">
+                <div style="color: green;"><i class="fa fa-check"></i> Note Added!
+                </div>
+            </ng-template>
+            <json-schema-form [schema]="approveNoteSchema" [layout]="form" framework="bootstrap-4"
+            (onSubmit)="onAttestApprove(true,$event)">
+        </json-schema-form>
+        </div>
+    </div>
 </div>
+
+
 
 <!-- approve Modal -->
 <div class="modal right fade" id="approve" tabindex="-1" role="dialog" aria-labelledby="approve">
@@ -208,7 +218,7 @@
 
             <div class="modal-body">
                 <json-schema-form [schema]="denyNoteSchema" [layout]="form" framework="bootstrap-4"
-                    (onSubmit)="onAttestApprove(false,$event)">
+                    (onSubmit)="onAttestDeny(false,$event)">
                 </json-schema-form>
             </div>
 

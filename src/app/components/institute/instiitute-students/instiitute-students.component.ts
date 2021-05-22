@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./instiitute-students.component.css']
 })
 export class InstiituteStudentsComponent implements OnInit {
+  currentDate = new Date();
   students = [];
   user;
   header1: string = 'institute';

@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="mt-5">
+        <h5>Claims by {{institute.BasicDetails.instituteName}}</h5>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <dl>
+            <dt class="fs-7 text-grey-color">Affiliation Board</dt>
+            <dd>{{affiliations.affiliationType}}
+            </dd>
+            <dt class="fs-7 text-grey-color">Affiliation Number</dt>
+            <dd>{{affiliations.affiliationNumber}}
+            </dd>
+            <dd style="text-align-last: right;">
+                <button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize"
+                    (click)="onAttest()"><i class="fa fa-check-circle text-success"></i>Approve</button>
+                <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize"
+                    data-toggle="modal" data-target="#deny"><i
+                        class="fa fa-exclamation-circle text-warning"></i>Deny</button>
+            </dd>
+        </dl>
+        <dl>
+            <dt class="fs-7 text-grey-color">Grant Year</dt>
+            <dd>{{affiliations.grantYear}}
+            </dd>
+            <ng-template [ngIf]="affiliations.expiryYear">
+                <dt class="fs-7 text-grey-color">Expiry Year</dt>
+                <dd>{{affiliations.expiryYear}}
+                </dd>
+            </ng-template>
+        </dl>   
+
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5>Note for {{institute.BasicDetails.instituteName}}</h5>
+            <ng-template [ngIf]="noteAdded">
+                <div style="color: green;"><i class="fa fa-check"></i> Note Added!
+                </div>
+            </ng-template>
+            <json-schema-form [schema]="approveNoteSchema" [layout]="form" framework="bootstrap-4"
+                (onSubmit)="onAttestApprove(true,$event)">
+            </json-schema-form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- deny Modal -->
+<div class="modal right fade" id="deny" tabindex="-1" role="dialog" aria-labelledby="deny">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel2">Deny Affiliation</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button> -->
+            </div>
+
+            <div class="modal-body">
+                <json-schema-form [schema]="denyNoteSchema" [layout]="form" framework="bootstrap-4"
+                    (onSubmit)="onAttestDeny(false,$event)">
+                </json-schema-form>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -4,7 +4,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">Submitted</th>
+        <th scope="col">Submitted Date</th>
         <th scope="col">Name</th>
         <th scope="col"></th>
       </tr>
@@ -12,7 +12,7 @@
     <tbody>
       <ng-template ngFor let-item [ngForOf]="attestation" let-i="index">
         <tr *ngIf="item.attested == 'pending'">
-          <td>11 May 2021</td>
+          <td>{{currentDate | date:'dd-MM-yyyy'}}</td>
           <td>{{user.fullName}}</td>
           <td><a [routerLink]="['/institute-attestation-detail', item.index, {type:item.type}]"
               class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td>

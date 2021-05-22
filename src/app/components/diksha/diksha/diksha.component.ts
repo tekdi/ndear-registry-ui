@@ -65,7 +65,7 @@ export class DikshaComponent implements OnInit {
   }
 
   loginPage1(){
-    this.showCourse = true;
+    this.showCourse = false;
   }
 
 }

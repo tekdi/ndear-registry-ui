@@ -63,9 +63,12 @@ export class InstituteAttestationDetailComponent implements OnInit {
       this.type = params['type']
     });
     this.user = JSON.parse(localStorage.getItem('user'));
-    this.consent = this.user.consent;
+    if(this.user.consent){
+      this.consent = this.user.consent;
+    }
+    
     if(this.consent != 'granted'){
-      this.contact = this.user.mobileEmail[0] + "*".repeat(this.user.mobileEmail.length - 2) + this.user.mobileEmail.slice(-1);
+      this.contact = this.user.mobileEmail.substring(0,3) + "*".repeat(this.user.mobileEmail.length - 6) + this.user.mobileEmail.slice(-3);
     }else{
       this.contact = this.user.mobileEmail
     }
@@ -93,8 +96,8 @@ export class InstituteAttestationDetailComponent implements OnInit {
       this.education[this.id] = this.educationDetail;
       localStorage.setItem('education', JSON.stringify(this.education))
     }
-    // this.router.navigate(['institute-attestation']);
-    window.location.reload();
+    this.router.navigate(['institute-attestation']);
+    // window.location.reload();
   }
   onConsent(){
     this.user.consent = true;

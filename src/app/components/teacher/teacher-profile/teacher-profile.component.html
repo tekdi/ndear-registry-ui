@@ -25,7 +25,7 @@
                     <ng-template [ngIf]="user.dob">
                         <dt class="fs-7 text-grey-color">Date of Birth</dt>
                         <dd>{{user.dob}}
-                            <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>
+                            <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
                         </dd>
                     </ng-template>
                 </dl>
@@ -61,14 +61,14 @@
                 </dl>
             </ng-template>
 
-
-            <dl>
-                <ng-template [ngIf]="user.address">
-                    <dt class="fs-7 text-grey-color">Address</dt>
-                    <dd>{{user.address}}</dd>
-                </ng-template>
-
-            </dl>
+            <ng-template [ngIf]="user.address">
+                <dl>
+                    <ng-template [ngIf]="user.address">
+                        <dt class="fs-7 text-grey-color">Address</dt>
+                        <dd>{{user.address}}</dd>
+                    </ng-template>
+                </dl>
+            </ng-template>
         </div>
     </div>
 

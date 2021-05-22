@@ -10,16 +10,24 @@ import { Router } from '@angular/router';
 export class InstituteSignupComponent implements OnInit {
   form: FormGroup;
   header1: string = 'plain';
+  user: any;
   constructor(fb: FormBuilder, public router: Router) { 
+    if(JSON.parse(localStorage.getItem('institutes-invite')) != null){
+      this.user = JSON.parse(localStorage.getItem('institutes-invite'))[0].email;
+      // this.form.value.fullName = this.user;
+    }else{
+      this.user = 'jayant@pragatiinstitute.com'
+    }
     this.form = fb.group({
       fullName: ['', Validators.required],
-      mobileEmail: ['', Validators.required],
+      mobileEmail: [this.user, Validators.required],
       accepted: false
     });
   }
 
   ngOnInit(): void {
-  
+
+    
   }
 
   onSubmit(){

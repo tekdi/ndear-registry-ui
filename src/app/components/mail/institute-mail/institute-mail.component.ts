@@ -11,7 +11,7 @@ export class InstituteMailComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    // this.user = JSON.parse(localStorage.getItem('institutes-invite'))[0];
+    this.user = JSON.parse(localStorage.getItem('institutes-invite'))[0];
   }
 
 }

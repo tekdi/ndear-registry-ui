@@ -33,7 +33,7 @@ export class TeacherProfileComponent implements OnInit {
       "institute": {
         "title": "Institute Name",
         "type": "string",
-        "enum": []
+        "enum": ['Bhartiya Shiksha Parishad','Sarvoday School','Aadharshila Institute']
       },
       "EmploymentType": {
         "title": "Employment Type",
@@ -91,7 +91,7 @@ export class TeacherProfileComponent implements OnInit {
       "institute": {
         "title": "Institute Name",
         "type": "string",
-        "enum": []
+        "enum": ['Bhartiya Shiksha Parishad','Sarvoday School','Aadharshila Institute']
       },
       "Qualification": {
         "title": "Qualification",

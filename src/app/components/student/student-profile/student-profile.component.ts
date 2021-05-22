@@ -31,9 +31,9 @@ export class StudentProfileComponent implements OnInit {
     "title": "Comment",
     "properties": {
       "institute": {
-        "title": "Institute",
+        "title": "Institute Name",
         "type": "string",
-        "enum": []
+        "enum": ['Bhartiya Shiksha Parishad','Sarvoday School','Aadharshila Institute']
       },
       "board": {
         "title": "Board of Education",

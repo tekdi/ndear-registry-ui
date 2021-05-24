@@ -224,6 +224,7 @@ export class InstituteProfileComponent implements OnInit {
 
     }
   };
+  instituteEntity: string;
 
   constructor(
     public instituteProfileService: InstituteProfileService
@@ -233,10 +234,11 @@ export class InstituteProfileComponent implements OnInit {
     this.institute = JSON.parse(localStorage.getItem('institute-detail'));
     this.affiliations = JSON.parse(localStorage.getItem('affiliations'));
     this.attestations = JSON.parse(localStorage.getItem('education'));
+    this.instituteEntity = localStorage.getItem('institute-entity');
     console.log(this.affiliations);
 
 
-    this.instituteProfileService.getInstituteProfile().subscribe((res)=>{
+    this.instituteProfileService.getInstituteProfile(this.instituteEntity).subscribe((res)=>{
       console.log({res});
        this.item = res;
 
@@ -255,29 +257,7 @@ export class InstituteProfileComponent implements OnInit {
   onEditProfileSubmit(event) {
     this.institute = event;
 
-    const data = {
-      "schoolCode": "string",
-      "schoolName": "Pragati Institute",
-      "adminEmail": "admin@pragatiinstitute.com",
-      "adminMobile": "",
-      "address": {
-        "addressLine1": "28",
-        "addressLine2": "Munjaba Wasti",
-        "district": "Dhanori",
-        "state": "Maharastra",
-        "pinCode": "411015"
-      }
-    }
 
-    console.log('this.institute --> ', data);
-
-    this.instituteProfileService.postInstituteProfile(data).subscribe((res) => {
-      console.log({ res });
-      if (res.responseCode == 'OK') {
-        alert('Institude Profile added successfully');
-      }
-
-    });
 
     localStorage.setItem('institute-detail', JSON.stringify(this.institute));
   }

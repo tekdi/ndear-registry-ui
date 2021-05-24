@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { DataService } from '../data/data-request.service';
-
+import { environment, ApiPaths } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InstituteProfileService {
 
+  baseUrl = environment.baseUrl;
+
   constructor(public dataService: DataService) {
   }
 
   postInstituteProfile(data) {
-    let url = 'https://ndear.xiv.in/registry/api/v1/School';
-
+    let url = `${this.baseUrl}/${ApiPaths.Institute}`;
     const req = {
       url: url,
       data: data
@@ -21,9 +22,8 @@ export class InstituteProfileService {
     return this.dataService.post(req);
   }
 
-  getInstituteProfile() {
-    let url = 'https://ndear.xiv.in/registry/api/v1/School/1-8960e82c-e941-4d47-b160-788ed7786dc6';
-
+  getInstituteProfile(id) {
+    let url = `${this.baseUrl}/${ApiPaths.Institute}/${id}`;
     const req = {
       url: url
     };

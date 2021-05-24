@@ -26,8 +26,6 @@ export class InstituteSignupComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    
   }
 
   onSubmit(){

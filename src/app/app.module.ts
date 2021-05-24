@@ -47,6 +47,12 @@ import { ConsentAuthorizeComponent } from './components/diksha/consent-authorize
 import { ConsentVerificationComponent } from './components/diksha/consent-verification/consent-verification.component';
 import { TeacherConsentComponent } from './components/teacher/teacher-consent/teacher-consent.component';
 import { BoardAttestationDetailsComponent } from './components/board/board-attestation-details/board-attestation-details.component';
+import {
+  SchemaFormModule,
+  WidgetRegistry,
+  DefaultWidgetRegistry,
+} from "ngx-schema-form";
+
 
 /* Service files */
 import { BoardInstituteService} from './services/board/board-institutes/board-institutes.service';
@@ -106,11 +112,13 @@ import { AdminFormService } from './services/admin-form.service';
     SuiModule,
     // MaterialDesignFrameworkModule,
     Bootstrap4FrameworkModule,
+    SchemaFormModule.forRoot()
   ],
   schemas: [],
   entryComponents: [],
   bootstrap: [AppComponent],
   providers: [ 
+    { provide: WidgetRegistry, useClass: DefaultWidgetRegistry },
     AdminFormService,
     BoardInstituteService
   ]

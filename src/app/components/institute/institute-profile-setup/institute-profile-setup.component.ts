@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { InstituteProfileService } from 'src/app/services/institute/institute-profile.service';
 
 @Component({
   selector: 'app-institute-profile-setup',
@@ -120,7 +121,7 @@ export class InstituteProfileSetupComponent implements OnInit {
       "title": "save"
     }
   ]
-  constructor(public router: Router) { }
+  constructor(public router: Router, public instituteProfileService: InstituteProfileService) { }
 
   ngOnInit(): void {
     
@@ -129,6 +130,32 @@ export class InstituteProfileSetupComponent implements OnInit {
     console.log(data)
     localStorage.setItem('admin-setup',"true");
     localStorage.setItem('institute-detail',JSON.stringify(data));
+
+    const formData = {
+      "schoolCode": "string",
+      "schoolName": "Pragati Institute",
+      "adminEmail": "admin@pragatiinstitute.com",
+      "adminMobile": "",
+      "address": {
+        "addressLine1": "28",
+        "addressLine2": "Munjaba Wasti",
+        "district": "Dhanori",
+        "state": "Maharastra",
+        "pinCode": "411015"
+      }
+    }
+
+    console.log('this.institute --> ', data);
+
+    this.instituteProfileService.postInstituteProfile(formData).subscribe((res) => {
+      console.log({ res });
+      if (res.responseCode == 'OK') {
+        localStorage.setItem('institute-entity',res.result.School.osid);
+        alert('Institude Profile added successfully');
+      }
+
+    });
+
     // const url = this.router.createUrlTree(['/admin-mail'])
     // window.open(url.toString(), '_blank')
     // this.router.navigate(['institute-profile-select']);

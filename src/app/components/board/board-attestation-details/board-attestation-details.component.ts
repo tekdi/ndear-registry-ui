@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./board-attestation-details.component.css']
 })
 export class BoardAttestationDetailsComponent implements OnInit {
+  
   affiliations: any;
   institute: any;
   noteAdded: boolean = false;

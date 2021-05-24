@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { InstituteProfileService } from '../../../services/institute/institute-profile.service';
 
 @Component({
   selector: 'app-institute-profile',
@@ -14,6 +15,7 @@ export class InstituteProfileComponent implements OnInit {
   user;
   header1: string = 'institute';
   tab: string = 'home';
+  item: any;
 
   schema = {
     "type": "object",
@@ -36,7 +38,7 @@ export class InstituteProfileComponent implements OnInit {
         "title": "Expiry Year",
         "type": "string",
         "format": "date"
-        
+
       },
       "affiliationNumber": {
         "title": "Affiliation Number",
@@ -88,7 +90,7 @@ export class InstituteProfileComponent implements OnInit {
             "type": "string"
           },
           "ContactNumber": {
-            "title":"Landline / Mobile",
+            "title": "Landline / Mobile",
             "type": "number"
           },
           "Email": {
@@ -101,11 +103,11 @@ export class InstituteProfileComponent implements OnInit {
             "type": "string"
           },
           "headPerson": {
-            "title":"Principal / Dean / Head - Full Name",
+            "title": "Principal / Dean / Head - Full Name",
             "type": "string"
           },
           "trust": {
-            "title":"Name of Trust / Society / Managing Committee",
+            "title": "Name of Trust / Society / Managing Committee",
             "type": "string"
           },
           "instututeType": {
@@ -126,7 +128,7 @@ export class InstituteProfileComponent implements OnInit {
                 "Hr. Sec. /Jr. College only with grades 11 & 12"
               ]
             }
-            
+
           },
           "SchoolType": {
             "title": "School Type",
@@ -165,7 +167,7 @@ export class InstituteProfileComponent implements OnInit {
           },
           "YearOfEstablishmentOfInstitute": {
             "type": "number"
-          },     
+          },
         }
       },
       "Address": {
@@ -198,7 +200,7 @@ export class InstituteProfileComponent implements OnInit {
             "type": "string"
           },
           "City": {
-            "title":"Village/Town/City",
+            "title": "Village/Town/City",
             "type": "string"
           },
           "pincode": {
@@ -223,16 +225,25 @@ export class InstituteProfileComponent implements OnInit {
     }
   };
 
-  constructor() {  }
+  constructor(
+    public instituteProfileService: InstituteProfileService
+  ) { }
 
   ngOnInit(): void {
     this.institute = JSON.parse(localStorage.getItem('institute-detail'));
     this.affiliations = JSON.parse(localStorage.getItem('affiliations'));
     this.attestations = JSON.parse(localStorage.getItem('education'));
-    console.log(this.affiliations)
+    console.log(this.affiliations);
+
+
+    this.instituteProfileService.getInstituteProfile().subscribe((res)=>{
+      console.log({res});
+       this.item = res;
+
+    })
   }
 
-  onAffiliationSubmit(event){
+  onAffiliationSubmit(event) {
     console.log(event);
     // this.user.details = this.editform.value
     event.attested = "pending"
@@ -241,8 +252,33 @@ export class InstituteProfileComponent implements OnInit {
     localStorage.setItem('affiliations', JSON.stringify(this.affiliations));
     // this.education = this.educationForm.value
   }
-  onEditProfileSubmit(event){
+  onEditProfileSubmit(event) {
     this.institute = event;
+
+    const data = {
+      "schoolCode": "string",
+      "schoolName": "Pragati Institute",
+      "adminEmail": "admin@pragatiinstitute.com",
+      "adminMobile": "",
+      "address": {
+        "addressLine1": "28",
+        "addressLine2": "Munjaba Wasti",
+        "district": "Dhanori",
+        "state": "Maharastra",
+        "pinCode": "411015"
+      }
+    }
+
+    console.log('this.institute --> ', data);
+
+    this.instituteProfileService.postInstituteProfile(data).subscribe((res) => {
+      console.log({ res });
+      if (res.responseCode == 'OK') {
+        alert('Institude Profile added successfully');
+      }
+
+    });
+
     localStorage.setItem('institute-detail', JSON.stringify(this.institute));
   }
 

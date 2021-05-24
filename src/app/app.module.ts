@@ -31,11 +31,8 @@ import { InstituteAttestationDetailComponent } from './components/institute/inst
 import { InstituteTeachersComponent } from './components/institute/institute-teachers/institute-teachers.component';
 import { TeacherMailComponent } from './components/mail/teacher-mail/teacher-mail.component';
 import { TeacherProfileComponent } from './components/teacher/teacher-profile/teacher-profile.component';
-
-import { AdminFormService } from '../app/services/admin-form.service';
 import { ConsentLoginComponent } from './components/diksha/consent-login/consent-login.component';
 import { DikshaComponent } from './components/diksha/diksha/diksha.component';
-
 import { InstiituteStudentsComponent } from './components/institute/instiitute-students/instiitute-students.component';
 import { StudentMailComponent } from './components/mail/student-mail/student-mail.component';
 import { InstituteMailComponent } from './components/mail/institute-mail/institute-mail.component';
@@ -51,6 +48,9 @@ import { ConsentVerificationComponent } from './components/diksha/consent-verifi
 import { TeacherConsentComponent } from './components/teacher/teacher-consent/teacher-consent.component';
 import { BoardAttestationDetailsComponent } from './components/board/board-attestation-details/board-attestation-details.component';
 
+/* Service files */
+import { BoardInstituteService} from './services/board/board-institutes/board-institutes.service';
+import { AdminFormService } from './services/admin-form.service';
 
 @NgModule({
   declarations: [
@@ -110,7 +110,10 @@ import { BoardAttestationDetailsComponent } from './components/board/board-attes
   schemas: [],
   entryComponents: [],
   bootstrap: [AppComponent],
-  providers: [ AdminFormService]
+  providers: [ 
+    AdminFormService,
+    BoardInstituteService
+  ]
 })
 export class AppModule {
 }

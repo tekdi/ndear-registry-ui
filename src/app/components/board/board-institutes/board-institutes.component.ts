@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BoardInstituteService } from '../../../services/board/board-institutes/board-institutes.service';
 
 @Component({
   selector: 'app-board-institutes',
@@ -11,6 +12,7 @@ displayResult : boolean = false;
 header1: string = 'board';
 institutes = [];
 tab: string = 'institutes';
+boardList: any;
 schema = {
   "type": "object",
   "title": "Invite",
@@ -34,9 +36,22 @@ form = [
     "title": "Send Invite"
   }
 ]
-  constructor(public router: Router) { }
+  constructor(
+    public router: Router,
+    public boardInstituteService: BoardInstituteService) { }
  
   ngOnInit(): void {
+
+   this.boardInstituteService.getBordInstitute().subscribe(res=>{
+    this.boardList = res;
+    console.log(this.boardList);
+
+
+  }, (err)=>{
+    console.log({err});
+
+  });
+
   }
 
   showResult(){

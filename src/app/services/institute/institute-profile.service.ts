@@ -19,7 +19,11 @@ export class InstituteProfileService {
       data: data
     };
 
-    return this.dataService.post(req);
+    if(!data.identifier){
+      return this.dataService.post(req);
+    }else{
+      return this.dataService.patch(req);
+    }
   }
 
   getInstituteProfile(id) {

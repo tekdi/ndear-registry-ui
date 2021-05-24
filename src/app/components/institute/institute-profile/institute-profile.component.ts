@@ -254,10 +254,32 @@ export class InstituteProfileComponent implements OnInit {
     localStorage.setItem('affiliations', JSON.stringify(this.affiliations));
     // this.education = this.educationForm.value
   }
+
   onEditProfileSubmit(event) {
     this.institute = event;
 
+    const data = {
+      "schoolCode": "string",
+      "schoolName": this.institute.BasicDetails.instituteName,
+      "adminEmail": this.institute.BasicDetails.Email,
+      "identifier": "",
+      "adminMobile": String(this.institute.BasicDetails.ContactNumber),
+      "address": {
+        "addressLine1":  this.institute.Address.Plot + ', ' + this.institute.Address.Street,
+        "addressLine2": this.institute.Address.Landmark + ', ' + this.institute.Address.Locality,
+        "district": this.institute.Address.District,
+        "state":  this.institute.Address.State,
+        "pinCode": this.institute.Address.pinCode,
+      }
+    }
 
+
+    this.instituteProfileService.postInstituteProfile(data).subscribe((res) => {
+      if (res.responseCode == 'OK') {
+        alert('Institude Profile added successfully');
+      }
+
+    });
 
     localStorage.setItem('institute-detail', JSON.stringify(this.institute));
   }

@@ -38,15 +38,29 @@
             <div class="card-body" style="height: 128px;">
                 <dl>
                     <dd>
-                        <div><b>{{educationDetail.Qualification}}</b></div>
-                        <div>{{educationDetail.institute}}</div>
-                        <div>{{educationDetail.year}}</div>
-                        <div class="fs-7 text-grey-color">Marks/Ranking/GPA : {{educationDetail.marks}}</div>
+                        <ng-template [ngIf]="educationDetail.Qualification">
+                            <div><b>{{educationDetail.Qualification}}</b></div>
+                        </ng-template>
+                        
+                        <ng-template [ngIf]="educationDetail.institute">
+                            <div>{{educationDetail.institute}}</div>
+                        </ng-template>
+                        <ng-template [ngIf]="educationDetail.year">
+                            <div>{{educationDetail.year}}</div>
+                        </ng-template>
+                        <ng-template [ngIf]="educationDetail.medium">
+                            <div>Medium : {{educationDetail.medium}}</div>
+                        </ng-template>
+                        <ng-template [ngIf]="educationDetail.marks">
+                            <div class="fs-7 text-grey-color">Marks/Ranking/GPA : {{educationDetail.marks}}</div>
+                        </ng-template>
+                        <ng-template [ngIf]="educationDetail.class">
+                            <div class="fs-7 text-grey-color">Class/Grade : {{educationDetail.class}}</div>
+                        </ng-template>
                     </dd>
                     <dd style="text-align-last: right;">
                         <button style="margin: 8px;"
-                            class="btn btn-primary text-end pr-20 fw-bold text-capitalize" data-toggle="modal"
-                            data-target="#approve"><i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
+                            class="btn btn-primary text-end pr-20 fw-bold text-capitalize" (click)="onAttest()"><i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
                                 title="Attested"></i>Approve</button>
                         <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize"
                             data-toggle="modal" data-target="#deny"><i
@@ -92,12 +106,12 @@
                         <dt class="fs-7 text-grey-color">Gender</dt>
                         <dd>{{user.gender}}</dd>
                     </ng-template>
-                    <ng-template [ngIf]="user.dob">
+                    <!-- <ng-template [ngIf]="user.dob">
                         <dt class="fs-7 text-grey-color">Date of Birth</dt>
                         <dd>{{user.dob.day}}/{{user.dob.month}}/{{user.dob.year}}
                             <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>
                         </dd>
-                    </ng-template>
+                    </ng-template> -->
                 </dl>
             </ng-template>
             <dl>

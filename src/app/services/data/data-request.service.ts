@@ -4,6 +4,8 @@ import { of as observableOf, throwError as observableThrowError, Observable } fr
 import { HttpOptions } from '../../interfaces/httpOptions.interface';
 import { mergeMap } from 'rxjs/operators';
 import * as _ from 'lodash-es';
+import { environment, ApiPaths } from '../../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,7 @@ export class DataService {
 /**
  * Contains base Url for api end points
  */
-  baseUrl: string;
+ baseUrl = environment.baseUrl;
 
   constructor(
     private http: HttpClient) {
@@ -40,7 +42,7 @@ export class DataService {
       params: requestParam.param
     };
 
-    return this.http.post(requestParam.url, requestParam.data, httpOptions).pipe(
+    return this.http.post(`${this.baseUrl}/${requestParam.url}`, requestParam.data, httpOptions).pipe(
       mergeMap((data: any) => {
         if (data.responseCode !== 'OK') {
           return observableThrowError(data);
@@ -61,7 +63,7 @@ export class DataService {
       params: requestParam.param
     };
 
-    return this.http.get(requestParam.url, httpOptions).pipe(
+    return this.http.get(`${this.baseUrl}/${requestParam.url}`, httpOptions).pipe(
       mergeMap((data: any) => {
 
         return observableOf(data);
@@ -78,7 +80,7 @@ export class DataService {
       headers: requestParam.header ? this.getHeader(requestParam.header) : this.getHeader(),
       params: requestParam.param
     };
-    return this.http.patch(requestParam.url, requestParam.data, httpOptions).pipe(
+    return this.http.patch(`${this.baseUrl}/${requestParam.url}`, requestParam.data, httpOptions).pipe(
       mergeMap((data: any) => {
         if (data.responseCode !== 'OK') {
           return observableThrowError(data);

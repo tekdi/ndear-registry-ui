@@ -42,6 +42,7 @@
     "ng-otp-input": "^1.7.1",
     "ng2-semantic-ui": "^0.9.7",
     "ngx-schema-form": "^2.6.5",
+    "ngx-toastr": "^14.0.0",
     "path": "^0.12.7",
     "random-words": "^1.1.0",
     "redux": "4.0.1",

@@ -53,10 +53,14 @@ import {
   DefaultWidgetRegistry,
 } from "ngx-schema-form";
 
+import { ToastrModule } from 'ngx-toastr';
+
 
 /* Service files */
 import { BoardInstituteService} from './services/board/board-institutes/board-institutes.service';
 import { AdminFormService } from './services/admin-form.service';
+import { TeacherProfileService } from './services/teacher/teacher-profile.service';
+import { StudentProfileService} from './services/student/student-profile.service';
 
 @NgModule({
   declarations: [
@@ -112,7 +116,11 @@ import { AdminFormService } from './services/admin-form.service';
     SuiModule,
     // MaterialDesignFrameworkModule,
     Bootstrap4FrameworkModule,
-    SchemaFormModule.forRoot()
+    SchemaFormModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-center',
+    preventDuplicates: true,
+    })
   ],
   schemas: [],
   entryComponents: [],
@@ -120,7 +128,9 @@ import { AdminFormService } from './services/admin-form.service';
   providers: [ 
     { provide: WidgetRegistry, useClass: DefaultWidgetRegistry },
     AdminFormService,
-    BoardInstituteService
+    BoardInstituteService,
+    TeacherProfileService,
+    StudentProfileService
   ]
 })
 export class AppModule {

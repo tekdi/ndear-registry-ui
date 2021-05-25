@@ -151,17 +151,20 @@ export class InstituteProfileSetupComponent implements OnInit {
     localStorage.setItem('admin-setup',"true");
     localStorage.setItem('institute-detail',JSON.stringify(data));
 
+    
+
     const formData = {
       "schoolCode": "string",
-      "schoolName": "Pragati Institute",
-      "adminEmail": "admin@pragatiinstitute.com",
-      "adminMobile": "",
+      "schoolName":data.BasicDetails.instituteName,
+      "adminEmail":data.BasicDetails.Email,
+      "identifier": "",
+      "adminMobile": String(data.BasicDetails.ContactNumber),
       "address": {
-        "addressLine1": "28",
-        "addressLine2": "Munjaba Wasti",
-        "district": "Dhanori",
-        "state": "Maharastra",
-        "pinCode": "411015"
+        "addressLine1":data.Address.Plot + ', ' +data.Address.Street,
+        "addressLine2":data.Address.Landmark + ', ' +data.Address.Locality,
+        "district":data.Address.District,
+        "state":data.Address.State,
+        "pinCode":data.Address.pinCode,
       }
     }
 
@@ -171,7 +174,6 @@ export class InstituteProfileSetupComponent implements OnInit {
       console.log({ res });
       if (res.responseCode == 'OK') {
         localStorage.setItem('institute-entity',res.result.School.osid);
-        alert('Institude Profile added successfully');
       }
 
     });

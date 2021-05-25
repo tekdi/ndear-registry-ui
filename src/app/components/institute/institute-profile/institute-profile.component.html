@@ -23,22 +23,21 @@
         <div class="card-body">
             <dl>
                 <dt class="fs-7 text-grey-color">Institute Name</dt>
-                <dd><b>{{item?.schoolName}}</b></dd>
+                <dd><b>{{institute?.BasicDetails?.instituteName}}</b></dd>
                 <ng-template [ngIf]="institute.BasicDetails.trust">
                     <dt class="fs-7 text-grey-color">Trust / Society / Managing Committee</dt>
                     <dd>{{institute.BasicDetails.trust}}</dd>
                 </ng-template>
-
             </dl>
             <ng-template [ngIf]="institute.BasicDetails.Email || institute.BasicDetails.ContactNumber">
                 <dl>
                     <ng-template [ngIf]="institute.BasicDetails.Email">
                         <dt class="fs-7 text-grey-color">Email</dt>
-                        <dd>{{item?.adminEmail}}</dd>
+                        <dd>{{institute?.BasicDetails?.Email}}</dd>
                     </ng-template>
                     <ng-template [ngIf]="institute.BasicDetails.ContactNumber">
                         <dt class="fs-7 text-grey-color">Landline / Mobile</dt>
-                        <dd>{{item?.adminMobile}}</dd>
+                        <dd>{{institute?.BasicDetails?.ContactNumber}}</dd>
                     </ng-template>
                 </dl>
             </ng-template>

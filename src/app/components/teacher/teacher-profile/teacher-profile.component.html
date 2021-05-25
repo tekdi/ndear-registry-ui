@@ -14,58 +14,58 @@
         <div class="card-body">
             <dl>
                 <dt class="fs-7 text-grey-color">Full Name</dt>
-                <dd>{{user.fullName}}</dd>
+                <dd>{{item?.teacherName}}</dd>
             </dl>
             <ng-template [ngIf]="user.gender || user.dob">
                 <dl>
-                    <ng-template [ngIf]="user.gender">
+                    <ng-template [ngIf]="item?.gender">
                         <dt class="fs-7 text-grey-color">Gender</dt>
-                        <dd>{{user.gender}}</dd>
+                        <dd>{{item?.gender}}</dd>
                     </ng-template>
-                    <ng-template [ngIf]="user.dob">
+                    <ng-template [ngIf]="item?.dob">
                         <dt class="fs-7 text-grey-color">Date of Birth</dt>
-                        <dd>{{user.dob}}
+                        <dd>{{item?.dob}}
                             <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
                         </dd>
                     </ng-template>
                 </dl>
             </ng-template>
 
-            <ng-template [ngIf]="user.mobileEmail || user.mobile">
+            <ng-template [ngIf]="item?.email || item?.mobile">
                 <dl>
-                    <ng-template [ngIf]="user.mobileEmail">
+                    <ng-template [ngIf]="item?.email">
                         <dt class="fs-7 text-grey-color">Email ID</dt>
-                        <dd>{{user.mobileEmail}}</dd>
+                        <dd>{{item?.email}}</dd>
                     </ng-template>
-                    <ng-template [ngIf]="user.mobile">
+                    <ng-template [ngIf]="item?.mobile">
                         <dt class="fs-7 text-grey-color">Mobile Number</dt>
-                        <dd>{{user.mobile}}
+                        <dd>{{item?.mobile}}
                             <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>
                         </dd>
                     </ng-template>
                 </dl>
             </ng-template>
 
-            <ng-template [ngIf]="user.idType || user.aadhaarNo">
+            <ng-template [ngIf]="item?.nationalIdentifier || item?.aadhaarNo">
                 <dl>
-                    <ng-template [ngIf]="user.idType">
+                    <ng-template [ngIf]="item?.nationalIdentifier">
                         <dt class="fs-7 text-grey-color">ID Type</dt>
-                        <dd>{{user.idType}}</dd>
+                        <dd>{{user.nationalIdentifier}}</dd>
                     </ng-template>
-                    <ng-template [ngIf]="user.aadhaarNo">
+                    <ng-template [ngIf]="item?.aadhaarNo">
                         <dt class="fs-7 text-grey-color">Aadhaar Number</dt>
-                        <dd>{{user.aadhaarNo}}
+                        <dd>{{item?.aadhaarNo}}
                             <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>
                         </dd>
                     </ng-template>
                 </dl>
             </ng-template>
 
-            <ng-template [ngIf]="user.address">
+            <ng-template [ngIf]="item?.address">
                 <dl>
-                    <ng-template [ngIf]="user.address">
+                    <ng-template [ngIf]="item?.address">
                         <dt class="fs-7 text-grey-color">Address</dt>
-                        <dd>{{user.address}}</dd>
+                        <dd>{{item?.address}} {{item?.district}}  {{item?.state}}</dd>
                     </ng-template>
                 </dl>
             </ng-template>
@@ -318,17 +318,17 @@
                     <div class="card-body">
                         <dl>
                             <dt class="fs-7 text-grey-color">Full Name</dt>
-                            <dd>{{user.fullName}}</dd>
+                            <dd>{{item?.teacherName}}</dd>
                         </dl>
-                        <ng-template [ngIf]="user.gender || user.dob">
+                        <ng-template [ngIf]="item?.gender || item?.dob">
                             <dl>
-                                <ng-template [ngIf]="user.gender">
+                                <ng-template [ngIf]="item?.gender">
                                     <dt class="fs-7 text-grey-color">Gender</dt>
-                                    <dd>{{user.gender}}</dd>
+                                    <dd>{{item?.gender}}</dd>
                                 </ng-template>
-                                <ng-template [ngIf]="user.dob">
+                                <ng-template [ngIf]="item?.dob">
                                     <dt class="fs-7 text-grey-color">Date of Birth</dt>
-                                    <dd>{{user.dob}}
+                                    <dd>{{item?.dob}}
                                         <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
                                             title="Attested"></i>
                                     </dd>
@@ -336,15 +336,15 @@
                             </dl>
                         </ng-template>
 
-                        <ng-template [ngIf]="user.mobileEmail || user.mobile">
+                        <ng-template [ngIf]="item?.email || item?.mobile">
                             <dl>
-                                <ng-template [ngIf]="user.mobileEmail">
+                                <ng-template [ngIf]="item?.email">
                                     <dt class="fs-7 text-grey-color">Email ID</dt>
-                                    <dd>{{user.mobileEmail}}</dd>
+                                    <dd>{{item?.email}}</dd>
                                 </ng-template>
-                                <ng-template [ngIf]="user.mobile">
+                                <ng-template [ngIf]="item?.mobile">
                                     <dt class="fs-7 text-grey-color">Mobile Number</dt>
-                                    <dd>{{user.mobile}}
+                                    <dd>{{item?.mobile}}
                                         <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
                                             title="Attested"></i>
                                     </dd>
@@ -352,15 +352,15 @@
                             </dl>
                         </ng-template>
 
-                        <ng-template [ngIf]="user.idType || user.aadhaarNo">
+                        <ng-template [ngIf]="item?.nationalIdentifier || user.aadhaarNo">
                             <dl>
-                                <ng-template [ngIf]="user.idType">
+                                <ng-template [ngIf]="item?.nationalIdentifier">
                                     <dt class="fs-7 text-grey-color">ID Type</dt>
-                                    <dd>{{user.idType}}</dd>
+                                    <dd>{{user.nationalIdentifier}}</dd>
                                 </ng-template>
-                                <ng-template [ngIf]="user.aadhaarNo">
+                                <ng-template [ngIf]="item?.aadhaarNo">
                                     <dt class="fs-7 text-grey-color">Aadhaar Number</dt>
-                                    <dd>{{user.aadhaarNo}}
+                                    <dd>{{item?.aadhaarNo}}
                                         <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
                                             title="Attested"></i>
                                     </dd>
@@ -370,9 +370,9 @@
 
 
                         <dl>
-                            <ng-template [ngIf]="user.address">
+                            <ng-template [ngIf]="item?.address">
                                 <dt class="fs-7 text-grey-color">Address</dt>
-                                <dd>{{user.address}}</dd>
+                                <dd>{{item?.address}} {{item?.district}}  {{item?.state}}</dd>
                             </ng-template>
 
                         </dl>

@@ -5,15 +5,14 @@ import { environment, ApiPaths } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class InstituteProfileService {
+export class TeacherProfileService {
 
-  baseUrl = environment.baseUrl;
 
   constructor(public dataService: DataService) {
   }
 
-  postInstituteProfile(data) {
-    let url = `${ApiPaths.Institute}`;
+  postTeacherProfile(data) {
+    let url = `${ApiPaths.Teacher}`;
     const req = {
       url: url,
       data: data
@@ -26,8 +25,8 @@ export class InstituteProfileService {
     }
   }
 
-  getInstituteProfile(id) {
-    let url = `${ApiPaths.Institute}/${id}`;
+  getTeacherProfile(id) {
+    let url = `${ApiPaths.Teacher}/${id}`;
     const req = {
       url: url
     };

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { InstituteProfileService } from '../../../services/institute/institute-profile.service';
-
+import { ToastMessageService } from '../../../services/toast-message/toast-message.service';
 @Component({
   selector: 'app-institute-profile',
   templateUrl: './institute-profile.component.html',
@@ -227,7 +227,8 @@ export class InstituteProfileComponent implements OnInit {
   instituteEntity: string;
 
   constructor(
-    public instituteProfileService: InstituteProfileService
+    public instituteProfileService: InstituteProfileService,
+    public toastMsg: ToastMessageService
   ) { }
 
   ngOnInit(): void {
@@ -238,11 +239,18 @@ export class InstituteProfileComponent implements OnInit {
     console.log(this.affiliations);
 
 
-    this.instituteProfileService.getInstituteProfile(this.instituteEntity).subscribe((res)=>{
-      console.log({res});
-       this.item = res;
+    this.instituteProfileService.getInstituteProfile(this.instituteEntity).subscribe((res) => {
+      console.log({ res });
 
-    })
+      this.institute.BasicDetails.instituteName = res.schoolName;
+      this.institute.BasicDetails.Email = res.adminEmail;
+
+      this.institute.BasicDetails.ContactNumber = res.adminMobile;
+      this.institute.Address.District = res.address.district;
+      this.institute.Address.State = res.address.state;
+      this.institute.Address.pinCode = res.address.pinCode;
+
+    });
   }
 
   onAffiliationSubmit(event) {
@@ -265,23 +273,23 @@ export class InstituteProfileComponent implements OnInit {
       "identifier": "",
       "adminMobile": String(this.institute.BasicDetails.ContactNumber),
       "address": {
-        "addressLine1":  this.institute.Address.Plot + ', ' + this.institute.Address.Street,
+        "addressLine1": this.institute.Address.Plot + ', ' + this.institute.Address.Street,
         "addressLine2": this.institute.Address.Landmark + ', ' + this.institute.Address.Locality,
         "district": this.institute.Address.District,
-        "state":  this.institute.Address.State,
+        "state": this.institute.Address.State,
         "pinCode": this.institute.Address.pinCode,
       }
     }
 
 
     this.instituteProfileService.postInstituteProfile(data).subscribe((res) => {
-      if (res.responseCode == 'OK') {
-        alert('Institude Profile added successfully');
+      if (res.responseCode == 'OK' && !res.params.errmsg) {
+        this.toastMsg.success('Success', 'Institude Profile added successfully');
+        localStorage.setItem('institute-detail', JSON.stringify(this.institute));
       }
 
     });
 
-    localStorage.setItem('institute-detail', JSON.stringify(this.institute));
   }
 
 }

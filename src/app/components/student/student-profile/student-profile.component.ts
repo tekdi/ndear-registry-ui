@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { StudentProfileService } from '../../../services/student/student-profile.service';
+import { ToastMessageService} from '../../../services/toast-message/toast-message.service';
 import { Router } from '@angular/router';
 import {
   NgbCalendar,
@@ -84,7 +86,12 @@ export class StudentProfileComponent implements OnInit {
       "title": "save"
     }
   ]
-  constructor(fb: FormBuilder, config: NgbInputDatepickerConfig, calendar: NgbCalendar, public router: Router) { 
+  constructor(fb: FormBuilder,
+     config: NgbInputDatepickerConfig,
+      calendar: NgbCalendar, 
+      public router: Router,
+      public studentProfileService : StudentProfileService,
+    public toastMsg : ToastMessageService) { 
     // customize default values of datepickers used by this component tree
     config.minDate = {year: 1900, month: 1, day: 1};
     config.maxDate = {year: 2020, month: 12, day: 31};
@@ -128,6 +135,26 @@ export class StudentProfileComponent implements OnInit {
     localStorage.setItem('user', JSON.stringify(this.editUserform.value));
     this.user = this.editUserform.value
     // this.router.navigate(['student-profile']);
+
+    const data = {
+      "teacherCode": "04",
+      "nationalIdentifier": this.editUserform.value.idType,
+      "teacherName": this.editUserform.value.fullName,
+      "gender": this.editUserform.value.gender,
+      "birthDate": this.editUserform.value.dob,
+      "email": this.editUserform.value.mobileEmail,
+      "mobile": this.editUserform.value.mobile,
+      "address": this.editUserform.value.address,
+      "district": "Pune",
+      "state": "Maharastra"
+    }
+
+    this.studentProfileService.postStudentProfile(data).subscribe(res => {
+      if (res.responseCode == 'OK' && !res.params.errmsg) {
+        localStorage.setItem('teacher_id',res.result.Teacher.osid);
+        this.toastMsg.success('Success', 'Teacher Profile added successfully');
+      }
+    })
   }
 
   onSubmit(){

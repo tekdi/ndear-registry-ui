@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SchemaService } from 'src/app/services/data/schema.service';
 import { InstituteProfileService } from 'src/app/services/institute/institute-profile.service';
 
 @Component({
@@ -9,109 +10,111 @@ import { InstituteProfileService } from 'src/app/services/institute/institute-pr
 })
 export class InstituteProfileSetupComponent implements OnInit {
   header1: string = 'plain';
-  schema = {
-    "type": "object",
-    "title": "Teacher",
-    "definitions": {
-      "BasicDetails": {
-        "type": "object",
-        "required": [
-          "instituteName"
-        ],
-        "properties": {
-          "instituteName": {
-            "type": "string"
-          }     
-        }
-      },
-      "Address": {
-        "type": "object",
-        "required": [
-          "Landmark",
-          "Locality",
-          "State",
-          "District",
-          "City",
-          "pincode"
-        ],
-        "properties": {
-          "Plot": {
-            "type": "string"
-          },
-          "Street": {
-            "type": "string"
-          },
-          "Landmark": {
-            "type": "string"
-          },
-          "Locality": {
-            "type": "string"
-          },
-          "State": {
-            "type": "string"
-          },
-          "District": {
-            "type": "string"
-          },
-          "City": {
-            "title":"Village/Town/City",
-            "type": "string"
-          },
-          "pincode": {
-            "type": "number"
-          },
-        }
-      },
-      "WhatIsYourRole": {
-        "type": "object",
-        "required": [
-          "role"
-        ],
-        "properties": {
-          "role":{
-            "type": "string",
-            "enum": [
-              "Head of department",
-              "Principal"
-            ]
-          }
-        }
-      },
-      "WhoIsAdmin": {
-        "type": "object",
-        "required": [
-          "emailOrMobile"
-        ],
-        "properties": {
-          "emailOrMobile":{
-            "title": "Email id or Mobile",
-            "type": "string"
-          }
-        }
-      }
-    },
-    "properties": {
-      "BasicDetails": {
-        "$ref": "#/definitions/BasicDetails"
-      },
-      "gstin": {
-        "title": "GSTIN ID",
-        "type": "string"
-      },
-      "Address": {
-        "title": "Address",
-        "$ref": "#/definitions/Address"
-      },
-      "WhatIsYourRole": {
-        "title": "What is your role?",
-        "$ref": "#/definitions/WhatIsYourRole"
-      },
-      "WhoIsAdmin": {
-        "title": "Invite admin to complete the setup",
-        "$ref": "#/definitions/WhoIsAdmin"
-      }
-    }
-  };
+  schema;
+
+  // schema = {
+  //   "type": "object",
+  //   "title": "Teacher",
+  //   "definitions": {
+  //     "BasicDetails": {
+  //       "type": "object",
+  //       "required": [
+  //         "instituteName"
+  //       ],
+  //       "properties": {
+  //         "instituteName": {
+  //           "type": "string"
+  //         }     
+  //       }
+  //     },
+  //     "Address": {
+  //       "type": "object",
+  //       "required": [
+  //         "Landmark",
+  //         "Locality",
+  //         "State",
+  //         "District",
+  //         "City",
+  //         "pincode"
+  //       ],
+  //       "properties": {
+  //         "Plot": {
+  //           "type": "string"
+  //         },
+  //         "Street": {
+  //           "type": "string"
+  //         },
+  //         "Landmark": {
+  //           "type": "string"
+  //         },
+  //         "Locality": {
+  //           "type": "string"
+  //         },
+  //         "State": {
+  //           "type": "string"
+  //         },
+  //         "District": {
+  //           "type": "string"
+  //         },
+  //         "City": {
+  //           "title":"Village/Town/City",
+  //           "type": "string"
+  //         },
+  //         "pincode": {
+  //           "type": "number"
+  //         },
+  //       }
+  //     },
+  //     "WhatIsYourRole": {
+  //       "type": "object",
+  //       "required": [
+  //         "role"
+  //       ],
+  //       "properties": {
+  //         "role":{
+  //           "type": "string",
+  //           "enum": [
+  //             "Head of department",
+  //             "Principal"
+  //           ]
+  //         }
+  //       }
+  //     },
+  //     "WhoIsAdmin": {
+  //       "type": "object",
+  //       "required": [
+  //         "emailOrMobile"
+  //       ],
+  //       "properties": {
+  //         "emailOrMobile":{
+  //           "title": "Email id or Mobile",
+  //           "type": "string"
+  //         }
+  //       }
+  //     }
+  //   },
+  //   "properties": {
+  //     "BasicDetails": {
+  //       "$ref": "#/definitions/BasicDetails"
+  //     },
+  //     "gstin": {
+  //       "title": "GSTIN ID",
+  //       "type": "string"
+  //     },
+  //     "Address": {
+  //       "title": "Address",
+  //       "$ref": "#/definitions/Address"
+  //     },
+  //     "WhatIsYourRole": {
+  //       "title": "What is your role?",
+  //       "$ref": "#/definitions/WhatIsYourRole"
+  //     },
+  //     "WhoIsAdmin": {
+  //       "title": "Invite admin to complete the setup",
+  //       "$ref": "#/definitions/WhoIsAdmin"
+  //     }
+  //   }
+  // };
  
   form: [
     "*",
@@ -121,7 +124,24 @@ export class InstituteProfileSetupComponent implements OnInit {
       "title": "save"
     }
   ]
-  constructor(public router: Router, public instituteProfileService: InstituteProfileService) { }
+  instituteSchema = {};
+  constructor(public router: Router, public instituteProfileService: InstituteProfileService, public Schema: SchemaService) {
+    this.Schema.getSchemas().subscribe((res)=>{
+      console.log("res",res);
+       this.schema = res;
+       console.log(this.schema.definitions)
+       this.instituteSchema = {
+         "type": "object",
+         "title": "School",
+         "definitions": this.schema.definitions,
+         "properties": {
+           "School": {
+             "$ref": "#/definitions/School"
+           }
+         }
+       };
+    });
+   }
 
   ngOnInit(): void {
     

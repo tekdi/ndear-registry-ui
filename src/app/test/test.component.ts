@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 // import { HiddenComponent } from 'angular6-json-schema-form/lib/widget-library/hidden.component';
 // import { WidgetLibraryService } from 'angular6-json-schema-form';
 import { of } from 'rxjs';
+import {TestService} from './test.service'
+import {WidgetRegistry, Validator, Binding, FormProperty, PropertyGroup} from 'ngx-schema-form';
 
 @Component({
   selector: 'app-test',
@@ -372,7 +374,125 @@ export class TestComponent implements OnInit {
     }
   };
 
+  areas = [
+    {
+      label: 'Maharastra',
+      nationId: 'india',
+      city: 'Pune'
+    },
+    {
+      label: 'Gujarat',
+      nationId: 'india'
+    },
+    {
+      label: 'Berlin',
+      nationId: 'USA'
+    },
+    {
+      label: 'Munich',
+      nationId: 'USA'
+    },
+    {
+      label: 'San Francisco',
+      nationId: 'Canada'
+    }
+  ]
 
+
+  mySchema = {
+    properties: {
+      "country": {
+        "id": "country",
+        "name": "country",
+        "title": "country",
+        "type": "string",
+        "widget": {
+          "id": "select"
+        },
+        "enum": [
+          "india",
+          "USA",
+          "Canada"
+        ]
+      },
+      "state": {
+        "id": "state",
+        "name": "state",
+        "title": "state",
+        "type": "string",
+        "widget": {
+          "id": "select"
+        },
+        "enum": [
+        ]
+      },
+      
+      
+    },
+    required: ["country", "state"],
+    buttons: [
+      {
+        id: "alert", // the id of the action callback
+        label: "submit", // the text inside the button
+      },
+    ],
+  };
+
+  mySchema2 = {
+    properties: {
+      "pincode": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 6,
+        "title": "Pin Code",
+        "isRequired": true,
+        "widget": {
+          "id": "integer"
+        }
+      },
+      "state": {
+        "id": "state",
+        "name": "state",
+        "title": "state",
+        "type": "string",
+        "widget": {
+          "id": "string"
+        },
+      },
+      
+      
+    },
+    required: ["country", "state"],
+    buttons: [
+      {
+        id: "alert", // the id of the action callback
+        label: "submit", // the text inside the button
+      },
+    ],
+  };
+
+  myModel = {};
+  
+
+  myFieldBindings = {
+    "/pincode": [
+      {
+        input: (event, formProperty: FormProperty) => {
+          
+          const root: PropertyGroup = formProperty.findRoot();
+          // console.log('evnt'+JSON.stringify(parent))
+          /**
+           * Set the input value for the children
+           */
+          const state: FormProperty = root.getProperty("state");
+
+          state.setValue("Gujarat", false);
+
+        },
+      },
+    ],
+  };
+  
 
   form: [
     '*',
@@ -382,17 +502,30 @@ export class TestComponent implements OnInit {
       "title": "save"
     }
   ]
-  constructor() { }
+  city_list: any[];
+  constructor(public testService: TestService) { }
 
   
 
   ngOnInit(): void {
-   
     // this.widgetLibrary.registerWidget('hidden', HiddenComponent);
 
   }
   yourOnSubmitFn(data){
     console.log(data)
+    if(data.pincode && data.pincode.toString().length == 6){
+      this.testService.getDetailsByPincode(data.pincode).subscribe((res)=>{
+        console.log(res[0]['PostOffice'][0].State);
+        // this.mySchema2.properties.state = res[0]['PostOffice'][0].State;
+        this.myModel['state'] = res[0]['PostOffice'][0].State;
+      });
+      // this.mySchema.properties.state.enum = this.getCities(data.country)
+      // console.log(this.getCities(data.country))
+    }
+    if(data.country != ''){
+      this.mySchema.properties.state.enum = this.getCities(data.country)
+      // console.log(this.getCities(data.country))
+    }
   }
 
   myActions = {
@@ -412,41 +545,19 @@ export class TestComponent implements OnInit {
   // }
 
 
-  // getCities(nationId: string = null) {
-  //    var cities = [
-  //       {
-  //         label: 'Bolzano',
-  //         nationId: 'india'
-  //       },
-  //       {
-  //         label: 'Rome',
-  //         nationId: 'india'
-  //       },
-  //       {
-  //         label: 'Berlin',
-  //         nationId: 'USA'
-  //       },
-  //       {
-  //         label: 'Munich',
-  //         nationId: 'USA'
-  //       },
-  //       {
-  //         label: 'San Francisco',
-  //         nationId: 'Canada'
-  //       }
-  //     ]
-  //     var data = cities.filter(entry => {
-  //       if (nationId) {
-  //         return entry.nationId === nationId;
-  //       } else {
-  //         return true;
-  //       }
-  //     })
-  //     var city_list = [];
-  //     data.forEach(element => {
-  //         city_list.push(element.label)
-  //     });
-  //     return city_list;
-  // }
+  getCities(nationId: string = null) {
+     var data = this.areas.filter(entry => {
+        if (nationId) {
+          return entry.nationId === nationId;
+        } else {
+          return true;
+        }
+      })
+      var nation_list = [];
+      data.forEach(element => {
+        nation_list.push(element.label)
+      });
+      return nation_list;
+  }
 
 }

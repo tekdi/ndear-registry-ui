@@ -1,11 +1,12 @@
 <div class="col-md-6 offset-md-3">
     <div class="card p-4">
         <div class="card-body">
-            <h4 class="card-title fw-bolder pb-2">Teacher</h4>
+            <h4 class="card-title fw-bolder pb-2">Test</h4>
             <!-- <json-schema-form [schema]="schema" (onChanges)="yourOnChangesFn($event)" [layout]="form" framework="bootstrap-4"
                 (onSubmit)="yourOnSubmitFn($event)">
             </json-schema-form> -->
-            <sf-form [schema]="schema" [actions]="myActions"></sf-form>
+            <sf-form [schema]="mySchema2" (onChange)="yourOnSubmitFn($event.value)" [bindings]="myFieldBindings" [model]="myModel" [actions]="myActions"></sf-form>
+            {{myModel | json}}
         </div>
     </div>
 </div>

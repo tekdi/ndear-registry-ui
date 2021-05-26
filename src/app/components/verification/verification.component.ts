@@ -26,13 +26,13 @@ export class VerificationComponent implements OnInit {
         console.log("board", JSON.parse(localStorage.getItem('board')))
         this.user_id = JSON.parse(localStorage.getItem('board')).mobileEmail;
       }
-      if(this.for == 'admin'){
+      else if(this.for == 'admin'){
         this.user_id = JSON.parse(localStorage.getItem('institute-detail')).WhoIsAdmin.emailOrMobile;
       }
-      if(this.for == 'teacher'){
+      else if(this.for == 'teacher'){
         this.user_id = JSON.parse(localStorage.getItem('teachers'))[0].email;
       }
-      if(this.for == 'diksha'){
+      else if(this.for == 'diksha'){
         this.user_id = JSON.parse(localStorage.getItem('consent'))[0].mobileEmail;
       }else{
         var user = localStorage.getItem('user');

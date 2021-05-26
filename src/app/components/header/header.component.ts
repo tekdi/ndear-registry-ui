@@ -57,6 +57,8 @@ export class HeaderComponent implements OnInit {
         console.log("this.attestation_count",this.attestation_count)
       }
       if(this.headerFor == 'teacher'){
+        this.user = JSON.parse(localStorage.getItem('teachers'))[0]
+        this.user_name = this.user.email;
         if(this.user.consent  === true){
           this.consent_count = 1
         }

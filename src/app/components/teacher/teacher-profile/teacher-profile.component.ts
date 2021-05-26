@@ -139,13 +139,13 @@ export class TeacherProfileComponent implements OnInit {
     // config.placement = ['top-left', 'top-right'];
     localStorage.setItem('is_logedin', "true")
     // localStorage.setItem('admin', 'false')
-    this.user = JSON.parse(localStorage.getItem('user'));
+    this.user = JSON.parse(localStorage.getItem('teachers'))[0];
 
     this.editUserform = fb.group({
       fullName: this.user.fullName,
       gaurdianfullName: this.user.gaurdianfullName,
       relation: this.user.relation,
-      mobileEmail: this.user.mobileEmail,
+      email: this.user.email,
       mobile: this.user.mobile,
       accepted: true,
       gender: this.user.gender,
@@ -171,9 +171,11 @@ export class TeacherProfileComponent implements OnInit {
   onEditProfileSubmit(){
     console.log(this.editUserform.value);
     // this.user.details = this.editform.value
-    localStorage.setItem('user', JSON.stringify(this.editUserform.value));
-    this.user = JSON.parse(localStorage.getItem('user'));
-    this.user = this.editUserform.value
+    var teachers = JSON.parse(localStorage.getItem('teachers'))
+    teachers[0] = this.editUserform.value;
+    localStorage.setItem('teachers', JSON.stringify(teachers));
+    this.user = JSON.parse(localStorage.getItem('teachers'))[0];
+    // this.user = this.editUserform.value
     // this.router.navigate(['student-profile']);
   }
 

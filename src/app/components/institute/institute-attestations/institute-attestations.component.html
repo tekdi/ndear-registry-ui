@@ -6,6 +6,7 @@
       <tr>
         <th scope="col">Submitted Date</th>
         <th scope="col">Name</th>
+        <th scope="col">Type</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -14,6 +15,7 @@
         <tr *ngIf="item.attested == 'pending'">
           <td>{{currentDate | date:'dd-MM-yyyy'}}</td>
           <td>{{user.fullName}}</td>
+          <td>{{item.type}}</td>
           <td><a [routerLink]="['/institute-attestation-detail', item.index, {type:item.type}]"
               class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td>
         </tr>

@@ -94,6 +94,10 @@ button.calendar, button.calendar:active {
 .red{
     color: red;
 }
+.btn-plain{
+    background-color: white;
+    border: transparent;
+}
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
 

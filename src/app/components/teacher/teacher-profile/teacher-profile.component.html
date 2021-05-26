@@ -3,19 +3,21 @@
     <div class="d-flex flex-justify-between">
         <div>
             <h6 class="d-inline-block">Personal</h6>
-            <a data-toggle="modal" data-target="#editProfile" class="pl-1 fs-7 text-primary-color">edit</a>
+            <button data-toggle="modal" data-target="#editProfile" class="btn-plain pl-1 fs-7 text-primary-color">edit</button>
         </div>
         <!-- <a data-toggle="modal" data-target="#addPersonalDetails" class="fs-7 text-primary-color"><i
                 class="fa fa-plus pr-1"></i>Personal Details</a> -->
-        <a class="text-end d-block text-primary-color blue-shade-btn" data-toggle="modal"
-            data-target="#prewiewProfile">Preview Public Profile</a>
+        <button class="btn-plain text-end d-block text-primary-color blue-shade-btn" data-toggle="modal"
+            data-target="#prewiewProfile">Preview Public Profile</button>
     </div>
     <div class="card">
         <div class="card-body">
-            <dl>
-                <dt class="fs-7 text-grey-color">Full Name</dt>
-                <dd>{{user.fullName}}</dd>
-            </dl>
+            <ng-template [ngIf]="user.fullName">
+                <dl>
+                    <dt class="fs-7 text-grey-color">Full Name</dt>
+                    <dd>{{user.fullName}}</dd>
+                </dl>
+            </ng-template>
             <ng-template [ngIf]="user.gender || user.dob">
                 <dl>
                     <ng-template [ngIf]="user.gender">
@@ -31,11 +33,14 @@
                 </dl>
             </ng-template>
 
-            <ng-template [ngIf]="user.mobileEmail || user.mobile">
+            <ng-template [ngIf]="user.email || user.mobile">
                 <dl>
-                    <ng-template [ngIf]="user.mobileEmail">
+                    <ng-template [ngIf]="user.email">
                         <dt class="fs-7 text-grey-color">Email ID</dt>
-                        <dd>{{user.mobileEmail}}</dd>
+                        <dd>{{user.email}}
+                            <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Verified by OTP"></i>
+                        </dd>
+                        
                     </ng-template>
                     <ng-template [ngIf]="user.mobile">
                         <dt class="fs-7 text-grey-color">Mobile Number</dt>
@@ -74,8 +79,8 @@
 
     <div class="d-flex justify-content-between mt-5">
         <h6 class="d-inline-block">Experience</h6>
-        <a data-toggle="modal" data-target="#addExperience" class="fs-7 text-primary-color"><i
-                class="fa fa-plus pr-1"></i>Experience</a>
+        <button data-toggle="modal" data-target="#addExperience" class="btn-plain fs-7 text-primary-color"><i
+                class="fa fa-plus pr-1"></i>Experience</button>
     </div>
     <div class="card">
         <div class="card-body">
@@ -103,8 +108,8 @@
 
     <div class="d-flex justify-content-between mt-5">
         <h6 class="d-inline-block">Education</h6>
-        <a data-toggle="modal" data-target="#addEducation" class="fs-7 text-primary-color"><i
-                class="fa fa-plus pr-1"></i>Education</a>
+        <button data-toggle="modal" data-target="#addEducation" class="btn-plain fs-7 text-primary-color"><i
+                class="fa fa-plus pr-1"></i>Education</button>
     </div>
     <div class="card">
         <div class="card-body">
@@ -171,10 +176,10 @@
                         </div>
                     </div>
 
-                    <label mdbLabel class="form-label fw-normal fs-7" for="mobileEmail">Contact Number</label>
+                    <label mdbLabel class="form-label fw-normal fs-7" for="email">Contact Number</label>
                     <div class="d-inline-block fs-8">(Optional)</div>
                     <mdb-form-control>
-                        <input mdbInput type="text" id="mobileEmail" class="form-control" formControlName="mobileEmail"
+                        <input mdbInput type="text" id="email" class="form-control" formControlName="email"
                             mdbValidate />
                     </mdb-form-control>
                     <div id="textExample1" class="form-text my-2">
@@ -256,7 +261,7 @@
                         <div class="col-md-12">
                             <label mdbLabel class="form-label fw-normal fs-7" for="aadhaarNo">Aadhaar Number</label>
                             <mdb-form-control>
-                                <input mdbInput type="text" id="aadhaarNo" class="form-control" mdbValidate
+                                <input mdbInput type="text" maxlength="12" id="aadhaarNo" class="form-control" mdbValidate
                                     placeholder="" formControlName="aadhaarNo" />
                             </mdb-form-control>
 
@@ -266,8 +271,8 @@
                         <div class="col-md-12">
                             <label mdbLabel class="form-label fw-normal fs-7" for="form2">EmailID</label>
                             <mdb-form-control>
-                                <input mdbInput type="text" id="mobileEmail" class="form-control" mdbValidate
-                                    placeholder="" formControlName="mobileEmail" />
+                                <input mdbInput type="text" id="email" class="form-control" mdbValidate
+                                    placeholder="" formControlName="email" />
                             </mdb-form-control>
                         </div>
 
@@ -316,10 +321,12 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <dl>
-                            <dt class="fs-7 text-grey-color">Full Name</dt>
-                            <dd>{{user.fullName}}</dd>
-                        </dl>
+                        <ng-template [ngIf]="user.fullName">
+                            <dl>
+                                <dt class="fs-7 text-grey-color">Full Name</dt>
+                                <dd>{{user.fullName}}</dd>
+                            </dl>
+                        </ng-template>
                         <ng-template [ngIf]="user.gender || user.dob">
                             <dl>
                                 <ng-template [ngIf]="user.gender">
@@ -336,11 +343,11 @@
                             </dl>
                         </ng-template>
 
-                        <ng-template [ngIf]="user.mobileEmail || user.mobile">
+                        <ng-template [ngIf]="user.email || user.mobile">
                             <dl>
-                                <ng-template [ngIf]="user.mobileEmail">
+                                <ng-template [ngIf]="user.email">
                                     <dt class="fs-7 text-grey-color">Email ID</dt>
-                                    <dd>{{user.mobileEmail}}</dd>
+                                    <dd>{{user.email}}</dd>
                                 </ng-template>
                                 <ng-template [ngIf]="user.mobile">
                                     <dt class="fs-7 text-grey-color">Mobile Number</dt>

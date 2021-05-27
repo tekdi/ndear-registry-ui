@@ -136,23 +136,28 @@ export class StudentProfileComponent implements OnInit {
     this.user = this.editUserform.value
     // this.router.navigate(['student-profile']);
 
+
     const data = {
-      "teacherCode": "04",
-      "nationalIdentifier": this.editUserform.value.idType,
-      "teacherName": this.editUserform.value.fullName,
-      "gender": this.editUserform.value.gender,
-      "birthDate": this.editUserform.value.dob,
-      "email": this.editUserform.value.mobileEmail,
-      "mobile": this.editUserform.value.mobile,
-      "address": this.editUserform.value.address,
-      "district": "Pune",
-      "state": "Maharastra"
-    }
+      
+        "identityDetails": {
+          "fullName": this.editUserform.value.fullName,
+          "gender": this.editUserform.value.gender,
+          "dob": this.editUserform.value.dob,
+          "identityType":  this.editUserform.value.idType,
+          "identityValue": "string"
+        },
+        "contactDetails": {
+          "email": this.editUserform.value.mobileEmail,
+          "mobile": this.editUserform.value.mobile,
+          "address":  this.editUserform.value.address
+        }
+      }
+    
 
     this.studentProfileService.postStudentProfile(data).subscribe(res => {
       if (res.responseCode == 'OK' && !res.params.errmsg) {
-        localStorage.setItem('teacher_id',res.result.Teacher.osid);
-        this.toastMsg.success('Success', 'Teacher Profile added successfully');
+        localStorage.setItem('teacher_id',res.result.Student.osid);
+        this.toastMsg.success('Success', 'Student Profile added successfully');
       }
     })
   }

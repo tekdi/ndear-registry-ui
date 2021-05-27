@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { DataService } from '../data/data-request.service';
-import { ApiPaths } from '../../../environments/environment';
+import { environment, ApiPaths } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentProfileService {
+  baseUrl = environment.baseUrl;
 
 
   constructor(public dataService: DataService) {
   }
 
   postStudentProfile(data) {
-    let url = `${ApiPaths.Student}`;
+    let url = `${this.baseUrl}/${ApiPaths.Student}`;
     const req = {
       url: url,
       data: data
@@ -26,7 +27,7 @@ export class StudentProfileService {
   }
 
   getStudentProfile(id) {
-    let url = `${ApiPaths.Student}/${id}`;
+    let url = `${this.baseUrl}/${ApiPaths.Student}/${id}`;
     const req = {
       url: url
     };

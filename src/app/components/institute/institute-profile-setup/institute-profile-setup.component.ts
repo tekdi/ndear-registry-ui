@@ -154,21 +154,32 @@ export class InstituteProfileSetupComponent implements OnInit {
     
 
     const formData = {
-      "schoolCode": "string",
-      "schoolName":data.BasicDetails.instituteName,
-      "adminEmail":data.BasicDetails.Email,
-      "identifier": "",
-      "adminMobile": String(data.BasicDetails.ContactNumber),
+      "instituteName": data.BasicDetails.instituteName,
       "address": {
-        "addressLine1":data.Address.Plot + ', ' +data.Address.Street,
-        "addressLine2":data.Address.Landmark + ', ' +data.Address.Locality,
-        "district":data.Address.District,
-        "state":data.Address.State,
-        "pinCode":data.Address.pinCode,
-      }
+        "plot":  data.Address.Plot,
+        "street":  data.Address.Street,
+        "landmark": data.Address.Landmark,
+        "locality": data.Address.Locality,
+        "state":  data.Address.State,
+        "district":  data.Address.District,
+        "village": "",
+        "pincode": data.Address.pinCode
+      },
+      "establishmentYear": String(data.BasicDetails.YearOfEstablishmentOfInstitute),
+      "gstnId": data.gstin,
+      "contactNumber":  String(data.BasicDetails.ContactNumber),
+      "email":  data.BasicDetails.Email,
+      "website": "https://ghg.com",
+      "category": "Primary",
+      "schoolType":data.BasicDetails.SchoolType,
+      "instituteManagement":  data.BasicDetails.ManagementOfInstitute[0],
+      "committee": "yes",
+      "adminName": data.BasicDetails.headPerson,
+      "adminEmail": data.BasicDetails.Email,
+      "adminMobile":  String(data.BasicDetails.ContactNumber)
+      
     }
 
-    console.log('this.institute --> ', data);
 
     this.instituteProfileService.postInstituteProfile(formData).subscribe((res) => {
       console.log({ res });

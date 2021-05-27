@@ -7,12 +7,13 @@ import { environment, ApiPaths } from '../../../environments/environment';
 })
 export class TeacherProfileService {
 
+  baseUrl = environment.baseUrl;
 
   constructor(public dataService: DataService) {
   }
 
   postTeacherProfile(data) {
-    let url = `${ApiPaths.Teacher}`;
+    let url = `${this.baseUrl}/${ApiPaths.Teacher}`;
     const req = {
       url: url,
       data: data
@@ -26,7 +27,7 @@ export class TeacherProfileService {
   }
 
   getTeacherProfile(id) {
-    let url = `${ApiPaths.Teacher}/${id}`;
+    let url = `${this.baseUrl}/${ApiPaths.Teacher}/${id}`;
     const req = {
       url: url
     };

@@ -192,7 +192,7 @@ export class TeacherProfileComponent implements OnInit {
 
 
     const data = {
-      "teacherCode": "05",
+      "teacherCode": "06",
       "nationalIdentifier": this.editUserform.value.idType,
       "teacherName": this.editUserform.value.fullName,
       "gender": this.editUserform.value.gender,

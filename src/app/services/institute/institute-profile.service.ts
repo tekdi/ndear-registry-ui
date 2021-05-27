@@ -13,7 +13,7 @@ export class InstituteProfileService {
   }
 
   postInstituteProfile(data) {
-    let url = `${ApiPaths.Institute}`;
+    let url = `${this.baseUrl}/${ApiPaths.Institute}`;
     const req = {
       url: url,
       data: data
@@ -27,7 +27,7 @@ export class InstituteProfileService {
   }
 
   getInstituteProfile(id) {
-    let url = `${ApiPaths.Institute}/${id}`;
+    let url = `${this.baseUrl}/${ApiPaths.Institute}/${id}`;
     const req = {
       url: url
     };

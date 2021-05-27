@@ -14,7 +14,7 @@ export class DataService {
 /**
  * Contains base Url for api end points
  */
- baseUrl = environment.baseUrl;
+ baseUrl: string;
 
   constructor(
     private http: HttpClient) {
@@ -42,7 +42,7 @@ export class DataService {
       params: requestParam.param
     };
 
-    return this.http.post(`${this.baseUrl}/${requestParam.url}`, requestParam.data, httpOptions).pipe(
+    return this.http.post(requestParam.url, requestParam.data, httpOptions).pipe(
       mergeMap((data: any) => {
         if (data.responseCode !== 'OK') {
           return observableThrowError(data);
@@ -63,7 +63,7 @@ export class DataService {
       params: requestParam.param
     };
 
-    return this.http.get(`${this.baseUrl}/${requestParam.url}`, httpOptions).pipe(
+    return this.http.get(requestParam.url, httpOptions).pipe(
       mergeMap((data: any) => {
 
         return observableOf(data);

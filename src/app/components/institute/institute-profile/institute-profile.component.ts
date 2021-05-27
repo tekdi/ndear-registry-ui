@@ -266,7 +266,7 @@ export class InstituteProfileComponent implements OnInit {
   onEditProfileSubmit(event) {
     this.institute = event;
 
-    const data = {
+    const data1 = {
       "schoolCode": "string",
       "schoolName": this.institute.BasicDetails.instituteName,
       "adminEmail": this.institute.BasicDetails.Email,
@@ -280,6 +280,33 @@ export class InstituteProfileComponent implements OnInit {
         "pinCode": this.institute.Address.pinCode,
       }
     }
+
+    const data= {
+        "instituteName": this.institute.BasicDetails.instituteName,
+        "address": {
+          "plot":  this.institute.Address.Plot,
+          "street":  this.institute.Address.Street,
+          "landmark": this.institute.Address.Landmark,
+          "locality": this.institute.Address.Locality,
+          "state":  this.institute.Address.State,
+          "district":  this.institute.Address.District,
+          "village": "",
+          "pincode": this.institute.Address.pinCode
+        },
+        "establishmentYear": String(this.institute.BasicDetails.YearOfEstablishmentOfInstitute),
+        "gstnId": this.institute.gstin,
+        "contactNumber":  String(this.institute.BasicDetails.ContactNumber),
+        "email":  this.institute.BasicDetails.Email,
+        "website": "https://ghg.com",
+        "category": "Primary",
+        "schoolType":this.institute.BasicDetails.SchoolType,
+        "instituteManagement":  this.institute.BasicDetails.ManagementOfInstitute[0],
+        "committee": "yes",
+        "adminName": this.institute.BasicDetails.headPerson,
+        "adminEmail": this.institute.BasicDetails.Email,
+        "adminMobile":  String(this.institute.BasicDetails.ContactNumber)
+    
+  }
 
 
     this.instituteProfileService.postInstituteProfile(data).subscribe((res) => {

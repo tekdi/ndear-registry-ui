@@ -19,11 +19,8 @@ export class TeacherProfileService {
       data: data
     };
 
-    if(!data.identifier){
       return this.dataService.post(req);
-    }else{
-      return this.dataService.patch(req);
-    }
+    
   }
 
   getTeacherProfile(id) {
@@ -33,6 +30,18 @@ export class TeacherProfileService {
     };
 
     return this.dataService.get(req);
+  }
+
+  putTeacherProfile(id, data) {
+    let url = `${this.baseUrl}/${ApiPaths.Teacher}/${id}`;
+    const req = {
+      url: url,
+      data: data
+    };
+
+   
+      return this.dataService.put(req);
+    
   }
 
 

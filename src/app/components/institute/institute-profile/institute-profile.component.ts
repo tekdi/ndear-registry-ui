@@ -242,7 +242,7 @@ export class InstituteProfileComponent implements OnInit {
     this.instituteProfileService.getInstituteProfile(this.instituteEntity).subscribe((res) => {
       console.log({ res });
 
-      this.institute.BasicDetails.instituteName = res.schoolName;
+      this.institute.BasicDetails.instituteName = res.instituteName;
       this.institute.BasicDetails.Email = res.adminEmail;
 
       this.institute.BasicDetails.ContactNumber = res.adminMobile;
@@ -313,6 +313,8 @@ export class InstituteProfileComponent implements OnInit {
       if (res.responseCode == 'OK' && !res.params.errmsg) {
         this.toastMsg.success('Success', 'Institude Profile added successfully');
         localStorage.setItem('institute-detail', JSON.stringify(this.institute));
+        localStorage.setItem('institute-entity',res.result.Institute.osid);
+
       }
 
     });

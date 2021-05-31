@@ -41,47 +41,47 @@
                     </ng-template>
                 </dl>
             </ng-template>
-            <ng-template [ngIf]="institute.Address.Plot || institute.Address.Street">
+            <ng-template [ngIf]="institute?.Address?.Plot || institute?.Address?.Street">
                 <dl>
                     <ng-template [ngIf]="institute.Address.Plot">
                         <dt class="fs-7 text-grey-color">Plot</dt>
-                        <dd>{{institute.Address.Plot}}</dd>
+                        <dd>{{institute?.Address?.Plot}}</dd>
                     </ng-template>
                     <ng-template [ngIf]="institute.Address.Street">
                         <dt class="fs-7 text-grey-color">Street</dt>
-                        <dd>{{institute.Address.Street}}</dd>
+                        <dd>{{institute?.Address?.Street}}</dd>
                     </ng-template>
 
                 </dl>
             </ng-template>
             <dl>
                 <dt class="fs-7 text-grey-color">Landmark</dt>
-                <dd>{{institute.Address.Landmark}}
+                <dd>{{institute?.Address?.Landmark}}
                     <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
                 </dd>
                 <dt class="fs-7 text-grey-color">Locality</dt>
-                <dd>{{institute.Address.Locality}}
+                <dd>{{institute?.Address?.Locality}}
                     <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
                 </dd>
             </dl>
             <dl>
                 <dt class="fs-7 text-grey-color">District</dt>
-                <dd>{{institute.Address.District}}
+                <dd>{{institute?.Address?.District}}
                     <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
                 </dd>
                 <dt class="fs-7 text-grey-color">City</dt>
-                <dd>{{institute.Address.City}}
+                <dd>{{institute?.Address?.City}}
                     <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
                 </dd>
 
             </dl>
             <dl>
                 <dt class="fs-7 text-grey-color">State</dt>
-                <dd>{{institute.Address.State}}
+                <dd>{{institute?.Address?.State}}
                     <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
                 </dd>
                 <dt class="fs-7 text-grey-color">PIN Code</dt>
-                <dd>{{institute.Address.pincode}}
+                <dd>{{institute?.Address?.pincode}}
                     <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
                 </dd>
 
@@ -89,7 +89,7 @@
             <dl>
                 <ng-template [ngIf]="institute.gstin">
                     <dt class="fs-7 text-grey-color">GST IN</dt>
-                    <dd>{{institute.gstin}}</dd>
+                    <dd>{{institute?.gstin}}</dd>
                 </ng-template>
                 <ng-template [ngIf]="institute.BasicDetails.Website">
                     <dt class="fs-7 text-grey-color">Website</dt>

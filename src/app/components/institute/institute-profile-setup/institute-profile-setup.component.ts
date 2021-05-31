@@ -132,11 +132,11 @@ export class InstituteProfileSetupComponent implements OnInit {
        console.log(this.schema.definitions)
        this.instituteSchema = {
          "type": "object",
-         "title": "School",
-         "definitions": this.schema.definitions,
+         "title": "Institute",
+         "definitions": this.schema.definitions.Institute,
          "properties": {
-           "School": {
-             "$ref": "#/definitions/School"
+           "Institute": {
+             "$ref": "#/definitions/Institute"
            }
          }
        };

@@ -207,6 +207,7 @@ export class TeacherProfileComponent implements OnInit {
     this.teacherProfileService.postTeacherProfile(data).subscribe(res => {
       if (res.responseCode == 'OK' && !res.params.errmsg) {
         localStorage.setItem('teacher_id',res.result.Teacher.osid);
+        this.getTeacherData();
         this.toastMsg.success('Success', 'Teacher Profile added successfully');
       }
     })
@@ -238,6 +239,45 @@ export class TeacherProfileComponent implements OnInit {
     this.experience.push(event)
     console.log(this.experience)
     localStorage.setItem('experience', JSON.stringify(this.experience));
+
+    /*
+    EmploymentType: "Permanant"
+TeacherType: "Assistant teacher UPS Head teacher primary school"
+attested: "pending"
+enddate: "2040-01-12"
+institute: "Sarvoday School"
+send: true
+startdate: "2000-02-12"
+__proto__: Object
+*/
+
+    const data = {
+      "experience": [
+        {
+          "institute": event.institute,
+          "employmentType": event.EmploymentType,
+          "start": event.startdate,
+          "end": event.enddate,
+          "teacherType": event.TeacherType,
+          "subjects": [
+            "string"
+          ],
+          "grades": [
+            "string"
+          ]
+        }
+      ]
+      }
+    
+      this.teacherId = localStorage.getItem('teacher_id');
+      this.teacherProfileService.putTeacherProfile(this.teacherId, data).subscribe(res => {
+        if (res.responseCode == 'OK' && !res.params.errmsg) {
+          localStorage.setItem('teacher_id',res.result.Teacher.osid);
+          this.getTeacherData();
+          this.toastMsg.success('Success', 'Experience data added successfully');
+        }
+      })
+
     this.educationForm.reset();
     // this.education = this.educationForm.value
   }
@@ -248,7 +288,10 @@ export class TeacherProfileComponent implements OnInit {
       this.experianceSchema.properties.institute.enum.push(this.institute)
       this.educationSchema.properties.institute.enum.push(this.institute)
     }
+    this.getTeacherData();
+  }
 
+  getTeacherData(){
     this.teacherId = localStorage.getItem('teacher_id');
     console.log(this.teacherId);
 

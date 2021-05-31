@@ -75,12 +75,12 @@ export class DataService {
 * for making post api calls
 * @param RequestParam param
 */
-  patch(requestParam): Observable<any> {
+  put(requestParam): Observable<any> {
     const httpOptions: HttpOptions = {
       headers: requestParam.header ? this.getHeader(requestParam.header) : this.getHeader(),
       params: requestParam.param
     };
-    return this.http.patch(`${this.baseUrl}/${requestParam.url}`, requestParam.data, httpOptions).pipe(
+    return this.http.put(requestParam.url, requestParam.data, httpOptions).pipe(
       mergeMap((data: any) => {
         if (data.responseCode !== 'OK') {
           return observableThrowError(data);

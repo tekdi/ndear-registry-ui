@@ -20,7 +20,7 @@ import {
 export class StudentProfileComponent implements OnInit {
   header1: string = 'student';
   tab: string = 'profile';
-  user;
+  user: any;
   education;
   institute
   editUserform: FormGroup;
@@ -30,7 +30,85 @@ export class StudentProfileComponent implements OnInit {
   enddate: NgbDateStruct;
   working: Boolean = true;
   studentId;
+  studentResult: any;
   fb;
+
+  studentProfile = {
+    "type": "object",
+    "title": "Teacher",
+    "definitions": {
+      "identityDetails": {
+        "type": "object",
+        "required": [
+          "fullName"
+        ],
+        "properties": {
+          "fullName": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "Male",
+              "Female",
+              "Other"
+            ]
+          } ,
+        "dob": {
+          "type": "string",
+          "format": "date",
+          "widget": {
+            "id": "date"
+          },
+        },
+        "identityType": {
+          "type": "string",
+          "enum": [
+            "Voter",
+            "Aadhaar"
+            ]
+        },
+        "identityValue": {
+          "type": "string"
+        }
+      },      
+      },
+      "contactDetails": {
+        "type": "object",
+        "required": [
+        ],
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "mobile": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          }
+        }
+      },
+    },
+    "properties": {
+      "identityDetails": {
+        "$ref": "#/definitions/identityDetails"
+      },
+      "contactDetails": {
+        "$ref": "#/definitions/contactDetails"
+      }
+    }
+  };
+  
+  form1: [
+    "*",
+    {
+      "type": "submit",
+      "style": "btn btn-primary text-end mt-3 fw-bold text-capitalize",
+      "title": "save"
+    }
+  ]
+
   schema = {
     "type": "object",
     "title": "Comment",
@@ -89,6 +167,12 @@ export class StudentProfileComponent implements OnInit {
       "title": "save"
     }
   ]
+
+  item2: any = [
+    { name: 'gh' },
+    { name: 'gfhg' }
+  ];
+
   constructor(fb: FormBuilder,
     config: NgbInputDatepickerConfig,
     calendar: NgbCalendar,
@@ -96,7 +180,7 @@ export class StudentProfileComponent implements OnInit {
     private route: ActivatedRoute,
     public studentProfileService: StudentProfileService,
     public toastMsg: ToastMessageService) {
-      this.fb = fb;
+    this.fb = fb;
     // customize default values of datepickers used by this component tree
     config.minDate = { year: 1900, month: 1, day: 1 };
     config.maxDate = { year: 2020, month: 12, day: 31 };
@@ -115,27 +199,9 @@ export class StudentProfileComponent implements OnInit {
       this.studentId = params['id'];
     });
 
-    this.editUserform = this.fb.group({
-      identityDetails : this.fb.group({ 
-        fullName: [''],
-        gender:  [''],
-        dob: [''],
-        idType:['']
-      }),
-      contactDetails:fb.group({
-        email:[],       
-        address: [''],
-        mobile: [''],
-      }),
-      gaurdianfullName: [''],
-      relation:[''],
-      accepted: true,
-      aadhaarNo:[''],
-    });
-  
     this.getStudentData(this.studentId);
-  
-   
+
+
 
     this.education = JSON.parse(localStorage.getItem('education'))
     this.educationForm = fb.group({
@@ -148,35 +214,18 @@ export class StudentProfileComponent implements OnInit {
     });
   }
 
-  onEditProfileSubmit() {
-    console.log(this.editUserform.value);
+  onEditProfileSubmit(event) {
+   // console.log(this.editUserform.value);
     // this.user.details = this.editform.value
-  //  localStorage.setItem('user', JSON.stringify(this.editUserform.value));
-  //  this.user = this.editUserform.value
+    //  localStorage.setItem('user', JSON.stringify(this.editUserform.value));
+    //  this.user = this.editUserform.value
     // this.router.navigate(['student-profile']);
 
-
-    const data1 = {
-
-      "identityDetails": {
-        "fullName": this.editUserform.value.fullName,
-        "gender": this.editUserform.value.gender,
-        "dob": this.editUserform.value.dob,
-        "identityType": this.editUserform.value.idType,
-        "identityValue": "string"
-      },
-      "contactDetails": {
-        "email": this.editUserform.value.email,
-        "mobile": this.editUserform.value.mobile,
-        "address": this.editUserform.value.address
-      }
-    }
-
-    const data = this.editUserform.value;
+    const data = event; //this.editUserform.value;
 
     this.studentProfileService.postStudentProfile(data).subscribe(res => {
       if (res.responseCode == 'OK' && !res.params.errmsg) {
-       // localStorage.setItem('student_id', res.result.Student.osid);
+        // localStorage.setItem('student_id', res.result.Student.osid);
         this.router.navigate(['/student-profile', { 'id': res.result.Student.osid }]);
         this.getStudentData(res.result.Student.osid);
         this.toastMsg.success('Success', 'Student Profile added successfully');
@@ -201,11 +250,46 @@ export class StudentProfileComponent implements OnInit {
     // this.user.details = this.editform.value
     event.attested = "pending"
     event.note = "Attestation pending"
-    this.education.push(event)
-    console.log(this.education)
-    localStorage.setItem('education', JSON.stringify(this.education));
+    // this.education.push(event)
+    // console.log(this.education)
+    // localStorage.setItem('education', JSON.stringify(this.education));
     this.educationForm.reset();
     // this.education = this.educationForm.value
+    /* const data = {
+ 
+       "educationDetails": [
+         {
+           "institute": event.institute,
+           "medium": event.medium,
+           "class": event.class
+         }
+       ]
+     }*/
+     
+
+    if (!this.user.hasOwnProperty('educationDetails')) {
+      this.user.educationDetails = [{
+        "institute": event.institute,
+        "medium": event.medium,
+        "class": event.class
+      }
+      ]
+    } else {
+      this.user.educationDetails.push({
+        "institute": event.institute,
+        "medium": event.medium,
+        "class": event.class
+      });
+    }
+    this.studentProfileService.putStudentProfile(this.user, this.studentId).subscribe(res => {
+      if (res.responseCode == 'OK' && !res.params.errmsg) {
+        // localStorage.setItem('student_id', res.result.Student.osid);
+        this.router.navigate(['/student-profile', { 'id': this.studentId}]);
+
+        this.getStudentData(this.studentId);
+        this.toastMsg.success('Success', 'Educational Deatils Added Successfully');
+      }
+    })
   }
 
   ngOnInit(): void {
@@ -223,22 +307,17 @@ export class StudentProfileComponent implements OnInit {
 
 
   getStudentData(studentId) {
-   
+
 
     this.studentProfileService.getStudentProfile(studentId).subscribe((res) => {
 
-      console.log({res});
+      console.log({ res });
       //this.item = res;
+      this.studentResult = res;
       this.user = res;
-      this.editUserform =  this.fb.group({
-       identityDetails : this.fb.group(res['identityDetails']),
-        contactDetails:this.fb.group(res['contactDetails']),
-      gaurdianfullName: '',
-       relation: '',
-        accepted: true,
-        aadhaarNo: '',
-       });
-     })
+      console.log("this.user", this.user);
+    
+    })
   }
 
   onWorkingChange() {

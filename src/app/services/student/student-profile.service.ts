@@ -19,11 +19,20 @@ export class StudentProfileService {
       data: data
     };
 
-    if(!data.identifier){
-      return this.dataService.post(req);
-    }else{
-      return this.dataService.put(req);
-    }
+    return this.dataService.post(req);
+
+  }
+
+  putStudentProfile(data, id) {
+    let url = `${this.baseUrl}/${ApiPaths.Student}/` + id;
+    const req = {
+      url: url,
+      data: data
+    };
+
+
+    return this.dataService.put(req);
+
   }
 
   getStudentProfile(id) {

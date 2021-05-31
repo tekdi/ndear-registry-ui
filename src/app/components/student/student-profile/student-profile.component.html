@@ -31,11 +31,11 @@
                 </dl>
             </ng-template>
 
-            <ng-template [ngIf]="user?.contactDetails?.mobileEmail || user?.contactDetails?.mobile">
+            <ng-template [ngIf]="user?.contactDetails?.email || user?.contactDetails?.mobile">
                 <dl>
-                    <ng-template [ngIf]="user?.contactDetails?.mobileEmail">
+                    <ng-template [ngIf]="user?.contactDetails?.email">
                         <dt class="fs-7 text-grey-color">Email ID</dt>
-                        <dd>{{user?.contactDetails?.mobileEmail}}</dd>
+                        <dd>{{user?.contactDetails?.email}}</dd>
                     </ng-template>
                     <ng-template [ngIf]="user?.contactDetails?.mobile">
                         <dt class="fs-7 text-grey-color">Mobile Number</dt>
@@ -240,8 +240,8 @@
                         <div class="col-md-12">
                             <label mdbLabel class="form-label fw-normal fs-7" for="form2">EmailID</label>
                             <mdb-form-control>
-                                <input mdbInput type="text" id="mobileEmail" class="form-control" mdbValidate
-                                    placeholder="" formControlName="mobileEmail" />
+                                <input mdbInput type="text" id="email" class="form-control" mdbValidate
+                                    placeholder="" formControlName="email" />
                             </mdb-form-control>
                         </div>
 
@@ -293,18 +293,18 @@
                     <div class="card-body">
                         <dl>
                             <dt class="fs-7 text-grey-color">Full Name</dt>
-                            <dd>{{user?.fullName}}</dd>
+                            <dd>{{user?.identityDetails?.fullName}}</dd>
 
                         </dl>
-                        <ng-template [ngIf]="user?.gender || user?.dob">
+                        <ng-template [ngIf]="user?.identityDetails?.gender || user?.dob">
                             <dl>
-                                <ng-template [ngIf]="user?.gender">
+                                <ng-template [ngIf]="user?.identityDetails?.gender">
                                     <dt class="fs-7 text-grey-color">Gender</dt>
-                                    <dd>{{user?.gender}}</dd>
+                                    <dd>{{user?.identityDetails?.gender}}</dd>
                                 </ng-template>
-                                <ng-template [ngIf]="user.dob">
+                                <ng-template [ngIf]="user?.identityDetails?.dob">
                                     <dt class="fs-7 text-grey-color">Date of Birth</dt>
-                                    <dd>{{user?.dob}}
+                                    <dd>{{user?.identityDetails?.dob}}
                                         <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
                                             title="Attested"></i>
                                     </dd>
@@ -312,26 +312,26 @@
                             </dl>
                         </ng-template>
 
-                        <ng-template [ngIf]="user?.mobileEmail || user?.mobile">
+                        <ng-template [ngIf]="user?.contactDetails?.email || user?.contactDetails?.mobile">
                             <dl>
-                                <ng-template [ngIf]="user.mobileEmail">
+                                <ng-template [ngIf]="user?.contactDetails?.email">
                                     <dt class="fs-7 text-grey-color">Email ID</dt>
-                                    <dd>{{user?.mobileEmail}}</dd>
+                                    <dd>{{user?.contactDetails?.email}}</dd>
                                 </ng-template>
-                                <ng-template [ngIf]="user.mobile">
+                                <ng-template [ngIf]="user?.contactDetails?.mobile">
                                     <dt class="fs-7 text-grey-color">Mobile Number</dt>
-                                    <dd>{{user?.mobile}}
+                                    <dd>{{user?.contactDetails?.mobile}}
                                         <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
                                             title="Attested"></i>
                                     </dd>
                                 </ng-template>
                             </dl>
                         </ng-template>
-                        <ng-template [ngIf]="user?.idType || user?.aadhaarNo">
+                        <ng-template [ngIf]="user?.identityType || user?.aadhaarNo">
                             <dl>
-                                <ng-template [ngIf]="user.idType">
+                                <ng-template [ngIf]="user?.identityDetails?.identityType">
                                     <dt class="fs-7 text-grey-color">ID Type</dt>
-                                    <dd>{{user?.idType}}</dd>
+                                    <dd>{{user?.identityDetails?.identityType}}</dd>
                                 </ng-template>
                                 <ng-template [ngIf]="user.aadhaarNo">
                                     <dt class="fs-7 text-grey-color">Aadhaar Number</dt>
@@ -344,9 +344,9 @@
                         </ng-template>
 
                         <dl>
-                            <ng-template [ngIf]="user?.address">
+                            <ng-template [ngIf]="user?.contactDetails?.address">
                                 <dt class="fs-7 text-grey-color">Address</dt>
-                                <dd>{{user?.address}}</dd>
+                                <dd>{{user?.contactDetails?.address}}</dd>
                             </ng-template>
 
                         </dl>

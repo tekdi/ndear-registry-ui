@@ -123,7 +123,7 @@ export class StudentProfileComponent implements OnInit {
         idType:['']
       }),
       contactDetails:fb.group({
-        mobileEmail:[],       
+        email:[],       
         address: [''],
         mobile: [''],
       }),
@@ -166,7 +166,7 @@ export class StudentProfileComponent implements OnInit {
         "identityValue": "string"
       },
       "contactDetails": {
-        "email": this.editUserform.value.mobileEmail,
+        "email": this.editUserform.value.email,
         "mobile": this.editUserform.value.mobile,
         "address": this.editUserform.value.address
       }
@@ -226,16 +226,18 @@ export class StudentProfileComponent implements OnInit {
    
 
     this.studentProfileService.getStudentProfile(studentId).subscribe((res) => {
+
+      console.log({res});
       //this.item = res;
       this.user = res;
-    //   this.fb.group({
-    //     identityDetails : this.fb.group(res['identityDetails']),
-    //     contactDetails:this.fb.group(res['contactDetails']),
-    //     gaurdianfullName: '',
-    //     relation: '',
-    //     accepted: true,
-    //     aadhaarNo: '',
-    //   });
+      this.editUserform =  this.fb.group({
+       identityDetails : this.fb.group(res['identityDetails']),
+        contactDetails:this.fb.group(res['contactDetails']),
+      gaurdianfullName: '',
+       relation: '',
+        accepted: true,
+        aadhaarNo: '',
+       });
      })
   }
 

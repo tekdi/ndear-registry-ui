@@ -22,7 +22,7 @@ export class InstituteProfileService {
     if(!data.identifier){
       return this.dataService.post(req);
     }else{
-      return this.dataService.patch(req);
+      return this.dataService.put(req);
     }
   }
 

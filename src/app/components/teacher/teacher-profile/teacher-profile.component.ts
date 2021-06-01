@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TeacherProfileService } from '../../../services/teacher/teacher-profile.service';
 import { ToastMessageService} from '../../../services/toast-message/toast-message.service';
 import {
@@ -9,6 +9,7 @@ import {
   NgbDateStruct,
   NgbInputDatepickerConfig
 } from '@ng-bootstrap/ng-bootstrap';
+import { SchemaService } from 'src/app/services/data/schema.service';
 
 
 @Component({
@@ -32,6 +33,84 @@ export class TeacherProfileComponent implements OnInit {
   working: Boolean = true;
   teacherId: string;
   item: any;
+  schemaJson: any;
+  teacherSchema: any;
+  teacherProfile = {
+    "type": "object",
+    "title": "Teacher",
+    "definitions": {
+      "identityDetails": {
+        "type": "object",
+        "required": [
+          "fullName"
+        ],
+        "properties": {
+          "fullName": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "Male",
+              "Female",
+              "Other"
+            ]
+          } ,
+        "dob": {
+          "type": "string",
+          "format": "date",
+          "widget": {
+            "id": "date"
+          },
+        },
+        "identityType": {
+          "type": "string",
+          "enum": [
+            "Voter",
+            "Aadhaar"
+            ]
+        },
+        "identityValue": {
+          "type": "string"
+        }
+      },      
+      },
+      "contactDetails": {
+        "type": "object",
+        "required": [
+        ],
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "mobile": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          }
+        }
+      },
+    },
+    "properties": {
+      "identityDetails": {
+        "$ref": "#/definitions/identityDetails"
+      },
+      "contactDetails": {
+        "$ref": "#/definitions/contactDetails"
+      }
+    }
+  };
+  
+  form1: [
+    "*",
+    {
+      "type": "submit",
+      "style": "btn btn-primary text-end mt-3 fw-bold text-capitalize",
+      "title": "save"
+    }
+  ]
+
   experianceSchema = {
     "type": "object",
     "title": "Experience",
@@ -139,8 +218,10 @@ export class TeacherProfileComponent implements OnInit {
     config: NgbInputDatepickerConfig,
     calendar: NgbCalendar,
     public router: Router,
+    private route: ActivatedRoute,
     public teacherProfileService: TeacherProfileService,
-    public toastMsg : ToastMessageService) {
+    public toastMsg : ToastMessageService,
+    public Schema: SchemaService) {
 
     // customize default values of datepickers used by this component tree
     config.minDate = { year: 1900, month: 1, day: 1 };
@@ -148,6 +229,32 @@ export class TeacherProfileComponent implements OnInit {
 
     // days that don't belong to current month are not visible
     config.outsideDays = 'hidden';
+    
+     this.Schema.getSchemas().subscribe((res)=>{
+       this.schemaJson = res;
+       console.log("res",this.schemaJson.definitions.IdentityDetails);
+
+      // console.log(this.schema.definitions)
+       this.teacherSchema = {
+         "type": "object",
+         "title": "Teacher",
+         "definitions": {
+          "identityDetails" : this.schemaJson.definitions.IdentityDetails,
+          "contactDetails" : this.schemaJson.definitions.ContactDetails,
+         },
+         "properties": {
+          "identityDetails": {
+            "$ref": "#/definitions/identityDetails"
+          },
+          "contactDetails": {
+            "$ref": "#/definitions/contactDetails"
+          }
+        }
+       };
+
+       console.log('  this.teacherSchema = > ',  this.teacherSchema);
+
+    });
 
     // setting datepicker popup to open above the input
     // config.placement = ['top-left', 'top-right'];
@@ -182,33 +289,20 @@ export class TeacherProfileComponent implements OnInit {
     });
   }
 
-  onEditProfileSubmit() {
-    console.log(this.editUserform.value);
+  onEditProfileSubmit(event) {
     // this.user.details = this.editform.value
-    localStorage.setItem('user', JSON.stringify(this.editUserform.value));
-    this.user = JSON.parse(localStorage.getItem('user'));
-    this.user = this.editUserform.value
+
     // this.router.navigate(['student-profile']);
+console.log({event});
 
-
-    const data = {
-      "teacherCode": "06",
-      "nationalIdentifier": this.editUserform.value.idType,
-      "teacherName": this.editUserform.value.fullName,
-      "gender": this.editUserform.value.gender,
-      "birthDate": this.editUserform.value.dob,
-      "email": this.editUserform.value.mobileEmail,
-      "mobile": this.editUserform.value.mobile,
-      "address": this.editUserform.value.address,
-      "district": "Pune",
-      "state": "Maharastra"
-    }
+    const data = event;
 
     this.teacherProfileService.postTeacherProfile(data).subscribe(res => {
       if (res.responseCode == 'OK' && !res.params.errmsg) {
-        localStorage.setItem('teacher_id',res.result.Teacher.osid);
-        this.getTeacherData();
-        this.toastMsg.success('Success', 'Teacher Profile added successfully');
+        this.router.navigate(['/teacher-profile', { 'id': res.result.Teacher.osid }]);
+
+        this.getTeacherData(res.result.Teacher.osid);
+        this.toastMsg.success('Success', 'Teacher Profile Added Successfully');
       }
     })
   }
@@ -273,7 +367,7 @@ __proto__: Object
       this.teacherProfileService.putTeacherProfile(this.teacherId, data).subscribe(res => {
         if (res.responseCode == 'OK' && !res.params.errmsg) {
           localStorage.setItem('teacher_id',res.result.Teacher.osid);
-          this.getTeacherData();
+          this.getTeacherData(this.teacherId);
           this.toastMsg.success('Success', 'Experience data added successfully');
         }
       })
@@ -288,16 +382,22 @@ __proto__: Object
       this.experianceSchema.properties.institute.enum.push(this.institute)
       this.educationSchema.properties.institute.enum.push(this.institute)
     }
-    this.getTeacherData();
+
+    this.route.params.subscribe(params => {
+      console.log("route", params)
+      this.teacherId = params['id'];
+    });
+    this.getTeacherData(this.teacherId);
   }
 
-  getTeacherData(){
+  getTeacherData(id){
     this.teacherId = localStorage.getItem('teacher_id');
     console.log(this.teacherId);
 
 
     this.teacherProfileService.getTeacherProfile(this.teacherId).subscribe((res)=>{
        this.item = res;
+       console.log('this.item', this.item);
     })
   }
 

@@ -10,111 +10,111 @@ import { InstituteProfileService } from 'src/app/services/institute/institute-pr
 })
 export class InstituteProfileSetupComponent implements OnInit {
   header1: string = 'plain';
-  schema;
+  //schema;
 
-  // schema = {
-  //   "type": "object",
-  //   "title": "Teacher",
-  //   "definitions": {
-  //     "BasicDetails": {
-  //       "type": "object",
-  //       "required": [
-  //         "instituteName"
-  //       ],
-  //       "properties": {
-  //         "instituteName": {
-  //           "type": "string"
-  //         }     
-  //       }
-  //     },
-  //     "Address": {
-  //       "type": "object",
-  //       "required": [
-  //         "Landmark",
-  //         "Locality",
-  //         "State",
-  //         "District",
-  //         "City",
-  //         "pincode"
-  //       ],
-  //       "properties": {
-  //         "Plot": {
-  //           "type": "string"
-  //         },
-  //         "Street": {
-  //           "type": "string"
-  //         },
-  //         "Landmark": {
-  //           "type": "string"
-  //         },
-  //         "Locality": {
-  //           "type": "string"
-  //         },
-  //         "State": {
-  //           "type": "string"
-  //         },
-  //         "District": {
-  //           "type": "string"
-  //         },
-  //         "City": {
-  //           "title":"Village/Town/City",
-  //           "type": "string"
-  //         },
-  //         "pincode": {
-  //           "type": "number"
-  //         },
-  //       }
-  //     },
-  //     "WhatIsYourRole": {
-  //       "type": "object",
-  //       "required": [
-  //         "role"
-  //       ],
-  //       "properties": {
-  //         "role":{
-  //           "type": "string",
-  //           "enum": [
-  //             "Head of department",
-  //             "Principal"
-  //           ]
-  //         }
-  //       }
-  //     },
-  //     "WhoIsAdmin": {
-  //       "type": "object",
-  //       "required": [
-  //         "emailOrMobile"
-  //       ],
-  //       "properties": {
-  //         "emailOrMobile":{
-  //           "title": "Email id or Mobile",
-  //           "type": "string"
-  //         }
-  //       }
-  //     }
-  //   },
-  //   "properties": {
-  //     "BasicDetails": {
-  //       "$ref": "#/definitions/BasicDetails"
-  //     },
-  //     "gstin": {
-  //       "title": "GSTIN ID",
-  //       "type": "string"
-  //     },
-  //     "Address": {
-  //       "title": "Address",
-  //       "$ref": "#/definitions/Address"
-  //     },
-  //     "WhatIsYourRole": {
-  //       "title": "What is your role?",
-  //       "$ref": "#/definitions/WhatIsYourRole"
-  //     },
-  //     "WhoIsAdmin": {
-  //       "title": "Invite admin to complete the setup",
-  //       "$ref": "#/definitions/WhoIsAdmin"
-  //     }
-  //   }
-  // };
+  schema = {
+    "type": "object",
+    "title": "Teacher",
+    "definitions": {
+      "BasicDetails": {
+        "type": "object",
+        "required": [
+          "instituteName"
+        ],
+        "properties": {
+          "instituteName": {
+            "type": "string"
+          }     
+        }
+      },
+      "Address": {
+        "type": "object",
+        "required": [
+          "Landmark",
+          "Locality",
+          "State",
+          "District",
+          "City",
+          "pincode"
+        ],
+        "properties": {
+          "Plot": {
+            "type": "string"
+          },
+          "Street": {
+            "type": "string"
+          },
+          "Landmark": {
+            "type": "string"
+          },
+          "Locality": {
+            "type": "string"
+          },
+          "State": {
+            "type": "string"
+          },
+          "District": {
+            "type": "string"
+          },
+          "City": {
+            "title":"Village/Town/City",
+            "type": "string"
+          },
+          "pincode": {
+            "type": "number"
+          },
+        }
+      },
+      "WhatIsYourRole": {
+        "type": "object",
+        "required": [
+          "role"
+        ],
+        "properties": {
+          "role":{
+            "type": "string",
+            "enum": [
+              "Head of department",
+              "Principal"
+            ]
+          }
+        }
+      },
+      "WhoIsAdmin": {
+        "type": "object",
+        "required": [
+          "emailOrMobile"
+        ],
+        "properties": {
+          "emailOrMobile":{
+            "title": "Email id or Mobile",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "properties": {
+      "BasicDetails": {
+        "$ref": "#/definitions/BasicDetails"
+      },
+      "gstin": {
+        "title": "GSTIN ID",
+        "type": "string"
+      },
+      "Address": {
+        "title": "Address",
+        "$ref": "#/definitions/Address"
+      },
+      "WhatIsYourRole": {
+        "title": "What is your role?",
+        "$ref": "#/definitions/WhatIsYourRole"
+      },
+      "WhoIsAdmin": {
+        "title": "Invite admin to complete the setup",
+        "$ref": "#/definitions/WhoIsAdmin"
+      }
+    }
+  };
  
   form: [
     "*",
@@ -125,22 +125,24 @@ export class InstituteProfileSetupComponent implements OnInit {
     }
   ]
   instituteSchema = {};
-  constructor(public router: Router, public instituteProfileService: InstituteProfileService, public Schema: SchemaService) {
-    this.Schema.getSchemas().subscribe((res)=>{
-      console.log("res",res);
-       this.schema = res;
-       console.log(this.schema.definitions)
-       this.instituteSchema = {
-         "type": "object",
-         "title": "Institute",
-         "definitions": this.schema.definitions.Institute,
-         "properties": {
-           "Institute": {
-             "$ref": "#/definitions/Institute"
-           }
-         }
-       };
-    });
+  constructor(public router: Router, 
+    public instituteProfileService: InstituteProfileService, 
+    public Schema: SchemaService) {
+    // this.Schema.getSchemas().subscribe((res)=>{
+    //   console.log("res",res);
+    //    this.schema = res;
+    //    console.log(this.schema.definitions)
+    //    this.instituteSchema = {
+    //      "type": "object",
+    //      "title": "Institute",
+    //      "definitions": this.schema.definitions.Institute,
+    //      "properties": {
+    //        "Institute": {
+    //          "$ref": "#/definitions/Institute"
+    //        }
+    //      }
+    //    };
+    // });
    }
 
   ngOnInit(): void {
@@ -172,7 +174,7 @@ export class InstituteProfileSetupComponent implements OnInit {
       "website": "https://ghg.com",
       "category": "Primary",
       "schoolType":data.BasicDetails.SchoolType,
-      "instituteManagement":  data.BasicDetails.ManagementOfInstitute[0],
+      "instituteManagement":  data.BasicDetails.ManagementOfInstitute,
       "committee": "yes",
       "adminName": data.BasicDetails.headPerson,
       "adminEmail": data.BasicDetails.Email,

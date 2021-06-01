@@ -163,11 +163,11 @@
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link active">{{institute.BasicDetails.instituteName}}</a>
+                            <a class="nav-link active">{{institute?.BasicDetails?.instituteName}}</a>
                             
                         </li>
-                        <ng-template [ngIf]="institute.BasicDetails.logoUrl">
-                            <li><img style="width: 50px;" src="{{institute.BasicDetails.logoUrl}}"></li>
+                        <ng-template [ngIf]="institute?.BasicDetails?.logoUrl">
+                            <li><img style="width: 50px;" src="{{institute?.BasicDetails?.logoUrl}}"></li>
                         </ng-template>
                         <!-- <li class="nav-item">
                             <a class="nav-link" href="#">Sign up</a>

@@ -14,58 +14,58 @@
         <div class="card-body">
             <dl>
                 <dt class="fs-7 text-grey-color">Full Name</dt>
-                <dd>{{item?.teacherName}}</dd>
+                <dd>{{item?.identityDetails?.fullName}}</dd>
             </dl>
-            <ng-template [ngIf]="user.gender || user.dob">
+            <ng-template [ngIf]="item?.identityDetails?.gender || item?.identityDetails?.dob">
                 <dl>
-                    <ng-template [ngIf]="item?.gender">
+                    <ng-template [ngIf]="item?.identityDetails?.gender">
                         <dt class="fs-7 text-grey-color">Gender</dt>
-                        <dd>{{item?.gender}}</dd>
+                        <dd>{{item?.identityDetails?.gender}}</dd>
                     </ng-template>
-                    <ng-template [ngIf]="item?.dob">
+                    <ng-template [ngIf]="item?.identityDetails?.dob">
                         <dt class="fs-7 text-grey-color">Date of Birth</dt>
-                        <dd>{{item?.dob}}
+                        <dd>{{item?.identityDetails?.dob}}
                             <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
                         </dd>
                     </ng-template>
                 </dl>
             </ng-template>
 
-            <ng-template [ngIf]="item?.email || item?.mobile">
+            <ng-template [ngIf]="item?.contactDetails?.email || item?.contactDetails?.mobile">
                 <dl>
-                    <ng-template [ngIf]="item?.email">
+                    <ng-template [ngIf]="item?.contactDetails?.email">
                         <dt class="fs-7 text-grey-color">Email ID</dt>
-                        <dd>{{item?.email}}</dd>
+                        <dd>{{item?.contactDetails?.email}}</dd>
                     </ng-template>
-                    <ng-template [ngIf]="item?.mobile">
+                    <ng-template [ngIf]="item?.contactDetails?.mobile">
                         <dt class="fs-7 text-grey-color">Mobile Number</dt>
-                        <dd>{{item?.mobile}}
+                        <dd>{{item?.contactDetails?.mobile}}
                             <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>
                         </dd>
                     </ng-template>
                 </dl>
             </ng-template>
 
-            <ng-template [ngIf]="item?.nationalIdentifier || item?.aadhaarNo">
+            <ng-template [ngIf]="item?.identityDetails?.identityType || item?.identityDetails?.identityValue">
                 <dl>
-                    <ng-template [ngIf]="item?.nationalIdentifier">
+                    <ng-template [ngIf]="item?.identityDetails?.identityType">
                         <dt class="fs-7 text-grey-color">ID Type</dt>
-                        <dd>{{user.nationalIdentifier}}</dd>
+                        <dd>{{item?.identityDetails?.identityType}}</dd>
                     </ng-template>
-                    <ng-template [ngIf]="item?.aadhaarNo">
+                    <ng-template [ngIf]=" item?.identityDetails?.identityValue">
                         <dt class="fs-7 text-grey-color">Aadhaar Number</dt>
-                        <dd>{{item?.aadhaarNo}}
+                        <dd>{{item?.identityDetails?.identityValue}}
                             <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>
                         </dd>
                     </ng-template>
                 </dl>
             </ng-template>
 
-            <ng-template [ngIf]="item?.address">
+            <ng-template [ngIf]="item?.contactDetails?.address">
                 <dl>
-                    <ng-template [ngIf]="item?.address">
+                    <ng-template [ngIf]="item?.contactDetails?.address">
                         <dt class="fs-7 text-grey-color">Address</dt>
-                        <dd>{{item?.address}} {{item?.district}}  {{item?.state}}</dd>
+                        <dd>{{item?.contactDetails?.address}}</dd>
                     </ng-template>
                 </dl>
             </ng-template>
@@ -191,7 +191,7 @@
                         </mdb-form-control>
                     </div>
 
-                    <button type="submit" (click)="onEditProfileSubmit()"
+                    <button type="submit" (click)="onEditProfileSubmit($event)"
                         class="btn btn-primary text-end mt-3 fw-bold text-capitalize" data-dismiss="modal">Save</button>
                 </form>
             </div>
@@ -213,87 +213,15 @@
             </div>
 
             <div class="modal-body h-100">
-
-                <form class="example-container" [formGroup]="editUserform">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label mdbLabel class="form-label fw-normal fs-7" for="fullName">Full Name</label>
-                            <mdb-form-control>
-                                <input mdbInput required="required" type="text" id="fullName" class="form-control"
-                                    mdbValidate placeholder="" formControlName="fullName" />
-                            </mdb-form-control>
-
-                        </div>
-
-                        <div class="" appearance="outline">
-                            <label mdbLabel class="form-label fw-normal fs-7" for="gender">Gender</label>
-                            <div class="d-inline-block fs-8">(Optional)</div>
-                            <select class="form-control" id="gender" mdbValidate formControlName="gender">
-                                <option value="Male" selected>Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-12">
-                            <label mdbLabel class="form-label fw-normal fs-7" for="dob">Date Of Birth</label>
-                            <mdb-form-control>
-                                <input mdbInput type="date" id="dob" class="form-control" mdbValidate placeholder=""
-                                    formControlName="dob" />
-                            </mdb-form-control>
-
-                        </div>
-
-                        <div class="" appearance="outline">
-                            <label mdbLabel class="form-label fw-normal fs-7" for="idType">ID Type</label>
-                            <div class="d-inline-block fs-8">(Optional)</div>
-                            <select class="form-control" id="idType" mdbValidate formControlName="idType">
-                                <option value="voter" selected>Voter</option>
-                                <option value="aadhaar">Aadhaar</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-12">
-                            <label mdbLabel class="form-label fw-normal fs-7" for="aadhaarNo">Aadhaar Number</label>
-                            <mdb-form-control>
-                                <input mdbInput type="text" id="aadhaarNo" class="form-control" mdbValidate
-                                    placeholder="" formControlName="aadhaarNo" />
-                            </mdb-form-control>
-
-                        </div>
-
-
-                        <div class="col-md-12">
-                            <label mdbLabel class="form-label fw-normal fs-7" for="form2">EmailID</label>
-                            <mdb-form-control>
-                                <input mdbInput type="text" id="mobileEmail" class="form-control" mdbValidate
-                                    placeholder="" formControlName="mobileEmail" />
-                            </mdb-form-control>
-                        </div>
-
-                        <div class="col-md-12">
-                            <label mdbLabel class="form-label fw-normal fs-7" for="fullName">Mobile Number</label>
-                            <mdb-form-control>
-                                <input mdbInput type="text" id="mobile" class="form-control" mdbValidate placeholder=""
-                                    formControlName="mobile" />
-                            </mdb-form-control>
-
-                        </div>
-
-                        <div class="col-md-12">
-                            <label mdbLabel class="form-label fw-normal fs-7" for="fullName">Address</label>
-                            <mdb-form-control>
-                                <input mdbInput type="textarea" id="address" class="form-control" mdbValidate
-                                    placeholder="" formControlName="address" />
-                            </mdb-form-control>
-
-                        </div>
+                <div class="modal-body h-100">
+                    <div *ngIf="teacherSchema">
+                        <json-schema-form  [schema]="teacherSchema" [layout]="form1" framework="bootstrap-4"
+                        (onSubmit)="onEditProfileSubmit($event)">
+                    </json-schema-form>
                     </div>
-
-
-                    <button type="submit" (click)="onEditProfileSubmit()"
-                        class="btn btn-primary text-end mt-3 fw-bold text-capitalize" data-dismiss="modal">Save</button>
-                </form>
+                    
+                </div>
+  
             </div>
 
         </div>
@@ -318,9 +246,9 @@
                     <div class="card-body">
                         <dl>
                             <dt class="fs-7 text-grey-color">Full Name</dt>
-                            <dd>{{item?.teacherName}}</dd>
+                            <dd>{{item?.identityDetails?.fullName}}</dd>
                         </dl>
-                        <ng-template [ngIf]="item?.gender || item?.dob">
+                        <ng-template [ngIf]="item?.identityDetails?.gender || item?.dob">
                             <dl>
                                 <ng-template [ngIf]="item?.gender">
                                     <dt class="fs-7 text-grey-color">Gender</dt>
@@ -336,15 +264,15 @@
                             </dl>
                         </ng-template>
 
-                        <ng-template [ngIf]="item?.email || item?.mobile">
+                        <ng-template [ngIf]="item?.contactDetails?.email || item?.contactDetails?.mobile">
                             <dl>
-                                <ng-template [ngIf]="item?.email">
+                                <ng-template [ngIf]="item?.contactDetails?.email">
                                     <dt class="fs-7 text-grey-color">Email ID</dt>
-                                    <dd>{{item?.email}}</dd>
+                                    <dd>{{item?.contactDetails?.email}}</dd>
                                 </ng-template>
-                                <ng-template [ngIf]="item?.mobile">
+                                <ng-template [ngIf]="item?.contactDetails?.mobile">
                                     <dt class="fs-7 text-grey-color">Mobile Number</dt>
-                                    <dd>{{item?.mobile}}
+                                    <dd>{{item?.contactDetails?.mobile}}
                                         <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
                                             title="Attested"></i>
                                     </dd>

@@ -108,7 +108,6 @@ export class StudentProfileComponent implements OnInit {
         "properties": {
           "EducationDetails": this.schemaJson.definitions.EducationType
         }
-
       };
 
       console.log('  this.teacherSchema = > ', this.educationSchema);
@@ -152,7 +151,7 @@ export class StudentProfileComponent implements OnInit {
         if (res.responseCode == 'OK' && !res.params.errmsg) {
           this.router.navigate(['/student-profile', { 'id': this.studentId }]);
           this.getStudentData(this.studentId);
-          this.toastMsg.success('Success', 'Student Profile Updated successfully');
+          this.toastMsg.success('Success', 'Student Profile Updated Successfully');
         }
       })
     } else {
@@ -162,7 +161,7 @@ export class StudentProfileComponent implements OnInit {
           // localStorage.setItem('student_id', res.result.Student.osid);
           this.router.navigate(['/student-profile', { 'id': res.result.Student.osid }]);
           this.getStudentData(res.result.Student.osid);
-          this.toastMsg.success('Success', 'Student Profile added successfully');
+          this.toastMsg.success('Success', 'Student Profile Added Successfully');
         }
       })
     }

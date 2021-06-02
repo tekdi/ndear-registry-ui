@@ -32,7 +32,7 @@ export class TeacherProfileService {
     return this.dataService.get(req);
   }
 
-  putTeacherProfile(id, data) {
+  putTeacherProfile(data, id) {
     let url = `${this.baseUrl}/${ApiPaths.Teacher}/${id}`;
     const req = {
       url: url,

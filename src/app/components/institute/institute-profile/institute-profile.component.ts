@@ -99,7 +99,6 @@ export class InstituteProfileComponent implements OnInit {
     if (!this.institute.hasOwnProperty('affiliation')) {
       this.institute.affiliation = [
         event
-
       ]
     } else {
       this.institute.affiliation.push(
@@ -114,7 +113,7 @@ export class InstituteProfileComponent implements OnInit {
         this.router.navigate(['/institute-profile', { 'id': this.instituteId }]);
 
         this.getInstituteData(this.instituteId);
-        this.toastMsg.success('Success', 'Educational Deatils Added Successfully');
+        this.toastMsg.success('Success', 'Affiliation Deatils Added Successfully');
       }
     })
 
@@ -126,16 +125,22 @@ export class InstituteProfileComponent implements OnInit {
     if(this.instituteId)
     {
       if(this.institute.hasOwnProperty('address')){
-        event.instituteDetails.address =  this.institute.address.osid;
+        if(event.instituteDetails.hasOwnProperty('address')){
+          
+          event.instituteDetails.address.osid= this.institute.address.osid;       
+         }
+        
       }
-     
+
+     console.log(event.instituteDetails);
+     event.instituteDetails['osid'] =  this.institute.osid;
       let data =  event.instituteDetails;
       this.instituteProfileService.putInstituteProfile(data, this.instituteId).subscribe(res => {
         if (res.responseCode == 'OK' && !res.params.errmsg) {
           this.router.navigate(['/institute-profile', { 'id': this.instituteId }]);
   
           this.getInstituteData(this.instituteId);
-          this.toastMsg.success('Success', 'Educational Deatils updated Successfully');
+          this.toastMsg.success('Success', 'Institute Details updated Successfully');
         }
       })
 
@@ -154,7 +159,9 @@ export class InstituteProfileComponent implements OnInit {
   getInstituteData(Id) {
     this.instituteProfileService.getInstituteProfile(Id).subscribe((res) => {
       this.institute = res;
-      this.item = res;
+      this.item = { instituteDetails : res};
+
+      console.log('this.item = ', this.item);
       console.log('this.institute- ', this.institute)
     })
   }

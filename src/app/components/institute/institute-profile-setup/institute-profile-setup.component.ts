@@ -191,10 +191,10 @@ export class InstituteProfileSetupComponent implements OnInit {
 
     });
 
-    // const url = this.router.createUrlTree(['/admin-mail'])
-    // window.open(url.toString(), '_blank')
-    // this.router.navigate(['institute-profile-select']);
-    this.router.navigate(['admin-mail']);
+    const url = this.router.createUrlTree(['/admin-mail'])
+    window.open(url.toString(), '_blank')
+    this.router.navigate(['institute-profile-select']);
+   // this.router.navigate(['admin-mail']);
   }
 
 }

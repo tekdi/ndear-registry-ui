@@ -37,6 +37,7 @@ export class TeacherProfileComponent implements OnInit {
   teacherSchema: any;
   educationSchema: any;
   experianceSchema: any;
+  
   form1: [
     "*",
     {
@@ -46,99 +47,7 @@ export class TeacherProfileComponent implements OnInit {
     }
   ]
 
-  experianceSchema1 = {
-    "type": "object",
-    "title": "Experience",
-    "properties": {
-      "institute": {
-        "title": "Institute Name",
-        "type": "string",
-        "enum": ['Bhartiya Shiksha Parishad', 'Sarvoday School', 'Aadharshila Institute']
-      },
-      "EmploymentType": {
-        "title": "Employment Type",
-        "type": "string",
-        "enum": ['Permanant', 'Contract']
-      },
-      "startdate": {
-        "title": "Start date",
-        "type": "string",
-        "format": "date"
-      },
-      "enddate": {
-        "title": "End date",
-        "type": "string",
-        "format": "date"
-      },
-      "TeacherType": {
-        "title": "Teacher Type",
-        "type": "string",
-        "enum": ['Assistant teacher PS',
-          'Assistant teacher UPS Head teacher primary school',
-          'Shiksha Mitra',
-          'Anudeshak (UPS)',
-          'Assistant teacher (AidedPS)',
-          'Assistant teacher (Aided UPS)',
-          'Teacher (KGBV)',
-          'Itinerant Teacher (CWSN)',
-          'Govt. LT (TGT) ',
-          'Govt. Lecturer (PGT)',
-          'Aided School LT (TGT)',
-          'Aided School Lecturer (PGT)',
-          'ICT teacher',
-          'Vocational teachers',
-          'Attached Primary Teacher',
-          'Sanskrit aided school'
-        ]
-      },
-      "send": {
-        "title": " Send for verification?",
-        "type": "boolean",
-        "default": true
-      }
-    },
-    "required": [
-      "institute",
-      "EmploymentType",
-      "startdate",
-      "TeacherType"
-    ]
-  };
-  educationSchema1 = {
-    "type": "object",
-    "title": "Experience",
-    "properties": {
-      "institute": {
-        "title": "Institute Name",
-        "type": "string",
-        "enum": ['Bhartiya Shiksha Parishad', 'Sarvoday School', 'Aadharshila Institute']
-      },
-      "Qualification": {
-        "title": "Qualification",
-        "type": "string",
-        "enum": ['Below secondary', 'Secondary', 'Higher secondary', 'Graduate', 'Post graduate', 'M.Phil', 'Ph.D', 'PostDoctoral']
-      },
-      "year": {
-        "title": "Year of Graduation",
-        "type": "string"
-      },
-      "marks": {
-        "title": "Marks / Ranking / GPA, etc",
-        "type": "string"
-      },
-      "send": {
-        "title": " Send for verification?",
-        "type": "boolean",
-        "default": true
-      }
-    },
-    "required": [
-      "institute",
-      "Qualification",
-      "year",
-      "marks"
-    ]
-  };
+
   form: [
     '*',
     {
@@ -244,6 +153,8 @@ export class TeacherProfileComponent implements OnInit {
           this.router.navigate(['/teacher-profile', { 'id': this.teacherId }]);
           this.getTeacherData(this.teacherId);
           this.toastMsg.success('Success', 'Teacher Profile Updated Successfully');
+        } else {
+          this.toastMsg.error('Error', res.params.errmsg);
         }
       })
 
@@ -256,6 +167,8 @@ export class TeacherProfileComponent implements OnInit {
   
           this.getTeacherData(res.result.Teacher.osid);
           this.toastMsg.success('Success', 'Teacher Profile Added Successfully');
+        }else{
+          this.toastMsg.error('Error', res.params.errmsg);
         }
       })
     }
@@ -369,6 +282,7 @@ __proto__: Object
   getTeacherData(id) {
     this.teacherProfileService.getTeacherProfile(id).subscribe((res) => {
       this.item = res;
+      
     })
   }
 

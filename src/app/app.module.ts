@@ -54,6 +54,8 @@ import {
 } from "ngx-schema-form";
 
 import { ToastrModule } from 'ngx-toastr';
+import { APP_INITIALIZER } from '@angular/core';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 
 /* Service files */
@@ -61,6 +63,9 @@ import { BoardInstituteService} from './services/board/board-institutes/board-in
 import { AdminFormService } from './services/admin-form.service';
 import { TeacherProfileService } from './services/teacher/teacher-profile.service';
 import { StudentProfileService} from './services/student/student-profile.service';
+import { InviteService} from './services/invite/invite.service';
+
+import { initializeKeycloak } from '../app/utility/app.init';
 
 @NgModule({
   declarations: [
@@ -114,7 +119,7 @@ import { StudentProfileService} from './services/student/student-profile.service
     NgOtpInputModule,
     NgbModule,
     SuiModule,
-    // MaterialDesignFrameworkModule,
+    KeycloakAngularModule,
     Bootstrap4FrameworkModule,
     SchemaFormModule.forRoot(),
     ToastrModule.forRoot({
@@ -130,7 +135,14 @@ import { StudentProfileService} from './services/student/student-profile.service
     AdminFormService,
     BoardInstituteService,
     TeacherProfileService,
-    StudentProfileService
+    StudentProfileService,
+    InviteService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService],
+    }
   ]
 })
 export class AppModule {

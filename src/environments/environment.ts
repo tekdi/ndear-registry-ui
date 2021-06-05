@@ -12,6 +12,9 @@ export const environment = {
 export enum ApiPaths {
   Institute = 'Institute',
   Teacher = 'Teacher',
-  Student = 'Student'
+  Student = 'Student',
+  InviteStudent = 'Student/invite',
+  InviteTeacher = 'Teacher/invite',
+  InviteInstitute = 'Institute/invite'
 }
 

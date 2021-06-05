@@ -48,7 +48,7 @@ export class InstituteProfileComponent implements OnInit {
     this.Schema.getSchemas().subscribe((res) => {
       this.schemaJson = res;
       delete this.schemaJson.definitions.Institute.properties.affiliation;
-      delete this.schemaJson.definitions.Institute.properties.adress;
+      delete this.schemaJson.definitions.Institute.properties.address;
 
 
       console.log(this.schemaJson);

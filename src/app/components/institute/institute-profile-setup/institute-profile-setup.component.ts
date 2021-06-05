@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SchemaService } from 'src/app/services/data/schema.service';
 import { InstituteProfileService } from 'src/app/services/institute/institute-profile.service';
+import { ToastMessageService } from '../../../services/toast-message/toast-message.service';
 
 @Component({
   selector: 'app-institute-profile-setup',
@@ -10,8 +11,8 @@ import { InstituteProfileService } from 'src/app/services/institute/institute-pr
 })
 export class InstituteProfileSetupComponent implements OnInit {
   header1: string = 'plain';
-  //schema;
-
+  schemaJson;
+  instituteSchema;
   schema = {
     "type": "object",
     "title": "Teacher",
@@ -24,7 +25,7 @@ export class InstituteProfileSetupComponent implements OnInit {
         "properties": {
           "instituteName": {
             "type": "string"
-          }     
+          }
         }
       },
       "Address": {
@@ -57,7 +58,7 @@ export class InstituteProfileSetupComponent implements OnInit {
             "type": "string"
           },
           "City": {
-            "title":"Village/Town/City",
+            "title": "Village/Town/City",
             "type": "string"
           },
           "pincode": {
@@ -71,7 +72,7 @@ export class InstituteProfileSetupComponent implements OnInit {
           "role"
         ],
         "properties": {
-          "role":{
+          "role": {
             "type": "string",
             "enum": [
               "Head of department",
@@ -86,7 +87,7 @@ export class InstituteProfileSetupComponent implements OnInit {
           "emailOrMobile"
         ],
         "properties": {
-          "emailOrMobile":{
+          "emailOrMobile": {
             "title": "Email id or Mobile",
             "type": "string"
           }
@@ -115,7 +116,7 @@ export class InstituteProfileSetupComponent implements OnInit {
       }
     }
   };
- 
+
   form: [
     "*",
     {
@@ -124,69 +125,84 @@ export class InstituteProfileSetupComponent implements OnInit {
       "title": "save"
     }
   ]
-  instituteSchema = {};
-  constructor(public router: Router, 
-    public instituteProfileService: InstituteProfileService, 
-    public Schema: SchemaService) {
-    // this.Schema.getSchemas().subscribe((res)=>{
-    //   console.log("res",res);
-    //    this.schema = res;
-    //    console.log(this.schema.definitions)
-    //    this.instituteSchema = {
-    //      "type": "object",
-    //      "title": "Institute",
-    //      "definitions": this.schema.definitions.Institute,
-    //      "properties": {
-    //        "Institute": {
-    //          "$ref": "#/definitions/Institute"
-    //        }
-    //      }
-    //    };
-    // });
-   }
+
+  constructor(public router: Router,
+    public instituteProfileService: InstituteProfileService,
+    public Schema: SchemaService,
+    public toastMsg: ToastMessageService) {
+    this.Schema.getSchemas().subscribe((res) => {
+      // console.log("res",res);
+      this.schemaJson = res;
+      delete this.schemaJson.definitions.Institute.properties.address;
+      delete this.schemaJson.definitions.Institute.properties.affiliation;
+      this.instituteSchema = {
+        "type": "object",
+        "title": "Teacher",
+        "definitions": {
+          "Institute": this.schemaJson.definitions.Institute,
+          "Address": this.schemaJson.definitions.Address,
+        },
+        "properties": {
+          "Institute": {
+            "$ref": "#/definitions/Institute"
+          },
+          "Address": {
+            "$ref": "#/definitions/Address"
+          }
+        }
+      }
+
+      console.log('this.instituteSchema = ', this.instituteSchema);
+    });
+  }
 
   ngOnInit(): void {
-    
+
   }
-  yourOnSubmitFn(data){
+  submitIntituteProfile(data) {
     console.log(data)
-    localStorage.setItem('admin-setup',"true");
-    localStorage.setItem('institute-detail',JSON.stringify(data));
-
-    
-
-    const formData = {
-      "instituteName": data.BasicDetails.instituteName,
-      "address": {
-        "plot":  data.Address.Plot,
-        "street":  data.Address.Street,
-        "landmark": data.Address.Landmark,
-        "locality": data.Address.Locality,
-        "state":  data.Address.State,
-        "district":  data.Address.District,
-        "village": "",
-        "pincode": data.Address.pinCode
-      },
-      "establishmentYear": String(data.BasicDetails.YearOfEstablishmentOfInstitute),
-      "gstnId": data.gstin,
-      "contactNumber":  String(data.BasicDetails.ContactNumber),
-      "email":  data.BasicDetails.Email,
-      "website": "https://ghg.com",
-      "category": "Primary",
-      "schoolType":data.BasicDetails.SchoolType,
-      "instituteManagement":  data.BasicDetails.ManagementOfInstitute,
-      "committee": "yes",
-      "adminName": data.BasicDetails.headPerson,
-      "adminEmail": data.BasicDetails.Email,
-      "adminMobile":  String(data.BasicDetails.ContactNumber)
-      
-    }
+    localStorage.setItem('admin-setup', "true");
+    localStorage.setItem('institute-detail', JSON.stringify(data));
 
 
-    this.instituteProfileService.postInstituteProfile(formData).subscribe((res) => {
+
+    // const formData = {
+    //   "instituteName": data.BasicDetails.instituteName,
+    //   "address": {
+    //     "plot": data.Address.Plot,
+    //     "street": data.Address.Street,
+    //     "landmark": data.Address.Landmark,
+    //     "locality": data.Address.Locality,
+    //     "state": data.Address.State,
+    //     "district": data.Address.District,
+    //     "village": "",
+    //     "pincode": data.Address.pinCode
+    //   },
+    //   "establishmentYear": String(data.BasicDetails.YearOfEstablishmentOfInstitute),
+    //   "gstnId": data.gstin,
+    //   "contactNumber": String(data.BasicDetails.ContactNumber),
+    //   "email": data.BasicDetails.Email,
+    //   "website": "https://ghg.com",
+    //   "category": "Primary",
+    //   "schoolType": data.BasicDetails.SchoolType,
+    //   "instituteManagement": data.BasicDetails.ManagementOfInstitute,
+    //   "committee": "yes",
+    //   "adminName": data.BasicDetails.headPerson,
+    //   "adminEmail": data.BasicDetails.Email,
+    //   "adminMobile": String(data.BasicDetails.ContactNumber)
+
+    // }
+
+
+    this.instituteProfileService.postInstituteProfile(data).subscribe((res) => {
       console.log({ res });
       if (res.responseCode == 'OK') {
-        localStorage.setItem('institute-entity',res.result.School.osid);
+        localStorage.setItem('institute-entity', res.result.School.osid);
+        if (res.responseCode == 'OK' && !res.params.errmsg) {
+          this.toastMsg.success('Success', 'Institute Profile created Successfully');
+        } else {
+          this.toastMsg.error('Error', res.params.errmsg);
+        }
       }
 
     });
@@ -194,7 +210,7 @@ export class InstituteProfileSetupComponent implements OnInit {
     const url = this.router.createUrlTree(['/admin-mail'])
     window.open(url.toString(), '_blank')
     this.router.navigate(['institute-profile-select']);
-   // this.router.navigate(['admin-mail']);
+    // this.router.navigate(['admin-mail']);
   }
 
 }

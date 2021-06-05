@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { InviteService} from '../../../services/invite/invite.service';
+import { ToastMessageService } from '../../../services/toast-message/toast-message.service';
 
 @Component({
   selector: 'app-institute-teachers',
@@ -37,7 +39,9 @@ export class InstituteTeachersComponent implements OnInit {
       "title": "Send Invite"
     }
   ]
-  constructor(public router: Router) { 
+  constructor(public router: Router,
+    public inviteService: InviteService,
+    public toastMsg: ToastMessageService) { 
     
     
   }
@@ -72,6 +76,17 @@ export class InstituteTeachersComponent implements OnInit {
       this.teachers.push(teacher)
      }
 
+     this.inviteService.inviteTeacher(this.teachers).subscribe((res)=>{
+      if (res.responseCode == 'OK' && !res.params.errmsg) {
+        this.toastMsg.success('Success', 'Invited successfully');
+      }else{
+        this.toastMsg.error('Error', res.params.errmsg);
+      }
+     }, (err)=>{
+
+      console.log({err});
+
+     });
     // event.emails = event.emails.split(',');
     // event.mobiles = event.mobiles.split(',');
     // event.emails.forEach(email => {

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { InviteService} from '../../../services/invite/invite.service';
+import { ToastMessageService } from '../../../services/toast-message/toast-message.service';
 
 @Component({
   selector: 'app-instiitute-students',
@@ -36,7 +38,9 @@ export class InstiituteStudentsComponent implements OnInit {
       "title": "Send Invite"
     }
   ]
-  constructor(public router: Router) { 
+  constructor(public router: Router,
+    public inviteService: InviteService,
+    public toastMsg: ToastMessageService) { 
     this.user = JSON.parse(localStorage.getItem('user'));
     // this.students = JSON.parse(localStorage.getItem('students'));
   }
@@ -51,6 +55,7 @@ export class InstiituteStudentsComponent implements OnInit {
 
     if (event.emails.indexOf(',') > -1) { 
       event.emails = event.emails.split(',');
+      
       event.emails.forEach(email => {
         var teacher = {
           'email': email,
@@ -66,6 +71,20 @@ export class InstiituteStudentsComponent implements OnInit {
       }
       this.students.push(teacher)
      }
+
+     this.inviteService.inviteStudent(this.students).subscribe((res)=>{
+      if (res.responseCode == 'OK' && !res.params.errmsg) {
+        this.toastMsg.success('Success', 'Invited successfully');
+      }else{
+        this.toastMsg.error('Error', res.params.errmsg);
+      }
+     }, (err)=>{
+
+      console.log({err});
+
+     });
+
+     
 
     // event.emails = event.emails.split(',');
     // event.mobiles = event.mobiles.split(',');

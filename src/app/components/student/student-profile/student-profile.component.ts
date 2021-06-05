@@ -152,6 +152,8 @@ export class StudentProfileComponent implements OnInit {
           this.router.navigate(['/student-profile', { 'id': this.studentId }]);
           this.getStudentData(this.studentId);
           this.toastMsg.success('Success', 'Student Profile Updated Successfully');
+        } else {
+          this.toastMsg.error('Error', res.params.errmsg);
         }
       })
     } else {
@@ -162,6 +164,8 @@ export class StudentProfileComponent implements OnInit {
           this.router.navigate(['/student-profile', { 'id': res.result.Student.osid }]);
           this.getStudentData(res.result.Student.osid);
           this.toastMsg.success('Success', 'Student Profile Added Successfully');
+        } else {
+          this.toastMsg.error('Error', res.params.errmsg);
         }
       })
     }
@@ -198,6 +202,8 @@ export class StudentProfileComponent implements OnInit {
 
         this.getStudentData(this.studentId);
         this.toastMsg.success('Success', 'Educational Deatils Added Successfully');
+      } else {
+        this.toastMsg.error('Error', res.params.errmsg);
       }
     })
   }

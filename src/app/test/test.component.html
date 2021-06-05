@@ -5,8 +5,21 @@
             <!-- <json-schema-form [schema]="schema" (onChanges)="yourOnChangesFn($event)" [layout]="form" framework="bootstrap-4"
                 (onSubmit)="yourOnSubmitFn($event)">
             </json-schema-form> -->
-            <sf-form [schema]="mySchema2" (onChange)="yourOnSubmitFn($event.value)" [bindings]="myFieldBindings" [model]="myModel" [actions]="myActions"></sf-form>
-            {{myModel | json}}
+            <!-- <sf-form [schema]="mySchema2" (onChange)="yourOnSubmitFn($event.value)" [bindings]="myFieldBindings" [model]="myModel" [actions]="myActions"></sf-form>
+            {{myModel | json}} -->
+
+            <div *ngIf="editSchema">
+                <json-schema-form [schema]="editSchema" [layout]="form" framework="bootstrap-4"
+                    (onSubmit)="onEditProfileSubmit($event)">
+                </json-schema-form>
+            </div>
+
+            <div *ngIf="editSchema">
+                ----
+                <json-schema-form [schema]="editSchema" [data]='item' [layout]="form" framework="bootstrap-4"
+                    (onSubmit)="onEditProfileSubmit($event)">
+                </json-schema-form>
+            </div>
         </div>
     </div>
 </div>

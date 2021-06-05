@@ -34,6 +34,8 @@ import { ConsentVerificationComponent } from './components/diksha/consent-verifi
 import { TeacherConsentComponent } from './components/teacher/teacher-consent/teacher-consent.component';
 import { BoardAttestationDetailsComponent } from './components/board/board-attestation-details/board-attestation-details.component';
 
+import { AuthGuard } from '../app/utility/app.guard';
+
 const routes: Routes = [
   { path: 'signup', component: HomeComponent },
   { path: 'hod-mail', component: InstituteMailComponent },
@@ -47,7 +49,7 @@ const routes: Routes = [
   { path: 'teacher-consent', component: TeacherConsentComponent },
 
   { path: 'institute-signup', component: InstituteSignupComponent },
-  { path: 'institute-login', component: InstituteLoginComponent },
+  { path: 'institute-login', component: InstituteLoginComponent},
   { path: 'institute-profile', component: InstituteProfileComponent },
   { path: 'institute-profile-setup', component: InstituteProfileSetupComponent },
   { path: 'institute-profile-select', component: InstituteProfileSelectComponent },
@@ -58,8 +60,8 @@ const routes: Routes = [
   { path: 'institute-teachers', component: InstituteTeachersComponent },
   { path: 'institute-students', component: InstiituteStudentsComponent },
 
-  { path: '', component: BoardLoginComponent },
-  { path: 'board-institutes', component: BoardInstitutesComponent },
+  { path: '', component: BoardLoginComponent , canActivate: [AuthGuard] },
+  { path: 'board-institutes', component: BoardInstitutesComponent, canActivate: [AuthGuard]  },
   { path: 'board-attestation', component: BoardAttestationsComponent },
   { path: 'board-attestation-detail', component: BoardAttestationDetailsComponent },
 

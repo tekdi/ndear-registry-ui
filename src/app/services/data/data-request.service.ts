@@ -15,18 +15,20 @@ export class DataService {
  * Contains base Url for api end points
  */
  baseUrl: string;
-
+ token : any;
   constructor(
     private http: HttpClient) {
+      this.token = localStorage.getItem('token');
   }
 
 /**
  * for preparing headers
  */
   private getHeader(headers?: HttpOptions['headers']): HttpOptions['headers'] {
+
     const default_headers = {
       Accept: 'application/json',
-     // Authorization: 'Bearer xxxx',
+      //Authorization: 'Bearer ' +  this.token
     };
 
     return default_headers;

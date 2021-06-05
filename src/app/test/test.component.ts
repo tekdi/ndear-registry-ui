@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { of } from 'rxjs';
 import {TestService} from './test.service'
 import {WidgetRegistry, Validator, Binding, FormProperty, PropertyGroup} from 'ngx-schema-form';
+import { SchemaService } from 'src/app/services/data/schema.service';
 
 @Component({
   selector: 'app-test',
@@ -14,7 +15,10 @@ import {WidgetRegistry, Validator, Binding, FormProperty, PropertyGroup} from 'n
 
 
 export class TestComponent implements OnInit {
-  
+
+  editSchema;
+  schemaJson;
+  item;
   schema = {
     "$schema": "http://json-schema.org/draft-04/hyper-schema#",
     "type": "object",
@@ -503,7 +507,30 @@ export class TestComponent implements OnInit {
     }
   ]
   city_list: any[];
-  constructor(public testService: TestService) { }
+  constructor(public testService: TestService,  public jsonschema: SchemaService,) { 
+
+this.jsonschema.getSchemas().subscribe((res) => {
+  this.schemaJson = res;
+  delete this.schemaJson.definitions.Institute.properties.affiliation;
+  delete this.schemaJson.definitions.Institute.properties.adress;
+    this.editSchema = {
+      "type": "object",
+      "title": "Institute",
+      "definitions": {
+        "instituteDetails": this.schemaJson.definitions.Institute,
+        "Address": this.schemaJson.definitions.Address
+      },
+      "properties": {
+        "instituteDetails": {
+          "$ref": "#/definitions/instituteDetails"
+        }
+      }
+    };
+  });
+
+
+
+  }
 
   
 
@@ -558,6 +585,10 @@ export class TestComponent implements OnInit {
         nation_list.push(element.label)
       });
       return nation_list;
+  }
+
+  onEditProfileSubmit(event){
+this.item = event;
   }
 
 }

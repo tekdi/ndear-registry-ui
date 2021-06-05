@@ -2,7 +2,7 @@
 <div class="col-md-4 offset-md-4">
     <div class="alert alert-success alert-dismissible">
       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-      <span class="fw-bold">Success!</span><br> Invitation sent to admins {{institute.WhoIsAdmin.emailOrMobile}} to signup.
+      <span class="fw-bold">Success!</span><br> Invitation sent to admins {{institute?.WhoIsAdmin?.emailOrMobile}} to signup.
     </div>
 </div>
 <div class="container">
@@ -15,8 +15,8 @@
             <div class="d-flex">
               <img src="../../../assets/images/profile.png" alt="" class="w-15">
               <div class="align-self-center text-justify">
-                <div class="fw-bold fs-9">{{institute.BasicDetails.instituteName}}</div>
-                <span class="fs-7">{{institute.BasicDetails.Address}}</span>
+                <div class="fw-bold fs-9">{{institute?.BasicDetails?.instituteName}}</div>
+                <span class="fs-7">{{institute?.BasicDetails?.Address}}</span>
               </div>
             </div>
             <button type="submit" [disabled]="true" class="btn btn-primary mt-3 fw-bold text-capitalize w-35">View</button>
@@ -26,7 +26,7 @@
             <i class="fas fa-info-circle me-3"></i>
             <div class="flex-column d-flex text-left">
               <span class="fw-bold mb-2">Setup not complete!</span> 
-              Admin({{institute.WhoIsAdmin.emailOrMobile}})
+              Admin({{institute?.WhoIsAdmin?.emailOrMobile}})
               has been notified to complete the setup
             </div>
           </div>
@@ -60,9 +60,9 @@
             <div class="d-flex">
               <img src="../../../assets/images/profile.png" alt="" class="w-15">
               <div class="d-flex flex-column text-justify">
-                <span class="fw-bold fs-9">{{user.fullName}}</span>
+                <span class="fw-bold fs-9">{{user?.fullName}}</span>
                 <span class="fs-8">Email ID</span>
-                <span class="fs-7">{{user.mobileEmail}}<i class="fa fa-check-circle text-success"></i></span>
+                <span class="fs-7">{{user?.mobileEmail}}<i class="fa fa-check-circle text-success"></i></span>
               </div>
             </div>
             <button type="submit" style="width: 150px;" [routerLink]="['/teacher-profile']" class="btn btn-primary mt-3 fw-bold text-capitalize w-35">Go to Profile</button>

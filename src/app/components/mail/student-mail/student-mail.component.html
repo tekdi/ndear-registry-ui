@@ -3,7 +3,7 @@
         <div>
             <h6 class="d-inline-block">From : registery@ourdomain.com</h6>
             <br>
-            <h6 class="d-inline-block">To : {{student.email}}</h6>
+            <h6 class="d-inline-block">To : {{student?.email}}</h6>
         </div>
     </div>
     <div class="card">
@@ -11,7 +11,7 @@
             <p>Hi,</p>
             <br>
             <br>
-            <p>You have recieved invite form {{institute.BasicDetails.instituteName}} to register as a student.</p>
+            <p>You have recieved invite form {{institute?.BasicDetails?.instituteName}} to register as a student.</p>
             <p>Click below to complete registration.</p>
             <button [routerLink]="['/student-signup']" class="btn btn-primary text-end mt-3 fw-bold text-capitalize">Complete Registration</button>
         </div>

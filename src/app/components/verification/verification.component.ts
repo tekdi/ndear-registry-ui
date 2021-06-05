@@ -53,7 +53,8 @@ export class VerificationComponent implements OnInit {
       localStorage.setItem('is_logedin', "true")
       console.log(this.for)
       if(this.for == 'student'){
-        this.router.navigate(['student-profile']);
+       let id = localStorage.getItem('studentId');
+        this.router.navigate(['student-profile', {'id':id}]);
       }
       if(this.for == 'teacher'){
         this.router.navigate(['teacher-profile']);
@@ -66,7 +67,7 @@ export class VerificationComponent implements OnInit {
       }
       else if(this.for == 'admin'){
         localStorage.setItem('admin', "true")
-        this.user_id = JSON.parse(localStorage.getItem('institute-detail')).WhoIsAdmin.emailOrMobile;
+        this.user_id = JSON.parse(localStorage.getItem('institute-detail'));//.WhoIsAdmin.emailOrMobile;
         // this.router.navigate(['admin-institute-setup'])
         this.router.navigate(['institute-profile'])
       }

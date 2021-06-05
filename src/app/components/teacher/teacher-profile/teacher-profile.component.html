@@ -95,7 +95,10 @@
                 <ng-template #elseBlock1>
                     <div>{{item?.start}} - Current</div>
                 </ng-template>
-                <div class="fs-7 text-grey-color">{{item?.employmentType}}</div>
+                <div class="fs-6">{{item?.employmentType}}</div>
+                <div class="fs-6">Grades: {{item?.grades.join(', ')}}</div>
+                <div class="fs-6">Subject: {{item?.subjects.join(', ')}}</div>
+                
                 <hr>
             </ng-template>
         </div>
@@ -310,7 +313,7 @@
                 <h6 class="mt-5">Experience</h6>
                 <div class="card">
                     <div class="card-body">
-                        <ng-template ngFor let-item [ngForOf]="item?.experience">
+                        <ng-template ngFor let-item [ngForOf]="item?.experience" let-i='index'>
                             <!-- <ng-template [ngIf]="item?.attested == true"> -->
                                 <h6>{{item?.institute}}
                                     <img *ngIf="item?.attested == 'pending'; else icons" style="width: 16px;"
@@ -326,9 +329,12 @@
                                 <div *ngIf="!item?.working; else elseBlock1">{{item?.start}} -
                                     {{item?.end}}</div>
                                 <ng-template #elseBlock1>
-                                    <div>{{item?.start}} - Current</div>
+                                    <div   *ngIf="item?.start">{{item?.start}} - Current</div>
                                 </ng-template>
-                                <div class="fs-7 text-grey-color">{{item?.employmentType}}</div>
+                                <div class="fs-6">{{item?.employmentType}}</div>
+                                <div class="fs-6">Grades: {{item?.grades.join(', ')}}</div>
+                                <div class="fs-6">Subject: {{item?.subjects.join(', ')}}</div>
+
                                 <hr>
                             <!-- </ng-template> -->
                         </ng-template>
@@ -387,75 +393,7 @@
                     (onSubmit)="onEducationSubmit($event)">
                 </json-schema-form>
             </div>
-                <!-- <form class="example-container" [formGroup]="educationForm">
-                    <div class="pb-3">
-                        <label mdbLabel class="form-label fw-bold fs-7" for="form1">Degree</label>
-                        <mdb-form-control>
-                            <input mdbInput type="text" id="form1" class="form-control" formControlName="degree"
-                                mdbValidate />
-                        </mdb-form-control>
-
-                    </div>
-
-                    <div class="pb-3">
-                        <label mdbLabel class="form-label fw-bold fs-7" for="form1">Institute</label>
-                        <mdb-form-control>
-                            <input mdbInput type="text" id="form1" class="form-control" formControlName="institute"
-                                mdbValidate />
-                        </mdb-form-control>
-
-                    </div>
-                    <div class="form-check">
-                        <input mdbCheckbox class="form-check-input" type="checkbox" value=true formControlName="working"
-                            mdbValidate (change)="onWorkingChange()" />
-                        <label class="form-check-label">
-                            I currently studying here
-                        </label>
-                    </div>
-
-                    <div class="form-group half">
-                        <label mdbLabel class="form-label fw-normal fs-7">Start Date</label>
-                        <div class="input-group">
-
-                            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="startdate"
-                                ngbDatepicker #startdate="ngbDatepicker">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary calendar" (click)="startdate.toggle()"
-                                    type="button"></button>
-                            </div>
-                        </div>
-                    </div>
-                    <ng-template [ngIf]="!working">
-                        <div class="form-group half">
-                            <label mdbLabel class="form-label fw-normal fs-7">End Date</label>
-                            <div class="input-group">
-
-                                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="enddate"
-                                    ngbDatepicker #enddate="ngbDatepicker">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary calendar" (click)="enddate.toggle()"
-                                        type="button"></button>
-                                </div>
-                            </div>
-                        </div>
-                    </ng-template>
-
-                    <div class="form-check">
-                        <input mdbCheckbox class="form-check-input" type="checkbox" value="" formControlName="send"
-                            mdbValidate />
-                        <label class="form-check-label">
-                            Send for verification
-                        </label>
-                    </div>
-
-
-
-                    <button class="btn btn-primary text-end mt-3 fw-bold text-capitalize mr-2" data-dismiss="modal">Save
-                        to
-                        draft</button>
-                    <button type="submit" (click)="onEducationSubmit()"
-                        class="btn btn-primary text-end mt-3 fw-bold text-capitalize" data-dismiss="modal">Save</button>
-                </form> -->
+               
             </div>
 
         </div>

@@ -25,7 +25,6 @@ export class InstituteProfileComponent implements OnInit {
   affiliationSchema;
 
 
-
   form: [
     '*',
     {
@@ -160,8 +159,6 @@ export class InstituteProfileComponent implements OnInit {
     this.instituteProfileService.getInstituteProfile(Id).subscribe((res) => {
       this.institute = res;
       this.item = { instituteDetails : res};
-
-      console.log('this.item = ', this.item);
       console.log('this.institute- ', this.institute)
     })
   }

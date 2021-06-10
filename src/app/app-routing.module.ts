@@ -46,7 +46,7 @@ const routes: Routes = [
   { path: 'student-login', component: StudentLoginComponent, canActivate: [AuthGuard] },
   { path: 'student-profile', component: StudentProfileComponent },
 
-  { path: 'teacher-profile', component: TeacherProfileComponent },
+  { path: 'teacher-profile', component: TeacherProfileComponent, canActivate: [AuthGuard] },
   { path: 'teacher-consent', component: TeacherConsentComponent },
 
   { path: 'institute-signup', component: InstituteSignupComponent },

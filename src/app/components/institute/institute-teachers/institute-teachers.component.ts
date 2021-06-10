@@ -68,9 +68,9 @@ export class InstituteTeachersComponent implements OnInit {
         event.emails.forEach(email => {
           var teacher = {
             'email': email,
-            'mobile': email
+            'mobile':  event.email
           }
-          this.teachers.push(teacher)
+          this.teachers.push(teacher);
         });
       }
       else {
@@ -78,10 +78,16 @@ export class InstituteTeachersComponent implements OnInit {
           'email': event.emails,
           'mobile': event.email
         }
-        this.teachers.push(teacher)
+
+        console.log('teacher -->', teacher);
+        this.teachers.push(teacher);
       }
 
-      this.inviteService.inviteTeacher(this.teachers[this.teachers.length - 1]).subscribe((res) => {
+      console.log('this.teachers[this.teachers.length - 1] -->', this.teachers[this.teachers.length - 1]);
+      let data = this.teachers[this.teachers.length - 1];
+      data.mobile = data.email;
+
+      this.inviteService.inviteTeacher(data).subscribe((res) => {
         if (res.responseCode == 'OK' && !res.params.errmsg) {
           this.toastMsg.success('Success', 'Invited successfully');
         } else {
@@ -92,24 +98,7 @@ export class InstituteTeachersComponent implements OnInit {
         console.log({ err });
 
       });
-      // event.emails = event.emails.split(',');
-      // event.mobiles = event.mobiles.split(',');
-      // event.emails.forEach(email => {
-      //   var teacher = {
-      //     'email': email,
-      //     'mobile': '-'
-      //   }
-      //   this.teachers.push(teacher)
-      // });
-      // event.mobiles.forEach(mobile => {
-      //   var teacher = {
-      //     'email': '-',
-      //     'mobile': mobile
-      //   }
-      //   this.teachers.push(teacher)
-      // });
-      // this.teachers = event;
-      // this.teachers.mobiles.concat(event.emails);
+
       console.log(this.teachers);
 
       localStorage.setItem('teachers', JSON.stringify(this.teachers));

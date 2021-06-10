@@ -37,6 +37,7 @@ export class TeacherProfileComponent implements OnInit {
   teacherSchema: any;
   educationSchema: any;
   experianceSchema: any;
+  attested = "pending";
 
   form1: [
     "*",
@@ -209,7 +210,7 @@ export class TeacherProfileComponent implements OnInit {
   onEducationSubmit(event) {
     console.log(event);
     // this.user.details = this.editform.value
-    // event.attested = "pending"
+     this.attested = "pending"
     // event.note = "Attestation pending"
     // event.consent = false
     // this.education.push(event)
@@ -239,6 +240,7 @@ export class TeacherProfileComponent implements OnInit {
 
   onExperienceSubmit(event) {
     console.log(event);
+    attested: "pending"
 
     /*
     EmploymentType: "Permanant"

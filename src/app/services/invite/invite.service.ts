@@ -25,7 +25,7 @@ export class InviteService {
     let url = `${this.baseUrl}/${ApiPaths.InviteTeacher}`;
     const req = {
       url: url,
-      data: data[0]
+      data: data
     };
 
     return this.dataService.post(req);

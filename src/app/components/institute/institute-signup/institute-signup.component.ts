@@ -16,37 +16,62 @@ export class InstituteSignupComponent implements OnInit {
 
   constructor(fb: FormBuilder, public router: Router,
     public instituteProfileService: InstituteProfileService,
-    public toastMsg: ToastMessageService) { 
-    if(JSON.parse(localStorage.getItem('institutes-invite')) != null){
+    public toastMsg: ToastMessageService) {
+    if (JSON.parse(localStorage.getItem('institutes-invite')) != null) {
       this.user = JSON.parse(localStorage.getItem('institutes-invite'))[0].email;
+
+      this.form = fb.group({
+        fullName: ['', Validators.required],
+        mobileEmail: [this.user, Validators.required],
+        accepted: false
+      });
       // this.form.value.fullName = this.user;
-    }else{
-      this.user = 'jayant@pragatiinstitute.com'
+    } else {
+      this.user = ''
+      this.form = fb.group({
+        fullName: ['', Validators.required],
+        mobileEmail: ['', Validators.required],
+        accepted: false
+      });
     }
-    this.form = fb.group({
-      fullName: ['', Validators.required],
-      mobileEmail: [this.user, Validators.required],
-      accepted: false
-    });
+
   }
 
   ngOnInit(): void {
   }
 
-  onSubmit(){
+  onSubmit() {
     console.log(this.form.value);
+    let isEmailId = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.form.value.mobileEmail);
 
-    this.instituteProfileService.postInstituteProfile(this.form.value).subscribe((res) => {
-      if (res.responseCode == 'OK' && !res.params.errmsg) {
-        //this.toastMsg.success('Success', 'Institude Profile added successfully');
-        this.router.navigate(['/institute-profile', { 'id': res.osid }]);
+    if (!isEmailId) {
+      this.toastMsg.error('Error', "Enter correct Email Id")
+    } else {
+      const data = {
+        "instituteName": this.form.value.fullName,
+        "email": this.form.value.mobileEmail,
+
       }
-    });
-    
-    localStorage.setItem('user', JSON.stringify(this.form.value));
-    localStorage.setItem('education','[]');
-    localStorage.setItem('experience','[]');
-    this.router.navigate(['verification',{'for':'instituteS2'}]);
+
+      this.instituteProfileService.postInstituteProfile(data).subscribe((res) => {
+        if (res.responseCode == 'OK' && !res.params.errmsg) {
+          //this.toastMsg.success('Success', 'Institude Profile added successfully');
+          localStorage.setItem('institute-entity', res.result.Institute.osid)
+        //  this.router.navigate(['/institute-profile', { 'id': res.result.Institute.osid }]);
+        }
+      });
+
+      localStorage.setItem('user', JSON.stringify(this.form.value));
+      localStorage.setItem('education', '[]');
+      localStorage.setItem('experience', '[]');
+      this.router.navigate(['verification', { 'for': 'instituteS2' }]);
+    }
+  }
+
+  validatePhoneNumber(input_str) {
+    var re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+
+    return re.test(input_str);
   }
 
 

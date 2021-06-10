@@ -47,6 +47,7 @@ import { ConsentAuthorizeComponent } from './components/diksha/consent-authorize
 import { ConsentVerificationComponent } from './components/diksha/consent-verification/consent-verification.component';
 import { TeacherConsentComponent } from './components/teacher/teacher-consent/teacher-consent.component';
 import { BoardAttestationDetailsComponent } from './components/board/board-attestation-details/board-attestation-details.component';
+import { TeacherSignupComponent } from './components/teacher/teacher-signup/teacher-signup.component';
 import {
   SchemaFormModule,
   WidgetRegistry,
@@ -103,7 +104,8 @@ import { initializeKeycloak } from '../app/utility/app.init';
     ConsentAuthorizeComponent,
     ConsentVerificationComponent,
     TeacherConsentComponent,
-    BoardAttestationDetailsComponent
+    BoardAttestationDetailsComponent,
+    TeacherSignupComponent
 
   ],
   imports: [

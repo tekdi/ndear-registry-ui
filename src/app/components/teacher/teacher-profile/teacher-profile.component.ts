@@ -37,7 +37,7 @@ export class TeacherProfileComponent implements OnInit {
   teacherSchema: any;
   educationSchema: any;
   experianceSchema: any;
-  
+
   form1: [
     "*",
     {
@@ -77,6 +77,8 @@ export class TeacherProfileComponent implements OnInit {
     this.Schema.getSchemas().subscribe((res) => {
       this.schemaJson = res;
       console.log("res", this.schemaJson.definitions.IdentityDetails);
+      delete this.schemaJson.definitions.ContactDetails.properties.address;
+
 
       // console.log(this.schema.definitions)
       this.teacherSchema = {
@@ -85,6 +87,7 @@ export class TeacherProfileComponent implements OnInit {
         "definitions": {
           "identityDetails": this.schemaJson.definitions.IdentityDetails,
           "contactDetails": this.schemaJson.definitions.ContactDetails,
+         // "address" : this.schemaJson.definitions.Address
         },
         "properties": {
           "identityDetails": {
@@ -93,8 +96,15 @@ export class TeacherProfileComponent implements OnInit {
           "contactDetails": {
             "$ref": "#/definitions/contactDetails"
           }
+          // ,
+          // "address": {
+          //   "$ref": "#/definitions/address"
+          // }
         }
       };
+
+      //this.teacherSchema.definitions.contactDetails.address =  this.schemaJson.definitions.Address;
+      console.log('this.teacherSchema==>', this.teacherSchema);
 
       this.educationSchema = this.schemaJson.definitions.AcademicQualification;
       this.experianceSchema = this.schemaJson.definitions.ExperienceType;
@@ -142,12 +152,22 @@ export class TeacherProfileComponent implements OnInit {
     // this.router.navigate(['student-profile']);
     console.log({ event });
 
-    if (this.teacherId) {
+    // event.contactDetails.address = event.address;
+    // delete event.address;
+
+    if (this.teacherId && this.teacherId != "null") {
 
       event.osid = this.teacherId;
       event.identityDetails.osid = this.item.identityDetails.osid;
       event.contactDetails.osid = this.item.contactDetails.osid;
+
+      // if(this.item.hasOwnProperty('address')){
+      //   event.address.osid = this.item.address.osid;
+      // }
+
       const data = event; //this.editUserform.value;
+      console.log('data event -> ', data);
+
       this.teacherProfileService.putTeacherProfile(data, this.teacherId).subscribe(res => {
         if (res.responseCode == 'OK' && !res.params.errmsg) {
           this.router.navigate(['/teacher-profile', { 'id': this.teacherId }]);
@@ -158,22 +178,28 @@ export class TeacherProfileComponent implements OnInit {
         }
       })
 
-    }else{
+    } else {
+     
+
+      
       const data = event;
+
+      console.log('data event -> ', data);
 
       this.teacherProfileService.postTeacherProfile(data).subscribe(res => {
         if (res.responseCode == 'OK' && !res.params.errmsg) {
           this.router.navigate(['/teacher-profile', { 'id': res.result.Teacher.osid }]);
-  
+          localStorage.setItem('teacherId', res.result.Teacher.osid);
+
           this.getTeacherData(res.result.Teacher.osid);
           this.toastMsg.success('Success', 'Teacher Profile Added Successfully');
-        }else{
+        } else {
           this.toastMsg.error('Error', res.params.errmsg);
         }
       })
     }
 
-   
+
   }
 
   onSubmit() {
@@ -183,10 +209,10 @@ export class TeacherProfileComponent implements OnInit {
   onEducationSubmit(event) {
     console.log(event);
     // this.user.details = this.editform.value
-   // event.attested = "pending"
+    // event.attested = "pending"
     // event.note = "Attestation pending"
     // event.consent = false
-   // this.education.push(event)
+    // this.education.push(event)
     //this.educationForm.reset();
     // this.education = this.educationForm.value
 
@@ -213,7 +239,7 @@ export class TeacherProfileComponent implements OnInit {
 
   onExperienceSubmit(event) {
     console.log(event);
- 
+
     /*
     EmploymentType: "Permanant"
 TeacherType: "Assistant teacher UPS Head teacher primary school"
@@ -274,16 +300,20 @@ __proto__: Object
     this.route.params.subscribe(params => {
       console.log("route", params)
       this.teacherId = params['id'];
+     // this.teacherId = ( this.teacherId)?  this.teacherId : localStorage.getItem('teacherId');
+
     });
 
     this.getTeacherData(this.teacherId);
   }
 
   getTeacherData(id) {
-    this.teacherProfileService.getTeacherProfile(id).subscribe((res) => {
-      this.item = res;
-      
-    })
+
+    if (id && id != "null") {
+      this.teacherProfileService.getTeacherProfile(id).subscribe((res) => {
+        this.item = res;
+      })
+    }
   }
 
   onWorkingChange() {

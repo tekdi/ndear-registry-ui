@@ -28,7 +28,7 @@ export class DataService {
 
     const default_headers = {
       Accept: 'application/json',
-      //Authorization: 'Bearer ' +  this.token
+       Authorization: 'Bearer ' +  this.token
     };
 
     return default_headers;

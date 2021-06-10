@@ -159,45 +159,21 @@ export class InstituteProfileSetupComponent implements OnInit {
   ngOnInit(): void {
 
   }
-  submitIntituteProfile(data) {
-    console.log(data)
+  submitIntituteProfile(event) {
+    console.log(event);
+
+   let  data = event.Institute;
+     data.Address = event.Address;
+
+    console.log(data);
+
     localStorage.setItem('admin-setup', "true");
     localStorage.setItem('institute-detail', JSON.stringify(data));
-
-
-
-    // const formData = {
-    //   "instituteName": data.BasicDetails.instituteName,
-    //   "address": {
-    //     "plot": data.Address.Plot,
-    //     "street": data.Address.Street,
-    //     "landmark": data.Address.Landmark,
-    //     "locality": data.Address.Locality,
-    //     "state": data.Address.State,
-    //     "district": data.Address.District,
-    //     "village": "",
-    //     "pincode": data.Address.pinCode
-    //   },
-    //   "establishmentYear": String(data.BasicDetails.YearOfEstablishmentOfInstitute),
-    //   "gstnId": data.gstin,
-    //   "contactNumber": String(data.BasicDetails.ContactNumber),
-    //   "email": data.BasicDetails.Email,
-    //   "website": "https://ghg.com",
-    //   "category": "Primary",
-    //   "schoolType": data.BasicDetails.SchoolType,
-    //   "instituteManagement": data.BasicDetails.ManagementOfInstitute,
-    //   "committee": "yes",
-    //   "adminName": data.BasicDetails.headPerson,
-    //   "adminEmail": data.BasicDetails.Email,
-    //   "adminMobile": String(data.BasicDetails.ContactNumber)
-
-    // }
-
 
     this.instituteProfileService.postInstituteProfile(data).subscribe((res) => {
       console.log({ res });
       if (res.responseCode == 'OK') {
-        localStorage.setItem('institute-entity', res.result.School.osid);
+        localStorage.setItem('institute-entity', res.result.Institute.osid);
         if (res.responseCode == 'OK' && !res.params.errmsg) {
           this.toastMsg.success('Success', 'Institute Profile created Successfully');
         } else {
@@ -210,7 +186,7 @@ export class InstituteProfileSetupComponent implements OnInit {
     const url = this.router.createUrlTree(['/admin-mail'])
     window.open(url.toString(), '_blank')
     this.router.navigate(['institute-profile-select']);
-    // this.router.navigate(['admin-mail']);
+     this.router.navigate(['admin-mail']);
   }
 
 }

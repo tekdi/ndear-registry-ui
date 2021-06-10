@@ -30,7 +30,7 @@ export class StudentProfileComponent implements OnInit {
   startdate: NgbDateStruct;
   enddate: NgbDateStruct;
   working: Boolean = true;
-  studentId;
+  studentId : string;
   studentResult: any;
   fb;
   schemaJson: any;
@@ -83,6 +83,9 @@ export class StudentProfileComponent implements OnInit {
       this.schemaJson = res;
       console.log("res", this.schemaJson.definitions.IdentityDetails);
 
+      delete this.schemaJson.definitions.ContactDetails.properties.address;
+
+
       // console.log(this.schema.definitions)
       this.studentProfileSchema = {
         "type": "object",
@@ -90,6 +93,7 @@ export class StudentProfileComponent implements OnInit {
         "definitions": {
           "identityDetails": this.schemaJson.definitions.IdentityDetails,
           "contactDetails": this.schemaJson.definitions.ContactDetails,
+          //"address" : this.schemaJson.definitions.Address,
         },
         "properties": {
           "identityDetails": {
@@ -98,7 +102,13 @@ export class StudentProfileComponent implements OnInit {
           },
           "contactDetails": {
             "$ref": "#/definitions/contactDetails"
+          
           }
+          // ,
+          // "address": {
+          //   'title': "",
+          //   "$ref": "#/definitions/address"
+          // }
         }
       };
 
@@ -141,10 +151,11 @@ export class StudentProfileComponent implements OnInit {
     //  this.user = this.editUserform.value
     // this.router.navigate(['student-profile']);
 
-    if (this.studentId) {
+    if (this.studentId &&  this.studentId != "null") {
       event.osid = this.studentId;
       event.identityDetails.osid = this.user.identityDetails.osid;
       event.contactDetails.osid = this.user.contactDetails.osid;
+     // event.address.osid = this.user.address.osid;
       const data = event; //this.editUserform.value;
 
       this.studentProfileService.putStudentProfile(data, this.studentId).subscribe(res => {
@@ -210,7 +221,7 @@ export class StudentProfileComponent implements OnInit {
 
   ngOnInit(): void {
     if (localStorage.getItem('institute-detail')) {
-      this.institute = JSON.parse(localStorage.getItem('institute-detail')).BasicDetails.instituteName;
+     // this.institute = JSON.parse(localStorage.getItem('institute-detail')).BasicDetails.instituteName;
       //this.schema.properties.institute.enum.push(this.institute)
     }
 
@@ -223,12 +234,14 @@ export class StudentProfileComponent implements OnInit {
 
 
   getStudentData(studentId) {
-    this.studentProfileService.getStudentProfile(studentId).subscribe((res) => {
-      console.log({ res });
-      this.studentResult = res;
-      this.user = res;
-      console.log("this.user", this.user);
-    })
+    if (studentId &&  studentId != "null") {
+      this.studentProfileService.getStudentProfile(studentId).subscribe((res) => {
+        console.log({ res });
+        this.studentResult = res;
+        this.user = res;
+        console.log("this.user", this.user);
+      })
+    }
   }
 
   onWorkingChange() {

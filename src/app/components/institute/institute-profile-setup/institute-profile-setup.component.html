@@ -4,7 +4,7 @@
     <div class="card-body">
         <h4 class="card-title fw-bolder pb-2">Complete Institute Setup</h4>
         <div *ngIf="instituteSchema">
-            <json-schema-form [schema]="instituteSchema" [layout]="form" framework="bootstrap-4" (onSubmit)="submitIntituteProfile($event)">
+            <json-schema-form [schema]="instituteSchema" [data]="item" [layout]="form" framework="bootstrap-4" (onSubmit)="submitIntituteProfile($event)">
             </json-schema-form>
         </div>
      

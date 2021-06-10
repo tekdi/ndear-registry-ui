@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { InviteService} from '../../../services/invite/invite.service';
+import { InviteService } from '../../../services/invite/invite.service';
 import { ToastMessageService } from '../../../services/toast-message/toast-message.service';
 
 @Component({
@@ -41,75 +41,82 @@ export class InstituteTeachersComponent implements OnInit {
   ]
   constructor(public router: Router,
     public inviteService: InviteService,
-    public toastMsg: ToastMessageService) { 
-    
-    
+    public toastMsg: ToastMessageService) {
+
+
   }
 
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('user'));
-    if(JSON.parse(localStorage.getItem('teachers')) != null){
-      this.teachers = JSON.parse(localStorage.getItem('teachers'));
-    }
-    
+    // if (JSON.parse(localStorage.getItem('teachers')) != null) {
+    //   this.teachers = JSON.parse(localStorage.getItem('teachers'));
+    // }
+
   }
 
-  oninviteSubmit(event){
+  oninviteSubmit(event) {
     // console.log(event);
     // this.user.details = this.editform.value
 
-    if (event.emails.indexOf(',') > -1) { 
-      event.emails = event.emails.split(',');
-      event.emails.forEach(email => {
+    let isEmailId = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(event.emails);
+    if (!isEmailId) {
+      this.toastMsg.error('Error', "Enter correct Email Id");
+    } else {
+
+      if (event.emails.indexOf(',') > -1) {
+        event.emails = event.emails.split(',');
+        event.emails.forEach(email => {
+          var teacher = {
+            'email': email,
+            'mobile': email
+          }
+          this.teachers.push(teacher)
+        });
+      }
+      else {
         var teacher = {
-          'email': email,
-          'mobile': '-'
+          'email': event.emails,
+          'mobile': event.email
         }
         this.teachers.push(teacher)
+      }
+
+      this.inviteService.inviteTeacher(this.teachers[this.teachers.length - 1]).subscribe((res) => {
+        if (res.responseCode == 'OK' && !res.params.errmsg) {
+          this.toastMsg.success('Success', 'Invited successfully');
+        } else {
+          this.toastMsg.error('Error', res.params.errmsg);
+        }
+      }, (err) => {
+
+        console.log({ err });
+
       });
-     }
-     else{
-      var teacher = {
-        'email': event.emails,
-        'mobile': '-'
-      }
-      this.teachers.push(teacher)
-     }
+      // event.emails = event.emails.split(',');
+      // event.mobiles = event.mobiles.split(',');
+      // event.emails.forEach(email => {
+      //   var teacher = {
+      //     'email': email,
+      //     'mobile': '-'
+      //   }
+      //   this.teachers.push(teacher)
+      // });
+      // event.mobiles.forEach(mobile => {
+      //   var teacher = {
+      //     'email': '-',
+      //     'mobile': mobile
+      //   }
+      //   this.teachers.push(teacher)
+      // });
+      // this.teachers = event;
+      // this.teachers.mobiles.concat(event.emails);
+      console.log(this.teachers);
 
-     this.inviteService.inviteTeacher(this.teachers).subscribe((res)=>{
-      if (res.responseCode == 'OK' && !res.params.errmsg) {
-        this.toastMsg.success('Success', 'Invited successfully');
-      }else{
-        this.toastMsg.error('Error', res.params.errmsg);
-      }
-     }, (err)=>{
+      localStorage.setItem('teachers', JSON.stringify(this.teachers));
+      const url = this.router.createUrlTree(['/teacher-invite'])
+      window.open(url.toString(), '_blank')
+      // this.educationForm.reset();
+    }
 
-      console.log({err});
-
-     });
-    // event.emails = event.emails.split(',');
-    // event.mobiles = event.mobiles.split(',');
-    // event.emails.forEach(email => {
-    //   var teacher = {
-    //     'email': email,
-    //     'mobile': '-'
-    //   }
-    //   this.teachers.push(teacher)
-    // });
-    // event.mobiles.forEach(mobile => {
-    //   var teacher = {
-    //     'email': '-',
-    //     'mobile': mobile
-    //   }
-    //   this.teachers.push(teacher)
-    // });
-    // this.teachers = event;
-    // this.teachers.mobiles.concat(event.emails);
-    console.log(this.teachers)
-    localStorage.setItem('teachers', JSON.stringify(this.teachers));
-    const url = this.router.createUrlTree(['/teacher-invite'])
-    window.open(url.toString(), '_blank')
-        // this.educationForm.reset();
-      }
-
+  }
 }

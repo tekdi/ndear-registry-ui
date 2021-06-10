@@ -52,19 +52,41 @@ export class InstituteProfileComponent implements OnInit {
 
       console.log(this.schemaJson);
 
+      // this.editSchema = {
+      //   "type": "object",
+      //   "title": "Institute",
+      //   "definitions": {
+      //     "Institute": this.schemaJson.definitions.Institute,
+      //     "Address": this.schemaJson.definitions.Address
+      //   },
+      //   "properties": {
+      //     "Institute": {
+      //       "$ref": "#/definitions/Institute"
+      //     },
+      //     "Address": {
+      //       "$ref": "#/definitions/Address"
+      //     }
+      //   }
+      // };
+
       this.editSchema = {
         "type": "object",
-        "title": "Institute",
+        "title": "Teacher",
         "definitions": {
-          "instituteDetails": this.schemaJson.definitions.Institute,
-          "Address": this.schemaJson.definitions.Address
+          "Institute": this.schemaJson.definitions.Institute,
+          "Address": this.schemaJson.definitions.Address,
         },
         "properties": {
-          "instituteDetails": {
-            "$ref": "#/definitions/instituteDetails"
+          "Institute": {
+            "$ref": "#/definitions/Institute"
+          },
+          "Address": {
+            "$ref": "#/definitions/Address"
           }
         }
-      };
+      }
+
+      console.log('editSchema - ', this.editSchema);
 
       this.affiliationSchema = {
         "type": "object",
@@ -82,17 +104,20 @@ export class InstituteProfileComponent implements OnInit {
 
     this.route.params.subscribe(params => {
       console.log("route", params)
-      this.instituteId = params['id'];
+    //  this.instituteId = params['id'];
+
+      this.instituteId = (params['id']) ? params['id'] : localStorage.getItem('institute-entity');
     });
     this.getInstituteData(this.instituteId);
   }
 
   onAffiliationSubmit(event) {
     console.log(event);
-    alert('hi');
+   // alert('hi');
     // this.user.details = this.editform.value
-    event.attested = "pending"
-    event.note = "Attestation pending"
+    event.attested = "pending";
+    event.note = "Attestation pending";
+    delete this.institute.Institute;
     // this.education = this.educationForm.value
 
     if (!this.institute.hasOwnProperty('affiliation')) {
@@ -121,19 +146,20 @@ export class InstituteProfileComponent implements OnInit {
   onEditProfileSubmit(event) {
     console.log(event);
 
+   
     if(this.instituteId)
     {
-      if(this.institute.hasOwnProperty('address')){
-        if(event.instituteDetails.hasOwnProperty('address')){
+      if(this.institute.hasOwnProperty('Address')){
+        if(event.hasOwnProperty('Address')){
           
-          event.instituteDetails.address.osid= this.institute.address.osid;       
+          event.Address.osid= this.institute.Address.osid;       
          }
         
       }
 
-     console.log(event.instituteDetails);
-     event.instituteDetails['osid'] =  this.institute.osid;
-      let data =  event.instituteDetails;
+     console.log(event);
+     event.Institute['osid'] =  this.institute.osid;
+      let data =  event;
       this.instituteProfileService.putInstituteProfile(data, this.instituteId).subscribe(res => {
         if (res.responseCode == 'OK' && !res.params.errmsg) {
           this.router.navigate(['/institute-profile', { 'id': this.instituteId }]);
@@ -144,7 +170,7 @@ export class InstituteProfileComponent implements OnInit {
       })
 
     }else{
-      this.instituteProfileService.postInstituteProfile(event.instituteDetails).subscribe((res) => {
+      this.instituteProfileService.postInstituteProfile(event).subscribe((res) => {
         if (res.responseCode == 'OK' && !res.params.errmsg) {
           this.toastMsg.success('Success', 'Institude Profile added successfully');
           this.router.navigate(['/institute-profile', { 'id': res.result.Institute.osid }]);
@@ -158,7 +184,8 @@ export class InstituteProfileComponent implements OnInit {
   getInstituteData(Id) {
     this.instituteProfileService.getInstituteProfile(Id).subscribe((res) => {
       this.institute = res;
-      this.item = { instituteDetails : res};
+      this.item =  res //{ instituteDetails : res};
+      this.item['Institute'] = res;
       console.log('this.institute- ', this.institute)
     })
   }

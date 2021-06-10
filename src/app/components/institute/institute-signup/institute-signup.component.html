@@ -18,10 +18,19 @@
                         <label mdbLabel class="form-label fw-bold fs-7" for="form1">Email Id</label>
                         <mdb-form-control>
                             <!-- <input mdbInput type="text" id="form1" class="form-control"  disabled  formControlName="mobileEmail" /> -->
-                            <input class="form-control" id="formControlReadonly" type="text" placeholder={{user}}
+                            <input  *ngIf="user" class="form-control" id="formControlReadonly" type="text" placeholder={{user}}
                                 aria-label="Invited Mail ID" formControlName="mobileEmail" disabled />
 
+                                <input *ngIf="!user" class="form-control" id="formControlReadonly" type="text" placeholder={{user}}
+                                aria-label="Invited Mail ID" formControlName="mobileEmail"  />
+
+
                         </mdb-form-control>
+                        <!-- <mdb-form-control>
+                            <input class="form-control" id="formControlReadonly" type="text" placeholder={{user}}
+                                aria-label="Invited Mail ID" formControlName="mobileEmail"  />
+
+                        </mdb-form-control> -->
                         <!-- <div id="textExample1" class="form-text my-2">
                                 Mobile must include '+91'                  
                             </div> -->

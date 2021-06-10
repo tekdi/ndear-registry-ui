@@ -12,6 +12,7 @@ export class MailComponent implements OnInit {
 
   ngOnInit(): void {
     this.institute = JSON.parse(localStorage.getItem('institute-detail'));
+    console.log( this.institute.Institute);
     this.user = JSON.parse(localStorage.getItem('user'));
   }
 

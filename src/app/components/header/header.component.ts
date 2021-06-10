@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -14,13 +15,14 @@ export class HeaderComponent implements OnInit {
   experience: any;
   user: any;
   affiliations: any;
-;
   user_name;
   admin: boolean = false;
   admin_setup: boolean = false;
   attestation_count: number = 0
-  consent_count: number = 0
-  constructor() { }
+  consent_count: number = 0;
+  constructor(
+    public router: Router
+  ) { }
 
   ngOnInit(): void {
     console.log(this.headerFor,this.tab);
@@ -73,6 +75,12 @@ export class HeaderComponent implements OnInit {
 
         
     }
+  }
+
+  redirectTo(){
+    let teacherId = localStorage.getItem('teacherId');
+    this.router.navigate(['/teacher-profile', { 'id': teacherId }]);
+
   }
 
 }

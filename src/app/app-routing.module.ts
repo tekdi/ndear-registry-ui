@@ -33,7 +33,7 @@ import { ConsentAuthorizeComponent } from './components/diksha/consent-authorize
 import { ConsentVerificationComponent } from './components/diksha/consent-verification/consent-verification.component';
 import { TeacherConsentComponent } from './components/teacher/teacher-consent/teacher-consent.component';
 import { BoardAttestationDetailsComponent } from './components/board/board-attestation-details/board-attestation-details.component';
-
+import{ TeacherSignupComponent } from './components/teacher/teacher-signup/teacher-signup.component';
 import { AuthGuard } from '../app/utility/app.guard';
 
 const routes: Routes = [
@@ -42,7 +42,8 @@ const routes: Routes = [
   { path: 'verification', component: VerificationComponent },
 
   { path: 'student-signup', component: StudentSignupComponent },
-  { path: 'student-login', component: StudentLoginComponent },
+  { path: 'teacher-signup', component: TeacherSignupComponent },
+  { path: 'student-login', component: StudentLoginComponent, canActivate: [AuthGuard] },
   { path: 'student-profile', component: StudentProfileComponent },
 
   { path: 'teacher-profile', component: TeacherProfileComponent },
@@ -60,8 +61,8 @@ const routes: Routes = [
   { path: 'institute-teachers', component: InstituteTeachersComponent },
   { path: 'institute-students', component: InstiituteStudentsComponent },
 
-  { path: '', component: BoardLoginComponent , canActivate: [AuthGuard] },
-  { path: 'board-institutes', component: BoardInstitutesComponent, canActivate: [AuthGuard]  },
+  { path: '', component: BoardLoginComponent },
+  { path: 'board-institutes', component: BoardInstitutesComponent },
   { path: 'board-attestation', component: BoardAttestationsComponent },
   { path: 'board-attestation-detail', component: BoardAttestationDetailsComponent },
 

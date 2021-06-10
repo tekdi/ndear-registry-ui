@@ -11,11 +11,12 @@ import { KeycloakService } from 'keycloak-angular';
 export class BoardLoginComponent implements OnInit {
   form: FormGroup;
   aboveControl = new FormControl(false);
-  user;
+ // user;
   header1: string = 'plain';
   constructor(fb: FormBuilder, 
     public router: Router,
-    public keycloakService: KeycloakService) { 
+   // public keycloakService: KeycloakService
+    ) { 
     this.form = fb.group({
       boardName: ['CBSE Board'],
       mobileEmail: ['', Validators.required],
@@ -27,19 +28,17 @@ export class BoardLoginComponent implements OnInit {
   }
 
   private initializeUserOptions(): void {
-    this.user = this.keycloakService.getUsername();
-    this.keycloakService.getToken().then((token)=>{
-      console.log('keyCloak token - ', token);
-      localStorage.setItem('token', token);
-      localStorage.setItem('loggedInUser', this.user)
-
-
-    });
+    //this.user = this.keycloakService.getUsername();
+    // this.keycloakService.getToken().then((token)=>{
+    //   console.log('keyCloak token - ', token);
+    //   localStorage.setItem('token', token);
+    //   localStorage.setItem('loggedInUser', this.user)
+    // });
 
   }
 
   logout(): void {
-    this.keycloakService.logout('http://localhost:4200');
+   // this.keycloakService.logout('http://localhost:4200');
   }
 
   onSubmit(){

@@ -53,10 +53,68 @@ import {
   DefaultWidgetRegistry,
 } from "ngx-schema-form";
 
+import { MatMenuModule } from '@angular/material/menu';
+// formly
+import { FormlyModule, FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
+import { ArrayTypeComponent } from '../app/forms/types/array.type';
+import { ObjectTypeComponent } from '../app/forms/types/object.type';
+import { MultiSchemaTypeComponent } from '../app/forms/types/multischema.type';
+import { NullTypeComponent } from '../app/forms/types/null.type';
+
+export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
+  return `should NOT have fewer than ${field.templateOptions.minItems} items`;
+}
+
+export function maxItemsValidationMessage(err, field: FormlyFieldConfig) {
+  return `should NOT have more than ${field.templateOptions.maxItems} items`;
+}
+
+export function minlengthValidationMessage(err, field: FormlyFieldConfig) {
+  return `should NOT be shorter than ${field.templateOptions.minLength} characters`;
+}
+
+export function maxlengthValidationMessage(err, field: FormlyFieldConfig) {
+  return `should NOT be longer than ${field.templateOptions.maxLength} characters`;
+}
+
+export function minValidationMessage(err, field: FormlyFieldConfig) {
+  return `should be >= ${field.templateOptions.min}`;
+}
+
+export function maxValidationMessage(err, field: FormlyFieldConfig) {
+  return `should be <= ${field.templateOptions.max}`;
+}
+
+export function multipleOfValidationMessage(err, field: FormlyFieldConfig) {
+  return `should be multiple of ${field.templateOptions.step}`;
+}
+
+export function exclusiveMinimumValidationMessage(err, field: FormlyFieldConfig) {
+  return `should be > ${field.templateOptions.step}`;
+}
+
+export function exclusiveMaximumValidationMessage(err, field: FormlyFieldConfig) {
+  return `should be < ${field.templateOptions.step}`;
+}
+
+export function constValidationMessage(err, field: FormlyFieldConfig) {
+  return `should be equal to constant "${field.templateOptions.const}"`;
+}
 
 /* Service files */
 import { BoardInstituteService} from './services/board/board-institutes/board-institutes.service';
 import { AdminFormService } from './services/admin-form.service';
+import { FormsComponent } from './forms/forms.component';
+import { LayoutsComponent } from './layouts/layouts.component';
+import { ModalContainerComponent } from '../app/layouts/modal/modal.component';
+import { ModalRouterLinkDirective } from '../app/layouts/modal/modal.directive';
+import { Test2Component } from './test/test2/test2.component';
+
+import { PanelsComponent } from './panels/panels.component';
+import { DemoPanelComponent } from './panels/demo-panel/demo-panel.component';
+
+
 
 @NgModule({
   declarations: [
@@ -94,7 +152,17 @@ import { AdminFormService } from './services/admin-form.service';
     ConsentAuthorizeComponent,
     ConsentVerificationComponent,
     TeacherConsentComponent,
-    BoardAttestationDetailsComponent
+    BoardAttestationDetailsComponent,
+    FormsComponent,
+    ArrayTypeComponent,
+    ObjectTypeComponent,
+    MultiSchemaTypeComponent,
+    NullTypeComponent,
+    LayoutsComponent,
+    ModalContainerComponent,
+    ModalRouterLinkDirective,
+    Test2Component,
+    PanelsComponent, DemoPanelComponent,
 
   ],
   imports: [
@@ -110,12 +178,49 @@ import { AdminFormService } from './services/admin-form.service';
     NgOtpInputModule,
     NgbModule,
     SuiModule,
+    FormlyBootstrapModule,
+    MatMenuModule,
+    FormlyModule.forRoot({
+      extras: { resetFieldOnHide: true },
+      validationMessages: [
+        { name: 'required', message: 'This field is required' },
+        
+      ],
+      types: [
+        { name: 'string', extends: 'input' },
+        {
+          name: 'number',
+          extends: 'input',
+          defaultOptions: {
+            templateOptions: {
+              type: 'number',
+            },
+          },
+        },
+        {
+          name: 'integer',
+          extends: 'input',
+          defaultOptions: {
+            templateOptions: {
+              type: 'number',
+            },
+          },
+        },
+        { name: 'boolean', extends: 'checkbox' },
+        { name: 'enum', extends: 'select' },
+        { name: 'null', component: NullTypeComponent, wrappers: ['form-field'] },
+        { name: 'array', component: ArrayTypeComponent },
+        { name: 'object', component: ObjectTypeComponent },
+        { name: 'multischema', component: MultiSchemaTypeComponent },
+      ],
+    }),
+
     // MaterialDesignFrameworkModule,
     Bootstrap4FrameworkModule,
     SchemaFormModule.forRoot()
   ],
   schemas: [],
-  entryComponents: [],
+  entryComponents: [Test2Component],
   bootstrap: [AppComponent],
   providers: [ 
     { provide: WidgetRegistry, useClass: DefaultWidgetRegistry },

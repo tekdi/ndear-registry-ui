@@ -1,0 +1,59 @@
+<div class="container">
+    <ng-template ngFor let-block [ngForOf]="Data" let-blockIndex="index">
+        <div class="d-flex flex-justify-between  mt-5">
+            <div>
+                <h6 class="d-inline-block">{{block.title}}</h6>
+                <ng-template [ngIf]="block.edit">
+                    <a panelLink={{block.editform}} class="pl-1 fs-7 text-primary-color">edit <i class="fa fa-pencil pr-1" aria-hidden="true"></i></a>
+                </ng-template>
+            </div>
+            <ng-template [ngIf]="block.add">
+                <a [routerLink]="['add-claim',block.addform]" class="fs-7 text-primary-color"><i
+                        class="fa fa-plus pr-1" aria-hidden="true"></i>{{block.definition}}</a>
+            </ng-template>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <ng-template ngFor let-item [ngForOf]="block.items" let-itemIndex="index">
+                    <ng-template ngFor let-element [ngForOf]="item" let-elementIndex="index">
+                        <ng-template [ngIf]="item[elementIndex].value">
+                            <ng-template [ngIf]="elementIndex %2 == 0">
+                                <dl>
+                                    <dt class="fs-7 text-grey-color">{{item[elementIndex].title}}</dt>
+                                    <dd>{{item[elementIndex].value}}</dd>
+                                    <dt class="fs-7 text-grey-color">{{item[elementIndex + 1].title}}</dt>
+                                    <dd>{{item[elementIndex + 1].value}}</dd>
+                                </dl>
+                            </ng-template>
+                        </ng-template>
+                    </ng-template>
+                </ng-template>
+            </div>
+        </div>
+    </ng-template>
+</div>
+
+<!-- Add Affiliation -->
+<div class="modal right fade" id="addAffiliation" tabindex="-1" role="dialog" aria-labelledby="AddAffiliation">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel2">Add Affiliation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+
+                <!-- <json-schema-form [schema]="schema" [layout]="form" framework="bootstrap-4"
+                    (onSubmit)="onAffiliationSubmit($event)">
+                </json-schema-form> -->
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<router-outlet name="claim"></router-outlet>

@@ -33,6 +33,11 @@ import { ConsentAuthorizeComponent } from './components/diksha/consent-authorize
 import { ConsentVerificationComponent } from './components/diksha/consent-verification/consent-verification.component';
 import { TeacherConsentComponent } from './components/teacher/teacher-consent/teacher-consent.component';
 import { BoardAttestationDetailsComponent } from './components/board/board-attestation-details/board-attestation-details.component';
+import { FormsComponent } from './forms/forms.component';
+import { LayoutsComponent } from './layouts/layouts.component';
+import { ModalContainerComponent } from './layouts/modal/modal.component';
+import { PanelsComponent } from './panels/panels.component';
+import { DemoPanelComponent } from './panels/demo-panel/demo-panel.component';
 
 const routes: Routes = [
   { path: 'signup', component: HomeComponent },
@@ -63,7 +68,9 @@ const routes: Routes = [
   { path: 'board-attestation', component: BoardAttestationsComponent },
   { path: 'board-attestation-detail', component: BoardAttestationDetailsComponent },
 
-  { path: 'test', component: TestComponent },
+  { path: 'test', component: TestComponent
+  },
+  { path: 'test/:id', component: ModalContainerComponent },
   { path: 'admin-mail', component: MailComponent },
   { path: 'teacher-invite', component: TeacherMailComponent },
 
@@ -74,7 +81,73 @@ const routes: Routes = [
   { path: 'board-search', component: BoardInstitutesComponent },
   { path: 'consent-auth', component: ConsentAuthorizeComponent },
 
+  // Forms
+  { path: 'form/:form', component: FormsComponent },
+  { path: 'form/:form/:id', component: FormsComponent },
 
+  // Layouts
+  {
+    path: 'profile/:layout', component: LayoutsComponent,
+    children: [
+      {
+        path: 'edit',
+        component: PanelsComponent,
+        outlet: 'claim',
+        children: [
+          {
+            path: ':claim',
+            component: DemoPanelComponent
+          }
+        ]
+      },
+      // {
+      //   path: 'add-claim/:claim',
+      //   component: ModalContainerComponent
+      // },
+      // {
+      //   path: 'edit/:claim',
+      //   component: ModalContainerComponent
+      // },
+      // {
+      //   path: 'dialog',
+      //   component: ModalContainerComponent
+      // }
+    ]
+  },
+  // {
+  //   path: 'panel',
+  //   component: PanelsComponent,
+  //   outlet: 'panel',
+  //   children: [
+  //     {
+  //       path: 'add',
+  //       component: DemoPanelComponent
+  //     }
+  //   ]
+  // }
+
+  // { path: 'profile/:layout/add-claim/:claim', component: ModalContainerComponent },
+  // { path: 'profile/:layout/edit-claim/:claim', component: ModalContainerComponent},
+
+//   {
+//     path: 'profile/:layout',
+//     component: LayoutsComponent, 
+//     children: [
+//         {
+//             path: 'add-claim/:claim',
+//             component: ModalContainerComponent,
+//         },
+//         {
+//             path: 'edit-claim/:claim',
+//             component: ModalContainerComponent,
+//         },
+//         {
+//            path: '',
+//            redirectTo: 'profile',
+//            pathMatch: 'full'
+//         }
+//     ]
+// }
 
 ];
 

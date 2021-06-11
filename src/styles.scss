@@ -6,7 +6,7 @@
  
 @import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import "https://fonts.googleapis.com/css2?family=Lato:wght@300@500@600&display=swap";
+@import "https://fonts.googleapis.com/css?family=Lato:wght@300@500@600&display=swap";
 @import "//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css";
 
 
@@ -53,8 +53,8 @@ body { margin: 0; font-family: "Lato", sans-serif;color: #000; }
 a{
     text-decoration: none !important;
 }
-/* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+// /* Importing Bootstrap SCSS file. */
+// @import '~bootstrap/scss/bootstrap';
 
 button.calendar, button.calendar:active {
     width: 2.75rem;
@@ -94,7 +94,36 @@ button.calendar, button.calendar:active {
 .red{
     color: red;
 }
+
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css'; 
 
+
+.display-flex { display: flex; }
+
+.flex-1 { flex: 1; }
+
+.flex-2 { flex: 2; }
+
+.flex-3 { flex: 3; }
+
+.flex-4 { flex: 4; }
+
+.flex-5 { flex: 5; }
+
+.flex-6 { flex: 6; }
+
+[class*="flex-"] {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+[class*="flex-"]:first-child {
+  padding-left: 0;
+}
+
+[class*="flex-"]:nth-last-child(2) {
+  padding-right: 0;
+}
 

@@ -1,0 +1,35 @@
+{
+    "type": "opensaberLayoutSchema",
+    "version": "0.1",
+    "layouts": [
+        {
+            "institute": {
+                "api": "/Institute",
+                "title": "Institute Profile",
+                "blocks": [
+                    {
+                        "definition": "Institute",
+                        "title": "Basic details",
+                        "add": false,
+                        "edit": true,
+                        "editform":"institute-setup",
+                        "fields": {
+                            "includes": ["*"],
+                            "excludes": ["affiliation"]
+                        }
+                    },
+                    {
+                        "definition": "Affiliation",
+                        "title": "Affiliation details",
+                        "add": true,
+                        "addform":"affiliation",
+                        "edit": false,
+                        "fields": {
+                            "includes": ["affiliation"]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

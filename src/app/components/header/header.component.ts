@@ -34,12 +34,17 @@ export class HeaderComponent implements OnInit {
       this.admin = JSON.parse(localStorage.getItem('admin'))
       this.admin_setup = JSON.parse(localStorage.getItem('admin-setup'))
      
-      this.user_name = await this.keycloakService.getUsername();
+      if(this.keycloakService.isLoggedIn){
+        this.user_name = await this.keycloakService.getUsername();
+
+      }else{
+        if (JSON.parse(localStorage.getItem('user')) != null) {
+          this.user = JSON.parse(localStorage.getItem('user'))
+          this.user_name = this.user.fullName;
+        }
+      }
      
-      // if (JSON.parse(localStorage.getItem('user')) != null) {
-      //   this.user = JSON.parse(localStorage.getItem('user'))
-      //   this.user_name = this.user.fullName;
-      // }
+     
 
 
       this.institute = JSON.parse(localStorage.getItem('institute-detail'));

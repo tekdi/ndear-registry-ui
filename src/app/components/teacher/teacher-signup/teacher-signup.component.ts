@@ -69,7 +69,7 @@ export class TeacherSignupComponent implements OnInit {
 if(!event.terms){
   this.toastMsg.error("ERROR", "Please Accept Terms and Conditions");
 }else if (!isEmailId && !phoneno.test(event.mobileEmail)) {
-      this.toastMsg.error("ERROR", "Enter correct Email Id or Mobile Number");
+      this.toastMsg.error("ERROR", "Enter Correct Email Id or Mobile Number");
     } else {
 
       if (isEmailId) {

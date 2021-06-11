@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { TeacherProfileService } from '../../../services/teacher/teacher-profile.service';
 import { ToastMessageService } from '../../../services/toast-message/toast-message.service';
+import { KeycloakService } from 'keycloak-angular';
+
 import {
   NgbCalendar,
   NgbDate,
@@ -66,7 +68,8 @@ export class TeacherProfileComponent implements OnInit {
     private route: ActivatedRoute,
     public teacherProfileService: TeacherProfileService,
     public toastMsg: ToastMessageService,
-    public Schema: SchemaService) {
+    public Schema: SchemaService,
+    public keycloakService: KeycloakService) {
 
     // customize default values of datepickers used by this component tree
     config.minDate = { year: 1900, month: 1, day: 1 };
@@ -298,6 +301,13 @@ __proto__: Object
     //   this.experianceSchema.properties.institute.enum.push(this.institute)
     //   this.educationSchema.properties.institute.enum.push(this.institute)
     // }
+
+    this.user = this.keycloakService.getUsername();
+    this.keycloakService.getToken().then((token)=>{
+      console.log('keyCloak teacher token - ', token);
+      localStorage.setItem('token', token);
+      localStorage.setItem('loggedInUser', this.user)
+    });
 
     this.route.params.subscribe(params => {
       console.log("route", params)

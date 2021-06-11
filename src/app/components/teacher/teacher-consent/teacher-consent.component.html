@@ -25,7 +25,7 @@
   </table>
   <table class="mx-5 my-5 w-50">
     <tbody class="fs-5">
-        <tr *ngIf="!user.consent?.length">
+        <tr *ngIf="!user?.consent?.length">
           <td class="float-end" [attr.colspan]="user?.consent?.length">
             No Records Found!
           </td>

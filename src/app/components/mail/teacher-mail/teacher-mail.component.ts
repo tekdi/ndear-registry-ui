@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { Router } from '@angular/router';
+import { ToastMessageService } from '../../../services/toast-message/toast-message.service';
 
 @Component({
   selector: 'app-teacher-mail',
@@ -10,9 +11,14 @@ import { Router } from '@angular/router';
 export class TeacherMailComponent implements OnInit {
   teacher;
   institute;
+  loginScreen : boolean = false;
+  header1: string = 'plain';
+  emailId : string = "";
+
   constructor(
     public keycloakService: KeycloakService,
     public router: Router,
+    public toastMsg : ToastMessageService
   ) { }
 
   ngOnInit(): void {
@@ -22,12 +28,17 @@ export class TeacherMailComponent implements OnInit {
   }
 
   login(){
-    alert('hi');
    // this.keycloakService.logout();
    // this.router.navigate(['teacher-profile']);
-   this.keycloakService.logout('http://localhost:4200/teacher-profile');
+  
+//alert('h');
+    this.keycloakService.logout('http://localhost:4200/teacher-profile');
+   
+  }
 
-
+  register()
+  {
+    this.loginScreen = !this.loginScreen
   }
 
 }

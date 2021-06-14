@@ -159,22 +159,29 @@ export class TeacherProfileComponent implements OnInit {
     // event.contactDetails.address = event.address;
     // delete event.address;
 
-    if (this.teacherId && this.teacherId != "null") {
+  //  if (this.teacherId && this.teacherId != "null") {
 
-      event.osid = this.teacherId;
-      event.identityDetails.osid = this.item.identityDetails.osid;
-      event.contactDetails.osid = this.item.contactDetails.osid;
+      event.osid = this.item.osid;
+      this.teacherId = this.item.osid;
+
+      if(this.item.hasOwnProperty('identityDetails')){
+        event.identityDetails.osid = this.item.identityDetails.osid;
+         }
+
+         if(this.item.hasOwnProperty('contactDetails')){
+          event.contactDetails.osid = this.item.contactDetails.osid;
+        }
 
       // if(this.item.hasOwnProperty('address')){
       //   event.address.osid = this.item.address.osid;
       // }
 
-      const data = event; //this.editUserform.value;
-      console.log('data event -> ', data);
+      //let data = event; //this.editUserform.value;
+      console.log('data event -> ', event);
 
-      this.teacherProfileService.putTeacherProfile(data, this.teacherId).subscribe(res => {
+      this.teacherProfileService.putTeacherProfile(event, this.teacherId).subscribe(res => {
         if (res.responseCode == 'OK' && !res.params.errmsg) {
-          this.router.navigate(['/teacher-profile', { 'id': this.teacherId }]);
+         // this.router.navigate(['/teacher-profile', { 'id': this.teacherId }]);
           this.getTeacherData(this.teacherId);
           this.toastMsg.success('Success', 'Teacher Profile Updated Successfully');
         } else {
@@ -182,7 +189,7 @@ export class TeacherProfileComponent implements OnInit {
         }
       })
 
-    } else {
+   // } else {
      
 
       
@@ -190,9 +197,9 @@ export class TeacherProfileComponent implements OnInit {
 
       console.log('data event -> ', data);
 
-      this.teacherProfileService.postTeacherProfile(data).subscribe(res => {
+     /* this.teacherProfileService.postTeacherProfile(data).subscribe(res => {
         if (res.responseCode == 'OK' && !res.params.errmsg) {
-          this.router.navigate(['/teacher-profile', { 'id': res.result.Teacher.osid }]);
+         // this.router.navigate(['/teacher-profile', { 'id': res.result.Teacher.osid }]);
           localStorage.setItem('teacherId', res.result.Teacher.osid);
 
           this.getTeacherData(res.result.Teacher.osid);
@@ -200,8 +207,8 @@ export class TeacherProfileComponent implements OnInit {
         } else {
           this.toastMsg.error('Error', res.params.errmsg);
         }
-      })
-    }
+      })*/
+   // }
 
 
   }
@@ -219,6 +226,7 @@ export class TeacherProfileComponent implements OnInit {
     // this.education.push(event)
     //this.educationForm.reset();
     // this.education = this.educationForm.value
+    this.teacherId = this.item.osid
 
     if (!this.item.hasOwnProperty('academicQualifications')) {
       this.item.academicQualifications = [
@@ -233,7 +241,7 @@ export class TeacherProfileComponent implements OnInit {
     this.teacherProfileService.putTeacherProfile(this.item, this.teacherId).subscribe(res => {
       if (res.responseCode == 'OK' && !res.params.errmsg) {
         // localStorage.setItem('student_id', res.result.Student.osid);
-        this.router.navigate(['/teacher-profile', { 'id': this.teacherId }]);
+       // this.router.navigate(['/teacher-profile', { 'id': this.teacherId }]);
         this.getTeacherData(this.teacherId);
         this.toastMsg.success('Success', 'Academic Qualifications Deatils Added Successfully');
       }
@@ -273,6 +281,9 @@ __proto__: Object
     //     }
     //   ]
     // }
+
+    //event.osid = this.item.osid;
+    this.teacherId = this.item.osid
 
     if (!this.item.hasOwnProperty('experience')) {
       this.item.experience = [
@@ -321,11 +332,11 @@ __proto__: Object
 
   getTeacherData(id) {
 
-    if (id && id != "null") {
+   // if (id && id != "null") {
       this.teacherProfileService.getTeacherProfile(id).subscribe((res) => {
         this.item = res;
       })
-    }
+    //}
   }
 
   onWorkingChange() {

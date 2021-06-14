@@ -14,13 +14,14 @@ export class InstituteTeachersComponent implements OnInit {
   user;
   header1: string = 'institute';
   tab: string = 'teachers';
+  tempEmail : string;
 
   schema = {
     "type": "object",
     "title": "Invite",
     "properties": {
       "emails": {
-        "title": "Enter email Id",
+        "title": "Enter Mobile Number",
         "type": "string",
       }
     }
@@ -30,7 +31,7 @@ export class InstituteTeachersComponent implements OnInit {
     {
       "key": "emails",
       "type": "textarea",
-      "placeholder": "Enter Email Ids seperated by comma"
+      "placeholder": "Enter Mobile Number"
     },
 
     {
@@ -59,9 +60,9 @@ export class InstituteTeachersComponent implements OnInit {
     // this.user.details = this.editform.value
 
     let isEmailId = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(event.emails);
-    if (!isEmailId) {
-      this.toastMsg.error('Error', "Enter correct Email Id");
-    } else {
+    // if (!isEmailId) {
+    //   this.toastMsg.error('Error', "Enter correct Email Id");
+    // } else {
 
       if (event.emails.indexOf(',') > -1) {
         event.emails = event.emails.split(',');
@@ -84,8 +85,24 @@ export class InstituteTeachersComponent implements OnInit {
       }
 
       console.log('this.teachers[this.teachers.length - 1] -->', this.teachers[this.teachers.length - 1]);
-      let data = this.teachers[this.teachers.length - 1];
-      data.mobile = data.email;
+      let data1 = this.teachers[this.teachers.length - 1];
+     // data.mobile = data.email;
+
+     if (!isEmailId) {
+       this.tempEmail = '';
+     }else{
+      this.tempEmail = data1.email;
+     }
+
+      let data = {
+        "contactDetails": {
+        "email":  this.tempEmail,
+        "mobile" : data1.email
+        },
+        "identityDetails": {
+          "fullName": ""
+        }
+      }
 
       this.inviteService.inviteTeacher(data).subscribe((res) => {
         if (res.responseCode == 'OK' && !res.params.errmsg) {
@@ -108,4 +125,4 @@ export class InstituteTeachersComponent implements OnInit {
     }
 
   }
-}
+

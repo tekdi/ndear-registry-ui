@@ -24,7 +24,7 @@ export class TeacherProfileService {
   }
 
   getTeacherProfile(id) {
-    let url = `${this.baseUrl}/${ApiPaths.Teacher}/${id}`;
+    let url = `${this.baseUrl}/${ApiPaths.Teacher}`;
     const req = {
       url: url
     };

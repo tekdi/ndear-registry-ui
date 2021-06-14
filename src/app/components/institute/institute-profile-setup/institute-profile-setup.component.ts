@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SchemaService } from 'src/app/services/data/schema.service';
 import { InstituteProfileService } from 'src/app/services/institute/institute-profile.service';
 import { ToastMessageService } from '../../../services/toast-message/toast-message.service';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-institute-profile-setup',
@@ -129,7 +130,8 @@ export class InstituteProfileSetupComponent implements OnInit {
   constructor(public router: Router,
     public instituteProfileService: InstituteProfileService,
     public Schema: SchemaService,
-    public toastMsg: ToastMessageService) {
+    public toastMsg: ToastMessageService,
+    public keycloakService: KeycloakService) {
     this.Schema.getSchemas().subscribe((res) => {
       // console.log("res",res);
       this.schemaJson = res;
@@ -157,6 +159,12 @@ export class InstituteProfileSetupComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.keycloakService.getToken().then((token)=>{
+      console.log('keyCloak teacher token - ', token);
+      localStorage.setItem('token', token);
+    });
+
 
   }
   submitIntituteProfile(event) {

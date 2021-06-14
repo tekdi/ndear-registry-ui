@@ -36,7 +36,7 @@ export class StudentProfileService {
   }
 
   getStudentProfile(id) {
-    let url = `${this.baseUrl}/${ApiPaths.Student}/${id}`;
+    let url = `${this.baseUrl}/${ApiPaths.Student}`;
     const req = {
       url: url
     };

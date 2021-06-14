@@ -15,7 +15,7 @@ export class InviteService {
     let url = `${this.baseUrl}/${ApiPaths.InviteStudent}`;
     const req = {
       url: url,
-      data: data[0]
+      data: data
     };
 
     return this.dataService.post(req);
@@ -35,7 +35,7 @@ export class InviteService {
     let url = `${this.baseUrl}/${ApiPaths.InviteInstitute}`;
     const req = {
       url: url,
-      data: data[0]
+      data: data
     };
 
     return this.dataService.post(req);

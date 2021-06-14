@@ -71,9 +71,9 @@ export class HeaderComponent implements OnInit {
         console.log("this.attestation_count", this.attestation_count)
       }
       if (this.headerFor == 'teacher') {
-        if (this.user.consent === true) {
-          this.consent_count = 1
-        }
+        // if (this.user.consent === true) {
+        //   this.consent_count = 1
+        // }
         // this.attestation_count = this.attestation_count + this.education.length
       }
 
@@ -97,6 +97,12 @@ export class HeaderComponent implements OnInit {
 
   logout(){
     this.keycloakService.logout('http://localhost:4200/teacher-profile');
+
+  }
+
+
+  logout1(){
+    this.keycloakService.logout('http://localhost:4200/student-profile');
 
   }
 

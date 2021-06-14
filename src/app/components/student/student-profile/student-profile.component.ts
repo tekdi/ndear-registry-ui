@@ -151,8 +151,10 @@ export class StudentProfileComponent implements OnInit {
     //  this.user = this.editUserform.value
     // this.router.navigate(['student-profile']);
 
-    if (this.studentId &&  this.studentId != "null") {
-      event.osid = this.studentId;
+   // if (this.studentId &&  this.studentId != "null") {
+      event.osid = this.user.osid;
+      this.studentId = this.user.osid;
+
       event.identityDetails.osid = this.user.identityDetails.osid;
       event.contactDetails.osid = this.user.contactDetails.osid;
      // event.address.osid = this.user.address.osid;
@@ -160,26 +162,26 @@ export class StudentProfileComponent implements OnInit {
 
       this.studentProfileService.putStudentProfile(data, this.studentId).subscribe(res => {
         if (res.responseCode == 'OK' && !res.params.errmsg) {
-          this.router.navigate(['/student-profile', { 'id': this.studentId }]);
+       //   this.router.navigate(['/student-profile', { 'id': this.studentId }]);
           this.getStudentData(this.studentId);
           this.toastMsg.success('Success', 'Student Profile Updated Successfully');
         } else {
           this.toastMsg.error('Error', res.params.errmsg);
         }
       })
-    } else {
+   /* } else {
       const data = event;
       this.studentProfileService.postStudentProfile(data).subscribe(res => {
         if (res.responseCode == 'OK' && !res.params.errmsg) {
           // localStorage.setItem('student_id', res.result.Student.osid);
-          this.router.navigate(['/student-profile', { 'id': res.result.Student.osid }]);
+        //  this.router.navigate(['/student-profile', { 'id': res.result.Student.osid }]);
           this.getStudentData(res.result.Student.osid);
           this.toastMsg.success('Success', 'Student Profile Added Successfully');
         } else {
           this.toastMsg.error('Error', res.params.errmsg);
         }
       })
-    }
+    }*/
   }
 
   onSubmit() {
@@ -192,7 +194,7 @@ export class StudentProfileComponent implements OnInit {
     event.attested = "pending"
     event.note = "Attestation pending"
     // this.education.push(event)
-
+    this.studentId = this.user.osid;
     this.educationForm.reset();
 
     if (!this.user.hasOwnProperty('educationDetails')) {
@@ -209,7 +211,7 @@ export class StudentProfileComponent implements OnInit {
     this.studentProfileService.putStudentProfile(this.user, this.studentId).subscribe(res => {
       if (res.responseCode == 'OK' && !res.params.errmsg) {
         // localStorage.setItem('student_id', res.result.Student.osid);
-        this.router.navigate(['/student-profile', { 'id': this.studentId }]);
+      //  this.router.navigate(['/student-profile', { 'id': this.studentId }]);
 
         this.getStudentData(this.studentId);
         this.toastMsg.success('Success', 'Educational Deatils Added Successfully');
@@ -234,14 +236,14 @@ export class StudentProfileComponent implements OnInit {
 
 
   getStudentData(studentId) {
-    if (studentId &&  studentId != "null") {
+   
       this.studentProfileService.getStudentProfile(studentId).subscribe((res) => {
         console.log({ res });
         this.studentResult = res;
         this.user = res;
         console.log("this.user", this.user);
       })
-    }
+    
   }
 
   onWorkingChange() {

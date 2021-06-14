@@ -13,21 +13,22 @@
             <br>
             <p>You have recieved invite form {{institute?.BasicDetails?.instituteName}} to register as a teacher.</p>
             <p>Click below to complete registration.</p>
-            <button (click)="register()" class="btn btn-primary text-end mt-3 fw-bold text-capitalize">Complete Registration</button>
+            <button (click)="register()" class="btn btn-primary text-end mt-3 fw-bold text-capitalize">Complete
+                Registration</button>
         </div>
     </div>
 
 </div>
 
-<div  *ngIf="loginScreen">
-<app-header [headerFor]='header1'></app-header>
-<div class="col-md-6 offset-md-3">
-    <div class="card p-4">
-        <div class="card-body">
-                <p class="fs-5 primary">Login To Complete Your Profile Via {{teacher.email}} Email Id</p>
-               
+<div *ngIf="loginScreen">
+    <app-header [headerFor]='header1'></app-header>
+    <div class="col-md-6 offset-md-3">
+        <div class="card p-4">
+            <div class="card-body">
+                <p class="fs-5 primary">Login To Complete Your Profile Via {{teacher.email}} Mobile Number</p>
+
                 <button class="mt-5" type="button" (click)="login()" mat-raised-button color="primary">Login</button>
+            </div>
         </div>
     </div>
-</div>
 </div>

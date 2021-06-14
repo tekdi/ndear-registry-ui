@@ -96,8 +96,8 @@
                     <div>{{item?.start}} - Current</div>
                 </ng-template>
                 <div class="fs-6">{{item?.employmentType}}</div>
-                <div class="fs-6">Grades: {{item?.grades.join(', ')}}</div>
-                <div class="fs-6">Subject: {{item?.subjects.join(', ')}}</div>
+                <div class="fs-6">Grades: {{item?.grades?.join(', ')}}</div>
+                <div class="fs-6">Subject: {{item?.subjects?.join(', ')}}</div>
                 
                 <hr>
             </ng-template>
@@ -332,8 +332,8 @@
                                     <div   *ngIf="item?.start">{{item?.start}} - Current</div>
                                 </ng-template>
                                 <div class="fs-6">{{item?.employmentType}}</div>
-                                <div class="fs-6">Grades: {{item?.grades.join(', ')}}</div>
-                                <div class="fs-6">Subject: {{item?.subjects.join(', ')}}</div>
+                                <div class="fs-6">Grades: {{item?.grades?.join(', ')}}</div>
+                                <div class="fs-6">Subject: {{item?.subjects?.join(', ')}}</div>
 
                                 <hr>
                             <!-- </ng-template> -->

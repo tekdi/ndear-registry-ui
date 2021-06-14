@@ -44,15 +44,15 @@ const routes: Routes = [
   { path: 'student-signup', component: StudentSignupComponent },
   { path: 'teacher-signup', component: TeacherSignupComponent },
   { path: 'student-login', component: StudentLoginComponent, canActivate: [AuthGuard] },
-  { path: 'student-profile', component: StudentProfileComponent },
+  { path: 'student-profile', component: StudentProfileComponent,  canActivate: [AuthGuard] },
 
   { path: 'teacher-profile', component: TeacherProfileComponent, canActivate: [AuthGuard] },
   { path: 'teacher-consent', component: TeacherConsentComponent },
 
   { path: 'institute-signup', component: InstituteSignupComponent },
   { path: 'institute-login', component: InstituteLoginComponent},
-  { path: 'institute-profile', component: InstituteProfileComponent },
-  { path: 'institute-profile-setup', component: InstituteProfileSetupComponent },
+  { path: 'institute-profile', component: InstituteProfileComponent, canActivate: [AuthGuard] },
+  { path: 'institute-profile-setup', component: InstituteProfileSetupComponent, canActivate: [AuthGuard] },
   { path: 'institute-profile-select', component: InstituteProfileSelectComponent },
   { path: 'admin-institute-setup', component: AdminInstituteSetupComponent },
   { path: 'institute-attestation', component: InstituteAttestationsComponent },

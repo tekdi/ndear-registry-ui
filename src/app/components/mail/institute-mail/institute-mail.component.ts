@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-institute-mail',
@@ -7,11 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InstituteMailComponent implements OnInit {
   user: any;
+  loginScreen : boolean = false;
+  header1: string = 'plain';
 
-  constructor() { }
+  constructor(
+    public keycloakService: KeycloakService
+  ) { }
 
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('institutes-invite'))[0];
+  }
+
+  login(){
+    this.keycloakService.logout('http://localhost:4200/institute-profile-setup');
+  }
+
+  register()
+  {
+    this.loginScreen = !this.loginScreen;
   }
 
 }

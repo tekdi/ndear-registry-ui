@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { InviteService} from '../../../services/invite/invite.service';
+import { InviteService } from '../../../services/invite/invite.service';
 import { ToastMessageService } from '../../../services/toast-message/toast-message.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class InstiituteStudentsComponent implements OnInit {
     "title": "Invite",
     "properties": {
       "emails": {
-        "title": "Enter email Id",
+        "title": "Enter Mobile Number",
         "type": "string",
       }
     }
@@ -30,7 +30,7 @@ export class InstiituteStudentsComponent implements OnInit {
     {
       "key": "emails",
       "type": "textarea",
-      "placeholder": "Enter Email Ids seperated by comma"
+      "placeholder": "Enter Mobile Number"
     },
     {
       "type": "submit",
@@ -40,22 +40,22 @@ export class InstiituteStudentsComponent implements OnInit {
   ]
   constructor(public router: Router,
     public inviteService: InviteService,
-    public toastMsg: ToastMessageService) { 
+    public toastMsg: ToastMessageService) {
     this.user = JSON.parse(localStorage.getItem('user'));
     // this.students = JSON.parse(localStorage.getItem('students'));
   }
 
   ngOnInit(): void {
-   
+
   }
 
-  oninviteSubmit(event){
+  oninviteSubmit(event) {
     // console.log(event);
     // this.user.details = this.editform.value
 
-    if (event.emails.indexOf(',') > -1) { 
+    if (event.emails.indexOf(',') > -1) {
       event.emails = event.emails.split(',');
-      
+
       event.emails.forEach(email => {
         var teacher = {
           'email': email,
@@ -63,28 +63,43 @@ export class InstiituteStudentsComponent implements OnInit {
         }
         this.students.push(teacher)
       });
-     }
-     else{
+    }
+    else {
       var teacher = {
         'email': event.emails,
         'mobile': '-'
       }
       this.students.push(teacher)
-     }
+    }
 
-     this.inviteService.inviteStudent(this.students).subscribe((res)=>{
+    let data = {
+      "contactDetails": {
+        "email": '',
+        "mobile": event.emails
+      },
+      "identityDetails": {
+        "fullName": ""
+      }
+    }
+
+    
+    this.inviteService.inviteStudent(data).subscribe((res) => {
       if (res.responseCode == 'OK' && !res.params.errmsg) {
         this.toastMsg.success('Success', 'Invited successfully');
-      }else{
+        console.log(this.students)
+        localStorage.setItem('students', JSON.stringify(this.students));
+        const url = this.router.createUrlTree(['/student-invite'])
+        window.open(url.toString(), '_blank')
+      } else {
         this.toastMsg.error('Error', res.params.errmsg);
       }
-     }, (err)=>{
+    }, (err) => {
 
-      console.log({err});
+      console.log({ err });
 
-     });
+    });
 
-     
+
 
     // event.emails = event.emails.split(',');
     // event.mobiles = event.mobiles.split(',');
@@ -104,11 +119,8 @@ export class InstiituteStudentsComponent implements OnInit {
     // });
     // this.students = event;
     // this.students.mobiles.concat(event.emails);
-    console.log(this.students)
-    localStorage.setItem('students', JSON.stringify(this.students));
-    const url = this.router.createUrlTree(['/student-invite'])
-    window.open(url.toString(), '_blank')
-        // this.educationForm.reset();
-      }
+   
+    // this.educationForm.reset();
+  }
 
 }

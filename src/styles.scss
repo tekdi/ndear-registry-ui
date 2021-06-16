@@ -127,3 +127,40 @@ button.calendar, button.calendar:active {
   padding-right: 0;
 }
 
+
+.modal-dialog.panel-right {
+    position: fixed !important;
+    left: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto !important;
+    width: 640px !important;
+    height: 100%;
+    -webkit-transform: translate3d(0%, 0, 0) !important;
+    -ms-transform: translate3d(0%, 0, 0) !important;
+    -o-transform: translate3d(0%, 0, 0) !important;
+    transform: translate3d(0%, 0, 0) !important;
+}
+.modal-dialog.panel-right .modal-content {
+    height: 100%;
+    overflow-y: auto;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.modal-dialog.panel-right .modal-body {
+    padding: 15px 15px 80px;
+}
+/*Right*/
+.modal.fade .modal-dialog.panel-right {
+    right: -320px;
+    -webkit-transition: opacity 0.3s linear, right 400ms ease-in-out !important;
+    -moz-transition: opacity 0.3s linear, right 400ms ease-in-out !important;
+    -o-transition: opacity 0.3s linear, right 400ms ease-in-out !important;
+    transition: opacity 0.3s linear, right 400ms ease-in-out !important;
+}
+.modal.fade.show .modal-dialog.panel-right {
+    right: 0;
+}
+
+

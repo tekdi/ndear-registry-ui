@@ -35,9 +35,9 @@ import { TeacherConsentComponent } from './components/teacher/teacher-consent/te
 import { BoardAttestationDetailsComponent } from './components/board/board-attestation-details/board-attestation-details.component';
 import { FormsComponent } from './forms/forms.component';
 import { LayoutsComponent } from './layouts/layouts.component';
-import { ModalContainerComponent } from './layouts/modal/modal.component';
-import { PanelsComponent } from './panels/panels.component';
-import { DemoPanelComponent } from './panels/demo-panel/demo-panel.component';
+import { PanelsComponent } from './layouts/modal/panels/panels.component';
+import { EditPanelComponent } from './layouts/modal/panels/edit-panel/edit-panel.component';
+import { AddPanelComponent } from './layouts/modal/panels/add-panel/add-panel.component';
 
 const routes: Routes = [
   { path: 'signup', component: HomeComponent },
@@ -70,7 +70,6 @@ const routes: Routes = [
 
   { path: 'test', component: TestComponent
   },
-  { path: 'test/:id', component: ModalContainerComponent },
   { path: 'admin-mail', component: MailComponent },
   { path: 'teacher-invite', component: TeacherMailComponent },
 
@@ -95,8 +94,19 @@ const routes: Routes = [
         outlet: 'claim',
         children: [
           {
-            path: ':claim',
-            component: DemoPanelComponent
+            path: ':form',
+            component: EditPanelComponent
+          }
+        ]
+      },
+      {
+        path: 'add',
+        component: PanelsComponent,
+        outlet: 'claim',
+        children: [
+          {
+            path: ':form',
+            component: AddPanelComponent
           }
         ]
       },
@@ -121,7 +131,7 @@ const routes: Routes = [
   //   children: [
   //     {
   //       path: 'add',
-  //       component: DemoPanelComponent
+  //       component: EditPanelComponent
   //     }
   //   ]
   // }

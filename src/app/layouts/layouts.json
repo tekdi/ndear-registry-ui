@@ -19,11 +19,12 @@
                         }
                     },
                     {
-                        "definition": "Affiliation",
+                        "definition": "Institute",
                         "title": "Affiliation details",
                         "add": true,
                         "addform":"affiliation",
                         "edit": false,
+                        "multiple": false,
                         "fields": {
                             "includes": ["affiliation"]
                         }

@@ -107,12 +107,13 @@ import { BoardInstituteService} from './services/board/board-institutes/board-in
 import { AdminFormService } from './services/admin-form.service';
 import { FormsComponent } from './forms/forms.component';
 import { LayoutsComponent } from './layouts/layouts.component';
-import { ModalContainerComponent } from '../app/layouts/modal/modal.component';
-import { ModalRouterLinkDirective } from '../app/layouts/modal/modal.directive';
+import { ModalRouterEditLinkDirective } from '../app/layouts/modal/modal.directive';
+import { ModalRouterAddLinkDirective } from '../app/layouts/modal/modal.directive';
 import { Test2Component } from './test/test2/test2.component';
 
-import { PanelsComponent } from './panels/panels.component';
-import { DemoPanelComponent } from './panels/demo-panel/demo-panel.component';
+import { PanelsComponent } from './layouts/modal/panels/panels.component';
+import { EditPanelComponent } from './layouts/modal/panels/edit-panel/edit-panel.component';
+import { AddPanelComponent } from './layouts/modal/panels/add-panel/add-panel.component';
 
 
 
@@ -159,10 +160,10 @@ import { DemoPanelComponent } from './panels/demo-panel/demo-panel.component';
     MultiSchemaTypeComponent,
     NullTypeComponent,
     LayoutsComponent,
-    ModalContainerComponent,
-    ModalRouterLinkDirective,
+    ModalRouterEditLinkDirective,
+    ModalRouterAddLinkDirective,
     Test2Component,
-    PanelsComponent, DemoPanelComponent,
+    PanelsComponent, EditPanelComponent, AddPanelComponent,
 
   ],
   imports: [

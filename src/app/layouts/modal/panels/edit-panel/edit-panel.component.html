@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title float-left">Claim</h3>
+  <h3 class="modal-title float-left">Edit Details</h3>
   <button
     type="button"
     class="close float-right"
@@ -9,6 +9,4 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-<div class="modal-body">
- <app-forms form="institute-setup"></app-forms>
-</div>
+ <app-forms form={{form}} identifier={{identifier}} modal="true"></app-forms>

@@ -5,6 +5,7 @@
         {
             "institute-setup-short": {
                 "api": "/Institute",
+                "type": "entity",
                 "title": "Institute Setup",
                 "fieldsets": [
                     {
@@ -70,55 +71,13 @@
         {
             "institute-setup": {
                 "api": "/Institute",
+                "type": "entity",
                 "title": "Institute Setup",
                 "fieldsets": [
                     {
                         "definition": "Institute",
                         "title": "Basic details",
-                        "fields": [
-                            {
-                                "name": "instituteName",
-                                "required": true
-                            },
-                            {
-                                "name": "gstnId"
-                            },
-                            {
-                                "name":"email"
-                            },
-                            {
-                                "name":"contactNumber",
-                                "required": true
-                            },
-                            {
-                                "name":"website"
-                            },
-                            {
-                                "name":"category",
-                                "required": true,
-                                "type":"checkbox"
-                            },
-                            {
-                                "name":"schoolType",
-                                "required": true
-                            },
-                            {
-                                "name":"instituteManagement"
-                            },
-                            {
-                                "name":"committee"
-                            },
-                            {
-                                "name":"establishmentYear"
-                            },
-                            {
-                                "name":"address",
-                                "children": {
-                                    "definition": "Address"
-                                }
-                            }
-                            
-                        ]
+                        "fields": ["*"]
                     }
                 ],
                 "nextstep": "otp-verify"
@@ -126,11 +85,17 @@
         },
         {
             "affiliation": {
+                "api": "/Institute",
+                "type": "property",
                 "title": "Affiliation Details",
                 "fieldsets": [
                     {
-                        "definition": "Affiliation",
-                        "fields": ["*"]
+                        "definition": "Institute",
+                        "fields": [
+                            {
+                                "name":"affiliation"
+                            }
+                        ]
                     }
                 ]
             }

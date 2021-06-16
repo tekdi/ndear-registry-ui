@@ -31,7 +31,8 @@ export class LayoutsComponent implements OnInit {
     router: Router) { }
 
   ngOnInit(): void {
-    this.identifier = '1-efa454db-569b-4d4f-ac22-6e52677d1ee3'
+    // this.identifier = '1-ad91e30d-9ad9-4172-ba27-3fd805ad8a75'
+    this.identifier = localStorage.getItem('institute-osid')
     this.route.params.subscribe(params => {
       console.log(params)
       this.layout = params['layout']
@@ -79,7 +80,8 @@ export class LayoutsComponent implements OnInit {
 
                 }
                 else {
-                  temp_object = this.responseData['definitions'][block.definition]['properties'][element]
+                  console.log("eeeeee",element)
+                  temp_object = this.responseData['definitions'][block.definition]['properties'][element]['properties'][key]
 
                   // this.property[key] = this.responseData['definitions'][block.definition]['properties'][element];
                   if (temp_object != undefined) {
@@ -125,7 +127,6 @@ export class LayoutsComponent implements OnInit {
                     console.log("here", temp_object[key])
                     this.property.push(temp_object)
                   }
-
 
                 }
                 else {
@@ -220,6 +221,7 @@ export class LayoutsComponent implements OnInit {
       };
       this.currentDialog = this.modalService.open(FormsComponent, options);
       this.currentDialog.componentInstance.form = params.claim;
+      this.currentDialog.componentInstance.modal = true;
       console.log('hse', params);
 
       // Go back to home page after the modal is closed

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SchemaService } from '../services/data/schema.service';
 import * as FormSchemas from './forms.json'
 import { FormGroup } from '@angular/forms';
@@ -7,6 +7,8 @@ import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { JSONSchema7 } from "json-schema";
 import { GeneralService } from '../services/general/general.service';
+import { PanelsComponent } from '../layouts/modal/panels/panels.component';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-forms',
@@ -15,6 +17,8 @@ import { GeneralService } from '../services/general/general.service';
 })
 export class FormsComponent implements OnInit {
   @Input() form;
+  @Input() modal;
+  @Input() identifier;
   formSchema;
   responseData;
   schemaloaded = false;
@@ -30,45 +34,43 @@ export class FormsComponent implements OnInit {
   required = [];
 
   form2: FormGroup;
-  model: any;
+  model = {};
   options: FormlyFormOptions;
   fields: FormlyFieldConfig[];
 
   type: string;
   apiUrl: string;
-  identifier = null;
-  modal =false
-  constructor(private route: ActivatedRoute, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService) { }
+  constructor(private route: ActivatedRoute, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      console.log('params',Object.keys(params).length)
+      console.log('params', params)
       // this.form = params['form']
-      if(Object.keys(params).length == 0){
-        this.modal = true;
-      }else{
-        
-        if(params['form'] != undefined){
-          this.form = params['form']
-        }
-        if(params['id'] != undefined){
-          this.identifier = params['id']
-        }
+
+      if (params['form'] != undefined) {
+        this.form = params['form']
       }
+      if (params['id'] != undefined) {
+        this.identifier = params['id']
+      }
+      if (params['modal'] != undefined) {
+        this.modal = params['modal']
+      }
+
     });
-    console.log('modal',this.modal)
+    // console.log("modallll", this.modal)
+    var filtered = FormSchemas.forms.filter(obj => {
+      console.log(Object.keys(obj)[0])
+      return Object.keys(obj)[0] === this.form
+    })
+    this.formSchema = filtered[0][this.form]
+    this.apiUrl = this.formSchema.api;
+    if (this.identifier != null) {
+      this.getData()
+    }
     this.schemaService.getSchemas().subscribe((res) => {
       this.responseData = res;
       console.log("this.responseData", this.responseData);
-      var filtered = FormSchemas.forms.filter(obj => {
-        console.log(Object.keys(obj)[0])
-        return Object.keys(obj)[0] === this.form
-      })
-      this.formSchema = filtered[0][this.form]
-      this.apiUrl = this.formSchema.api;
-      if(this.identifier != null){
-        this.getData()
-      }
       // console.log("formSchema",this.formSchema);
       this.formSchema.fieldsets.forEach(fieldset => {
         this.definations[fieldset.definition] = {}
@@ -85,7 +87,7 @@ export class FormsComponent implements OnInit {
         this.definations[fieldset.definition].properties = {}
         this.property[fieldset.definition] = {}
         this.property = this.definations[fieldset.definition].properties;
-        console.log('ppppp',this.definations[fieldset.definition].properties)
+        // console.log('ppppp', this.definations[fieldset.definition].properties)
         // if(this.definations[fieldset.definition].required && this.definations[fieldset.definition].required.length > 0){
         //   this.schema['required'] = this.definations[fieldset.definition].required
         // }
@@ -93,7 +95,7 @@ export class FormsComponent implements OnInit {
           this.definations = this.responseData.definitions;
           this.property[fieldset.definition] = {
             "title": fieldset.title,
-            "$ref": "#/definitions/"+fieldset.definition
+            "$ref": "#/definitions/" + fieldset.definition
           };
         } else {
           this.addFields(fieldset)
@@ -118,7 +120,7 @@ export class FormsComponent implements OnInit {
     this.form2 = new FormGroup({});
     this.options = {};
     this.fields = [this.formlyJsonschema.toFieldConfig(this.schema)];
-    this.model = {};
+    // this.model = {};
     this.schemaloaded = true;
   }
 
@@ -135,16 +137,17 @@ export class FormsComponent implements OnInit {
             if (reffield.required) {
               ref_required.push(reffield.name)
             }
-            // this.responseData.definitions[field.children.definition].properties[reffield.name].replace("Common.json/","")
-            console.log("rrrrrrrrr",this.responseData.definitions[field.children.definition].properties[reffield.name])
             ref_properties[reffield.name] = this.responseData.definitions[field.children.definition].properties[reffield.name];
             // this.property[reffield.name] = this.responseData.definitions[field.children.definition].properties[reffield.name];
           });
+          // this.property[field.name] = ref_properties;
           this.definations[field.children.definition].properties = ref_properties;
           this.definations[field.children.definition].required = ref_required;
         }
       }
       this.definations[fieldset.definition].properties[field.name] = this.responseData.definitions[fieldset.definition].properties[field.name];
+
+
     });
   }
 
@@ -186,39 +189,56 @@ export class FormsComponent implements OnInit {
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['disabled'] = field.disabled
       };
     }
-      console.log("field", field)
-    }
+    // console.log("field", field)
+  }
 
-    submit() {
-      console.log(this.model)
-      // alert(JSON.stringify(this.model));
-      if(this.identifier != null){
-        this.generalService.putData(this.apiUrl,this.identifier, this.model).subscribe((res) => {
+  submit() {
+    console.log(this.model)
+    if(this.apiUrl.includes(":")){
+      this.identifier = localStorage.getItem('institute-osid');
+      this.apiUrl = this.apiUrl.split('/:')[0]
+      console.log("this.model",this.model)
+    }
+    // alert(JSON.stringify(this.model));
+    if (this.identifier != null) {
+      this.generalService.putData(this.apiUrl, this.identifier, this.model).subscribe((res) => {
+        if (res.params.status == 'SUCCESSFUL') {
           alert('Data updated successfully');
-          this.getData()
-        });
-      }else{
-        this.generalService.postData(this.apiUrl,this.model).subscribe((res) => {
-          console.log({ res });
-          if (res.responseCode == 'OK') {
-            alert('Data added successfully : '+JSON.stringify(res.result));
-          }else{
-            alert(res.params.errmsg);
-          }
-    
-        });
-      }
-    }
-
-    getData(){
-      this.generalService.getData(this.apiUrl,this.identifier).subscribe((res) => {
+        }
+        else{
+          alert(res.params.status);
+        }
+        
+        this.getData()
+      });
+    } else {
+      this.generalService.postData(this.apiUrl, this.model).subscribe((res) => {
         console.log({ res });
-        this.model = res
-  
+        if (res.responseCode == 'OK') {
+          alert('Data added successfully : ' + JSON.stringify(res.result));
+          localStorage.setItem('institute-osid', res.result.Institute.osid);
+          const url = this.router.createUrlTree(['/profile/institute'])
+          window.open(url.toString(), '_blank')
+          // this.educationForm.reset();
+
+        } else {
+          alert(res.params.errmsg);
+        }
+
       });
     }
-
-    // close() {
-    //   this.panel.close();
-    // }
   }
+
+  getData() {
+    this.generalService.getData(this.apiUrl, this.identifier).subscribe((res) => {
+      console.log({ res });
+      this.model = res
+
+    });
+  }
+
+  // close() {
+  //   this.location.back()
+  //   // this.panel.close();
+  // }
+}

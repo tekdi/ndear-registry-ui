@@ -31,6 +31,36 @@
                     }
                 ]
             }
+        },
+        {
+            "student": {
+                "api": "/Student",
+                "title": "Student Profile",
+                "blocks": [
+                    {
+                        "definition": "Student",
+                        "title": "Basic details",
+                        "add": false,
+                        "edit": true,
+                        "editform":"student-setup",
+                        "fields": {
+                            "includes": ["*"],
+                            "excludes": ["educationDetails"]
+                        }
+                    },
+                    {
+                        "definition": "Institute",
+                        "title": "Education details",
+                        "add": true,
+                        "addform":"student-education",
+                        "edit": false,
+                        "multiple": false,
+                        "fields": {
+                            "includes": ["educationDetails"]
+                        }
+                    }
+                ]
+            }
         }
     ]
 }

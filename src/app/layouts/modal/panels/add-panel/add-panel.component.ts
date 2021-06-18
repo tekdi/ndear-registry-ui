@@ -18,8 +18,8 @@ export class AddPanelComponent implements OnInit {
       console.log('params',params)
       this.form = params['form']
     });
-    if(localStorage.getItem('institute-osid')){
-      this.identifier = localStorage.getItem('institute-osid')
+    if(localStorage.getItem('entity-osid')){
+      this.identifier = localStorage.getItem('entity-osid')
     }
     else{
       console.log("Not Authorized")

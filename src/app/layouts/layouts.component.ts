@@ -32,7 +32,7 @@ export class LayoutsComponent implements OnInit {
 
   ngOnInit(): void {
     // this.identifier = '1-ad91e30d-9ad9-4172-ba27-3fd805ad8a75'
-    this.identifier = localStorage.getItem('institute-osid')
+    this.identifier = localStorage.getItem('entity-osid')
     this.route.params.subscribe(params => {
       console.log(params)
       this.layout = params['layout']
@@ -47,6 +47,7 @@ export class LayoutsComponent implements OnInit {
         console.log(Object.keys(obj)[0])
         return Object.keys(obj)[0] === this.layout
       })
+      console.log(filtered)
       this.layoutSchema = filtered[0][this.layout]
       this.apiUrl = this.layoutSchema.api;
       if (this.identifier && this.identifier != null) {

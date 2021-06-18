@@ -11,6 +11,7 @@
                     {
                         "definition": "Institute",
                         "title": "Basic details",
+                        "formclass":"row",
                         "fields": [
                             {
                                 "name": "instituteName",
@@ -64,8 +65,7 @@
                             }
                         ]
                     }
-                ],
-                "nextstep": "otp-verify"
+                ]
             }
         },
         {
@@ -86,7 +86,7 @@
         {
             "affiliation": {
                 "api": "/Institute",
-                "type": "property",
+                "type": "property:affiliation",
                 "title": "Affiliation Details",
                 "fieldsets": [
                     {
@@ -94,6 +94,102 @@
                         "fields": [
                             {
                                 "name":"affiliation"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "student-signup": {
+                "api": "/Student",
+                "type": "entity",
+                "formclass":"row",
+                "title": "Sign up / Create new account",
+                "fieldsets": [
+                    {
+                        "definition": "Student",
+                        "fields": [
+                            {
+                                "name":"above13",
+                                "custom":true,
+                                "element":{
+                                    "title": "Are you above 13?",
+                                    "enum": [
+                                      "Yes",
+                                      "No"
+                                    ],
+                                    "widget": {
+                                      "formlyConfig": {
+                                        "type": "radio",
+                                        "fieldGroupClassName":"controls",
+                                        "className": "radio"
+                                      }
+                                    }
+                                  }
+                            },
+                            {
+                                "name":"identityDetails",
+                                "children": {
+                                    "definition": "IdentityDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "fullName",
+                                            "required": true
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name":"contactDetails",
+                                "children": {
+                                    "definition": "ContactDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "email",
+                                            "required": true
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "redirectTo":"/profile/student"
+            }
+        },
+        {
+            "student-setup": {
+                "api": "/Student",
+                "type": "entity",
+                "fieldsets": [
+                    {
+                        "definition": "Student",
+                        "fields": [
+                            {
+                                "name":"contactDetails"
+                            },
+                            {
+                                "name":"identityDetails"
+                            }
+                        ]
+                    }
+                ],
+                "nextstep": "otp-verify"
+            }
+        },
+        {
+            "student-education": {
+                "api": "/Student",
+                "type": "property:educationDetails",
+                "fieldsets": [
+                    {
+                        "definition": "Student",
+                        "fields": [
+                            {
+                                "name":"educationDetails"
                             }
                         ]
                     }

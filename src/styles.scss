@@ -4,7 +4,7 @@
 @import '~@fortawesome/fontawesome-free/scss/regular.scss';
 @import '~@fortawesome/fontawesome-free/scss/brands.scss';
  
-@import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
+// @import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "https://fonts.googleapis.com/css?family=Lato:wght@300@500@600&display=swap";
 @import "//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css";
@@ -163,4 +163,6 @@ button.calendar, button.calendar:active {
     right: 0;
 }
 
-
+formly-field {
+    display: block;
+  }

@@ -9,6 +9,7 @@ import { JSONSchema7 } from "json-schema";
 import { GeneralService } from '../services/general/general.service';
 import { PanelsComponent } from '../layouts/modal/panels/panels.component';
 import { Location } from '@angular/common'
+import { title } from 'process';
 
 @Component({
   selector: 'app-forms',
@@ -37,9 +38,11 @@ export class FormsComponent implements OnInit {
   model = {};
   options: FormlyFormOptions;
   fields: FormlyFieldConfig[];
+  customFields = [];
 
   type: string;
   apiUrl: string;
+  redirectTo: any;
   constructor(private route: ActivatedRoute, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
 
   ngOnInit(): void {
@@ -64,9 +67,18 @@ export class FormsComponent implements OnInit {
       return Object.keys(obj)[0] === this.form
     })
     this.formSchema = filtered[0][this.form]
-    this.apiUrl = this.formSchema.api;
+    
+    if(this.formSchema.api){
+      this.apiUrl = this.formSchema.api;
+    }
+    if(this.formSchema.redirectTo){
+      this.redirectTo = this.formSchema.redirectTo;
+    }
     if (this.identifier != null) {
       this.getData()
+    }
+    if (this.formSchema.type) {
+      this.type = this.formSchema.type
     }
     this.schemaService.getSchemas().subscribe((res) => {
       this.responseData = res;
@@ -78,9 +90,6 @@ export class FormsComponent implements OnInit {
         if (fieldset.title) {
           this.definations[fieldset.definition]['title'] = fieldset.title
         }
-        // if(fieldset.order && fieldset.order.length > 0){
-        //   this.definations[fieldset.definition]['order'] = fieldset.order
-        // }
         if (fieldset.required && fieldset.required.length > 0) {
           this.definations[fieldset.definition]['required'] = fieldset.required
         }
@@ -91,6 +100,10 @@ export class FormsComponent implements OnInit {
         // if(this.definations[fieldset.definition].required && this.definations[fieldset.definition].required.length > 0){
         //   this.schema['required'] = this.definations[fieldset.definition].required
         // }
+        if(fieldset.formclass){
+          this.schema['widget'] = {};
+          this.schema['widget']['formlyConfig'] = { fieldGroupClassName: fieldset.formclass }
+        }
         if (fieldset.fields[0] === "*") {
           this.definations = this.responseData.definitions;
           this.property[fieldset.definition] = {
@@ -126,8 +139,9 @@ export class FormsComponent implements OnInit {
 
   addFields(fieldset) {
     fieldset.fields.forEach(field => {
-      this.addWidget(fieldset, field)
+      
       if (field.children) {
+        
         this.definations[field.children.definition] = this.responseData.definitions[field.children.definition];
         var ref_properties = {}
         var ref_required = []
@@ -138,16 +152,33 @@ export class FormsComponent implements OnInit {
               ref_required.push(reffield.name)
             }
             ref_properties[reffield.name] = this.responseData.definitions[field.children.definition].properties[reffield.name];
-            // this.property[reffield.name] = this.responseData.definitions[field.children.definition].properties[reffield.name];
+            
+            // this.property[field.children.definition].properties[reffield.name] = this.responseData.definitions[field.children.definition].properties[reffield.name];
           });
           // this.property[field.name] = ref_properties;
+          this.responseData.definitions[fieldset.definition].properties[field.name].properties = ref_properties;
           this.definations[field.children.definition].properties = ref_properties;
           this.definations[field.children.definition].required = ref_required;
         }
       }
+      if(field.custom && field.element){
+        this.responseData.definitions[fieldset.definition].properties[field.name] = field.element;
+        this.customFields.push(field.name)
+        console.log("mod",this.model)
+      }else{
+        this.addWidget(fieldset, field)
+      }
+      
       this.definations[fieldset.definition].properties[field.name] = this.responseData.definitions[fieldset.definition].properties[field.name];
-
-
+      if(field.children && !field.children.title){
+        if(this.property[field.name].title){
+          delete this.property[field.name].title;
+        }
+        if(this.property[field.name].description){
+          delete this.property[field.name].description;
+        }
+        
+      }
     });
   }
 
@@ -156,7 +187,8 @@ export class FormsComponent implements OnInit {
     this.responseData.definitions[fieldset.definition].properties[field.name]['widget'] = {
       "formlyConfig": {
         "templateOptions": {},
-        "validation": {}
+        "validation": {},
+        "expressionProperties":{}
       }
     }
     if (field.classGroup) {
@@ -193,47 +225,62 @@ export class FormsComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.model)
-    if(this.apiUrl.includes(":")){
-      this.identifier = localStorage.getItem('institute-osid');
-      this.apiUrl = this.apiUrl.split('/:')[0]
-      console.log("this.model",this.model)
+    console.log("model",this.model,this.type,this.identifier)
+    this.customFields.forEach(element => {
+      delete this.model[element];
+    });
+    if(this.type && this.type === 'entity'){
+      if (this.identifier != null) {
+        this.updateData()
+      } else {
+        this.postData()
+      }
+      // this.getData()
     }
-    // alert(JSON.stringify(this.model));
-    if (this.identifier != null) {
-      this.generalService.putData(this.apiUrl, this.identifier, this.model).subscribe((res) => {
-        if (res.params.status == 'SUCCESSFUL') {
-          alert('Data updated successfully');
-        }
-        else{
-          alert(res.params.status);
-        }
-        
-        this.getData()
-      });
-    } else {
-      this.generalService.postData(this.apiUrl, this.model).subscribe((res) => {
-        console.log({ res });
-        if (res.responseCode == 'OK') {
-          alert('Data added successfully : ' + JSON.stringify(res.result));
-          localStorage.setItem('institute-osid', res.result.Institute.osid);
-          const url = this.router.createUrlTree(['/profile/institute'])
-          window.open(url.toString(), '_blank')
-          // this.educationForm.reset();
-
-        } else {
-          alert(res.params.errmsg);
-        }
-
-      });
+    else if(this.type && this.type.includes("property")){
+      this.identifier = localStorage.getItem('entity-osid');
+      var property = this.type.split(":")[1];
+      var url = [this.apiUrl,this.identifier,property];
+      this.apiUrl = url.join("/");
+      this.model = this.model[property];
+      this.postData()
+      // this.getData()
     }
+    this.router.navigateByUrl(this.redirectTo)
   }
 
   getData() {
+    this.identifier = localStorage.getItem('entity-osid');
     this.generalService.getData(this.apiUrl, this.identifier).subscribe((res) => {
       console.log({ res });
       this.model = res
 
+    });
+  }
+
+  postData() {
+    this.generalService.postData(this.apiUrl, this.model).subscribe((res) => {
+      console.log({ res });
+      if (res.responseCode == 'OK') {
+        var entity = this.apiUrl.split('/')[1]
+        alert('Data added successfully : ' + JSON.stringify(res.result));
+        localStorage.setItem('entity-osid', res.result[0].osid);
+        // const url = this.router.createUrlTree(['/profile/institute'])
+        // window.open(url.toString(), '_blank')
+      } else {
+        alert(res.params.errmsg);
+      }
+    });
+  }
+
+  updateData() {
+    this.generalService.putData(this.apiUrl, this.identifier, this.model).subscribe((res) => {
+      if (res.params.status == 'SUCCESSFUL') {
+        alert('Data updated successfully');
+      }
+      else{
+        alert(res.params.status);
+      }
     });
   }
 

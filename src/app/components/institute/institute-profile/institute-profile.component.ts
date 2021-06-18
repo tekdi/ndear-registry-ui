@@ -106,7 +106,7 @@ export class InstituteProfileComponent implements OnInit {
       console.log("route", params)
     //  this.instituteId = params['id'];
 
-      this.instituteId = (params['id']) ? params['id'] : localStorage.getItem('institute-entity');
+     // this.instituteId = (params['id']) ? params['id'] : localStorage.getItem('institute-entity');
     });
     this.getInstituteData(this.instituteId);
   }
@@ -121,20 +121,19 @@ export class InstituteProfileComponent implements OnInit {
     // this.education = this.educationForm.value
 
     if (!this.institute.hasOwnProperty('affiliation')) {
-      this.institute.affiliation = [
-        event
-      ]
-    } else {
+      this.institute.affiliation =  event
+    
+    } /*else {
       this.institute.affiliation.push(
         event
       );
-    }
+    }*/
     console.log(' add afflilication -', this.institute);
     
     this.instituteProfileService.putInstituteProfile(this.institute, this.instituteId).subscribe(res => {
       if (res.responseCode == 'OK' && !res.params.errmsg) {
         // localStorage.setItem('student_id', res.result.Student.osid);
-        this.router.navigate(['/institute-profile', { 'id': this.instituteId }]);
+      //  this.router.navigate(['/institute-profile', { 'id': this.instituteId }]);
 
         this.getInstituteData(this.instituteId);
         this.toastMsg.success('Success', 'Affiliation Deatils Added Successfully');
@@ -162,7 +161,7 @@ export class InstituteProfileComponent implements OnInit {
       let data =  event;
       this.instituteProfileService.putInstituteProfile(data, this.instituteId).subscribe(res => {
         if (res.responseCode == 'OK' && !res.params.errmsg) {
-          this.router.navigate(['/institute-profile', { 'id': this.instituteId }]);
+          //this.router.navigate(['/institute-profile', { 'id': this.instituteId }]);
   
           this.getInstituteData(this.instituteId);
           this.toastMsg.success('Success', 'Institute Details updated Successfully');
@@ -185,6 +184,7 @@ export class InstituteProfileComponent implements OnInit {
     this.instituteProfileService.getInstituteProfile(Id).subscribe((res) => {
       this.institute = res[0];
       this.item =  { Institute : res[0]};
+      this.instituteId = this.institute.osid;
      // this.item['Institute'] = res[0];
       console.log('this.institute- ', this.institute)
     })

@@ -130,16 +130,16 @@
             data-target="#addAffiliation"><i class="fa fa-plus pr-1"></i> Affiliation Details</a>
     </div>
     <ng-template #affiliationBlock>
-        <div class="d-flex flex-justify-between mt-5">
+        <div class="d-flex flex-justify-between mt-5"  *ngIf="institute?.affiliation[0]">
             <div>
                 <h6 class="d-inline-block">ID Details</h6>
                 <!-- <a class="pl-1 fs-7 text-primary-color">edit</a> -->
             </div>
         </div>
-        <div class="card">
+        <div class="card" *ngIf="institute?.affiliation[0]">
             <div class="card-body">
-                <dl>
-                    <dt class="fs-7 text-grey-color">Affiliation Board 1</dt>
+                <dl *ngIf="institute?.affiliation[0] || institute?.affiliation[0]?.affiliationNumber">
+                    <dt class="fs-7 text-grey-color">Affiliation Board</dt>
                     <dd>{{institute?.affiliation[0]?.board}}
                         <!-- <img *ngIf="affiliation.attested == 'pending'; else icons" style="width: 16px;"
                             src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
@@ -158,7 +158,7 @@
                         </ng-template> -->
                     </dd>
                 </dl>
-                <dl>
+                <dl *ngIf="institute?.affiliation[0]?.grantYear || institute?.affiliation[0]?.expiryYear">
                     <dt class="fs-7 text-grey-color">Grant Year </dt>
                     <dd>{{institute?.affiliation[0]?.grantYear}}
                     </dd>

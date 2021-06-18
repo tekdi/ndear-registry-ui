@@ -5,8 +5,9 @@
   <!-- ------------------ Institute Search ------------------------------------- -->
   <mat-tab label="Search Institute">
     <div *ngIf="searchInstitute" class="">
-      <json-schema-form [schema]="searchInstitute" framework="bootstrap-4" (onChanges)="onEditProfileSubmit($event)">
+      <json-schema-form [schema]="searchInstitute" [data]='data' [widgets]="yourWidgets" [layout]="form" framework="bootstrap-4" (onChanges)="onEditProfileSubmit($event)">
       </json-schema-form>
+      <button (click)="resetData()" class="btn btn-info">Reset</button>
 
     </div>
 
@@ -26,8 +27,9 @@
   <!-- ------------------ Institute Teacher ------------------------------------- -->
   <mat-tab label="Search Teacher">
     <div *ngIf="searchInstitute" class="">
-      <json-schema-form [schema]="searchInstitute" framework="bootstrap-4" (onChanges)="onEditProfileSubmit($event)">
+      <json-schema-form [schema]="searchInstitute" [data]='data' framework="bootstrap-4" (onChanges)="onEditProfileSubmit($event)">
       </json-schema-form>
+      <button (click)="resetData()" class="btn btn-info">Reset</button>
 
     </div>
 
@@ -47,8 +49,9 @@
   <!-- ------------------ Institute Student ------------------------------------- -->
   <mat-tab label="Search Student">
     <div *ngIf="searchInstitute" class="">
-      <json-schema-form [schema]="searchInstitute" framework="bootstrap-4" (onChanges)="onEditProfileSubmit($event)">
+      <json-schema-form [schema]="searchInstitute" [data]='data' framework="bootstrap-4" (onChanges)="onEditProfileSubmit($event)">
       </json-schema-form>
+      <button (click)="resetData()" class="btn btn-info">Reset</button>
 
     </div>
 

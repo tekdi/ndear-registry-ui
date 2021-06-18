@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NoneComponent } from 'angular6-json-schema-form';
 import { SchemaService } from 'src/app/services/data/schema.service';
 import { BoardInstituteService } from '../../services/board/board-institutes/board-institutes.service';
 
@@ -12,6 +13,12 @@ export class DiscoveryComponent implements OnInit {
   searchInstitute;
   schemaJson;
   boardList;
+  data;
+
+
+  yourWidgets = {
+     submit: NoneComponent,  
+  }
   constructor(
     public schemaService: SchemaService,
     public boardInstituteService: BoardInstituteService
@@ -127,14 +134,16 @@ export class DiscoveryComponent implements OnInit {
       };
     });
 
-    this.boardInstituteService.getBordInstitute().subscribe(res=>{
+
+
+    this.boardInstituteService.getBordInstitute().subscribe(res => {
       this.boardList = res;
       console.log(this.boardList);
-  
-  
-    }, (err)=>{
-      console.log({err});
-  
+
+
+    }, (err) => {
+      console.log({ err });
+
     });
   }
 
@@ -142,8 +151,13 @@ export class DiscoveryComponent implements OnInit {
     console.log(event);
   }
 
-  showDetails(){
+  showDetails() {
     //alert('hi');
+  }
+
+  resetData() {
+    this.data = {  }
+
   }
 
 

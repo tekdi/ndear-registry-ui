@@ -213,9 +213,27 @@ export class StudentProfileComponent implements OnInit {
         // localStorage.setItem('student_id', res.result.Student.osid);
       //  this.router.navigate(['/student-profile', { 'id': this.studentId }]);
 
-        this.getStudentData(this.studentId);
-        this.sendVerification(this.studentId,  this.user.educationDetails[0].osid);
-        this.toastMsg.success('Success', 'Educational Deatils Added Successfully');
+       // this.getStudentData(this.studentId);
+       this.studentProfileService.getStudentProfile(this.studentId).subscribe((res) => {
+        this.user = res[0];
+         let self = this;
+         this.toastMsg.success('Success', 'Educational Deatils Added Successfully');
+
+        for(let i= 0; i <=  self.user.educationDetails.length; i++){
+
+          console.log(self.user.educationDetails[i]._osState);
+          if( self.user.educationDetails[i]._osState == 'DRAFT'){
+          this.sendVerification(this.studentId,   self.user.educationDetails[i].osid);
+          this.getStudentData(this.studentId);
+          }
+        }
+       // this.toastMsg.success('Success', 'Educational Deatils Added Successfully');
+
+        console.log({ res });
+        this.studentResult = res[0];
+        console.log("this.user", this.user);
+      })
+       
       } else {
         this.toastMsg.error('Error', res.params.errmsg);
       }
@@ -236,12 +254,13 @@ export class StudentProfileComponent implements OnInit {
   }
 
 
-  getStudentData(studentId) {
+   getStudentData(studentId) {
    
       this.studentProfileService.getStudentProfile(studentId).subscribe((res) => {
+        this.user = res[0];
+
         console.log({ res });
         this.studentResult = res[0];
-        this.user = res[0];
         console.log("this.user", this.user);
       })
     
@@ -254,7 +273,6 @@ export class StudentProfileComponent implements OnInit {
       //  this.router.navigate(['/student-profile', { 'id': this.studentId }]);
 
         this.getStudentData(this.studentId);
-        this.toastMsg.success('Success', 'Educational Deatils Added Successfully');
       } else {
         this.toastMsg.error('Error', res.params.errmsg);
       }

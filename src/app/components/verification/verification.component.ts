@@ -73,7 +73,7 @@ export class VerificationComponent implements OnInit {
         localStorage.setItem('admin', "true")
         let id = localStorage.getItem('institute-entity');//.WhoIsAdmin.emailOrMobile;
         // this.router.navigate(['admin-institute-setup'])
-        this.router.navigate(['institute-profile', {'id' : id}])
+        //this.router.navigate(['institute-profile', {'id' : id}])
       }
       else if(this.for == 'board'){
         this.router.navigate(['board-institutes'])

@@ -88,8 +88,8 @@ export class HeaderComponent implements OnInit {
   }
 
   redirectTo() {
-    let teacherId = localStorage.getItem('teacherId');
-    this.router.navigate(['/teacher-profile', { 'id': teacherId }]);
+   // let teacherId = localStorage.getItem('teacherId');
+    this.router.navigate(['/teacher-profile']);
 
   }
 

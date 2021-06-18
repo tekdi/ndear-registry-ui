@@ -334,7 +334,7 @@ __proto__: Object
 
    // if (id && id != "null") {
       this.teacherProfileService.getTeacherProfile(id).subscribe((res) => {
-        this.item = res;
+        this.item = res[0];
       })
     //}
   }

@@ -48,12 +48,9 @@ import { ConsentVerificationComponent } from './components/diksha/consent-verifi
 import { TeacherConsentComponent } from './components/teacher/teacher-consent/teacher-consent.component';
 import { BoardAttestationDetailsComponent } from './components/board/board-attestation-details/board-attestation-details.component';
 import { TeacherSignupComponent } from './components/teacher/teacher-signup/teacher-signup.component';
-import {
-  SchemaFormModule,
-  WidgetRegistry,
-  DefaultWidgetRegistry,
-} from "ngx-schema-form";
-
+import { DiscoveryComponent } from './components/discovery/discovery.component';
+import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry,} from "ngx-schema-form";
+import { KeycloakloginComponent } from './components/keyCloak/keycloaklogin/keycloaklogin.component';
 import { ToastrModule } from 'ngx-toastr';
 import { APP_INITIALIZER } from '@angular/core';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
@@ -105,7 +102,9 @@ import { initializeKeycloak } from '../app/utility/app.init';
     ConsentVerificationComponent,
     TeacherConsentComponent,
     BoardAttestationDetailsComponent,
-    TeacherSignupComponent
+    TeacherSignupComponent,
+    DiscoveryComponent,
+    KeycloakloginComponent
 
   ],
   imports: [

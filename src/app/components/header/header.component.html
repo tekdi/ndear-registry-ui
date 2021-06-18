@@ -13,10 +13,10 @@
                     </div>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-primary" [routerLink]="['/student-login']">Login</a>
+                            <a class="nav-link text-primary" [routerLink]="['/login']">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-primary" [routerLink]="['/student-signup']">Sign up</a>
+                            <a class="nav-link text-primary" [routerLink]="['/signup']">Sign up</a>
                         </li>
                     </ul>
                 </div>
@@ -47,9 +47,9 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link active" href="#">{{user_name}}</a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link" (click)="logout1()">
                                 <img style="width: 25px;" src="assets/images/logout.png"/>
@@ -179,6 +179,16 @@
                         <!-- <li class="nav-item">
                             <a class="nav-link" href="#">Sign up</a>
                         </li> -->
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">{{user_name}}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="logout()">
+                                <img style="width: 25px;" src="assets/images/logout.png"/>
+                            </a>
+                        </li>
                     </ul>
                     
                 </div>

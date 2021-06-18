@@ -17,7 +17,6 @@ import { InstituteAttestationDetailComponent } from './components/institute/inst
 import { InstituteTeachersComponent } from './components/institute/institute-teachers/institute-teachers.component';
 import { TeacherMailComponent } from './components/mail/teacher-mail/teacher-mail.component';
 import { TeacherProfileComponent } from './components/teacher/teacher-profile/teacher-profile.component';
-
 import { ConsentLoginComponent } from './components/diksha/consent-login/consent-login.component';
 import { DikshaComponent } from './components/diksha/diksha/diksha.component';
 
@@ -35,6 +34,8 @@ import { TeacherConsentComponent } from './components/teacher/teacher-consent/te
 import { BoardAttestationDetailsComponent } from './components/board/board-attestation-details/board-attestation-details.component';
 import{ TeacherSignupComponent } from './components/teacher/teacher-signup/teacher-signup.component';
 import { AuthGuard } from '../app/utility/app.guard';
+import { DiscoveryComponent } from './components/discovery/discovery.component';
+import { KeycloakloginComponent } from './components/keyCloak/keycloaklogin/keycloaklogin.component';
 
 const routes: Routes = [
   { path: 'signup', component: HomeComponent },
@@ -61,7 +62,7 @@ const routes: Routes = [
   { path: 'institute-teachers', component: InstituteTeachersComponent },
   { path: 'institute-students', component: InstiituteStudentsComponent },
 
-  { path: '', component: BoardLoginComponent },
+  { path: '', component: DiscoveryComponent },
   { path: 'board-institutes', component: BoardInstitutesComponent },
   { path: 'board-attestation', component: BoardAttestationsComponent },
   { path: 'board-attestation-detail', component: BoardAttestationDetailsComponent },
@@ -76,7 +77,8 @@ const routes: Routes = [
   { path: 'student-invite', component: StudentMailComponent },
   { path: 'board-search', component: BoardInstitutesComponent },
   { path: 'consent-auth', component: ConsentAuthorizeComponent },
-
+  { path: 'discovery', component: DiscoveryComponent },
+  { path: 'login', component: KeycloakloginComponent ,  canActivate: [AuthGuard]},
 
 
 ];

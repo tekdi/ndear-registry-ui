@@ -5,6 +5,7 @@ import { HttpOptions } from '../../interfaces/httpOptions.interface';
 import { mergeMap } from 'rxjs/operators';
 import * as _ from 'lodash-es';
 import { environment, ApiPaths } from '../../../environments/environment';
+import { KeycloakService } from 'keycloak-angular';
 
 
 @Injectable({
@@ -16,8 +17,10 @@ export class DataService {
  */
  baseUrl: string;
  token : any;
+ isLoogedIn;
   constructor(
-    private http: HttpClient) {
+    private http: HttpClient,
+    public keycloak: KeycloakService) {
       this.token = localStorage.getItem('token');
   }
 
@@ -26,12 +29,28 @@ export class DataService {
  */
   private getHeader(headers?: HttpOptions['headers']): HttpOptions['headers'] {
 
-    const default_headers = {
-      Accept: 'application/json',
-       Authorization: 'Bearer ' +  this.token
-    };
+    this.keycloak.isLoggedIn().then((res)=>{
+      console.log(res);
+      this.isLoogedIn = res;
+    })
+    if(this.isLoogedIn){
+     // alert(this.keycloak.isLoggedIn);
+      let default_headers = {
+        Accept: 'application/json',
+         Authorization: 'Bearer ' +  this.token
+      };
 
-    return default_headers;
+      return default_headers;
+
+    }else{
+      let default_headers = {
+        Accept: 'application/json'
+      };
+      return default_headers;
+
+    }
+   
+
   }
 
 /**

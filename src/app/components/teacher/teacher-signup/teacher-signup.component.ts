@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TeacherProfileService } from '../../../services/teacher/teacher-profile.service';
 import { ToastMessageService } from '../../../services/toast-message/toast-message.service';
 import { SchemaService } from 'src/app/services/data/schema.service';
+import { InviteService } from '../../../services/invite/invite.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -28,7 +29,8 @@ export class TeacherSignupComponent implements OnInit {
     public teacherProfileService: TeacherProfileService,
     public toastMsg: ToastMessageService,
     public Schema: SchemaService,
-    public router: Router
+    public router: Router,
+    public inviteService: InviteService
   ) {
     this.Schema.getSchemas().subscribe((res) => {
       this.schemaJson = res;
@@ -73,7 +75,7 @@ if(!event.terms){
     } else {
 
       if (isEmailId) {
-        this.mobileEmail = { 'email': event.mobileEmail }
+        this.mobileEmail = { 'email': event.mobileEmail, 'mobile': event.mobileEmail }
       } else {
         this.mobileEmail = { 'mobile': event.mobileEmail }
 
@@ -87,17 +89,32 @@ if(!event.terms){
 
       }
 
-      this.teacherProfileService.postTeacherProfile(data).subscribe((res) => {
+      this.inviteService.inviteTeacher(data).subscribe((res) => {
+        if (res.responseCode == 'OK' && !res.params.errmsg) {
+         // this.toastMsg.success('Success', 'Invited successfully');
+         this.toastMsg.success('Success', 'Signup Successfully..!');
+         this.router.navigate(['/login']);
+
+        } else {
+          this.toastMsg.error('Error', res.params.errmsg);
+        }
+      }, (err) => {
+
+        console.log({ err });
+
+      });
+
+      /*this.teacherProfileService.postTeacherProfile(data).subscribe((res) => {
         if (res.responseCode == 'OK' && !res.params.errmsg) {
           ///this.toastMsg.success('Success', 'Signup Successfully..!');
           localStorage.setItem('teacherId', res.result.Teacher.osid);
-          // this.router.navigate(['/student-profile', { 'id': res.result.Institute.osid}]);
+          // this.router.navigate(['/student-profile', { 'id': res.result.Institute.osid}])
         }
-      });
+      });*/
 
       //  localStorage.setItem('user', JSON.stringify(this.form.value));
       //localStorage.setItem('education', '[]');
-      this.router.navigate(['verification', { 'for': 'teacher' }]);
+     // this.router.navigate(['verification', { 'for': 'teacher' }]);
 
 
     }

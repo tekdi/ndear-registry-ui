@@ -53,15 +53,18 @@ export class VerificationComponent implements OnInit {
       localStorage.setItem('is_logedin', "true")
       console.log(this.for)
       if(this.for == 'student'){
-       let id = localStorage.getItem('studentId');
-        this.router.navigate(['student-profile', {'id':id}]);
+        this.router.navigate(['login']);
+      // let id = localStorage.getItem('studentId');
+       // this.router.navigate(['student-profile', {'id':id}]);
       }
       if(this.for == 'teacher'){
-        let id = localStorage.getItem('teacherId');
-        this.router.navigate(['teacher-profile', {'id':id}]);
+        this.router.navigate(['login']);
+        //let id = localStorage.getItem('teacherId');
+       // this.router.navigate(['teacher-profile', {'id':id}]);
       }
       else if(this.for === 'institute'){
-        this.router.navigate(['institute-profile']);
+        this.router.navigate(['login']);
+       // this.router.navigate(['institute-profile']);
       }
       else if(this.for === 'instituteS2'){
         this.router.navigate(['institute-profile-setup'])

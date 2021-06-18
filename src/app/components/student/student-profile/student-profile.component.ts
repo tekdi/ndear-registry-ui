@@ -208,12 +208,13 @@ export class StudentProfileComponent implements OnInit {
       );
     }
 
-    this.studentProfileService.putStudentProfile(this.user, this.studentId).subscribe(res => {
+    this.studentProfileService.postStudentProfile( event.EducationDetails, this.studentId).subscribe(res => {
       if (res.responseCode == 'OK' && !res.params.errmsg) {
         // localStorage.setItem('student_id', res.result.Student.osid);
       //  this.router.navigate(['/student-profile', { 'id': this.studentId }]);
 
         this.getStudentData(this.studentId);
+        this.sendVerification(this.studentId,  this.user.educationDetails[0].osid);
         this.toastMsg.success('Success', 'Educational Deatils Added Successfully');
       } else {
         this.toastMsg.error('Error', res.params.errmsg);
@@ -239,11 +240,25 @@ export class StudentProfileComponent implements OnInit {
    
       this.studentProfileService.getStudentProfile(studentId).subscribe((res) => {
         console.log({ res });
-        this.studentResult = res;
-        this.user = res;
+        this.studentResult = res[0];
+        this.user = res[0];
         console.log("this.user", this.user);
       })
     
+  }
+
+  sendVerification(entityId, propertyId){
+    this.studentProfileService.updateStudentProperty( entityId, propertyId).subscribe(res => {
+      if (res.responseCode == 'OK' && !res.params.errmsg) {
+        // localStorage.setItem('student_id', res.result.Student.osid);
+      //  this.router.navigate(['/student-profile', { 'id': this.studentId }]);
+
+        this.getStudentData(this.studentId);
+        this.toastMsg.success('Success', 'Educational Deatils Added Successfully');
+      } else {
+        this.toastMsg.error('Error', res.params.errmsg);
+      }
+    })
   }
 
   onWorkingChange() {

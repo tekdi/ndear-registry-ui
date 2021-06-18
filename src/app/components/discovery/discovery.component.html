@@ -1,0 +1,180 @@
+<app-header [headerFor]='header1'></app-header>
+
+<mat-tab-group class="mx-5">
+
+  <!-- ------------------ Institute Search ------------------------------------- -->
+  <mat-tab label="Search Institute">
+    <div *ngIf="searchInstitute" class="">
+      <json-schema-form [schema]="searchInstitute" framework="bootstrap-4" (onChanges)="onEditProfileSubmit($event)">
+      </json-schema-form>
+
+    </div>
+
+    <div class="mt-5">
+      <p class="small"><b>5 Institutes </b></p>
+      <div class="card p-2" *ngFor="let item of boardList?.data">
+        <div class="card-body" data-toggle="modal" data-target="#prewiewProfile" (click)="showDetails()">
+          <span>{{item?.first_name}} {{item?.last_name}}</span><br />
+          <span class="small text-muted">Bengaluru karnataka </span> <br />
+          <span>Visiting Faculty, Pragti Institute</span><br />
+          <span>B.Ed Mumbai University </span><br />
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+  <!-- ------------------ Institute Teacher ------------------------------------- -->
+  <mat-tab label="Search Teacher">
+    <div *ngIf="searchInstitute" class="">
+      <json-schema-form [schema]="searchInstitute" framework="bootstrap-4" (onChanges)="onEditProfileSubmit($event)">
+      </json-schema-form>
+
+    </div>
+
+    <div class="mt-5">
+      <p class="small"><b>5 Teachers </b></p>
+      <div class="card p-2" *ngFor="let item of boardList?.data">
+        <div class="card-body " data-toggle="modal" data-target="#prewiewProfile" (click)="showDetails()">
+          <span>{{item?.first_name}} {{item?.last_name}}</span><br />
+          <span class="small text-muted">Bengaluru karnataka </span> <br />
+          <span>Visiting Faculty, Pragti Institute</span><br />
+          <span>B.Ed Mumbai University </span><br />
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+  <!-- ------------------ Institute Student ------------------------------------- -->
+  <mat-tab label="Search Student">
+    <div *ngIf="searchInstitute" class="">
+      <json-schema-form [schema]="searchInstitute" framework="bootstrap-4" (onChanges)="onEditProfileSubmit($event)">
+      </json-schema-form>
+
+    </div>
+
+    <div class="mt-5">
+      <p class="small"><b>5 Student </b></p>
+      <div class="card p-2" *ngFor="let item of boardList?.data">
+        <div class="card-body " data-toggle="modal" data-target="#prewiewProfile" (click)="showDetails()">
+          <span>{{item?.first_name}} {{item?.last_name}}</span><br />
+          <span class="small text-muted">Bengaluru karnataka </span> <br />
+          <span>Visiting Faculty, Pragti Institute</span><br />
+          <span>B.Ed Mumbai University </span><br />
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+</mat-tab-group>
+
+
+
+<!-- Preview Profile Modal -->
+<div class="modal right fade right-xl-modal" id="prewiewProfile" tabindex="-1" role="dialog"
+  aria-labelledby="prewiewProfile">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h6 class="modal-title" id="prewiewProfile">Public Profile</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+      </div>
+
+      <div class="modal-body">
+
+        <h4>Alice Fred</h4>
+        <p>Bengaluru, Karnataka </p>
+
+
+        <div class="card">
+          <div class="card-body">
+            
+            <dl>
+              <div class="w-50">
+                <dt class="fs-7 text-grey-color">Gender</dt>
+                <dd>Male</dd>
+              </div>
+              <div class="w-50">
+                <dt class="fs-7 text-grey-color">Date of Birth</dt>
+                <dd>14/05/1993 <i class="fa fa-check-circle text-success"></i></dd>
+              </div>
+            </dl>
+
+            <dl>
+              <div class="w-50">
+                <dt class="fs-7 text-grey-color">Contact Number</dt>
+                <dd>+91 ******899 <i class="fa fa-check-circle text-success"></i></dd>
+              </div>
+              <div class="w-50">
+                <dt class="fs-7 text-grey-color">Email Id</dt>
+                <dd>fre****@gmail.com <i class="fa fa-check-circle text-success"></i></dd>
+              </div>
+            </dl>
+
+            <dl>
+              <div class="w-50">
+                <dt class="fs-7 text-grey-color">Address</dt>
+                <dd>Karve Nagar, kothrud, pune</dd>
+              </div>
+              <div class="w-50">
+                <dt class="fs-7 text-grey-color">District</dt>
+                <dd>Pune </dd>
+              </div>
+            </dl>
+
+            <dl>
+              <div>
+                <dt class="fs-7 text-grey-color">State</dt>
+                <dd>Maharashtra</dd>
+              </div>
+            </dl>
+
+          </div>
+        </div>
+
+
+        <div class="mt-4">
+        <h5>ID Details</h5>
+        <div class="card">
+          <div class="card-body">
+            <dl>
+                <dd>Aadhhar  <i class="fa fa-check-circle text-success"></i></dd>
+                <dd>PAN  <i class="fa fa-check-circle text-success"></i></dd>
+            </dl>
+
+            <span>
+                Profesional Lisence  <i class="fa fa-check-circle text-success"></i>
+            </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <h5>Experience</h5>
+          <div class="card">
+            <div class="card-body">
+                 <h6>Associative Professor <i class="fa fa-check-circle text-success"></i></h6>
+                 <span class="fs-6">Pragati Institute</span><br />
+                 <span class="fs-7">2021 - Current</span><br />
+                 <span class="fs-7 text-grey-color">Class: ITI Diploma</span><br />
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <h5>Education</h5>
+            <div class="card">
+              <div class="card-body">
+                <h6>Bachelor Degree B.Ed(English) <i class="fa fa-check-circle text-success"></i></h6>
+                <span class="fs-6 text-grey-color">Pragati Institute</span><br />
+                <span class="fs-7">2014</span><br />
+                </div>
+              </div>
+            </div>
+          
+
+         
+
+      </div>
+    </div>

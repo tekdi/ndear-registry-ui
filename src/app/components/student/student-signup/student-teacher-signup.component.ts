@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { StudentProfileService } from '../../../services/student/student-profile.service';
 import { ToastMessageService } from '../../../services/toast-message/toast-message.service';
+import { InviteService } from '../../../services/invite/invite.service';
 
 @Component({
   selector: 'app-student-teacher-signup',
@@ -16,7 +17,8 @@ export class StudentSignupComponent implements OnInit {
   data;
   constructor(fb: FormBuilder, public router: Router,
     public studentProfileService: StudentProfileService,
-    public toastMsg: ToastMessageService
+    public toastMsg: ToastMessageService,
+    public inviteService: InviteService
   ) {
     this.form = fb.group({
       above: this.aboveControl,
@@ -46,6 +48,7 @@ export class StudentSignupComponent implements OnInit {
         },
         "contactDetails": {
           'email': this.form.value.mobileEmail,
+          'mobile': this.form.value.mobileEmail
         }
       }
     }else {
@@ -61,17 +64,30 @@ export class StudentSignupComponent implements OnInit {
         }
       }
 
-      this.studentProfileService.postStudentProfile(this.data).subscribe((res) => {
+      this.inviteService.inviteStudent(this.data).subscribe((res) => {
+        if (res.responseCode == 'OK' && !res.params.errmsg) {
+          this.toastMsg.success('Success', 'Signup Successfully..!');
+          this.router.navigate(['/login']);
+         // const url = this.router.createUrlTree(['/student-invite'])
+          //window.open(url.toString(), '_blank')
+        } else {
+          this.toastMsg.error('Error', res.params.errmsg);
+        }
+      }, (err) => {
+  
+        console.log({ err });
+  
+      });
+      /*this.studentProfileService.postStudentProfile(this.data).subscribe((res) => {
         if (res.responseCode == 'OK' && !res.params.errmsg) {
           ///this.toastMsg.success('Success', 'Signup Successfully..!');
           localStorage.setItem('studentId', res.result.Student.osid);
           // this.router.navigate(['/student-profile', { 'id': res.result.Institute.osid}]);
         }
-      });
-
+      });*/
       localStorage.setItem('user', JSON.stringify(this.form.value));
       localStorage.setItem('education', '[]');
-      this.router.navigate(['verification', { 'for': 'student' }]);
+     // this.router.navigate(['verification', { 'for': 'student' }]);
     }
 
     setUserCategoryValidators() {

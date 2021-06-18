@@ -12,8 +12,8 @@ export class StudentProfileService {
   constructor(public dataService: DataService) {
   }
 
-  postStudentProfile(data) {
-    let url = `${this.baseUrl}/${ApiPaths.Student}`;
+  postStudentProfile(data, id) {
+    let url = `${this.baseUrl}/${ApiPaths.Student}/` + id + '/educationDetails';
     const req = {
       url: url,
       data: data
@@ -42,6 +42,18 @@ export class StudentProfileService {
     };
 
     return this.dataService.get(req);
+  }
+
+
+  updateStudentProperty(entityId, propertyId) {
+    let url = `${this.baseUrl}/${ApiPaths.Student}/` + entityId + '/educationDetails/' + propertyId;
+    const req = {
+      url: url,
+      data: { 'send' : true}
+    };
+
+    return this.dataService.put(req);
+
   }
 
 

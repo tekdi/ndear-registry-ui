@@ -26,25 +26,23 @@ export class HeaderComponent implements OnInit {
     public keycloakService: KeycloakService
   ) { }
 
- async ngOnInit() {
+  async ngOnInit() {
     console.log(this.headerFor, this.tab);
     this.loged_in = JSON.parse(localStorage.getItem('is_logedin'))
     // console.log(Boolean(localStorage.getItem('is_logedin')))
     if (this.loged_in) {
       this.admin = JSON.parse(localStorage.getItem('admin'))
       this.admin_setup = JSON.parse(localStorage.getItem('admin-setup'))
-     
-      if(this.keycloakService.isLoggedIn){
+
+      if (this.keycloakService.isLoggedIn) {
         this.user_name = await this.keycloakService.getUsername();
 
-      }else{
+      } else {
         if (JSON.parse(localStorage.getItem('user')) != null) {
           this.user = JSON.parse(localStorage.getItem('user'))
           this.user_name = this.user.fullName;
         }
       }
-     
-     
 
 
       this.institute = JSON.parse(localStorage.getItem('institute-detail'));
@@ -95,14 +93,20 @@ export class HeaderComponent implements OnInit {
 
   }
 
-  logout(){
-    this.keycloakService.logout('http://localhost:4200/teacher-profile');
+  logout() {
+    localStorage.clear();
+
+    this.keycloakService.clearToken();
+    this.keycloakService.logout('http://localhost:4200');
 
   }
 
 
-  logout1(){
-    this.keycloakService.logout('http://localhost:4200/student-profile');
+  logout1() {
+    localStorage.clear();
+
+    this.keycloakService.clearToken();
+    this.keycloakService.logout('http://localhost:4200');
 
   }
 

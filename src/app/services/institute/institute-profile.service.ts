@@ -33,7 +33,7 @@ export class InstituteProfileService {
   }
 
   getInstituteProfile(id) {
-    let url = `${this.baseUrl}/${ApiPaths.Institute}/${id}`;
+    let url = `${this.baseUrl}/${ApiPaths.Institute}`;
     const req = {
       url: url
     };

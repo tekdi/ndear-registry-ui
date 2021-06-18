@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { InstituteProfileService } from '../../../services/institute/institute-profile.service';
 import { ToastMessageService } from '../../../services/toast-message/toast-message.service';
+import { InviteService } from '../../../services/invite/invite.service';
 
 @Component({
   selector: 'app-institute-signup',
@@ -16,6 +17,7 @@ export class InstituteSignupComponent implements OnInit {
 
   constructor(fb: FormBuilder, public router: Router,
     public instituteProfileService: InstituteProfileService,
+    public inviteService: InviteService,
     public toastMsg: ToastMessageService) {
     if (JSON.parse(localStorage.getItem('institutes-invite')) != null) {
       this.user = JSON.parse(localStorage.getItem('institutes-invite'))[0].email;
@@ -53,18 +55,34 @@ export class InstituteSignupComponent implements OnInit {
 
       }
 
-      this.instituteProfileService.postInstituteProfile(data).subscribe((res) => {
+      this.inviteService.inviteInstitute(data).subscribe((res) => {
+        if (res.responseCode == 'OK' && !res.params.errmsg) {
+         // this.toastMsg.success('Success', 'Invited successfully');
+         this.toastMsg.success('Success', 'Signup Successfully..!');
+         this.router.navigate(['/login']);
+
+        } else {
+          this.toastMsg.error('Error', res.params.errmsg);
+        }
+      }, (err) => {
+
+        console.log({ err });
+
+      });
+
+
+     /* this.instituteProfileService.postInstituteProfile(data).subscribe((res) => {
         if (res.responseCode == 'OK' && !res.params.errmsg) {
           //this.toastMsg.success('Success', 'Institude Profile added successfully');
           localStorage.setItem('institute-entity', res.result.Institute.osid)
         //  this.router.navigate(['/institute-profile', { 'id': res.result.Institute.osid }]);
         }
-      });
+      });*/
 
       localStorage.setItem('user', JSON.stringify(this.form.value));
       localStorage.setItem('education', '[]');
       localStorage.setItem('experience', '[]');
-      this.router.navigate(['verification', { 'for': 'instituteS2' }]);
+      //this.router.navigate(['verification', { 'for': 'instituteS2' }]);
     }
   }
 

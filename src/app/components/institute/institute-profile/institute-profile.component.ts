@@ -147,7 +147,7 @@ export class InstituteProfileComponent implements OnInit {
     console.log(event);
 
    
-    if(this.instituteId)
+    if(this.item)
     {
       if(this.institute.hasOwnProperty('Address')){
         if(event.hasOwnProperty('Address')){
@@ -183,9 +183,9 @@ export class InstituteProfileComponent implements OnInit {
 
   getInstituteData(Id) {
     this.instituteProfileService.getInstituteProfile(Id).subscribe((res) => {
-      this.institute = res;
-      this.item =  res //{ instituteDetails : res};
-      this.item['Institute'] = res;
+      this.institute = res[0];
+      this.item =  { Institute : res[0]};
+     // this.item['Institute'] = res[0];
       console.log('this.institute- ', this.institute)
     })
   }

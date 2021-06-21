@@ -1,0 +1,44 @@
+<div class="container">
+    <ng-template ngFor let-block [ngForOf]="Data" let-blockIndex="index">
+        <div class="d-flex flex-justify-between  mt-5">
+            <div>
+                <h6 class="d-inline-block">{{block.title}}</h6>
+                <ng-template [ngIf]="block.edit">
+                    <a panelEditLink="{{block.editform}}" class="pl-1 fs-7 text-primary-color">edit <i class="fa fa-pencil pr-1" aria-hidden="true"></i></a>
+                </ng-template>
+            </div>
+            <ng-template [ngIf]="block.add">
+                <a panelAddLink="{{block.addform}}" class="fs-7 text-primary-color"><i
+                        class="fa fa-plus pr-1" aria-hidden="true"></i>{{block.definition}}</a>
+            </ng-template>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <ng-template ngFor let-item [ngForOf]="block.items" let-itemIndex="index">
+                    <ng-template ngFor let-element [ngForOf]="item" let-elementIndex="index">
+                        <ng-template [ngIf]="item[elementIndex].value">
+                            <ng-template [ngIf]="elementIndex %2 == 0">
+                                
+                                <dl>
+                                    
+                                    <dt class="fs-7 text-grey-color">{{item[elementIndex].title}}</dt>
+                                    
+                                    <dd>{{item[elementIndex].value}}</dd>
+                                    <ng-template [ngIf]="elementIndex + 1 != item.length">
+                                        <dt class="fs-7 text-grey-color">{{item[elementIndex + 1].title}}</dt>
+                                        <dd >{{item[elementIndex + 1].value}}</dd>
+                                    </ng-template>
+                                    
+                                </dl>
+                            </ng-template>
+                        </ng-template>
+                    </ng-template>
+                </ng-template>
+            </div>
+        </div>
+    </ng-template>
+</div>
+
+
+<router-outlet name="claim"></router-outlet>

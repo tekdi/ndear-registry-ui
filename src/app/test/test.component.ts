@@ -4,7 +4,12 @@ import { Component, OnInit } from '@angular/core';
 import { of } from 'rxjs';
 import {TestService} from './test.service'
 import {WidgetRegistry, Validator, Binding, FormProperty, PropertyGroup} from 'ngx-schema-form';
+
 import { SchemaService } from 'src/app/services/data/schema.service';
+
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Test2Component} from '../test/test2/test2.component'
+
 
 @Component({
   selector: 'app-test',
@@ -15,6 +20,7 @@ import { SchemaService } from 'src/app/services/data/schema.service';
 
 
 export class TestComponent implements OnInit {
+
 
   editSchema;
   schemaJson;
@@ -537,58 +543,24 @@ this.jsonschema.getSchemas().subscribe((res) => {
   ngOnInit(): void {
     // this.widgetLibrary.registerWidget('hidden', HiddenComponent);
 
-  }
-  yourOnSubmitFn(data){
-    console.log(data)
-    if(data.pincode && data.pincode.toString().length == 6){
-      this.testService.getDetailsByPincode(data.pincode).subscribe((res)=>{
-        console.log(res[0]['PostOffice'][0].State);
-        // this.mySchema2.properties.state = res[0]['PostOffice'][0].State;
-        this.myModel['state'] = res[0]['PostOffice'][0].State;
-      });
-      // this.mySchema.properties.state.enum = this.getCities(data.country)
-      // console.log(this.getCities(data.country))
-    }
-    if(data.country != ''){
-      this.mySchema.properties.state.enum = this.getCities(data.country)
-      // console.log(this.getCities(data.country))
-    }
-  }
-
-  myActions = {
-    alert: (property) => {
-      alert(JSON.stringify(property.value));
-    },
-    reset: (property) => {
-      property.reset();
-    },
-  };
-  // yourOnChangesFn(data){
-  //   console.log(data)
-  //   if(data.state){
-  //     console.log(this.getCities(data.state))
-  //     this.schema.properties.city.enum = this.getCities(data.state)
-  //   }
-  // }
+  
+  constructor(private modalService: NgbModal) {}
 
 
-  getCities(nationId: string = null) {
-     var data = this.areas.filter(entry => {
-        if (nationId) {
-          return entry.nationId === nationId;
-        } else {
-          return true;
-        }
-      })
-      var nation_list = [];
-      data.forEach(element => {
-        nation_list.push(element.label)
-      });
-      return nation_list;
+  open() {
+    const modalRef = this.modalService.open(Test2Component);
+    modalRef.componentInstance.photo = 'World';
   }
+
+  ngOnInit() {
+    console.log('Hi');
+  }
+
 
   onEditProfileSubmit(event){
 this.item = event;
   }
 
 }
+}
+

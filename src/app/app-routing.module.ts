@@ -32,10 +32,17 @@ import { ConsentAuthorizeComponent } from './components/diksha/consent-authorize
 import { ConsentVerificationComponent } from './components/diksha/consent-verification/consent-verification.component';
 import { TeacherConsentComponent } from './components/teacher/teacher-consent/teacher-consent.component';
 import { BoardAttestationDetailsComponent } from './components/board/board-attestation-details/board-attestation-details.component';
+
 import{ TeacherSignupComponent } from './components/teacher/teacher-signup/teacher-signup.component';
 import { AuthGuard } from '../app/utility/app.guard';
 import { DiscoveryComponent } from './components/discovery/discovery.component';
 import { KeycloakloginComponent } from './components/keyCloak/keycloaklogin/keycloaklogin.component';
+
+import { FormsComponent } from './forms/forms.component';
+import { LayoutsComponent } from './layouts/layouts.component';
+import { PanelsComponent } from './layouts/modal/panels/panels.component';
+import { EditPanelComponent } from './layouts/modal/panels/edit-panel/edit-panel.component';
+import { AddPanelComponent } from './layouts/modal/panels/add-panel/add-panel.component';
 
 const routes: Routes = [
   { path: 'signup', component: HomeComponent },
@@ -67,7 +74,8 @@ const routes: Routes = [
   { path: 'board-attestation', component: BoardAttestationsComponent },
   { path: 'board-attestation-detail', component: BoardAttestationDetailsComponent },
 
-  { path: 'test', component: TestComponent },
+  { path: 'test', component: TestComponent
+  },
   { path: 'admin-mail', component: MailComponent },
   { path: 'teacher-invite', component: TeacherMailComponent },
 
@@ -77,9 +85,90 @@ const routes: Routes = [
   { path: 'student-invite', component: StudentMailComponent },
   { path: 'board-search', component: BoardInstitutesComponent },
   { path: 'consent-auth', component: ConsentAuthorizeComponent },
+
   { path: 'discovery', component: DiscoveryComponent },
   { path: 'login', component: KeycloakloginComponent ,  canActivate: [AuthGuard]},
 
+
+  // Forms
+  { path: 'form/:form', component: FormsComponent },
+  { path: 'form/:form/:id', component: FormsComponent },
+
+
+  // Layouts
+  {
+    path: 'profile/:layout', component: LayoutsComponent,
+    children: [
+      {
+        path: 'edit',
+        component: PanelsComponent,
+        outlet: 'claim',
+        children: [
+          {
+            path: ':form',
+            component: EditPanelComponent
+          }
+        ]
+      },
+      {
+        path: 'add',
+        component: PanelsComponent,
+        outlet: 'claim',
+        children: [
+          {
+            path: ':form',
+            component: AddPanelComponent
+          }
+        ]
+      },
+      // {
+      //   path: 'add-claim/:claim',
+      //   component: ModalContainerComponent
+      // },
+      // {
+      //   path: 'edit/:claim',
+      //   component: ModalContainerComponent
+      // },
+      // {
+      //   path: 'dialog',
+      //   component: ModalContainerComponent
+      // }
+    ]
+  },
+  // {
+  //   path: 'panel',
+  //   component: PanelsComponent,
+  //   outlet: 'panel',
+  //   children: [
+  //     {
+  //       path: 'add',
+  //       component: EditPanelComponent
+  //     }
+  //   ]
+  // }
+
+  // { path: 'profile/:layout/add-claim/:claim', component: ModalContainerComponent },
+  // { path: 'profile/:layout/edit-claim/:claim', component: ModalContainerComponent},
+
+//   {
+//     path: 'profile/:layout',
+//     component: LayoutsComponent, 
+//     children: [
+//         {
+//             path: 'add-claim/:claim',
+//             component: ModalContainerComponent,
+//         },
+//         {
+//             path: 'edit-claim/:claim',
+//             component: ModalContainerComponent,
+//         },
+//         {
+//            path: '',
+//            redirectTo: 'profile',
+//            pathMatch: 'full'
+//         }
+//     ]
+// }
 
 ];
 

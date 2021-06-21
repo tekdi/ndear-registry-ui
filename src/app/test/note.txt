@@ -1,0 +1,13 @@
+"formlyConfig": {
+            "fieldGroupClassName":"row",
+            "className": 'form-check form-check-inline',
+            "templateOptions": {
+              "required": "true",
+            },
+            "validation": {
+               "messages": {
+                "pattern": field.validation.message
+              }
+           }
+          }
+        }

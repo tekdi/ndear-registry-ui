@@ -13,10 +13,10 @@
                     </div>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-primary" [routerLink]="['/student-login']">Login</a>
+                            <a class="nav-link text-primary" [routerLink]="['/login']">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-primary" [routerLink]="['/student-signup']">Sign up</a>
+                            <a class="nav-link text-primary" [routerLink]="['/signup']">Sign up</a>
                         </li>
                     </ul>
                 </div>
@@ -47,8 +47,13 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link active" href="#">{{user_name}}</a>
+                        </li> -->
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="logout1()">
+                                <img style="width: 25px;" src="assets/images/logout.png"/>
+                            </a>
                         </li>
                         <!-- <li class="nav-item">
                             <a class="nav-link" href="#">Sign up</a>
@@ -75,7 +80,7 @@
                     </div>
                     <ul class="navbar-nav  mb-2 mb-lg-0" style="margin-left: 50px;">
                         <li class="nav-item active" >
-                            <a class="nav-link active" [routerLink]="['/teacher-profile']">Home</a>
+                            <a class="nav-link active" (click)="redirectTo()">Home</a>
                             <ng-template [ngIf]="tab === 'profile'">
                                 <hr>
                             </ng-template>
@@ -94,12 +99,14 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">{{user_name}}</a>
-                        </li>
                         <!-- <li class="nav-item">
-                            <a class="nav-link" href="#">Sign up</a>
+                            <a class="nav-link active" href="#">{{user_name}}</a>
                         </li> -->
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="logout()">
+                                <img style="width: 25px;" src="assets/images/logout.png"/>
+                            </a>
+                        </li>
                     </ul>
                     
                 </div>
@@ -163,15 +170,25 @@
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link active">{{institute.BasicDetails.instituteName}}</a>
+                            <a class="nav-link active">{{institute?.BasicDetails?.instituteName}}</a>
                             
                         </li>
-                        <ng-template [ngIf]="institute.BasicDetails.logoUrl">
-                            <li><img style="width: 50px;" src="{{institute.BasicDetails.logoUrl}}"></li>
+                        <ng-template [ngIf]="institute?.BasicDetails?.logoUrl">
+                            <li><img style="width: 50px;" src="{{institute?.BasicDetails?.logoUrl}}"></li>
                         </ng-template>
                         <!-- <li class="nav-item">
                             <a class="nav-link" href="#">Sign up</a>
                         </li> -->
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <!-- <li class="nav-item">
+                            <a class="nav-link active" href="#">{{user_name}}</a>
+                        </li> -->
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="logout()">
+                                <img style="width: 25px;" src="assets/images/logout.png"/>
+                            </a>
+                        </li>
                     </ul>
                     
                 </div>

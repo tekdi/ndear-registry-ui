@@ -1,0 +1,14 @@
+<app-header [headerFor]='header1'></app-header>
+
+<div class="col-md-6 offset-md-3">
+    <div class="card p-4">
+        <div class="card-body" *ngIf="teacherSchema">
+            <h4 class="card-title fw-bolder pb-2">Sign Up / Create New Account </h4>
+            <json-schema-form [schema]="teacherSchema" [layout]="form1" framework="bootstrap-4"
+                (onSubmit)="onEditProfileSubmit($event)">
+            </json-schema-form>
+
+            
+        </div>
+    </div>
+</div>

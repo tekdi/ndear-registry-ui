@@ -1,4 +1,5 @@
 <app-header [headerFor]='header1' [tab]='tab'></app-header>
+
 <div class="container">
     <div class="d-flex flex-justify-between">
         <div>
@@ -14,47 +15,47 @@
         <div class="card-body">
             <dl>
                 <dt class="fs-7 text-grey-color">Full Name</dt>
-                <dd>{{user.fullName}}</dd>
+                <dd>{{user?.identityDetails?.fullName}}</dd>
             </dl>
-            <ng-template [ngIf]="user.gender || user.dob">
+            <ng-template [ngIf]="user?.identityDetails?.gender || user?.identityDetails?.dob">
                 <dl>
-                    <ng-template [ngIf]="user.gender">
+                    <ng-template [ngIf]="user?.identityDetails?.gender">
                         <dt class="fs-7 text-grey-color">Gender</dt>
-                        <dd>{{user.gender}}</dd>
+                        <dd>{{user?.identityDetails?.gender}}</dd>
                     </ng-template>
-                    <ng-template [ngIf]="user.dob">
+                    <ng-template [ngIf]="user?.dob">
                         <dt class="fs-7 text-grey-color">Date of Birth</dt>
-                        <dd>{{user.dob}}
+                        <dd>{{user?.identityDetails?.dob}}
                             <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
                         </dd>
                     </ng-template>
                 </dl>
             </ng-template>
 
-            <ng-template [ngIf]="user.mobileEmail || user.mobile">
+            <ng-template [ngIf]="user?.contactDetails?.email || user?.contactDetails?.mobile">
                 <dl>
-                    <ng-template [ngIf]="user.mobileEmail">
+                    <ng-template [ngIf]="user?.contactDetails?.email">
                         <dt class="fs-7 text-grey-color">Email ID</dt>
-                        <dd>{{user.mobileEmail}}</dd>
+                        <dd>{{user?.contactDetails?.email}}</dd>
                     </ng-template>
-                    <ng-template [ngIf]="user.mobile">
+                    <ng-template [ngIf]="user?.contactDetails?.mobile">
                         <dt class="fs-7 text-grey-color">Mobile Number</dt>
-                        <dd>{{user.mobile}}
-                            <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>
+                        <dd>{{user?.contactDetails?.mobile}}
+                            <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i> -->
                         </dd>
                     </ng-template>
                 </dl>
             </ng-template>
 
-            <ng-template [ngIf]="user.idType || user.aadhaarNo">
+            <ng-template [ngIf]="user?.identityDetails?.identityType || user?.identityDetails?.identityValue">
                 <dl>
-                    <ng-template [ngIf]="user.idType">
+                    <ng-template [ngIf]="user?.identityDetails?.identityType">
                         <dt class="fs-7 text-grey-color">ID Type</dt>
-                        <dd>{{user.idType}}</dd>
+                        <dd>{{user?.identityDetails?.identityType}}</dd>
                     </ng-template>
-                    <ng-template [ngIf]="user.aadhaarNo">
-                        <dt class="fs-7 text-grey-color">Aadhaar Number</dt>
-                        <dd>{{user.aadhaarNo}}
+                    <ng-template [ngIf]="user?.identityDetails?.identityValue">
+                        <dt class="fs-7 text-grey-color">ID Value</dt>
+                        <dd>{{user?.identityDetails?.identityValue}}
                             <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>
                         </dd>
                     </ng-template>
@@ -63,9 +64,9 @@
 
 
             <dl>
-                <ng-template [ngIf]="user.address">
+                <ng-template [ngIf]="user?.contactDetails?.address">
                     <dt class="fs-7 text-grey-color">Address</dt>
-                    <dd>{{user.address}}</dd>
+                    <dd>{{user?.contactDetails?.address}}</dd>
                 </ng-template>
 
             </dl>
@@ -80,18 +81,18 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <ng-template ngFor let-item [ngForOf]="education" let-i="index">
-                <h6>{{item.institute}}
-                    <img *ngIf="item.attested == 'pending'; else icons" style="width: 16px;"
+            <ng-template ngFor let-item [ngForOf]="user?.educationDetails" let-i="index">
+                <h6>{{item?.institute}}
+                    <img *ngIf="item._osState == 'ATTESTATION_REQUESTED'; else icons" style="width: 16px;"
                         src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
                     <ng-template #icons>
-                        <i [ngClass]="item.attested == true ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle red'"
+                        <i [ngClass]="item._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle red'"
                             data-mdb-toggle="tooltip" title={{item.note}}></i>
                     </ng-template>
 
                 </h6>
-                <div>{{item.class}}</div>
-                <div>Medium : {{item.medium}}</div>
+                <div>{{item?.class}}</div>
+                <div>Medium : {{item?.medium}}</div>
                 <!-- <div *ngIf="!item.working; else elseBlock1">{{item.startdate}} -
                     {{item.enddate}}</div>
                 <ng-template #elseBlock1>
@@ -105,167 +106,27 @@
 
 </div>
 
-<!-- Add Personal Details Modal -->
-<div class="modal right fade right-l-modal" id="addPersonalDetails" tabindex="-1" role="dialog"
-    aria-labelledby="addPersonalDetails">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
 
-            <div class="modal-header">
-                <h5 class="modal-title" id="addPersonalDetails">Add Personal Details to Profile</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-            </div>
-
-            <div class="modal-body">
-
-                <form class="example-container" [formGroup]="editUserform">
-                    <div class="" appearance="outline">
-                        <label mdbLabel class="form-label fw-normal fs-7" for="gender">Gender</label>
-                        <div class="d-inline-block fs-8">(Optional)</div>
-                        <select class="form-control" id="gender" mdbValidate formControlName="gender">
-                            <option value="Male" selected>Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group half">
-                        <label mdbLabel class="form-label fw-normal fs-7" for="dob">Date of Birth</label>
-                        <div class="input-group">
-
-                            <input class="form-control" id="dob" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model"
-                                formControlName="dob" ngbDatepicker #d="ngbDatepicker" mdbValidate>
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
-                                    type="button"></button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <label mdbLabel class="form-label fw-normal fs-7" for="mobileEmail">Contact Number</label>
-                    <div class="d-inline-block fs-8">(Optional)</div>
-                    <mdb-form-control>
-                        <input mdbInput type="text" id="mobileEmail" class="form-control" formControlName="mobileEmail"
-                            mdbValidate />
-                    </mdb-form-control>
-                    <div id="textExample1" class="form-text my-2">
-                        Mobile must include '+91'
-                    </div>
-
-                    <div class="form-group">
-                        <label mdbLabel class="form-label fw-normal fs-7">Address</label>
-                        <div class="d-inline-block fs-8">(Optional)</div>
-                        <mdb-form-control>
-                            <textarea mdbInput class="form-control" id="textAreaExample" formControlName="address"
-                                rows="4"></textarea>
-                            <label mdbLabel class="form-label" for="textAreaExample">Full Address</label>
-                        </mdb-form-control>
-                    </div>
-
-                    <button type="submit" (click)="onEditProfileSubmit()"
-                        class="btn btn-primary text-end mt-3 fw-bold text-capitalize" data-dismiss="modal">Save</button>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
 
 <!-- Edit Personal Details Modal -->
+
 <div class="modal right fade right-l-modal" id="editProfile" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel2">
     <div class="modal-dialog" role="document">
         <div class="modal-content h-100vh">
 
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel2">Edit Personal Details</h5>
+                <h5 class="modal-title" id="myModalLabel2">Edit Personal Details </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
             </div>
 
             <div class="modal-body h-100">
-
-                <form class="example-container" [formGroup]="editUserform">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label mdbLabel class="form-label fw-normal fs-7" for="fullName">Full Name</label>
-                            <mdb-form-control>
-                                <input mdbInput required="required" type="text" id="fullName" class="form-control"
-                                    mdbValidate placeholder="" formControlName="fullName" />
-                            </mdb-form-control>
-
-                        </div>
-
-                        <div class="" appearance="outline">
-                            <label mdbLabel class="form-label fw-normal fs-7" for="gender">Gender</label>
-                            <div class="d-inline-block fs-8">(Optional)</div>
-                            <select class="form-control" id="gender" mdbValidate formControlName="gender">
-                                <option value="Male" selected>Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-12">
-                            <label mdbLabel class="form-label fw-normal fs-7" for="dob">Date Of Birth</label>
-                            <mdb-form-control>
-                                <input mdbInput type="date" id="dob" class="form-control" mdbValidate placeholder=""
-                                    formControlName="dob" />
-                            </mdb-form-control>
-
-                        </div>
-
-                        <div class="" appearance="outline">
-                            <label mdbLabel class="form-label fw-normal fs-7" for="idType">ID Type</label>
-                            <div class="d-inline-block fs-8">(Optional)</div>
-                            <select class="form-control" id="idType" mdbValidate formControlName="idType">
-                                <option value="voter" selected>Voter</option>
-                                <option value="aadhaar">Aadhaar</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-12">
-                            <label mdbLabel class="form-label fw-normal fs-7" for="aadhaarNo">Aadhaar Number</label>
-                            <mdb-form-control>
-                                <input mdbInput type="text" id="aadhaarNo" class="form-control" mdbValidate
-                                    placeholder="" formControlName="aadhaarNo" />
-                            </mdb-form-control>
-
-                        </div>
-
-
-                        <div class="col-md-12">
-                            <label mdbLabel class="form-label fw-normal fs-7" for="form2">EmailID</label>
-                            <mdb-form-control>
-                                <input mdbInput type="text" id="mobileEmail" class="form-control" mdbValidate
-                                    placeholder="" formControlName="mobileEmail" />
-                            </mdb-form-control>
-                        </div>
-
-                        <div class="col-md-12">
-                            <label mdbLabel class="form-label fw-normal fs-7" for="fullName">Mobile Number</label>
-                            <mdb-form-control>
-                                <input mdbInput type="text" id="mobile" class="form-control" mdbValidate placeholder=""
-                                    formControlName="mobile" />
-                            </mdb-form-control>
-
-                        </div>
-
-                        <div class="col-md-12">
-                            <label mdbLabel class="form-label fw-normal fs-7" for="fullName">Address</label>
-                            <mdb-form-control>
-                                <input mdbInput type="textarea" id="address" class="form-control" mdbValidate
-                                    placeholder="" formControlName="address" />
-                            </mdb-form-control>
-
-                        </div>
-                    </div>
-
-
-                    <button type="submit" (click)="onEditProfileSubmit()"
-                        class="btn btn-primary text-end mt-3 fw-bold text-capitalize" data-dismiss="modal">Save</button>
-                </form>
+                <div *ngIf="studentProfileSchema">
+                    <json-schema-form [schema]="studentProfileSchema" [data]='user' [layout]="form1" framework="bootstrap-4"
+                        (onSubmit)="onEditProfileSubmit($event)">
+                    </json-schema-form>
+                </div>
             </div>
 
         </div>
@@ -290,90 +151,93 @@
                     <div class="card-body">
                         <dl>
                             <dt class="fs-7 text-grey-color">Full Name</dt>
-                            <dd>{{user.fullName}}</dd>
+                            <dd>{{user?.identityDetails?.fullName}}</dd>
 
                         </dl>
-                        <ng-template [ngIf]="user.gender || user.dob">
+                        <ng-template [ngIf]="user?.identityDetails?.gender || user?.dob">
                             <dl>
-                                <ng-template [ngIf]="user.gender">
+                                <ng-template [ngIf]="user?.identityDetails?.gender">
                                     <dt class="fs-7 text-grey-color">Gender</dt>
-                                    <dd>{{user.gender}}</dd>
+                                    <dd>{{user?.identityDetails?.gender}}</dd>
                                 </ng-template>
-                                <ng-template [ngIf]="user.dob">
+                                <ng-template [ngIf]="user?.identityDetails?.dob">
                                     <dt class="fs-7 text-grey-color">Date of Birth</dt>
-                                    <dd>{{user.dob}}
-                                        <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
-                                            title="Attested"></i>
+                                    <dd>{{user?.identityDetails?.dob}}
+                                        <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
+                                            title="Attested"></i> -->
                                     </dd>
                                 </ng-template>
                             </dl>
                         </ng-template>
 
-                        <ng-template [ngIf]="user.mobileEmail || user.mobile">
+                        <ng-template [ngIf]="user?.contactDetails?.email || user?.contactDetails?.mobile">
                             <dl>
-                                <ng-template [ngIf]="user.mobileEmail">
+                                <ng-template [ngIf]="user?.contactDetails?.email">
                                     <dt class="fs-7 text-grey-color">Email ID</dt>
-                                    <dd>{{user.mobileEmail}}</dd>
+                                    <dd>{{user?.contactDetails?.email}}</dd>
                                 </ng-template>
-                                <ng-template [ngIf]="user.mobile">
+                                <ng-template [ngIf]="user?.contactDetails?.mobile">
                                     <dt class="fs-7 text-grey-color">Mobile Number</dt>
-                                    <dd>{{user.mobile}}
-                                        <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
-                                            title="Attested"></i>
+                                    <dd>{{user?.contactDetails?.mobile}}
+                                        <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
+                                            title="Attested"></i> -->
                                     </dd>
                                 </ng-template>
                             </dl>
                         </ng-template>
-                        <ng-template [ngIf]="user.idType || user.aadhaarNo">
+                        <ng-template
+                            [ngIf]="user?.identityDetails?.identityType || user?.identityDetails?.identityValue">
                             <dl>
-                                <ng-template [ngIf]="user.idType">
+                                <ng-template [ngIf]="user?.identityDetails?.identityType">
                                     <dt class="fs-7 text-grey-color">ID Type</dt>
-                                    <dd>{{user.idType}}</dd>
+                                    <dd>{{user?.identityDetails?.identityType}}</dd>
                                 </ng-template>
-                                <ng-template [ngIf]="user.aadhaarNo">
-                                    <dt class="fs-7 text-grey-color">Aadhaar Number</dt>
-                                    <dd>{{user.aadhaarNo}}
-                                        <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
-                                            title="Attested"></i>
+                                <ng-template [ngIf]="user?.identityDetails?.identityValue">
+                                    <dt class="fs-7 text-grey-color">ID Value</dt>
+                                    <dd>{{user?.identityDetails?.identityValue}}
+                                        <!-- <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
+                                            title="Attested"></i> -->
                                     </dd>
                                 </ng-template>
                             </dl>
                         </ng-template>
 
                         <dl>
-                            <ng-template [ngIf]="user.address">
+                            <ng-template [ngIf]="user?.contactDetails?.address">
                                 <dt class="fs-7 text-grey-color">Address</dt>
-                                <dd>{{user.address}}</dd>
+                                <dd>{{user?.contactDetails?.address}}</dd>
                             </ng-template>
 
                         </dl>
                     </div>
                 </div>
                 <hr>
-                <h6 class="mt-5">Education</h6>
+                <h6 class="mt-5">Education </h6>
+
+
                 <div class="card">
                     <div class="card-body">
-                        <ng-template ngFor let-item [ngForOf]="education" let-i="index">
-                            <ng-template [ngIf]="item.attested == true">
-                                <h6>{{item.institute}}
-                                    <img *ngIf="item.attested == 'pending'; else icons" style="width: 16px;"
-                                        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
-                                    <ng-template #icons>
-                                        <i [ngClass]="item.attested == true ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle red'"
-                                            data-mdb-toggle="tooltip" title={{item.note}}></i>
-                                    </ng-template>
+                        <ng-template ngFor let-item [ngForOf]="user?.educationDetails" let-i="index">
 
-                                </h6>
-                                <div>{{item.class}}</div>
-                                <div>Medium : {{item.medium}}</div>
-                                <!-- <div *ngIf="!item.working; else elseBlock1">{{item.startdate}} -
+                            <h6>{{item?.institute}}
+                                <img *ngIf="item?._osState == 'ATTESTATION_REQUESTED'; else icons" style="width: 16px;"
+                                    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
+                                <ng-template #icons>
+                                    <i [ngClass]="item?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle red'"
+                                        data-mdb-toggle="tooltip" title={{item?.note}}></i>
+                                </ng-template>
+
+                            </h6>
+                            <div>{{item?.class}}</div>
+                            <div>Medium : {{item?.medium}}</div>
+                            <!-- <div *ngIf="!item.working; else elseBlock1">{{item.startdate}} -
                                 {{item.enddate}}</div>
                             <ng-template #elseBlock1>
                                 <div>{{item.startdate}} - Current</div>
                             </ng-template> -->
-                                <div class="fs-7 text-grey-color">Board : {{item.board}}</div>
-                                <hr>
-                            </ng-template>
+                            <div class="fs-7 text-grey-color">Board : {{item?.board}}</div>
+                            <hr>
+
                         </ng-template>
                     </div>
                 </div>
@@ -396,11 +260,11 @@
             </div>
 
             <div class="modal-body">
-
-                <json-schema-form [schema]="schema" [layout]="form" framework="bootstrap-4"
-                    (onSubmit)="onEducationSubmit($event)">
-                </json-schema-form>
-
+                <div *ngIf="educationSchema">
+                    <json-schema-form [schema]="educationSchema" [layout]="form" framework="bootstrap-4"
+                        (onSubmit)="onEducationSubmit($event)">
+                    </json-schema-form>
+                </div>
             </div>
 
         </div>
@@ -409,7 +273,7 @@
 
 
 <!-- Edit Education -->
-<div class="modal right fade" id="editEducation" tabindex="-1" role="dialog" aria-labelledby="AddEducation">
+<!-- <div class="modal right fade" id="editEducation" tabindex="-1" role="dialog" aria-labelledby="AddEducation">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
@@ -421,81 +285,13 @@
 
             <div class="modal-body">
 
-                <json-schema-form [schema]="schema" [layout]="form" framework="bootstrap-4"
+                <json-schema-form [schema]="educationSchema" [layout]="form" framework="bootstrap-4"
                     (onSubmit)="onEducationSubmit($event)">
                 </json-schema-form>
 
-                <!-- <form class="example-container" [formGroup]="educationForm">
-                    <div class="pb-3">
-                        <label mdbLabel class="form-label fw-bold fs-7" for="form1">Degree</label>
-                        <mdb-form-control>
-                            <input mdbInput type="text" id="form1" class="form-control" formControlName="degree"
-                                mdbValidate />
-                        </mdb-form-control>
 
-                    </div>
-
-                    <div class="pb-3">
-                        <label mdbLabel class="form-label fw-bold fs-7" for="form1">Institute</label>
-                        <mdb-form-control>
-                            <input mdbInput type="text" id="form1" class="form-control" formControlName="institute"
-                                mdbValidate />
-                        </mdb-form-control>
-
-                    </div>
-                    <div class="form-check">
-                        <input mdbCheckbox class="form-check-input" type="checkbox" value=true formControlName="working"
-                            mdbValidate (change)="onWorkingChange()" />
-                        <label class="form-check-label">
-                            I currently studying here
-                        </label>
-                    </div>
-
-                    <div class="form-group half">
-                        <label mdbLabel class="form-label fw-normal fs-7">Start Date</label>
-                        <div class="input-group">
-
-                            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="startdate"
-                                ngbDatepicker #startdate="ngbDatepicker">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary calendar" (click)="startdate.toggle()"
-                                    type="button"></button>
-                            </div>
-                        </div>
-                    </div>
-                    <ng-template [ngIf]="!working">
-                        <div class="form-group half">
-                            <label mdbLabel class="form-label fw-normal fs-7">End Date</label>
-                            <div class="input-group">
-
-                                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="enddate"
-                                    ngbDatepicker #enddate="ngbDatepicker">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary calendar" (click)="enddate.toggle()"
-                                        type="button"></button>
-                                </div>
-                            </div>
-                        </div>
-                    </ng-template>
-
-                    <div class="form-check">
-                        <input mdbCheckbox class="form-check-input" type="checkbox" value="" formControlName="send"
-                            mdbValidate />
-                        <label class="form-check-label">
-                            Send for verification
-                        </label>
-                    </div>
-
-
-
-                    <button class="btn btn-primary text-end mt-3 fw-bold text-capitalize mr-2" data-dismiss="modal">Save
-                        to
-                        draft</button>
-                    <button type="submit" (click)="onEducationSubmit()"
-                        class="btn btn-primary text-end mt-3 fw-bold text-capitalize" data-dismiss="modal">Save</button>
-                </form> -->
             </div>
 
         </div>
     </div>
-</div>
+</div> -->

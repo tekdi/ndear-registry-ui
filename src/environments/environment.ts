@@ -5,13 +5,16 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://ndear.xiv.in/registry/api/v1',
+  baseUrl: 'http://localhost:4200/registry/api/v1',
   schemaUrl: 'https://ndear.xiv.in/registry/api/docs/swagger.json'
 };
 
 export enum ApiPaths {
-  Institute = '/School',
-  Teacher = '/Teacher',
-  Student = '/Student'
+  Institute = 'Institute',
+  Teacher = 'Teacher',
+  Student = 'Student',
+  InviteStudent = 'Student/invite',
+  InviteTeacher = 'Teacher/invite',
+  InviteInstitute = 'Institute/invite'
 }
 

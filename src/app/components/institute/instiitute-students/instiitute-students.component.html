@@ -27,6 +27,15 @@
             </ng-template>
         </tbody>
       </table>
+      <table class="mx-5 my-5 w-50">
+        <tbody class="fs-5">
+            <tr *ngIf="!students.length">
+              <td class="float-end" [attr.colspan]="students.length">
+                No Records Found!
+              </td>
+            </tr>
+          </tbody>
+      </table>
 </div>
 
 <!-- Invite Modal -->

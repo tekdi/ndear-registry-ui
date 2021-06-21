@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BoardInstituteService } from '../../../services/board/board-institutes/board-institutes.service';
+import { InviteService } from '../../../services/invite/invite.service';
+import { ToastMessageService } from '../../../services/toast-message/toast-message.service';
 
 @Component({
   selector: 'app-board-institutes',
@@ -38,7 +40,9 @@ form = [
 ]
   constructor(
     public router: Router,
-    public boardInstituteService: BoardInstituteService) { }
+    public boardInstituteService: BoardInstituteService,
+    public inviteService: InviteService,
+    public toastMsg: ToastMessageService) { }
  
   ngOnInit(): void {
 
@@ -78,6 +82,24 @@ form = [
       }
       this.institutes.push(teacher)
      }
+
+     let data =  {
+      'email': event.emails,
+      'mobile': event.emails
+    };
+
+
+     this.inviteService.inviteInstitute(data).subscribe((res) => {
+      if (res.responseCode == 'OK' && !res.params.errmsg) {
+        this.toastMsg.success('Success', 'Invited successfully');
+      } else {
+        this.toastMsg.error('Error', res.params.errmsg);
+      }
+    }, (err) => {
+
+      console.log({ err });
+
+    });
     
     // event.mobiles = event.mobiles.split(',');
 

@@ -1,9 +1,9 @@
-<div class="container">
+<div class="container"  *ngIf="!loginScreen">
     <div class="d-flex flex-justify-between">
         <div>
             <h6 class="d-inline-block">From : registery@ourdomain.com</h6>
             <br>
-            <h6 class="d-inline-block">To : {{student.email}}</h6>
+            <h6 class="d-inline-block">To : {{student?.email}}</h6>
         </div>
     </div>
     <div class="card">
@@ -11,10 +11,23 @@
             <p>Hi,</p>
             <br>
             <br>
-            <p>You have recieved invite form {{institute.BasicDetails.instituteName}} to register as a student.</p>
+            <p>You have recieved invite form {{institute?.BasicDetails?.instituteName}} to register as a student.</p>
             <p>Click below to complete registration.</p>
-            <button [routerLink]="['/student-signup']" class="btn btn-primary text-end mt-3 fw-bold text-capitalize">Complete Registration</button>
+            <button (click)="register()" class="btn btn-primary text-end mt-3 fw-bold text-capitalize">Complete Registration</button>
         </div>
     </div>
 
+</div>
+
+<div *ngIf="loginScreen">
+    <app-header [headerFor]='header1'></app-header>
+    <div class="col-md-6 offset-md-3">
+        <div class="card p-4">
+            <div class="card-body">
+                <p class="fs-5 primary">Login To Complete Your Profile Via {{student.email}} Mobile Number</p>
+
+                <button class="mt-5" type="button" (click)="login()" mat-raised-button color="primary">Login</button>
+            </div>
+        </div>
+    </div>
 </div>

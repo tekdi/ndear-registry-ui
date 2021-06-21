@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { StudentProfileService } from '../../../services/student/student-profile.service';
+import { ToastMessageService } from '../../../services/toast-message/toast-message.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   NgbCalendar,
   NgbDate,
   NgbDateStruct,
   NgbInputDatepickerConfig
 } from '@ng-bootstrap/ng-bootstrap';
+import { SchemaService } from 'src/app/services/data/schema.service';
+
 
 @Component({
   selector: 'app-student-profile',
@@ -17,7 +21,7 @@ import {
 export class StudentProfileComponent implements OnInit {
   header1: string = 'student';
   tab: string = 'profile';
-  user;
+  user: any;
   education;
   institute
   editUserform: FormGroup;
@@ -26,56 +30,23 @@ export class StudentProfileComponent implements OnInit {
   startdate: NgbDateStruct;
   enddate: NgbDateStruct;
   working: Boolean = true;
-  schema = {
-    "type": "object",
-    "title": "Comment",
-    "properties": {
-      "institute": {
-        "title": "Institute Name",
-        "type": "string",
-        "enum": ['Bhartiya Shiksha Parishad','Sarvoday School','Aadharshila Institute']
-      },
-      "board": {
-        "title": "Board of Education",
-        "type": "string",
-        "enum": ['CBSE', "State Board"]
-      },
-      "medium": {
-        "title": "Medium of Education",
-        "type": "string",
-        "enum": ['English', 'Hindi', 'Marathi', 'Gujarati']
-      },
-      "class": {
-        "title": "Enrollment Class/Std.",
-        "type": "string",
-        "enum": [
-          "Grade 1",
-          "Grade 2",
-          "Grade 3",
-          "Grade 4",
-          "Grade 5",
-          "Grade 6",
-          "Grade 7",
-          "Grade 8",
-          "Grade 9",
-          "Grade 10",
-          "Grade 11",
-          "Grade 12"
-        ]
-      },
-      "send": {
-        "title": " Send for verification?",
-        "type": "boolean",
-        "default": true
-      }
-    },
-    "required": [
-      "institute",
-      "board",
-      "medium",
-      "class"
-    ]
-  };
+  studentId : string;
+  studentResult: any;
+  fb;
+  schemaJson: any;
+  studentProfileSchema;
+  educationSchema;
+
+  form1: [
+    "*",
+    {
+      "type": "submit",
+      "style": "btn btn-primary text-end mt-3 fw-bold text-capitalize",
+      "title": "save"
+    }
+  ]
+
+
   form: [
     '*',
     {
@@ -84,10 +55,19 @@ export class StudentProfileComponent implements OnInit {
       "title": "save"
     }
   ]
-  constructor(fb: FormBuilder, config: NgbInputDatepickerConfig, calendar: NgbCalendar, public router: Router) { 
+
+  constructor(fb: FormBuilder,
+    config: NgbInputDatepickerConfig,
+    calendar: NgbCalendar,
+    public router: Router,
+    private route: ActivatedRoute,
+    public studentProfileService: StudentProfileService,
+    public toastMsg: ToastMessageService,
+    public Schema: SchemaService) {
+    this.fb = fb;
     // customize default values of datepickers used by this component tree
-    config.minDate = {year: 1900, month: 1, day: 1};
-    config.maxDate = {year: 2020, month: 12, day: 31};
+    config.minDate = { year: 1900, month: 1, day: 1 };
+    config.maxDate = { year: 2020, month: 12, day: 31 };
 
     // days that don't belong to current month are not visible
     config.outsideDays = 'hidden';
@@ -96,81 +76,219 @@ export class StudentProfileComponent implements OnInit {
     // config.placement = ['top-left', 'top-right'];
     localStorage.setItem('is_logedin', "true")
     // localStorage.setItem('admin', 'false')
-    this.user = JSON.parse(localStorage.getItem('user'))
-    this.editUserform = fb.group({
-      fullName: this.user.fullName,
-      gaurdianfullName: this.user.gaurdianfullName,
-      relation: this.user.relation,
-      mobileEmail: this.user.mobileEmail,
-      accepted: true,
-      gender: ['', Validators.required],
-      dob: ['', Validators.required],
-      address: [''],
-      mobile: this.user.mobile,
-      aadhaarNo: this.user.aadhaarNo,
-      idType:  this.user.idType
+    //this.user = JSON.parse(localStorage.getItem('user'));
+
+
+    this.Schema.getSchemas().subscribe((res) => {
+      this.schemaJson = res;
+      console.log("res", this.schemaJson.definitions.IdentityDetails);
+
+      delete this.schemaJson.definitions.ContactDetails.properties.address;
+
+
+      // console.log(this.schema.definitions)
+      this.studentProfileSchema = {
+        "type": "object",
+        "title": "Student",
+        "definitions": {
+          "identityDetails": this.schemaJson.definitions.IdentityDetails,
+          "contactDetails": this.schemaJson.definitions.ContactDetails,
+          //"address" : this.schemaJson.definitions.Address,
+        },
+        "properties": {
+          "identityDetails": {
+            'title': "",
+            "$ref": "#/definitions/identityDetails"
+          },
+          "contactDetails": {
+            "$ref": "#/definitions/contactDetails"
+          
+          }
+          // ,
+          // "address": {
+          //   'title': "",
+          //   "$ref": "#/definitions/address"
+          // }
+        }
+      };
+
+      this.educationSchema = {
+        "type": "object",
+        "title": "Comment",
+        "properties": {
+          "EducationDetails": this.schemaJson.definitions.EducationType
+        }
+      };
+
+      console.log('  this.teacherSchema = > ', this.educationSchema);
+
     });
-    
+
+    this.route.params.subscribe(params => {
+      console.log("route", params)
+      this.studentId = params['id'];
+    });
+
+    this.getStudentData(this.studentId);
+
+
+
     this.education = JSON.parse(localStorage.getItem('education'))
     this.educationForm = fb.group({
       institute: ['', Validators.required],
       working: [true],
-      startdate: [{'day':'','month':'', 'year': ''}],
-      enddate: [{'day':'','month':'', 'year': ''}],
+      startdate: [{ 'day': '', 'month': '', 'year': '' }],
+      enddate: [{ 'day': '', 'month': '', 'year': '' }],
       send: true,
       attested: false
     });
   }
 
-  onEditProfileSubmit(){
-    console.log(this.editUserform.value);
+  onEditProfileSubmit(event) {
+    // console.log(this.editUserform.value);
     // this.user.details = this.editform.value
-    localStorage.setItem('user', JSON.stringify(this.editUserform.value));
-    this.user = this.editUserform.value
+    //  localStorage.setItem('user', JSON.stringify(this.editUserform.value));
+    //  this.user = this.editUserform.value
     // this.router.navigate(['student-profile']);
+
+   // if (this.studentId &&  this.studentId != "null") {
+      event.osid = this.user.osid;
+      this.studentId = this.user.osid;
+
+      event.identityDetails.osid = this.user.identityDetails.osid;
+      event.contactDetails.osid = this.user.contactDetails.osid;
+     // event.address.osid = this.user.address.osid;
+      const data = event; //this.editUserform.value;
+
+      this.studentProfileService.putStudentProfile(data, this.studentId).subscribe(res => {
+        if (res.responseCode == 'OK' && !res.params.errmsg) {
+       //   this.router.navigate(['/student-profile', { 'id': this.studentId }]);
+          this.getStudentData(this.studentId);
+          this.toastMsg.success('Success', 'Student Profile Updated Successfully');
+        } else {
+          this.toastMsg.error('Error', res.params.errmsg);
+        }
+      })
+   /* } else {
+      const data = event;
+      this.studentProfileService.postStudentProfile(data).subscribe(res => {
+        if (res.responseCode == 'OK' && !res.params.errmsg) {
+          // localStorage.setItem('student_id', res.result.Student.osid);
+        //  this.router.navigate(['/student-profile', { 'id': res.result.Student.osid }]);
+          this.getStudentData(res.result.Student.osid);
+          this.toastMsg.success('Success', 'Student Profile Added Successfully');
+        } else {
+          this.toastMsg.error('Error', res.params.errmsg);
+        }
+      })
+    }*/
   }
 
-  onSubmit(){
-    
+  onSubmit() {
+
   }
-  // onEducationChange(event){
-  //   console.log(event)
-  //   if(!event.working){
-  //     this.schema.properties.enddate.type = 'string'
-  //   }
-  //   else{
-  //     this.schema.properties.enddate.type = 'hidden'
-  //   }
-  // }
-  onEducationSubmit(event){
+
+  onEducationSubmit(event) {
     console.log(event);
     // this.user.details = this.editform.value
     event.attested = "pending"
     event.note = "Attestation pending"
-    this.education.push(event)
-    console.log(this.education)
-    localStorage.setItem('education', JSON.stringify(this.education));
+    // this.education.push(event)
+    this.studentId = this.user.osid;
     this.educationForm.reset();
-    // this.education = this.educationForm.value
+
+    if (!this.user.hasOwnProperty('educationDetails')) {
+      this.user.educationDetails = [
+        event.EducationDetails
+
+      ]
+    } else {
+      this.user.educationDetails.push(
+        event.EducationDetails
+      );
+    }
+
+    this.studentProfileService.postStudentProfile( event.EducationDetails, this.studentId).subscribe(res => {
+      if (res.responseCode == 'OK' && !res.params.errmsg) {
+        // localStorage.setItem('student_id', res.result.Student.osid);
+      //  this.router.navigate(['/student-profile', { 'id': this.studentId }]);
+
+       // this.getStudentData(this.studentId);
+       this.studentProfileService.getStudentProfile(this.studentId).subscribe((res) => {
+        this.user = res[0];
+         let self = this;
+         this.toastMsg.success('Success', 'Educational Deatils Added Successfully');
+
+        for(let i= 0; i <=  self.user.educationDetails.length; i++){
+
+          console.log(self.user.educationDetails[i]._osState);
+          if( self.user.educationDetails[i]._osState == 'DRAFT'){
+          this.sendVerification(this.studentId,   self.user.educationDetails[i].osid);
+          this.getStudentData(this.studentId);
+          }
+        }
+       // this.toastMsg.success('Success', 'Educational Deatils Added Successfully');
+
+        console.log({ res });
+        this.studentResult = res[0];
+        console.log("this.user", this.user);
+      })
+       
+      } else {
+        this.toastMsg.error('Error', res.params.errmsg);
+      }
+    })
   }
 
   ngOnInit(): void {
-    if(localStorage.getItem('institute-detail')){
-      this.institute = JSON.parse(localStorage.getItem('institute-detail')).BasicDetails.instituteName;
-      this.schema.properties.institute.enum.push(this.institute)
+    if (localStorage.getItem('institute-detail')) {
+     // this.institute = JSON.parse(localStorage.getItem('institute-detail')).BasicDetails.instituteName;
+      //this.schema.properties.institute.enum.push(this.institute)
     }
+
+    this.route.params.subscribe(params => {
+      console.log("route", params)
+      this.studentId = params['id'];
+    });
+    this.getStudentData(this.studentId);
   }
 
-  onWorkingChange(){
+
+   getStudentData(studentId) {
+   
+      this.studentProfileService.getStudentProfile(studentId).subscribe((res) => {
+        this.user = res[0];
+
+        console.log({ res });
+        this.studentResult = res[0];
+        console.log("this.user", this.user);
+      })
+    
+  }
+
+  sendVerification(entityId, propertyId){
+    this.studentProfileService.updateStudentProperty( entityId, propertyId).subscribe(res => {
+      if (res.responseCode == 'OK' && !res.params.errmsg) {
+        // localStorage.setItem('student_id', res.result.Student.osid);
+      //  this.router.navigate(['/student-profile', { 'id': this.studentId }]);
+
+        this.getStudentData(this.studentId);
+      } else {
+        this.toastMsg.error('Error', res.params.errmsg);
+      }
+    })
+  }
+
+  onWorkingChange() {
     console.log(this.educationForm.value.working)
     this.working = this.educationForm.value.working;
   }
 
-  modelchange(id){
+  modelchange(id) {
     console.log(id)
     this.education[id] = this.educationForm
   }
 
-  
+
 
 }

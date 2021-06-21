@@ -51,21 +51,12 @@
                 <ng-template [ngIf]="!aboveControl.value">
                     <div class="row">
                         <div class="col-md-6 py-3 half" appearance="outline">
-                            <label mdbLabel class="form-label fw-bold fs-7">Guardian's Full Name</label>
+                            <label mdbLabel class="form-label fw-bold fs-7">Parent's Or Guardian's Full Name</label>
                             <mdb-form-control>
                                 <input mdbInput type="text" class="form-control" mdbValidate formControlName="gaurdianfullName" placeholder="Full Name"/>
                             </mdb-form-control>
                         </div>
                         
-                        <div class="col-md-6 py-3 half" appearance="outline">
-                            <label mdbLabel class="form-label fw-bold fs-7">Relationship</label>
-                            <select class="form-control" formControlName="relation" mdbValidate>
-                                <option value="1" selected>Father</option>
-                                <option value="2">Mother</option>
-                                <option value="3">Brother</option>
-                                <option value="4">Sister</option>
-                              </select>                 
-                        </div>
                     </div>
                 </ng-template>
 

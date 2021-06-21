@@ -27,7 +27,7 @@ export class VerificationComponent implements OnInit {
         this.user_id = JSON.parse(localStorage.getItem('board')).mobileEmail;
       }
       if(this.for == 'admin'){
-        this.user_id = JSON.parse(localStorage.getItem('institute-detail')).WhoIsAdmin.emailOrMobile;
+        this.user_id = JSON.parse(localStorage.getItem('institute-detail')).adminEmail;
       }
       if(this.for == 'teacher'){
         this.user_id = JSON.parse(localStorage.getItem('teachers'))[0].email;
@@ -53,22 +53,27 @@ export class VerificationComponent implements OnInit {
       localStorage.setItem('is_logedin', "true")
       console.log(this.for)
       if(this.for == 'student'){
-        this.router.navigate(['student-profile']);
+        this.router.navigate(['login']);
+      // let id = localStorage.getItem('studentId');
+       // this.router.navigate(['student-profile', {'id':id}]);
       }
       if(this.for == 'teacher'){
-        this.router.navigate(['teacher-profile']);
+        this.router.navigate(['login']);
+        //let id = localStorage.getItem('teacherId');
+       // this.router.navigate(['teacher-profile', {'id':id}]);
       }
-      else if(this.for == 'institute'){
-        this.router.navigate(['institute-profile']);
+      else if(this.for === 'institute'){
+        this.router.navigate(['login']);
+       // this.router.navigate(['institute-profile']);
       }
-      else if(this.for == 'instituteS2'){
+      else if(this.for === 'instituteS2'){
         this.router.navigate(['institute-profile-setup'])
       }
       else if(this.for == 'admin'){
         localStorage.setItem('admin', "true")
-        this.user_id = JSON.parse(localStorage.getItem('institute-detail')).WhoIsAdmin.emailOrMobile;
+        let id = localStorage.getItem('institute-entity');//.WhoIsAdmin.emailOrMobile;
         // this.router.navigate(['admin-institute-setup'])
-        this.router.navigate(['institute-profile'])
+        //this.router.navigate(['institute-profile', {'id' : id}])
       }
       else if(this.for == 'board'){
         this.router.navigate(['board-institutes'])

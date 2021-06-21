@@ -1,12 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TeacherProfileService } from '../../../services/teacher/teacher-profile.service';
+import { ToastMessageService } from '../../../services/toast-message/toast-message.service';
+import { KeycloakService } from 'keycloak-angular';
+
 import {
   NgbCalendar,
   NgbDate,
   NgbDateStruct,
   NgbInputDatepickerConfig
 } from '@ng-bootstrap/ng-bootstrap';
+import { SchemaService } from 'src/app/services/data/schema.service';
+
+
 @Component({
   selector: 'app-teacher-profile',
   templateUrl: './teacher-profile.component.html',
@@ -26,99 +33,24 @@ export class TeacherProfileComponent implements OnInit {
   startdate: NgbDateStruct;
   enddate: NgbDateStruct;
   working: Boolean = true;
-  experianceSchema = {
-    "type": "object",
-    "title": "Experience",
-    "properties": {
-      "institute": {
-        "title": "Institute Name",
-        "type": "string",
-        "enum": ['Bhartiya Shiksha Parishad','Sarvoday School','Aadharshila Institute']
-      },
-      "EmploymentType": {
-        "title": "Employment Type",
-        "type": "string",
-        "enum": ['Permanant','Contract']
-      },
-      "startdate": {
-        "title": "Start date",
-        "type": "string",
-        "format": "date"
-      },
-      "enddate": {
-        "title": "End date",
-        "type": "string",
-        "format": "date"
-      },
-      "TeacherType": {
-        "title": "Teacher Type",
-        "type": "string",
-        "enum": ['Assistant teacher PS',
-                'Assistant teacher UPS Head teacher primary school',
-                'Shiksha Mitra',
-                'Anudeshak (UPS)',
-                'Assistant teacher (AidedPS)',
-                'Assistant teacher (Aided UPS)',
-                'Teacher (KGBV)',
-                'Itinerant Teacher (CWSN)',
-                'Govt. LT (TGT) ',
-                'Govt. Lecturer (PGT)',
-                'Aided School LT (TGT)',
-                'Aided School Lecturer (PGT)',
-                'ICT teacher',
-                'Vocational teachers',
-                'Attached Primary Teacher',
-                'Sanskrit aided school'
-                ]
-      },
-      "send": {
-        "title": " Send for verification?",
-        "type": "boolean",
-        "default": true
-      }
-    },
-    "required": [
-      "institute",
-      "EmploymentType",
-      "startdate",
-      "TeacherType"
-    ]
-  };
-  educationSchema = {
-    "type": "object",
-    "title": "Experience",
-    "properties": {
-      "institute": {
-        "title": "Institute Name",
-        "type": "string",
-        "enum": ['Bhartiya Shiksha Parishad','Sarvoday School','Aadharshila Institute']
-      },
-      "Qualification": {
-        "title": "Qualification",
-        "type": "string",
-        "enum": ['Below secondary','Secondary','Higher secondary','Graduate','Post graduate', 'M.Phil','Ph.D','PostDoctoral']
-      },
-      "year": {
-        "title": "Year of Graduation",
-        "type": "string"
-      },
-      "marks": {
-        "title": "Marks / Ranking / GPA, etc",
-        "type": "string"
-      },
-      "send": {
-        "title": " Send for verification?",
-        "type": "boolean",
-        "default": true
-      }
-    },
-    "required": [
-      "institute",
-      "Qualification",
-      "year",
-      "marks"
-    ]
-  };
+  teacherId: string;
+  item: any;
+  schemaJson: any;
+  teacherSchema: any;
+  educationSchema: any;
+  experianceSchema: any;
+  attested = "pending";
+
+  form1: [
+    "*",
+    {
+      "type": "submit",
+      "style": "btn btn-primary text-end mt-3 fw-bold text-capitalize",
+      "title": "save"
+    }
+  ]
+
+
   form: [
     '*',
     {
@@ -127,102 +59,293 @@ export class TeacherProfileComponent implements OnInit {
       "title": "save"
     }
   ]
-  constructor(fb: FormBuilder, config: NgbInputDatepickerConfig, calendar: NgbCalendar, public router: Router) { 
+  constructor(
+
+    fb: FormBuilder,
+    config: NgbInputDatepickerConfig,
+    calendar: NgbCalendar,
+    public router: Router,
+    private route: ActivatedRoute,
+    public teacherProfileService: TeacherProfileService,
+    public toastMsg: ToastMessageService,
+    public Schema: SchemaService,
+    public keycloakService: KeycloakService) {
+
     // customize default values of datepickers used by this component tree
-    config.minDate = {year: 1900, month: 1, day: 1};
-    config.maxDate = {year: 2020, month: 12, day: 31};
+    config.minDate = { year: 1900, month: 1, day: 1 };
+    config.maxDate = { year: 2020, month: 12, day: 31 };
 
     // days that don't belong to current month are not visible
     config.outsideDays = 'hidden';
+
+    this.Schema.getSchemas().subscribe((res) => {
+      this.schemaJson = res;
+      console.log("res", this.schemaJson.definitions.IdentityDetails);
+      delete this.schemaJson.definitions.ContactDetails.properties.address;
+
+
+      // console.log(this.schema.definitions)
+      this.teacherSchema = {
+        "type": "object",
+        "title": "Teacher",
+        "definitions": {
+          "identityDetails": this.schemaJson.definitions.IdentityDetails,
+          "contactDetails": this.schemaJson.definitions.ContactDetails,
+         // "address" : this.schemaJson.definitions.Address
+        },
+        "properties": {
+          "identityDetails": {
+            "$ref": "#/definitions/identityDetails"
+          },
+          "contactDetails": {
+            "$ref": "#/definitions/contactDetails"
+          }
+          // ,
+          // "address": {
+          //   "$ref": "#/definitions/address"
+          // }
+        }
+      };
+
+      //this.teacherSchema.definitions.contactDetails.address =  this.schemaJson.definitions.Address;
+      console.log('this.teacherSchema==>', this.teacherSchema);
+
+      this.educationSchema = this.schemaJson.definitions.AcademicQualification;
+      this.experianceSchema = this.schemaJson.definitions.ExperienceType;
+
+
+      console.log('  this.educationSchema = > ', this.experianceSchema);
+
+    });
 
     // setting datepicker popup to open above the input
     // config.placement = ['top-left', 'top-right'];
     localStorage.setItem('is_logedin', "true")
     // localStorage.setItem('admin', 'false')
-    this.user = JSON.parse(localStorage.getItem('user'));
 
-    this.editUserform = fb.group({
-      fullName: this.user.fullName,
-      gaurdianfullName: this.user.gaurdianfullName,
-      relation: this.user.relation,
-      mobileEmail: this.user.mobileEmail,
-      mobile: this.user.mobile,
-      accepted: true,
-      gender: this.user.gender,
-      address: this.user.address,
-      aadhaarNo: this.user.aadhaarNo,
-      idType:  this.user.idType,
-      dob:  this.user.dob
-    });
-    
+    // this.editUserform = fb.group({
+    //   fullName: this.user.fullName,
+    //   gaurdianfullName: this.user.gaurdianfullName,
+    //   relation: this.user.relation,
+    //   mobileEmail: this.user.mobileEmail,
+    //   mobile: this.user.mobile,
+    //   accepted: true,
+    //   gender: this.user.gender,
+    //   address: this.user.address,
+    //   aadhaarNo: this.user.aadhaarNo,
+    //   idType: this.user.idType,
+    //   dob: this.user.dob
+    // });
+
     this.education = JSON.parse(localStorage.getItem('education'))
     this.experience = JSON.parse(localStorage.getItem('experience'))
     this.educationForm = fb.group({
       institute: ['', Validators.required],
       working: [true],
-      startdate: [{'day':'','month':'', 'year': ''}],
-      enddate: [{'day':'','month':'', 'year': ''}],
+      startdate: [{ 'day': '', 'month': '', 'year': '' }],
+      enddate: [{ 'day': '', 'month': '', 'year': '' }],
       send: true,
       attested: false,
       consent: false
     });
   }
 
-  onEditProfileSubmit(){
-    console.log(this.editUserform.value);
+  onEditProfileSubmit(event) {
     // this.user.details = this.editform.value
-    localStorage.setItem('user', JSON.stringify(this.editUserform.value));
-    this.user = JSON.parse(localStorage.getItem('user'));
-    this.user = this.editUserform.value
+
     // this.router.navigate(['student-profile']);
+    console.log({ event });
+
+    // event.contactDetails.address = event.address;
+    // delete event.address;
+
+  //  if (this.teacherId && this.teacherId != "null") {
+
+      event.osid = this.item.osid;
+      this.teacherId = this.item.osid;
+
+      if(this.item.hasOwnProperty('identityDetails')){
+        event.identityDetails.osid = this.item.identityDetails.osid;
+         }
+
+         if(this.item.hasOwnProperty('contactDetails')){
+          event.contactDetails.osid = this.item.contactDetails.osid;
+        }
+
+      // if(this.item.hasOwnProperty('address')){
+      //   event.address.osid = this.item.address.osid;
+      // }
+
+      //let data = event; //this.editUserform.value;
+      console.log('data event -> ', event);
+
+      this.teacherProfileService.putTeacherProfile(event, this.teacherId).subscribe(res => {
+        if (res.responseCode == 'OK' && !res.params.errmsg) {
+         // this.router.navigate(['/teacher-profile', { 'id': this.teacherId }]);
+          this.getTeacherData(this.teacherId);
+          this.toastMsg.success('Success', 'Teacher Profile Updated Successfully');
+        } else {
+          this.toastMsg.error('Error', res.params.errmsg);
+        }
+      })
+
+   // } else {
+     
+
+      
+      const data = event;
+
+      console.log('data event -> ', data);
+
+     /* this.teacherProfileService.postTeacherProfile(data).subscribe(res => {
+        if (res.responseCode == 'OK' && !res.params.errmsg) {
+         // this.router.navigate(['/teacher-profile', { 'id': res.result.Teacher.osid }]);
+          localStorage.setItem('teacherId', res.result.Teacher.osid);
+
+          this.getTeacherData(res.result.Teacher.osid);
+          this.toastMsg.success('Success', 'Teacher Profile Added Successfully');
+        } else {
+          this.toastMsg.error('Error', res.params.errmsg);
+        }
+      })*/
+   // }
+
+
   }
 
-  onSubmit(){
-    
+  onSubmit() {
+
   }
-  
-  onEducationSubmit(event){
+
+  onEducationSubmit(event) {
     console.log(event);
     // this.user.details = this.editform.value
-    event.attested = "pending"
-    event.note = "Attestation pending"
-    event.consent= false
-    this.education.push(event)
-    console.log(this.education)
-    localStorage.setItem('education', JSON.stringify(this.education));
-    this.educationForm.reset();
+     this.attested = "pending"
+    // event.note = "Attestation pending"
+    // event.consent = false
+    // this.education.push(event)
+    //this.educationForm.reset();
     // this.education = this.educationForm.value
+    this.teacherId = this.item.osid
+
+    if (!this.item.hasOwnProperty('academicQualifications')) {
+      this.item.academicQualifications = [
+        event
+      ]
+    } else {
+      this.item.academicQualifications.push(
+        event
+      );
+    }
+
+    this.teacherProfileService.putTeacherProfile(this.item, this.teacherId).subscribe(res => {
+      if (res.responseCode == 'OK' && !res.params.errmsg) {
+        // localStorage.setItem('student_id', res.result.Student.osid);
+       // this.router.navigate(['/teacher-profile', { 'id': this.teacherId }]);
+        this.getTeacherData(this.teacherId);
+        this.toastMsg.success('Success', 'Academic Qualifications Deatils Added Successfully');
+      }
+    })
+
   }
 
-  onExperienceSubmit(event){
+  onExperienceSubmit(event) {
     console.log(event);
-    // this.user.details = this.editform.value
-    event.attested = "pending"
-    event.note = "Attestation pending"
-    event.consent= false
-    this.experience.push(event)
-    console.log(this.experience)
-    localStorage.setItem('experience', JSON.stringify(this.experience));
+    attested: "pending"
+
+    /*
+    EmploymentType: "Permanant"
+TeacherType: "Assistant teacher UPS Head teacher primary school"
+attested: "pending"
+enddate: "2040-01-12"
+institute: "Sarvoday School"
+send: true
+startdate: "2000-02-12"
+__proto__: Object
+*/
+
+    // const data = {
+    //   "experience": [
+    //     {
+    //       "institute": event.institute,
+    //       "employmentType": event.EmploymentType,
+    //       "start": event.startdate,
+    //       "end": event.enddate,
+    //       "teacherType": event.TeacherType,
+    //       "subjects": [
+    //         "string"
+    //       ],
+    //       "grades": [
+    //         "string"
+    //       ]
+    //     }
+    //   ]
+    // }
+
+    //event.osid = this.item.osid;
+    this.teacherId = this.item.osid
+
+    if (!this.item.hasOwnProperty('experience')) {
+      this.item.experience = [
+        event
+      ]
+    } else {
+      this.item.experience.push(
+        event
+      );
+    }
+
+    this.teacherProfileService.putTeacherProfile(this.item, this.teacherId).subscribe(res => {
+      if (res.responseCode == 'OK' && !res.params.errmsg) {
+        this.getTeacherData(this.teacherId);
+        this.toastMsg.success('Success', 'Experience data added successfully');
+      }
+    })
+
     this.educationForm.reset();
     // this.education = this.educationForm.value
   }
 
   ngOnInit(): void {
-    if(localStorage.getItem('institute-detail')){
-      this.institute = JSON.parse(localStorage.getItem('institute-detail')).BasicDetails.instituteName;
-      this.experianceSchema.properties.institute.enum.push(this.institute)
-      this.educationSchema.properties.institute.enum.push(this.institute)
-    } 
+    // if (localStorage.getItem('institute-detail')) {
+    //   this.institute = JSON.parse(localStorage.getItem('institute-detail')).BasicDetails.instituteName;
+    //   this.experianceSchema.properties.institute.enum.push(this.institute)
+    //   this.educationSchema.properties.institute.enum.push(this.institute)
+    // }
+
+    this.user = this.keycloakService.getUsername();
+    this.keycloakService.getToken().then((token)=>{
+      console.log('keyCloak teacher token - ', token);
+      localStorage.setItem('token', token);
+      localStorage.setItem('loggedInUser', this.user)
+    });
+
+    this.route.params.subscribe(params => {
+      console.log("route", params)
+      this.teacherId = params['id'];
+     // this.teacherId = ( this.teacherId)?  this.teacherId : localStorage.getItem('teacherId');
+
+    });
+
+    this.getTeacherData(this.teacherId);
   }
 
-  onWorkingChange(){
+  getTeacherData(id) {
+
+   // if (id && id != "null") {
+      this.teacherProfileService.getTeacherProfile(id).subscribe((res) => {
+        this.item = res[0];
+      })
+    //}
+  }
+
+  onWorkingChange() {
     console.log(this.educationForm.value.working)
     this.working = this.educationForm.value.working;
   }
 
-  modelchange(id){
+  modelchange(id) {
     console.log(id)
     this.education[id] = this.educationForm
   }
 }
-

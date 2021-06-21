@@ -19,15 +19,21 @@ export class InstituteProfileService {
       data: data
     };
 
-    if(!data.identifier){
       return this.dataService.post(req);
-    }else{
-      return this.dataService.patch(req);
-    }
+  }
+
+  putInstituteProfile(data, id) {
+    let url = `${this.baseUrl}/${ApiPaths.Institute}/` + id;
+    const req = {
+      url: url,
+      data: data
+    };
+
+    return this.dataService.put(req);
   }
 
   getInstituteProfile(id) {
-    let url = `${this.baseUrl}/${ApiPaths.Institute}/${id}`;
+    let url = `${this.baseUrl}/${ApiPaths.Institute}`;
     const req = {
       url: url
     };

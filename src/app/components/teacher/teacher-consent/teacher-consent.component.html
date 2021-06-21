@@ -12,7 +12,7 @@
     </thead>
     <tbody>
       <!-- <ng-template ngFor let-item [ngForOf]="consent" let-i="index"> -->
-        <tr *ngIf="user.consent === true">
+        <tr *ngIf="user?.consent === true">
           <td>{{currentDate | date:'dd-MM-yyyy'}}</td>
           <td>{{user.fullName}} ({{user.mobileEmail}})</td>
           <td><button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize" (click)="onConsentApprove('granted')"><i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>Grant</button>
@@ -22,5 +22,14 @@
         </tr>
       <!-- </ng-template> -->
     </tbody>
+  </table>
+  <table class="mx-5 my-5 w-50">
+    <tbody class="fs-5">
+        <tr *ngIf="!user?.consent?.length">
+          <td class="float-end" [attr.colspan]="user?.consent?.length">
+            No Records Found!
+          </td>
+        </tr>
+      </tbody>
   </table>
 </div>

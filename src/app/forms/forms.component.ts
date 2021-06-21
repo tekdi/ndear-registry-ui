@@ -263,8 +263,9 @@ export class FormsComponent implements OnInit {
       console.log({ res });
       if (res.responseCode == 'OK') {
         var entity = this.apiUrl.split('/')[1]
-        alert('Data added successfully : ' + JSON.stringify(res.result));
-        localStorage.setItem('entity-osid', res.result[0].osid);
+        // alert('Data added successfully : ' + JSON.stringify(res.result));
+        console.log("resp--",res.result[entity],entity)
+        localStorage.setItem('entity-osid', res.result[entity].osid);
         // const url = this.router.createUrlTree(['/profile/institute'])
         // window.open(url.toString(), '_blank')
       } else {

@@ -20,7 +20,7 @@ export class LayoutsComponent implements OnInit {
   schemaloaded = false;
   layoutSchema;
   apiUrl: any;
-  identifier: any;
+  identifier: any = null;
   model: any;
   Data: string[] = [];
   property: string[] = [];

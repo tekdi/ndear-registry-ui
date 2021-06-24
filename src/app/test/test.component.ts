@@ -12,6 +12,8 @@ import { SchemaService } from 'src/app/services/data/schema.service';
   styleUrls: ['./test.component.css']
 })
 
+
+
 export class TestComponent implements OnInit {
 
   editSchema;

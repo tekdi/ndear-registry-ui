@@ -12,7 +12,17 @@ export class StudentProfileService {
   constructor(public dataService: DataService) {
   }
 
-  postStudentProfile(data, id) {
+  postStudentProfile(data) {
+    let url = `${this.baseUrl}/${ApiPaths.Student}`;
+    const req = {
+      url: url,
+      data: data
+    };
+
+    return this.dataService.post(req);
+  }
+
+  addProperty(data, id) {
     let url = `${this.baseUrl}/${ApiPaths.Student}/` + id + '/educationDetails';
     const req = {
       url: url,
@@ -20,7 +30,6 @@ export class StudentProfileService {
     };
 
     return this.dataService.post(req);
-
   }
 
   putStudentProfile(data, id) {

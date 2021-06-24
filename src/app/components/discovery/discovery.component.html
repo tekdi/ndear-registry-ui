@@ -5,29 +5,42 @@
   <!-- ------------------ Institute Search ------------------------------------- -->
   <mat-tab label="Search Institute">
     <div *ngIf="searchInstitute" class="">
-      <json-schema-form [schema]="searchInstitute" [data]='data' [widgets]="yourWidgets" framework="bootstrap-4" (onChanges)="onEditProfileSubmit($event)">
+      <json-schema-form [schema]="searchInstitute" [data]='data' [widgets]="yourWidgets" framework="bootstrap-4" (onChanges)="searchInstituteData($event)">
       </json-schema-form>
       <button (click)="resetData()" class="btn btn-info">Reset</button>
 
     </div>
 
     <div class="mt-5">
-      <p class="small"><b>5 Institutes </b></p>
-      <div class="card p-2" *ngFor="let item of boardList?.data">
+      <p class="small"><b> <span *ngIf="instituteItems?.length">{{items.length}}</span> Institutes </b></p>
+      <hr />
+      <div class="card p-2" *ngFor="let item of instituteItems | paginate: { itemsPerPage: limit, currentPage: p }">
         <div class="card-body" data-toggle="modal" data-target="#prewiewProfile" (click)="showDetails()">
-          <span>{{item?.first_name}} {{item?.last_name}}</span><br />
+          <span>{{item?.instituteName}}</span><br />
           <span class="small text-muted">Bengaluru karnataka </span> <br />
           <span>Visiting Faculty, Pragti Institute</span><br />
           <span>B.Ed Mumbai University </span><br />
         </div>
       </div>
+      <table class="mx-5 my-5 w-50">
+        <tbody class="fs-5">
+          <tr *ngIf="!instituteItems?.length">
+            <td class="float-end" [attr.colspan]="instituteItems?.length">
+              Data Not Found!
+              </td>
+            </tr>
+          </tbody>
+      </table>  
+      <div class="mt-5 float-end">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>        
     </div>
   </mat-tab>
 
   <!-- ------------------ Institute Teacher ------------------------------------- -->
   <mat-tab label="Search Teacher">
     <div *ngIf="searchInstitute" class="">
-      <json-schema-form [schema]="searchInstitute" [data]='data' framework="bootstrap-4" (onChanges)="onEditProfileSubmit($event)">
+      <json-schema-form [schema]="searchInstitute" [data]='data' framework="bootstrap-4" (onChanges)="searchTeacherData($event)">
       </json-schema-form>
       <button (click)="resetData()" class="btn btn-info">Reset</button>
 
@@ -35,21 +48,33 @@
 
     <div class="mt-5">
       <p class="small"><b>5 Teachers </b></p>
-      <div class="card p-2" *ngFor="let item of boardList?.data">
-        <div class="card-body " data-toggle="modal" data-target="#prewiewProfile" (click)="showDetails()">
+      <div class="card p-2" *ngFor="let item of items?.data | paginate: { itemsPerPage: limit, currentPage: p }">
+        <div class="card-body" data-toggle="modal" data-target="#prewiewProfile" (click)="showDetails()">
           <span>{{item?.first_name}} {{item?.last_name}}</span><br />
           <span class="small text-muted">Bengaluru karnataka </span> <br />
           <span>Visiting Faculty, Pragti Institute</span><br />
           <span>B.Ed Mumbai University </span><br />
         </div>
       </div>
+      <table class="mx-5 my-5 w-50">
+        <tbody class="fs-5">
+          <tr *ngIf="!items?.length">
+            <td class="float-end" [attr.colspan]="items?.length">
+              Data Not Found!
+              </td>
+            </tr>
+          </tbody>
+      </table>          
+      <div class="mt-5 float-end">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>        
     </div>
   </mat-tab>
 
   <!-- ------------------ Institute Student ------------------------------------- -->
   <mat-tab label="Search Student">
     <div *ngIf="searchInstitute" class="">
-      <json-schema-form [schema]="searchInstitute" [data]='data' framework="bootstrap-4" (onChanges)="onEditProfileSubmit($event)">
+      <json-schema-form [schema]="searchInstitute" [data]='data' framework="bootstrap-4" (onChanges)="searchStudentData($event)">
       </json-schema-form>
       <button (click)="resetData()" class="btn btn-info">Reset</button>
 
@@ -57,17 +82,30 @@
 
     <div class="mt-5">
       <p class="small"><b>5 Student </b></p>
-      <div class="card p-2" *ngFor="let item of boardList?.data">
-        <div class="card-body " data-toggle="modal" data-target="#prewiewProfile" (click)="showDetails()">
+      <div class="card p-2" *ngFor="let item of items?.data | paginate: { itemsPerPage: limit, currentPage: p }">
+        <div class="card-body" data-toggle="modal" data-target="#prewiewProfile" (click)="showDetails()">
           <span>{{item?.first_name}} {{item?.last_name}}</span><br />
           <span class="small text-muted">Bengaluru karnataka </span> <br />
           <span>Visiting Faculty, Pragti Institute</span><br />
           <span>B.Ed Mumbai University </span><br />
         </div>
       </div>
+      <table class="mx-5 my-5 w-50">
+        <tbody class="fs-5">
+          <tr *ngIf="!items?.length">
+            <td class="float-end" [attr.colspan]="items?.length">
+              Data Not Found!
+              </td>
+            </tr>
+          </tbody>
+      </table>  
+      <div class="mt-5 float-end">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>    
     </div>
   </mat-tab>
 
+ 
 </mat-tab-group>
 
 

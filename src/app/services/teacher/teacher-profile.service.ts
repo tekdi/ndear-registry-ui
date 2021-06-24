@@ -23,6 +23,18 @@ export class TeacherProfileService {
     
   }
 
+  addProperty(data, id, property) {
+    
+    let url = `${this.baseUrl}/${ApiPaths.Teacher}/` + id + '/' + property;
+    const req = {
+      url: url,
+      data: data
+    };
+
+      return this.dataService.post(req);
+    
+  }
+
   getTeacherProfile(id) {
     let url = `${this.baseUrl}/${ApiPaths.Teacher}`;
     const req = {
@@ -39,10 +51,21 @@ export class TeacherProfileService {
       data: data
     };
 
-   
       return this.dataService.put(req);
     
   }
+
+  updateTeacherProperty(entityId, propertyId, property) {
+    let url = `${this.baseUrl}/${ApiPaths.Teacher}/` + entityId + '/' + property + '/' + propertyId;
+    const req = {
+      url: url,
+      data: { 'send' : true}
+    };
+
+    return this.dataService.put(req);
+
+  }
+
 
 
 }

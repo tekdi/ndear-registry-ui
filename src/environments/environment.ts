@@ -15,6 +15,9 @@ export enum ApiPaths {
   Student = 'Student',
   InviteStudent = 'Student/invite',
   InviteTeacher = 'Teacher/invite',
-  InviteInstitute = 'Institute/invite'
+  InviteInstitute = 'Institute/invite',
+  searchInstitute = 'Institute/search',
+  searchTeacher = 'Teacher/search',
+  searchStudent = 'Student/search'
 }
 

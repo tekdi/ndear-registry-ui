@@ -49,12 +49,12 @@ import { TeacherConsentComponent } from './components/teacher/teacher-consent/te
 import { BoardAttestationDetailsComponent } from './components/board/board-attestation-details/board-attestation-details.component';
 import { TeacherSignupComponent } from './components/teacher/teacher-signup/teacher-signup.component';
 import { DiscoveryComponent } from './components/discovery/discovery.component';
-import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry,} from "ngx-schema-form";
 import { KeycloakloginComponent } from './components/keyCloak/keycloaklogin/keycloaklogin.component';
+import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry,} from "ngx-schema-form";
 import { ToastrModule } from 'ngx-toastr';
 import { APP_INITIALIZER } from '@angular/core';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
-
+import {NgxPaginationModule} from 'ngx-pagination';
 
 /* Service files */
 import { BoardInstituteService} from './services/board/board-institutes/board-institutes.service';
@@ -62,7 +62,7 @@ import { AdminFormService } from './services/admin-form.service';
 import { TeacherProfileService } from './services/teacher/teacher-profile.service';
 import { StudentProfileService} from './services/student/student-profile.service';
 import { InviteService} from './services/invite/invite.service';
-
+import { DiscoveryService } from './services/discovery/discovery.service';
 import { initializeKeycloak } from '../app/utility/app.init';
 
 @NgModule({
@@ -126,7 +126,8 @@ import { initializeKeycloak } from '../app/utility/app.init';
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-center',
     preventDuplicates: true,
-    })
+    }),
+    NgxPaginationModule
   ],
   schemas: [],
   entryComponents: [],
@@ -138,12 +139,14 @@ import { initializeKeycloak } from '../app/utility/app.init';
     TeacherProfileService,
     StudentProfileService,
     InviteService,
+    DiscoveryService,
     {
       provide: APP_INITIALIZER,
       useFactory: initializeKeycloak,
       multi: true,
       deps: [KeycloakService],
     }
+    
   ]
 })
 export class AppModule {

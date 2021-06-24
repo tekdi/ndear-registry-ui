@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NoneComponent } from 'angular6-json-schema-form';
 import { SchemaService } from 'src/app/services/data/schema.service';
 import { BoardInstituteService } from '../../services/board/board-institutes/board-institutes.service';
+import { DiscoveryService } from '../../services/discovery/discovery.service';
 
 @Component({
   selector: 'app-discovery',
@@ -14,14 +15,19 @@ export class DiscoveryComponent implements OnInit {
   schemaJson;
   boardList;
   data;
-
-
+  p: number = 1;
+  limit: number = 3;
   yourWidgets = {
-     submit: NoneComponent,  
+    submit: NoneComponent,
   }
+  instituteItems;
+  studentItems;
+  teacherItems;
+  search;
   constructor(
     public schemaService: SchemaService,
-    public boardInstituteService: BoardInstituteService
+    public boardInstituteService: BoardInstituteService,
+    public discoveryService: DiscoveryService
   ) { }
 
   ngOnInit(): void {
@@ -147,8 +153,100 @@ export class DiscoveryComponent implements OnInit {
     });
   }
 
-  onEditProfileSubmit(event) {
+  searchInstituteData(event) {
     console.log(event);
+    this.search = event;
+    let self = this;
+    let searchString = {
+      "filters": {
+        "instituteName": {
+          "eq": event.Institute.instituteName
+        }
+      }
+
+
+      // "schoolType": {
+      //   "eq": event.instituteName
+      // },
+      // "address.state": {
+      //   "eq": event.state
+      // }, "address.district": {
+      //   "eq": event.instituteType
+      // }
+
+    }
+
+
+    this.discoveryService.searchfilter(searchString).subscribe((err) => {
+    }, (res) => {
+      console.log(res);
+      this.instituteItems = res;
+    });
+
+  }
+
+  searchTeacherData(event) {
+    console.log(event);
+    this.search = event;
+    let self = this;
+    let searchString = {
+      "filters": {
+        "instituteName": {
+          "eq": event.Institute.instituteName
+        }
+      }
+
+
+      // "schoolType": {
+      //   "eq": event.instituteName
+      // },
+      // "address.state": {
+      //   "eq": event.state
+      // }, "address.district": {
+      //   "eq": event.instituteType
+      // }
+
+    }
+
+
+    this.discoveryService.searchfilter(searchString).subscribe((err) => {
+    }, (res) => {
+      console.log(res);
+      this.instituteItems = res;
+    });
+
+  }
+
+  searchStudentData(event) {
+    console.log(event);
+    this.search = event;
+    let self = this;
+    let searchString = {
+      "filters": {
+        "instituteName": {
+          "eq": event.Institute.instituteName
+        }
+      }
+
+
+      // "schoolType": {
+      //   "eq": event.instituteName
+      // },
+      // "address.state": {
+      //   "eq": event.state
+      // }, "address.district": {
+      //   "eq": event.instituteType
+      // }
+
+    }
+
+
+    this.discoveryService.searchfilter(searchString).subscribe((err) => {
+    }, (res) => {
+      console.log(res);
+      this.instituteItems = res;
+    });
+
   }
 
   showDetails() {
@@ -156,9 +254,10 @@ export class DiscoveryComponent implements OnInit {
   }
 
   resetData() {
-    this.data = {  }
+    this.data = {}
 
   }
+
 
 
 }

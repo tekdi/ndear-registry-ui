@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
+declare var $: any;
 
 @Component({
   selector: 'app-header',
@@ -21,6 +22,7 @@ export class HeaderComponent implements OnInit {
   admin_setup: boolean = false;
   attestation_count: number = 0
   consent_count: number = 0;
+  entity;
   constructor(
     public router: Router,
     public keycloakService: KeycloakService
@@ -44,6 +46,9 @@ export class HeaderComponent implements OnInit {
         }
       }
 
+      this.keycloakService.loadUserProfile().then((res) => {
+        this.entity = res['attributes'].entity[0];
+      });
 
       this.institute = JSON.parse(localStorage.getItem('institute-detail'));
       if (this.headerFor == 'institute') {
@@ -88,9 +93,27 @@ export class HeaderComponent implements OnInit {
   }
 
   redirectTo() {
-   // let teacherId = localStorage.getItem('teacherId');
+    // let teacherId = localStorage.getItem('teacherId');
     this.router.navigate(['/teacher-profile']);
 
+  }
+
+  navToInstitute() {
+    this.router.navigate(['/institute-profile']);
+    this.modalClose();
+
+  }
+
+  navToTeacher() {
+    this.router.navigate(['/teacher-profile']);
+    this.modalClose();
+
+  }
+
+  modalClose() {
+    $('.modal-backdrop').hide(); // for black background
+    $('body').removeClass('modal-open'); // For scroll run
+    $('#modal').modal('hide');
   }
 
   logout() {

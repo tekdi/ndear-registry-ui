@@ -33,6 +33,7 @@ export class DataService {
       console.log(res);
       this.isLoogedIn = res;
     })
+
     if(this.isLoogedIn){
      // alert(this.keycloak.isLoggedIn);
       let default_headers = {
@@ -42,10 +43,12 @@ export class DataService {
 
       return default_headers;
 
-    }else{
+    }else
+    {
       let default_headers = {
         Accept: 'application/json'
       };
+      
       return default_headers;
 
     }

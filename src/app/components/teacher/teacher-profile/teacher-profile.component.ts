@@ -81,32 +81,37 @@ export class TeacherProfileComponent implements OnInit {
     this.Schema.getSchemas().subscribe((res) => {
       this.schemaJson = res;
       console.log("res", this.schemaJson.definitions.IdentityDetails);
-      delete this.schemaJson.definitions.ContactDetails.properties.address;
+     // delete this.schemaJson.definitions.ContactDetails.properties.address;
 
+
+      delete this.schemaJson.definitions.Teacher.properties.experience;
+      delete this.schemaJson.definitions.Teacher.properties.academicQualifications;
+
+      this.teacherSchema = this.schemaJson.definitions.Teacher;
 
       // console.log(this.schema.definitions)
-      this.teacherSchema = {
-        "type": "object",
-        "title": "Teacher",
-        "definitions": {
-          "identityDetails": this.schemaJson.definitions.IdentityDetails,
-          "contactDetails": this.schemaJson.definitions.ContactDetails,
-         // "address" : this.schemaJson.definitions.Address
-        },
-        "properties": {
-          "identityDetails": {
-            "$ref": "#/definitions/identityDetails"
-          },
-          "contactDetails": {
-            "$ref": "#/definitions/contactDetails"
-          }
-          // ,
-          // "address": {
-          //   "$ref": "#/definitions/address"
-          // }
-        }
-      };
-
+      /*    this.teacherSchema = {
+            "type": "object",
+            "title": "Teacher",
+            "definitions": {
+              "identityDetails": this.schemaJson.definitions.IdentityDetails,
+              "contactDetails": this.schemaJson.definitions.ContactDetails,
+             // "address" : this.schemaJson.definitions.Address
+            },
+            "properties": {
+              "identityDetails": {
+                "$ref": "#/definitions/identityDetails"
+              },
+              "contactDetails": {
+                "$ref": "#/definitions/contactDetails"
+              }
+              // ,
+              // "address": {
+              //   "$ref": "#/definitions/address"
+              // }
+            }
+          };
+    */
       //this.teacherSchema.definitions.contactDetails.address =  this.schemaJson.definitions.Address;
       console.log('this.teacherSchema==>', this.teacherSchema);
 
@@ -159,56 +164,56 @@ export class TeacherProfileComponent implements OnInit {
     // event.contactDetails.address = event.address;
     // delete event.address;
 
-  //  if (this.teacherId && this.teacherId != "null") {
+    //  if (this.teacherId && this.teacherId != "null") {
 
-      event.osid = this.item.osid;
-      this.teacherId = this.item.osid;
+    event.osid = this.item.osid;
+    this.teacherId = this.item.osid;
 
-      if(this.item.hasOwnProperty('identityDetails')){
-        event.identityDetails.osid = this.item.identityDetails.osid;
-         }
+    if (this.item.hasOwnProperty('identityDetails')) {
+      event.identityDetails.osid = this.item.identityDetails.osid;
+    }
 
-         if(this.item.hasOwnProperty('contactDetails')){
-          event.contactDetails.osid = this.item.contactDetails.osid;
-        }
+    if (this.item.hasOwnProperty('contactDetails')) {
+      event.contactDetails.osid = this.item.contactDetails.osid;
+    }
 
-      // if(this.item.hasOwnProperty('address')){
-      //   event.address.osid = this.item.address.osid;
-      // }
+    // if(this.item.hasOwnProperty('address')){
+    //   event.address.osid = this.item.address.osid;
+    // }
 
-      //let data = event; //this.editUserform.value;
-      console.log('data event -> ', event);
+    //let data = event; //this.editUserform.value;
+    console.log('data event -> ', event);
 
-      this.teacherProfileService.putTeacherProfile(event, this.teacherId).subscribe(res => {
-        if (res.responseCode == 'OK' && !res.params.errmsg) {
-         // this.router.navigate(['/teacher-profile', { 'id': this.teacherId }]);
-          this.getTeacherData(this.teacherId);
-          this.toastMsg.success('Success', 'Teacher Profile Updated Successfully');
-        } else {
-          this.toastMsg.error('Error', res.params.errmsg);
-        }
-      })
+    this.teacherProfileService.putTeacherProfile(event, this.teacherId).subscribe(res => {
+      if (res.responseCode == 'OK' && !res.params.errmsg) {
+        // this.router.navigate(['/teacher-profile', { 'id': this.teacherId }]);
+        this.getTeacherData(this.teacherId);
+        this.toastMsg.success('Success', 'Teacher Profile Updated Successfully');
+      } else {
+        this.toastMsg.error('Error', res.params.errmsg);
+      }
+    })
 
-   // } else {
-     
+    // } else {
 
-      
-      const data = event;
 
-      console.log('data event -> ', data);
 
-     /* this.teacherProfileService.postTeacherProfile(data).subscribe(res => {
-        if (res.responseCode == 'OK' && !res.params.errmsg) {
-         // this.router.navigate(['/teacher-profile', { 'id': res.result.Teacher.osid }]);
-          localStorage.setItem('teacherId', res.result.Teacher.osid);
+    const data = event;
 
-          this.getTeacherData(res.result.Teacher.osid);
-          this.toastMsg.success('Success', 'Teacher Profile Added Successfully');
-        } else {
-          this.toastMsg.error('Error', res.params.errmsg);
-        }
-      })*/
-   // }
+    console.log('data event -> ', data);
+
+    /* this.teacherProfileService.postTeacherProfile(data).subscribe(res => {
+       if (res.responseCode == 'OK' && !res.params.errmsg) {
+        // this.router.navigate(['/teacher-profile', { 'id': res.result.Teacher.osid }]);
+         localStorage.setItem('teacherId', res.result.Teacher.osid);
+
+         this.getTeacherData(res.result.Teacher.osid);
+         this.toastMsg.success('Success', 'Teacher Profile Added Successfully');
+       } else {
+         this.toastMsg.error('Error', res.params.errmsg);
+       }
+     })*/
+    // }
 
 
   }
@@ -220,7 +225,7 @@ export class TeacherProfileComponent implements OnInit {
   onEducationSubmit(event) {
     console.log(event);
     // this.user.details = this.editform.value
-     this.attested = "pending"
+    this.attested = "pending"
     // event.note = "Attestation pending"
     // event.consent = false
     // this.education.push(event)
@@ -238,12 +243,23 @@ export class TeacherProfileComponent implements OnInit {
       );
     }
 
-    this.teacherProfileService.putTeacherProfile(this.item, this.teacherId).subscribe(res => {
+    this.teacherProfileService.addProperty(event, this.teacherId, 'academicQualifications').subscribe(res => {
       if (res.responseCode == 'OK' && !res.params.errmsg) {
-        // localStorage.setItem('student_id', res.result.Student.osid);
-       // this.router.navigate(['/teacher-profile', { 'id': this.teacherId }]);
-        this.getTeacherData(this.teacherId);
-        this.toastMsg.success('Success', 'Academic Qualifications Deatils Added Successfully');
+        this.teacherProfileService.getTeacherProfile(this.teacherId).subscribe((res) => {
+          this.item = res[0];
+          let self = this;
+          this.toastMsg.success('Success', 'Academic Qualifications Deatils Added Successfully');
+
+          for (let i = 0; i <= self.item.academicQualifications.length; i++) {
+
+            console.log(self.item.academicQualifications[i]._osState);
+            if (self.item.academicQualifications[i]._osState == 'DRAFT') {
+              this.sendVerification(this.teacherId, self.item.academicQualifications[i].osid, 'academicQualifications');
+              this.getTeacherData(this.teacherId);
+            }
+          }
+
+        })
       }
     })
 
@@ -252,35 +268,6 @@ export class TeacherProfileComponent implements OnInit {
   onExperienceSubmit(event) {
     console.log(event);
     attested: "pending"
-
-    /*
-    EmploymentType: "Permanant"
-TeacherType: "Assistant teacher UPS Head teacher primary school"
-attested: "pending"
-enddate: "2040-01-12"
-institute: "Sarvoday School"
-send: true
-startdate: "2000-02-12"
-__proto__: Object
-*/
-
-    // const data = {
-    //   "experience": [
-    //     {
-    //       "institute": event.institute,
-    //       "employmentType": event.EmploymentType,
-    //       "start": event.startdate,
-    //       "end": event.enddate,
-    //       "teacherType": event.TeacherType,
-    //       "subjects": [
-    //         "string"
-    //       ],
-    //       "grades": [
-    //         "string"
-    //       ]
-    //     }
-    //   ]
-    // }
 
     //event.osid = this.item.osid;
     this.teacherId = this.item.osid
@@ -295,10 +282,23 @@ __proto__: Object
       );
     }
 
-    this.teacherProfileService.putTeacherProfile(this.item, this.teacherId).subscribe(res => {
+    this.teacherProfileService.addProperty(event, this.teacherId, 'experience').subscribe(res => {
       if (res.responseCode == 'OK' && !res.params.errmsg) {
-        this.getTeacherData(this.teacherId);
-        this.toastMsg.success('Success', 'Experience data added successfully');
+        this.teacherProfileService.getTeacherProfile(this.teacherId).subscribe((res) => {
+          this.item = res[0];
+          let self = this;
+          this.toastMsg.success('Success', 'Experience data added successfully');
+
+          for (let i = 0; i <= self.item.experience.length; i++) {
+
+            console.log(self.item.experience[i]._osState);
+            if (self.item.experience[i]._osState == 'DRAFT') {
+              this.sendVerification(this.teacherId, self.item.experience[i].osid, 'experience');
+              this.getTeacherData(this.teacherId);
+            }
+          }
+
+        })
       }
     })
 
@@ -314,7 +314,7 @@ __proto__: Object
     // }
 
     this.user = this.keycloakService.getUsername();
-    this.keycloakService.getToken().then((token)=>{
+    this.keycloakService.getToken().then((token) => {
       console.log('keyCloak teacher token - ', token);
       localStorage.setItem('token', token);
       localStorage.setItem('loggedInUser', this.user)
@@ -323,7 +323,7 @@ __proto__: Object
     this.route.params.subscribe(params => {
       console.log("route", params)
       this.teacherId = params['id'];
-     // this.teacherId = ( this.teacherId)?  this.teacherId : localStorage.getItem('teacherId');
+      // this.teacherId = ( this.teacherId)?  this.teacherId : localStorage.getItem('teacherId');
 
     });
 
@@ -332,10 +332,10 @@ __proto__: Object
 
   getTeacherData(id) {
 
-   // if (id && id != "null") {
-      this.teacherProfileService.getTeacherProfile(id).subscribe((res) => {
-        this.item = res[0];
-      })
+    // if (id && id != "null") {
+    this.teacherProfileService.getTeacherProfile(id).subscribe((res) => {
+      this.item = res[0];
+    })
     //}
   }
 
@@ -348,4 +348,18 @@ __proto__: Object
     console.log(id)
     this.education[id] = this.educationForm
   }
+
+  sendVerification(entityId, propertyId, property) {
+    this.teacherProfileService.updateTeacherProperty(entityId, propertyId, property).subscribe(res => {
+      if (res.responseCode == 'OK' && !res.params.errmsg) {
+        // localStorage.setItem('student_id', res.result.Student.osid);
+        //  this.router.navigate(['/student-profile', { 'id': this.studentId }]);
+
+        this.getTeacherData(this.teacherId);
+      } else {
+        this.toastMsg.error('Error', res.params.errmsg);
+      }
+    })
+  }
+
 }

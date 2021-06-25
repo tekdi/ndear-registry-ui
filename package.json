@@ -45,6 +45,7 @@
     "mdb-angular-ui-kit": "^1.0.0-beta3",
     "ng-otp-input": "^1.7.1",
     "ng2-semantic-ui": "^0.9.7",
+    "ngx-pagination": "^5.1.1",
     "ngx-schema-form": "^2.6.5",
     "ngx-toastr": "^14.0.0",
     "path": "^0.12.7",

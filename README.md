@@ -248,7 +248,7 @@ Key | Value
 `form.fieldsets` | Array/List of fieldsets(multiple) to populate in `form`.
 
 
-`fieldsets`
+>`fieldsets`
 
 Key | Value
 ------------ | -------------
@@ -256,7 +256,7 @@ Key | Value
 `fieldsets.fields` | Array/List of fields(multiple) to populate in `fieldsets`
 
 
-`fields`
+>`fields`
 
 Key | Value
 ------------ | -------------
@@ -275,6 +275,91 @@ Key | Value
                                 }
 ```     
 
+### app/layouts/layouts.json
+
+```json
+{
+    "type": "opensaberLayoutSchema",
+    "version": "0.1",
+    "layouts": [
+        {
+            "employer": {
+                "api": "/Employer",
+                "title": "Employer Profile",
+                "blocks": [
+                    {
+                        "definition": "Employer",
+                        "title": "Basic details",
+                        "add": false,
+                        "edit": true,
+                        "editform":"employer-setup",
+                        "fields": {
+                            "includes": ["*"]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "employee": {
+                "api": "/Employee",
+                "title": "Employee Profile",
+                "blocks": [
+                    {
+                        "definition": "Employee",
+                        "title": "Basic details",
+                        "add": false,
+                        "edit": false,
+                        "fields": {
+                            "includes": ["*"],
+                            "excludes": ["experience"]
+                        }
+                    },
+                    {
+                        "definition": "Experience",
+                        "title": "Experience details",
+                        "add": true,
+                        "addform":"employee-experience",
+                        "edit": false,
+                        "multiple": true,
+                        "fields": {
+                            "includes": ["experience"]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
+```
+
+`layoutUrl = {baseUrl}/profile/:route`
+
+`layout = layouts[route]`
+
+Key | Value
+------------ | -------------
+`layout.api` | URL Path of API
+`layout.title` | Title of form
+`layout.blocks` | Cards/Blocks (multiple) to populate in `layout`.
+
+>`blocks`
+
+Key | Value
+------------ | -------------
+`blocks.definition` | Defination of fields from JSON Schemas in `schemaUrl`
+`blocks.title` | Title of Card/Block
+`blocks.add` | `boolean` Enable Add Button
+`blocks.addform` | `<name of form from forms>` Form opens on Add Button click
+`blocks.edit` | `boolean` Enable Edit Button
+`blocks.editform` | `<name of form from forms>` Form opens on Edit Button click
+`blocks.multiple` | `boolean` Enable Multiple values
+`blocks.fields` | Array/List of fields(multiple) to populate in `fieldsets`
 
 
+>`fields`
 
+Key | Value
+------------ | -------------
+`fields.includes` | Array/list of Included Fields from response or [*]
+`fields.excludes` | Array/list of Excluded Fields from response

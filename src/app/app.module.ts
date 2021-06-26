@@ -167,7 +167,7 @@ import { AddPanelComponent } from './layouts/modal/panels/add-panel/add-panel.co
 
     TeacherSignupComponent,
     DiscoveryComponent,
-    KeycloakloginComponent
+    KeycloakloginComponent,
 
     FormsComponent,
     ArrayTypeComponent,

@@ -92,12 +92,14 @@ const routes: Routes = [
 
   // Forms
   { path: 'form/:form', component: FormsComponent },
-  { path: 'form/:form/:id', component: FormsComponent },
+  { path: 'form/:form/:id', component: FormsComponent, canActivate: [AuthGuard] },
 
 
   // Layouts
+  { path: ':layout', component: LayoutsComponent, canActivate: [AuthGuard] },
   {
     path: 'profile/:layout', component: LayoutsComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'edit',
@@ -120,56 +122,9 @@ const routes: Routes = [
             component: AddPanelComponent
           }
         ]
-      },
-      // {
-      //   path: 'add-claim/:claim',
-      //   component: ModalContainerComponent
-      // },
-      // {
-      //   path: 'edit/:claim',
-      //   component: ModalContainerComponent
-      // },
-      // {
-      //   path: 'dialog',
-      //   component: ModalContainerComponent
-      // }
+      }
     ]
-  },
-  // {
-  //   path: 'panel',
-  //   component: PanelsComponent,
-  //   outlet: 'panel',
-  //   children: [
-  //     {
-  //       path: 'add',
-  //       component: EditPanelComponent
-  //     }
-  //   ]
-  // }
-
-  // { path: 'profile/:layout/add-claim/:claim', component: ModalContainerComponent },
-  // { path: 'profile/:layout/edit-claim/:claim', component: ModalContainerComponent},
-
-//   {
-//     path: 'profile/:layout',
-//     component: LayoutsComponent, 
-//     children: [
-//         {
-//             path: 'add-claim/:claim',
-//             component: ModalContainerComponent,
-//         },
-//         {
-//             path: 'edit-claim/:claim',
-//             component: ModalContainerComponent,
-//         },
-//         {
-//            path: '',
-//            redirectTo: 'profile',
-//            pathMatch: 'full'
-//         }
-//     ]
-// }
-
+  }
 ];
 
 @NgModule({

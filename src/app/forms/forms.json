@@ -143,8 +143,133 @@
             }
         },
         {
+            "teacher-signup": {
+                "api": "/Teacher/invite",
+                "type": "entity",
+                "formclass":"row",
+                "title": "Sign up / Create new account",
+                "fieldsets": [
+                    {
+                        "definition": "Teacher",
+                        "fields": [
+                            {
+                                "name":"identityDetails",
+                                "children": {
+                                    "definition": "IdentityDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "fullName",
+                                            "required": true
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name":"contactDetails",
+                                "children": {
+                                    "definition": "ContactDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "email",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "mobile",
+                                            "required": true
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "redirectTo":"/profile/teacher"
+            }
+        },
+        {
+            "teacher-setup": {
+                "api": "/Teacher",
+                "type": "entity",
+                "redirectTo":"/profile/teacher",
+                "fieldsets": [
+                    {
+                        "definition": "Teacher",
+                        "fields": [
+                            {
+                                "name":"contactDetails"
+                            },
+                            {
+                                "name":"identityDetails",
+                                "children":{
+                                    "definition": "IdentityDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "fullName",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "gender",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "dob",
+                                            "required": true,
+                                            "type": "date"
+                                        },
+                                        {
+                                            "name": "identityType",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "identityValue",
+                                            "required": true
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "teacher-education": {
+                "api": "/Teacher",
+                "type": "property:academicQualifications",
+                "fieldsets": [
+                    {
+                        "definition": "Teacher",
+                        "fields": [
+                            {
+                                "name":"academicQualifications"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "teacher-experience": {
+                "api": "/Teacher",
+                "type": "property:experience",
+                "fieldsets": [
+                    {
+                        "definition": "Teacher",
+                        "fields": [
+                            {
+                                "name":"experience"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
             "student-signup": {
-                "api": "/Student",
+                "api": "/Student/invite",
                 "type": "entity",
                 "formclass":"row",
                 "title": "Sign up / Create new account",
@@ -209,6 +334,10 @@
                                         {
                                             "name": "email",
                                             "required": true
+                                        },
+                                        {
+                                            "name": "mobile",
+                                            "required": true
                                         }
                                     ]
                                 }
@@ -223,6 +352,7 @@
             "student-setup": {
                 "api": "/Student",
                 "type": "entity",
+                "redirectTo":"/profile/student",
                 "fieldsets": [
                     {
                         "definition": "Student",
@@ -231,7 +361,34 @@
                                 "name":"contactDetails"
                             },
                             {
-                                "name":"identityDetails"
+                                "name":"identityDetails",
+                                "children":{
+                                    "definition": "IdentityDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "fullName",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "gender",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "dob",
+                                            "required": true,
+                                            "type": "date"
+                                        },
+                                        {
+                                            "name": "identityType",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "identityValue",
+                                            "required": true
+                                        }
+                                    ]
+                                }
                             }
                         ]
                     }

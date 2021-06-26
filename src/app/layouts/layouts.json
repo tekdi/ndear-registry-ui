@@ -33,6 +33,47 @@
             }
         },
         {
+            "teacher": {
+                "api": "/Teacher",
+                "title": "Teacher Profile",
+                "blocks": [
+                    {
+                        "definition": "Teacher",
+                        "title": "Basic details",
+                        "add": false,
+                        "edit": true,
+                        "editform":"teacher-setup",
+                        "fields": {
+                            "includes": ["*"],
+                            "excludes": ["experience","academicQualifications"]
+                        }
+                    },
+                    {
+                        "definition": "Teacher",
+                        "title": "Experience details",
+                        "add": true,
+                        "addform":"teacher-experience",
+                        "edit": false,
+                        "multiple": true,
+                        "fields": {
+                            "includes": ["experience"]
+                        }
+                    },
+                    {
+                        "definition": "Teacher",
+                        "title": "Academic Qualifications",
+                        "add": true,
+                        "addform":"teacher-education",
+                        "edit": false,
+                        "multiple": true,
+                        "fields": {
+                            "includes": ["academicQualifications"]
+                        }
+                    }
+                ]
+            }
+        },
+        {
             "student": {
                 "api": "/Student",
                 "title": "Student Profile",
@@ -49,12 +90,12 @@
                         }
                     },
                     {
-                        "definition": "Institute",
+                        "definition": "Student",
                         "title": "Education details",
                         "add": true,
                         "addform":"student-education",
                         "edit": false,
-                        "multiple": false,
+                        "multiple": true,
                         "fields": {
                             "includes": ["educationDetails"]
                         }

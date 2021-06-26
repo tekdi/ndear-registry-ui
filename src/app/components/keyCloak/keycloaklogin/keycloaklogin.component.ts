@@ -32,12 +32,13 @@ export class KeycloakloginComponent implements OnInit {
 
       switch(this.entity)
       {
-        case 'Student' : 
-        this.profileUrl = '/student-profile';
+        case 'Student' :
+        // this.profileUrl = '/student-profile';
+        this.profileUrl = '/profile/'+this.entity;
         break;
 
         case 'Teacher' : 
-        this.profileUrl = '/teacher-profile';
+        this.profileUrl = '/profile/'+this.entity;
         break;
 
         case 'Institute' : 

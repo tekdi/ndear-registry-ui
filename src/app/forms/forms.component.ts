@@ -43,13 +43,15 @@ export class FormsComponent implements OnInit {
   type: string;
   apiUrl: string;
   redirectTo: any;
+  add: boolean;
   constructor(private route: ActivatedRoute, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       console.log('params', params)
       // this.form = params['form']
-
+      this.add = this.router.url.includes('add');
+      console.log(this.add);
       if (params['form'] != undefined) {
         this.form = params['form']
       }
@@ -61,6 +63,7 @@ export class FormsComponent implements OnInit {
       }
 
     });
+    
     // console.log("modallll", this.modal)
     var filtered = FormSchemas.forms.filter(obj => {
       console.log(Object.keys(obj)[0])
@@ -74,12 +77,13 @@ export class FormsComponent implements OnInit {
     if(this.formSchema.redirectTo){
       this.redirectTo = this.formSchema.redirectTo;
     }
-    if (this.identifier != null) {
-      this.getData()
-    }
+    // if (this.identifier != null) {
+    //   this.getData()
+    // }
     if (this.formSchema.type) {
       this.type = this.formSchema.type
     }
+    this.getData()
     this.schemaService.getSchemas().subscribe((res) => {
       this.responseData = res;
       console.log("this.responseData", this.responseData);
@@ -133,7 +137,9 @@ export class FormsComponent implements OnInit {
     this.form2 = new FormGroup({});
     this.options = {};
     this.fields = [this.formlyJsonschema.toFieldConfig(this.schema)];
-    // this.model = {};
+    if(this.add){
+      this.model = {};
+    }
     this.schemaloaded = true;
   }
 
@@ -214,13 +220,13 @@ export class FormsComponent implements OnInit {
           this.responseData.definitions[fieldset.definition].properties[field.name]['pattern'] = field.validation.pattern;
         }
       }
-      if (field.type) {
-        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = field.type
-      }
-      if (field.disabled || field.disable) {
-        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['disabled'] = field.disabled
-      };
     }
+    if (field.type) {
+      this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['type'] = field.type
+    }
+    if (field.disabled || field.disable) {
+      this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['disabled'] = field.disabled
+    };
     // console.log("field", field)
   }
 
@@ -238,7 +244,7 @@ export class FormsComponent implements OnInit {
       // this.getData()
     }
     else if(this.type && this.type.includes("property")){
-      this.identifier = localStorage.getItem('entity-osid');
+      // this.identifier = localStorage.getItem('entity-osid');
       var property = this.type.split(":")[1];
       var url = [this.apiUrl,this.identifier,property];
       this.apiUrl = url.join("/");
@@ -246,38 +252,47 @@ export class FormsComponent implements OnInit {
       this.postData()
       // this.getData()
     }
-    this.router.navigateByUrl(this.redirectTo)
+    // const url = this.router.createUrlTree(['/profile/institute'])
+    // window.open(this.router.createUrlTree([this.redirectTo]).toString(), '_blank')
+    
   }
 
   getData() {
-    this.identifier = localStorage.getItem('entity-osid');
-    this.generalService.getData(this.apiUrl, this.identifier).subscribe((res) => {
+    var get_url;
+    if(this.identifier){
+      get_url = this.apiUrl+'/'+this.identifier
+    }else{
+      get_url = this.apiUrl
+    }
+    // this.identifier = localStorage.getItem('entity-osid');
+    console.log("hereeeeeee",get_url)
+    this.generalService.getData(get_url).subscribe((res) => {
       console.log({ res });
-      this.model = res
-
+      this.model = res[0];
+      this.identifier = res[0].osid;
     });
   }
 
   postData() {
+    if (Array.isArray(this.model)) {
+      this.model = this.model[0];
+    }
     this.generalService.postData(this.apiUrl, this.model).subscribe((res) => {
       console.log({ res });
-      if (res.responseCode == 'OK') {
-        var entity = this.apiUrl.split('/')[1]
-        // alert('Data added successfully : ' + JSON.stringify(res.result));
-        console.log("resp--",res.result[entity],entity)
-        localStorage.setItem('entity-osid', res.result[entity].osid);
-        // const url = this.router.createUrlTree(['/profile/institute'])
-        // window.open(url.toString(), '_blank')
-      } else {
-        alert(res.params.errmsg);
+      if (res.params.status == 'SUCCESSFUL') {
+        this.router.navigate([this.redirectTo])
+      }
+      else{
+        alert(res.params.status);
       }
     });
+    
   }
 
   updateData() {
     this.generalService.putData(this.apiUrl, this.identifier, this.model).subscribe((res) => {
       if (res.params.status == 'SUCCESSFUL') {
-        alert('Data updated successfully');
+        this.router.navigate([this.redirectTo])
       }
       else{
         alert(res.params.status);

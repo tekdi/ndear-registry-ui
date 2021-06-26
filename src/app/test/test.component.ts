@@ -540,17 +540,14 @@ this.jsonschema.getSchemas().subscribe((res) => {
 
   
 
-  ngOnInit(): void {
-    // this.widgetLibrary.registerWidget('hidden', HiddenComponent);
-
-  
-  constructor(private modalService: NgbModal) {}
+  // ngOnInit(): void {
+  //   // this.widgetLibrary.registerWidget('hidden', HiddenComponent);
 
 
-  open() {
-    const modalRef = this.modalService.open(Test2Component);
-    modalRef.componentInstance.photo = 'World';
-  }
+  // open() {
+  //   const modalRef = this.modalService.open(Test2Component);
+  //   modalRef.componentInstance.photo = 'World';
+  // }
 
   ngOnInit() {
     console.log('Hi');
@@ -562,5 +559,5 @@ this.item = event;
   }
 
 }
-}
+
 

@@ -99,7 +99,7 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
+                        <li class="nav-item" *ngIf="instituteFlag && teacherFlag">
                             <!-- <a class="nav-link active" href="#">{{user_name}}</a> -->
                            
                                     <a class="nav-link" data-toggle="modal" data-target="#switchAccount">
@@ -186,7 +186,7 @@
                         </li> -->
                     </ul>
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
+                        <li class="nav-item" *ngIf="instituteFlag && teacherFlag">
                             <!-- <a class="nav-link active" href="#">{{user_name}}</a> -->
                            
                                     <a class="nav-link" data-toggle="modal" data-target="#switchAccount">
@@ -338,8 +338,13 @@
                                   <img src="../../../assets/images/profile.png" alt="" class="w-20">
                                   <div class="d-flex flex-column text-justify mt-2">
                                    
-                                    <span class="ml-3 fs-5">  Pragti Institute</span>
-                                    <span class="ml-3 fs-7 text-grey-color">Kothrud, Pune</span>
+                                    <span class="ml-3 fs-5"> {{instituteProfile?.instituteName}} </span>
+                                    <span class="ml-3 fs-7 text-grey-color">
+                                        Kothrud, Pune
+                                        <span *ngIf="instituteProfile?.Address?.district">{{instituteProfile?.Address?.district}}</span>
+                                        <span *ngIf="instituteProfile?.Address?.state">{{instituteProfile?.Address?.state}}</span>
+
+                                    </span>
                                   </div>
                                 </div>
                               </div>
@@ -353,8 +358,8 @@
                                       <img src="../../../assets/images/profile.png" alt="" class="w-23">
                                       <div class="d-flex flex-column text-justify mt-2">
                                        
-                                        <span class="ml-3 fs-5"> Alice Roberto</span>
-                                        <span class="ml-3 fs-7 text-grey-color">aliceroberto@gmail.com</span>
+                                        <span class="ml-3 fs-5">{{teacherProfile?.identityDetails?.fullName}}</span>
+                                        <span class="ml-3 fs-7 text-grey-color">{{teacherProfile?.contactDetails?.email}}</span>
                                       </div>
                                     </div>
                                     <!-- <button type="submit" [routerLink]="['/teacher-profile']" class="btn btn-primary mt-3 fw-bold text-capitalize w-25">View</button> -->

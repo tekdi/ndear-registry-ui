@@ -10,7 +10,7 @@ export class DiscoveryService {
 
   constructor(public dataService: DataService) { }
 
-  searchfilter(filters){    
+  searchInstitute(filters){    
       let url = `${this.baseUrl}/${ApiPaths.searchInstitute}`;
       const req = {
         url: url,
@@ -19,5 +19,25 @@ export class DiscoveryService {
   
         return this.dataService.post(req);
   }
+
+  searchTeacher(filters){    
+    let url = `${this.baseUrl}/${ApiPaths.searchTeacher}`;
+    const req = {
+      url: url,
+      data: filters
+    };
+
+      return this.dataService.post(req);
+}
+
+searchStudent(filters){    
+  let url = `${this.baseUrl}/${ApiPaths.searchStudent}`;
+  const req = {
+    url: url,
+    data: filters
+  };
+
+    return this.dataService.post(req);
+}
 
 }

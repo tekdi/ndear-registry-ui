@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
+import { InstituteProfileService } from '../../services/institute/institute-profile.service';
+import { TeacherProfileService} from '../../services/teacher/teacher-profile.service';
 declare var $: any;
 
 @Component({
@@ -23,16 +25,23 @@ export class HeaderComponent implements OnInit {
   attestation_count: number = 0
   consent_count: number = 0;
   entity;
+  instituteProfile;
+  teacherProfile;
+  instituteFlag : boolean = true;
+  teacherFlag : boolean = true;
+
   constructor(
     public router: Router,
-    public keycloakService: KeycloakService
+    public keycloakService: KeycloakService,
+    public instituteProfileService: InstituteProfileService,
+    public teacherProfileService: TeacherProfileService
   ) { }
 
   async ngOnInit() {
     console.log(this.headerFor, this.tab);
     this.loged_in = JSON.parse(localStorage.getItem('is_logedin'))
     // console.log(Boolean(localStorage.getItem('is_logedin')))
-    if (this.loged_in) {
+    if (this.loged_in || this.keycloakService.isLoggedIn) {
       this.admin = JSON.parse(localStorage.getItem('admin'))
       this.admin_setup = JSON.parse(localStorage.getItem('admin-setup'))
 
@@ -48,6 +57,21 @@ export class HeaderComponent implements OnInit {
 
       this.keycloakService.loadUserProfile().then((res) => {
         this.entity = res['attributes'].entity[0];
+
+       
+          this.instituteProfileService.getInstituteProfile('').subscribe((res) => {
+            this.instituteProfile = res[0];
+          },(err)=>{
+            this.instituteFlag = false;;
+          })
+        
+
+        this.teacherProfileService.getTeacherProfile('').subscribe((res) => {
+          this.teacherProfile = res[0];
+        },(err)=>{
+          this.teacherFlag = false;
+        })
+        
       });
 
       this.institute = JSON.parse(localStorage.getItem('institute-detail'));

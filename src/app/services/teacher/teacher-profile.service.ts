@@ -55,14 +55,13 @@ export class TeacherProfileService {
     
   }
 
-  updateTeacherProperty(entityId, propertyId, property) {
-    let url = `${this.baseUrl}/${ApiPaths.Teacher}/` + entityId + '/' + property + '/' + propertyId;
+  sendAttestedTeacherProperty(entityId, propertyId, property) {
+    let url = `${this.baseUrl}/${ApiPaths.Teacher}/` + entityId + 'send/' + property + '/' + propertyId;
     const req = {
-      url: url,
-      data: { 'send' : true}
+      url: url
     };
 
-    return this.dataService.put(req);
+    return this.dataService.post(req);
 
   }
 

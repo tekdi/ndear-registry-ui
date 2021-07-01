@@ -45,7 +45,7 @@ export class HeaderComponent implements OnInit {
       this.admin = JSON.parse(localStorage.getItem('admin'))
       this.admin_setup = JSON.parse(localStorage.getItem('admin-setup'))
 
-      if (this.keycloakService.isLoggedIn) {
+      if (this.keycloakService.isLoggedIn()) {
         this.user_name = await this.keycloakService.getUsername();
 
       } else {

@@ -15,7 +15,7 @@
     <div class="mt-5">
       <p class="small"><b> <span *ngIf="instituteItems?.length">{{instituteItems.length}}</span> Institutes </b></p>
       <hr />
-      <div class="card p-2" *ngFor="let item of instituteItems | paginate: { id :'pageInstitute' , itemsPerPage: limit, currentPage: p }">
+      <div class="card p-2" *ngFor="let item of instituteItems | paginate: { id :'pageInstitute' , itemsPerPage: limit, currentPage: iCurrentPg }">
         <div class="card-body" data-toggle="modal" data-target="#prewiewProfile"
           (click)="showDetails(item, 'institute')">
           <span>{{item?.instituteName}}</span><br />
@@ -34,12 +34,12 @@
         </tbody>
       </table>
       <div class="mt-5 float-end">
-        <pagination-controls id="pageInstitute" (pageChange)="p = $event"></pagination-controls>
+        <pagination-controls id="pageInstitute" (pageChange)="iCurrentPg = $event"></pagination-controls>
       </div>
     </div>
   </mat-tab>
 
-  <!-- ------------------ Institute Teacher ------------------------------------- -->
+  <!-- ------------------  Teacher ------------------------------------- -->
   <mat-tab label="Search Teacher">
     <div *ngIf="searchInstitute">
       <json-schema-form [schema]="searchInstitute" [data]='data' framework="bootstrap-4"
@@ -51,7 +51,7 @@
 
     <div class="mt-5">
       <p class="small"><b>{{teacherItems?.length}} Teachers </b></p>
-      <div class="card p-2" *ngFor="let item of teacherItems | paginate: { id:'pageTeacher', itemsPerPage: limit, currentPage: t }">
+      <div class="card p-2" *ngFor="let item of teacherItems | paginate: { id:'pageTeacher', itemsPerPage: limit, currentPage: tCurrentPg }">
         <div class="card-body" data-toggle="modal" data-target="#prewiewProfile" (click)="showDetails(item, 'teacher')">
           <span>{{item?.identityDetails?.fullName}}</span><br />
           <span class="small text-muted"
@@ -71,12 +71,12 @@
         </tbody>
       </table>
       <div class="mt-5 float-end">
-        <pagination-controls id='pageTeacher' (pageChange)="t = $event"></pagination-controls>
+        <pagination-controls id='pageTeacher' (pageChange)="tCurrentPg = $event"></pagination-controls>
       </div>
     </div>
   </mat-tab>
 
-  <!-- ------------------ Institute Student ------------------------------------- -->
+  <!-- ------------------  Student ------------------------------------- -->
   <mat-tab label="Search Student">
     <div *ngIf="searchInstitute" class="">
       <json-schema-form [schema]="searchInstitute" [data]='data' framework="bootstrap-4"
@@ -88,7 +88,7 @@
 
     <div class="mt-5">
       <p class="small"><b> {{studentItems?.length}} Student </b></p>
-      <div class="card p-2 h-20" *ngFor="let item of studentItems | paginate: { id:'pageStudent', itemsPerPage: limit, currentPage: s }">
+      <div class="card p-2 h-20" *ngFor="let item of studentItems | paginate: { id:'pageStudent', itemsPerPage: limit, currentPage: sCurrentPg }">
         <div class="card-body" data-toggle="modal" data-target="#prewiewProfile" (click)="showDetails(item, 'student')">
           <span>{{item?.identityDetails?.fullName}} <br /> </span>
           <div *ngIf="item?.contactDetails?.address?.state">
@@ -109,7 +109,7 @@
         </tbody>
       </table>
       <div class="mt-5 float-end">
-        <pagination-controls id="pageStudent" (pageChange)="s = $event"></pagination-controls>
+        <pagination-controls id="pageStudent" (pageChange)="sCurrentPg = $event"></pagination-controls>
       </div>
     </div>
   </mat-tab>
@@ -237,17 +237,13 @@
         <!-- Institute Profile Preview Modal : End -->
 
 
-        <div class="mt-4">
+        <div class="mt-4" *ngIf="user?.identityDetails?.identityType">
           <h5>ID Details</h5>
           <div class="card">
             <div class="card-body">
-              <dl>
-                <dd>Aadhhar <i class="fa fa-check-circle text-success"></i></dd>
-                <dd>PAN <i class="fa fa-check-circle text-success"></i></dd>
-              </dl>
 
               <span>
-                Profesional Lisence <i class="fa fa-check-circle text-success"></i>
+                {{user?.identityDetails?.identityType}} <i class="fa fa-check-circle text-success"></i>
               </span>
             </div>
           </div>
@@ -256,11 +252,22 @@
         <div class="mt-4" *ngIf="user?.experience">
           <h5>Experience</h5>
           <div class="card">
-            <div class="card-body">
-              <h6>{{user?.experience?.teacherType}} <i class="fa fa-check-circle text-success"></i></h6>
-              <span class="fs-6">{{user?.experience?.institute}}</span><br />
-              <span class="fs-7">{{user?.experience?.start}} - {{user?.experience?.employmentType}}</span><br />
+            <div class="card-body" *ngFor="let exp of user?.experience">
+              <h6>{{exp?.teacherType}} <i class="fa fa-check-circle text-success"></i></h6>
+              <span class="fs-6">{{exp?.institute}}</span><br />
+              <span class="fs-7">{{exp?.start}} - {{exp?.employmentType}}</span><br />
               <span class="fs-7 text-grey-color">Class: ITI Diploma</span><br />
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4" *ngIf="user?.educationDetails">
+          <h5>Education</h5>
+          <div class="card">
+            <div class="card-body" *ngFor="let education of user?.educationDetails">
+              <h6>{{education?.class}} <i class="fa fa-check-circle text-success"></i></h6>
+              <span class="fs-6 text-grey-color">{{education?.institute}}</span><br />
+              <span class="fs-7">{{education?.medium}}</span><br />
             </div>
           </div>
         </div>
@@ -268,10 +275,10 @@
         <div class="mt-4" *ngIf="user?.academicQualifications">
           <h5>Education</h5>
           <div class="card">
-            <div class="card-body">
-              <h6>{{user?.academicQualifications?.qualification}} <i class="fa fa-check-circle text-success"></i></h6>
-              <span class="fs-6 text-grey-color">{{user?.academicQualifications?.institute}}</span><br />
-              <span class="fs-7">{{user?.academicQualifications?.graduationYear}}</span><br />
+            <div class="card-body" *ngFor="let academic of user?.academicQualifications">
+              <h6>{{academic?.qualification}} <i class="fa fa-check-circle text-success"></i></h6>
+              <span class="fs-6 text-grey-color">{{academic?.institute}}</span><br />
+              <span class="fs-7">{{academic?.graduationYear}}</span><br />
             </div>
           </div>
         </div>

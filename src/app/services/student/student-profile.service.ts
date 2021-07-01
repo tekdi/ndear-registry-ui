@@ -54,14 +54,13 @@ export class StudentProfileService {
   }
 
 
-  updateStudentProperty(entityId, propertyId) {
-    let url = `${this.baseUrl}/${ApiPaths.Student}/` + entityId + '/educationDetails/' + propertyId;
+  sendAttestedStudentProperty(entityId, propertyId) {
+    let url = `${this.baseUrl}/${ApiPaths.Student}/` + entityId + '/send/educationDetails/' + propertyId;
     const req = {
-      url: url,
-      data: { 'send' : true}
+      url: url
     };
 
-    return this.dataService.put(req);
+    return this.dataService.post(req);
 
   }
 

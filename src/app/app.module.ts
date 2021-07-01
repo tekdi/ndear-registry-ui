@@ -50,6 +50,8 @@ import { BoardAttestationDetailsComponent } from './components/board/board-attes
 import { TeacherSignupComponent } from './components/teacher/teacher-signup/teacher-signup.component';
 import { DiscoveryComponent } from './components/discovery/discovery.component';
 import { KeycloakloginComponent } from './components/keyCloak/keycloaklogin/keycloaklogin.component';
+import { TeacherAttestationComponent } from './components/teacher/teacher-attestation/teacher-attestation/teacher-attestation.component';
+import { TeacherAttestationDetailComponent } from './components/teacher/teacher-attestation-detail/teacher-attestation-detail/teacher-attestation-detail.component';
 import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry,} from "ngx-schema-form";
 import { ToastrModule } from 'ngx-toastr';
 import { APP_INITIALIZER } from '@angular/core';
@@ -64,6 +66,7 @@ import { StudentProfileService} from './services/student/student-profile.service
 import { InviteService} from './services/invite/invite.service';
 import { DiscoveryService } from './services/discovery/discovery.service';
 import { initializeKeycloak } from '../app/utility/app.init';
+import { AttestationService } from './services/attestation/attestation.service';
 
 @NgModule({
   declarations: [
@@ -104,8 +107,9 @@ import { initializeKeycloak } from '../app/utility/app.init';
     BoardAttestationDetailsComponent,
     TeacherSignupComponent,
     DiscoveryComponent,
-    KeycloakloginComponent
-
+    KeycloakloginComponent,
+    TeacherAttestationComponent,
+    TeacherAttestationDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -145,7 +149,8 @@ import { initializeKeycloak } from '../app/utility/app.init';
       useFactory: initializeKeycloak,
       multi: true,
       deps: [KeycloakService],
-    }
+    },
+    AttestationService
     
   ]
 })

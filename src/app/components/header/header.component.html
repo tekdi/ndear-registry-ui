@@ -80,13 +80,24 @@
                     </div>
                     <ul class="navbar-nav  mb-2 mb-lg-0" style="margin-left: 50px;">
                         <li class="nav-item active">
-                            <a class="nav-link active" (click)="redirectTo()">Home</a>
+                            <a class="nav-link active" (click)="redirectTo()">Profile</a>
                             <ng-template [ngIf]="tab === 'profile'">
                                 <hr>
                             </ng-template>
 
                         </li>
                         <li class="nav-item active">
+                            <a class="nav-link notification" [routerLink]="['/teacher-attestation']">Attestations
+                                <ng-template [ngIf]="tab != 'attestation' && attestation_count != 0">
+                                    <span class="badge">{{attestation_count}}</span>
+                                </ng-template>
+
+                            </a>
+                            <ng-template [ngIf]="tab === 'attestation'">
+                                <hr>
+                            </ng-template>
+                        </li>
+                        <!-- <li class="nav-item active">
                             <a class="nav-link notification" [routerLink]="['/teacher-consent']">Consents
                                 <ng-template [ngIf]="tab != 'consent' && consent_count != 0">
                                     <span class="badge">{{consent_count}}</span>
@@ -96,7 +107,7 @@
                             <ng-template [ngIf]="tab === 'consent'">
                                 <hr>
                             </ng-template>
-                        </li>
+                        </li> -->
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item" *ngIf="instituteFlag && teacherFlag">
@@ -134,7 +145,7 @@
                     </div>
                     <ul class="navbar-nav  mb-2 mb-lg-0" style="margin-left: 50px;">
                         <li class="nav-item active">
-                            <a class="nav-link active" [routerLink]="['/institute-profile']">Home</a>
+                            <a class="nav-link active" [routerLink]="['/institute-profile']">Profile</a>
                             <ng-template [ngIf]="tab === 'home'">
                                 <hr>
                             </ng-template>
@@ -150,16 +161,16 @@
                                 <hr>
                             </ng-template>
                         </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" [routerLink]="['/institute-consent']">Consents
+                        <!-- <li class="nav-item active">
+                            <a class="nav-link" [routerLink]="['/institute-consent']">Consents -->
                                 <!-- <ng-template [ngIf]="tab != 'consent' && consent_count != 0">
                                     <span class="badge">{{consent_count}}</span>
                                 </ng-template> -->
-                            </a>
+                          <!--  </a>
                             <ng-template [ngIf]="tab === 'consent'">
                                 <hr>
                             </ng-template>
-                        </li>
+                        </li> -->
                         <li class="nav-item active">
                             <a class="nav-link" [routerLink]="['/institute-teachers']">Teachers</a>
                             <ng-template [ngIf]="tab === 'teachers'">
@@ -221,7 +232,7 @@
                     </div>
                     <ul class="navbar-nav  mb-2 mb-lg-0" style="margin-left: 50px;">
                         <li class="nav-item active">
-                            <a class="nav-link active">Home</a>
+                            <a class="nav-link active">Profile</a>
                             <ng-template [ngIf]="tab === 'home'">
                                 <hr>
                             </ng-template>

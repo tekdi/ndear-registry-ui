@@ -36,6 +36,9 @@ import{ TeacherSignupComponent } from './components/teacher/teacher-signup/teach
 import { AuthGuard } from '../app/utility/app.guard';
 import { DiscoveryComponent } from './components/discovery/discovery.component';
 import { KeycloakloginComponent } from './components/keyCloak/keycloaklogin/keycloaklogin.component';
+import { TeacherAttestationComponent } from './components/teacher/teacher-attestation/teacher-attestation/teacher-attestation.component';
+import { TeacherAttestationDetailComponent } from './components/teacher/teacher-attestation-detail/teacher-attestation-detail/teacher-attestation-detail.component';
+
 
 const routes: Routes = [
   { path: 'signup', component: HomeComponent },
@@ -79,8 +82,8 @@ const routes: Routes = [
   { path: 'consent-auth', component: ConsentAuthorizeComponent },
   { path: 'discovery', component: DiscoveryComponent },
   { path: 'login', component: KeycloakloginComponent ,  canActivate: [AuthGuard]},
-
-
+  { path: 'teacher-attestation', component: TeacherAttestationComponent },
+  { path: 'teacher-attestation-detail', component: TeacherAttestationDetailComponent }
 ];
 
 @NgModule({

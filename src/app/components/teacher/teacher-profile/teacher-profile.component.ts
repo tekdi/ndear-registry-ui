@@ -350,7 +350,7 @@ export class TeacherProfileComponent implements OnInit {
   }
 
   sendVerification(entityId, propertyId, property) {
-    this.teacherProfileService.updateTeacherProperty(entityId, propertyId, property).subscribe(res => {
+    this.teacherProfileService.sendAttestedTeacherProperty(entityId, propertyId, property).subscribe(res => {
       if (res.responseCode == 'OK' && !res.params.errmsg) {
         // localStorage.setItem('student_id', res.result.Student.osid);
         //  this.router.navigate(['/student-profile', { 'id': this.studentId }]);

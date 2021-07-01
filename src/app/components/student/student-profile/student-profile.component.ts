@@ -263,11 +263,10 @@ export class StudentProfileComponent implements OnInit {
       this.studentResult = res[0];
       console.log("this.user", this.user);
     })
-
   }
 
   sendVerification(entityId, propertyId) {
-    this.studentProfileService.updateStudentProperty(entityId, propertyId).subscribe(res => {
+    this.studentProfileService.sendAttestedStudentProperty(entityId, propertyId).subscribe(res => {
       if (res.responseCode == 'OK' && !res.params.errmsg) {
         // localStorage.setItem('student_id', res.result.Student.osid);
         //  this.router.navigate(['/student-profile', { 'id': this.studentId }]);

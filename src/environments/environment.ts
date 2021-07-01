@@ -18,6 +18,10 @@ export enum ApiPaths {
   InviteInstitute = 'Institute/invite',
   searchInstitute = 'Institute/search',
   searchTeacher = 'Teacher/search',
-  searchStudent = 'Student/search'
+  searchStudent = 'Student/search',
+  teacherGrantDenyClaims = 'Teacher/claims',
+  studentGrantDenyClaims = 'Student/claims',
+  instituteGrantDenyClaims = 'Institute/claims',
+  allClaims = ''
 }
 

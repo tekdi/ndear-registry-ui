@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AttestationService } from '../../../services/attestation/attestation.service';
 
 @Component({
   selector: 'app-institute-attestation-detail',
@@ -53,7 +54,10 @@ export class InstituteAttestationDetailComponent implements OnInit {
       "title": "Submit"
     }
   ]
-  constructor(private route: ActivatedRoute, public router: Router) { }
+  constructor(
+    private route: ActivatedRoute, 
+    public router: Router,
+    public attestationService: AttestationService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -87,7 +91,8 @@ export class InstituteAttestationDetailComponent implements OnInit {
     if(this.type == 'experience'){
       this.experienceDetail.attested = true;
       this.experience[this.id] = this.experienceDetail;
-      localStorage.setItem('experience', JSON.stringify(this.experience))
+      localStorage.setItem('experience', JSON.stringify(this.experience));
+
     }else{
       this.educationDetail.attested = true;
       this.education[this.id] = this.educationDetail;
@@ -102,7 +107,13 @@ export class InstituteAttestationDetailComponent implements OnInit {
       // this.experienceDetail.attested = action;
       this.experienceDetail.note = event.note;
       this.experience[this.id] = this.experienceDetail;
-      localStorage.setItem('experience', JSON.stringify(this.experience))
+      localStorage.setItem('experience', JSON.stringify(this.experience));
+
+      this.attestationService.grantDenyAttestation( this.experienceDetail.entity, 'GRANTED', event.note).subscribe((res)=>{
+        alert('success');
+        console.log(res);
+      })
+
     }else{
       this.educationDetail.note = event.note;
       // this.educationDetail.attested = action;
@@ -120,7 +131,14 @@ export class InstituteAttestationDetailComponent implements OnInit {
       this.experienceDetail.attested = action;
       this.experienceDetail.note = event.note;
       this.experience[this.id] = this.experienceDetail;
-      localStorage.setItem('experience', JSON.stringify(this.experience))
+      localStorage.setItem('experience', JSON.stringify(this.experience));
+
+
+      this.attestationService.grantDenyAttestation( this.experienceDetail.entity, 'DENIED', event.note).subscribe((res)=>{
+        alert('success');
+        console.log(res);
+      })
+
     }else{
       this.educationDetail.note = event.note;
       this.educationDetail.attested = action;

@@ -16,9 +16,9 @@ export class DiscoveryComponent implements OnInit {
   schemaJson;
   boardList;
   data;
-  p: number = 1;
-  t: number = 1;
-  s: number = 1;
+  iCurrentPg: number = 1;
+  tCurrentPg: number = 1;
+  sCurrentPg: number = 1;
   type: string;
   limit: number = 3;
   yourWidgets = {
@@ -60,14 +60,7 @@ export class DiscoveryComponent implements OnInit {
                 ]
               },
               "instituteName": {
-                "type": "string",
-                "enum": [
-                  "Broad River University",
-                  "Central Technical School",
-                  "Oakwood School of Fine Arts90",
-                  "Barti Institute",
-                  "Thomas Institute"
-                ]
+                "type": "string"
               }
             }
           },
@@ -221,6 +214,7 @@ export class DiscoveryComponent implements OnInit {
   }
 
   searchInstituteData(event) {
+    this.iCurrentPg = 1;
 
     let filterData = this.searchDataIN(event);
 
@@ -232,6 +226,7 @@ export class DiscoveryComponent implements OnInit {
   }
 
   searchTeacherData(event) {
+    this.tCurrentPg = 1;
     let filterData = this.searchData(event);
 
     this.discoveryService.searchTeacher(filterData).subscribe((err) => {
@@ -242,6 +237,8 @@ export class DiscoveryComponent implements OnInit {
 
 
   searchStudentData(event) {
+    this.sCurrentPg = 1;
+
     let filterData = this.searchData(event);
 
     this.discoveryService.searchStudent(filterData).subscribe((err) => {

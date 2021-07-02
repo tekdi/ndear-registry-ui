@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
 import { InstituteProfileService } from '../../services/institute/institute-profile.service';
-import { TeacherProfileService} from '../../services/teacher/teacher-profile.service';
+import { TeacherProfileService } from '../../services/teacher/teacher-profile.service';
 declare var $: any;
 
 @Component({
@@ -27,8 +27,8 @@ export class HeaderComponent implements OnInit {
   entity;
   instituteProfile;
   teacherProfile;
-  instituteFlag : boolean = true;
-  teacherFlag : boolean = true;
+  instituteFlag: boolean = false;
+  teacherFlag: boolean = false;
 
   constructor(
     public router: Router,
@@ -58,20 +58,28 @@ export class HeaderComponent implements OnInit {
       this.keycloakService.loadUserProfile().then((res) => {
         this.entity = res['attributes'].entity[0];
 
-       
+        if (this.entity != 'Student') {
+
           this.instituteProfileService.getInstituteProfile('').subscribe((res) => {
-            this.instituteProfile = res[0];
-          },(err)=>{
+            if (res?.params?.status != 'UNSUCCESSFUL') {
+              this.instituteProfile = res[0];
+              this.instituteFlag = true;;
+            }
+          }, (err) => {
             this.instituteFlag = false;;
           })
-        
 
-        this.teacherProfileService.getTeacherProfile('').subscribe((res) => {
-          this.teacherProfile = res[0];
-        },(err)=>{
-          this.teacherFlag = false;
-        })
-        
+
+          this.teacherProfileService.getTeacherProfile('').subscribe((res) => {
+            if (res?.params?.status != 'UNSUCCESSFUL') {
+              this.teacherProfile = res[0];
+              this.teacherFlag = true;
+            }
+          }, (err) => {
+            this.teacherFlag = false;
+          })
+        }
+
       });
 
       this.institute = JSON.parse(localStorage.getItem('institute-detail'));

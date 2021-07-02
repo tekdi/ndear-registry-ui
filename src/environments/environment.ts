@@ -19,9 +19,9 @@ export enum ApiPaths {
   searchInstitute = 'Institute/search',
   searchTeacher = 'Teacher/search',
   searchStudent = 'Student/search',
-  teacherGrantDenyClaims = 'Teacher/claims',
-  studentGrantDenyClaims = 'Student/claims',
-  instituteGrantDenyClaims = 'Institute/claims',
+  //teacherGrantDenyClaims = 'Teacher/claims',
+  //studentGrantDenyClaims = 'Student/claims',
+  //instituteGrantDenyClaims = 'Institute/claims',
   allClaims = ''
 }
 

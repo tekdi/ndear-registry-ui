@@ -109,10 +109,10 @@ export class InstituteAttestationDetailComponent implements OnInit {
       this.experience[this.id] = this.experienceDetail;
       localStorage.setItem('experience', JSON.stringify(this.experience));
 
-      this.attestationService.grantDenyAttestation( this.experienceDetail.entity, 'GRANTED', event.note).subscribe((res)=>{
-        alert('success');
-        console.log(res);
-      })
+      // this.attestationService.grantDenyAttestation( this.experienceDetail.entity, 'GRANTED', event.note).subscribe((res)=>{
+      //   alert('success');
+      //   console.log(res);
+      // })
 
     }else{
       this.educationDetail.note = event.note;
@@ -134,10 +134,10 @@ export class InstituteAttestationDetailComponent implements OnInit {
       localStorage.setItem('experience', JSON.stringify(this.experience));
 
 
-      this.attestationService.grantDenyAttestation( this.experienceDetail.entity, 'DENIED', event.note).subscribe((res)=>{
-        alert('success');
-        console.log(res);
-      })
+      // this.attestationService.grantDenyAttestation( this.experienceDetail.entity, 'DENIED', event.note).subscribe((res)=>{
+      //   alert('success');
+      //   console.log(res);
+      // })
 
     }else{
       this.educationDetail.note = event.note;

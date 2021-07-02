@@ -56,7 +56,7 @@ export class TeacherProfileService {
   }
 
   sendAttestedTeacherProperty(entityId, propertyId, property) {
-    let url = `${this.baseUrl}/${ApiPaths.Teacher}/` + entityId + 'send/' + property + '/' + propertyId;
+    let url = `${this.baseUrl}/${ApiPaths.Teacher}/` + entityId + '/send/' + property + '/' + propertyId;
     const req = {
       url: url
     };

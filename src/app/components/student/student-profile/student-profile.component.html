@@ -64,10 +64,29 @@
 
 
             <dl>
-                <ng-template [ngIf]="user?.contactDetails?.address">
-                    <dt class="fs-7 text-grey-color">Address</dt>
-                    <dd>{{user?.contactDetails?.address}}</dd>
-                </ng-template>
+                
+                    <ng-template [ngIf]="user?.contactDetails?.address">
+                        <dt class="fs-7 text-grey-color">Address</dt>
+                        <dd>
+                            <span
+                                *ngIf="user?.contactDetails?.address?.plot">{{user?.contactDetails?.address?.plot}}, </span>
+                            <span
+                                *ngIf="user?.contactDetails?.address?.street">{{user?.contactDetails?.address?.street}}, </span>
+                            <span
+                                *ngIf="user?.contactDetails?.address?.landmark">{{user?.contactDetails?.address?.landmark}}, </span>
+                            <span
+                                *ngIf="user?.contactDetails?.address?.locality">{{user?.contactDetails?.address?.locality}}, </span>
+                            <span
+                                *ngIf="user?.contactDetails?.address?.village">{{user?.contactDetails?.address?.village}}, </span>
+                            <span
+                                *ngIf="user?.contactDetails?.address?.district">{{user?.contactDetails?.address?.district}}, </span>
+                            <span
+                                *ngIf="user?.contactDetails?.address?.pincode">{{user?.contactDetails?.address?.pincode}}, </span>
+                            <span
+                                *ngIf="user?.contactDetails?.address?.state">{{user?.contactDetails?.address?.state}}</span>
+    
+                        </dd>
+                    </ng-template>
 
             </dl>
         </div>
@@ -205,7 +224,25 @@
                         <dl>
                             <ng-template [ngIf]="user?.contactDetails?.address">
                                 <dt class="fs-7 text-grey-color">Address</dt>
-                                <dd>{{user?.contactDetails?.address}}</dd>
+                                <dd>
+                                    <span
+                                        *ngIf="user?.contactDetails?.address?.plot">{{user?.contactDetails?.address?.plot}}, </span>
+                                    <span
+                                        *ngIf="user?.contactDetails?.address?.street">{{user?.contactDetails?.address?.street}}, </span>
+                                    <span
+                                        *ngIf="user?.contactDetails?.address?.landmark">{{user?.contactDetails?.address?.landmark}}, </span>
+                                    <span
+                                        *ngIf="user?.contactDetails?.address?.locality">{{user?.contactDetails?.address?.locality}}, </span>
+                                    <span
+                                        *ngIf="user?.contactDetails?.address?.village">{{user?.contactDetails?.address?.village}}, </span>
+                                    <span
+                                        *ngIf="user?.contactDetails?.address?.district">{{user?.contactDetails?.address?.district}}, </span>
+                                    <span
+                                        *ngIf="user?.contactDetails?.address?.pincode">{{user?.contactDetails?.address?.pincode}}, </span>
+                                    <span
+                                        *ngIf="user?.contactDetails?.address?.state">{{user?.contactDetails?.address?.state}}</span>
+            
+                                </dd>
                             </ng-template>
 
                         </dl>

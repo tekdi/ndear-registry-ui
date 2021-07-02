@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AttestationService } from '../../../../services/attestation/attestation.service';
 import { Router } from '@angular/router';
 
@@ -8,22 +8,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./teacher-attestation.component.css']
 })
 export class TeacherAttestationComponent implements OnInit {
+  @Output() navToAttastation = new EventEmitter<any>();
 
   currentDate = new Date();
-  education;
-  experience;
-  user;
+  education: any;
+  experience: any;
+  user: any;
   header1: string = 'teacher';
   tab: string = 'attestation';
-  attestation;
+  attestation: any;
   constructor(
     public attestationService: AttestationService,
     public router: Router) {
   }
 
   ngOnInit(): void {
-
-this.getAttastations();
+    this.getAttastations();
+    
   }
 
 
@@ -33,9 +34,14 @@ this.getAttastations();
     });
   }
 
-  navToAttastationDeatil(entityId){
-    this.router.navigate(['/teacher-profile', , { 'entityId': entityId }]);
+  navToAttastationDeatil(entityId, claimId) {
+    let data = {
+      entityId: entityId,
+      claimId: claimId
+    }
 
+    console.log(btoa(JSON.stringify(data)));
+    this.router.navigate(['/teacher-attestation-detail', { 'id': btoa(JSON.stringify(data)) }]);
   }
 
 }

@@ -60,7 +60,7 @@ const routes: Routes = [
   { path: 'institute-profile-select', component: InstituteProfileSelectComponent },
   { path: 'admin-institute-setup', component: AdminInstituteSetupComponent },
   { path: 'institute-attestation', component: InstituteAttestationsComponent },
-  { path: 'institute-attestation-detail/:id', component: InstituteAttestationDetailComponent },
+  { path: 'institute-attestation-detail', component: InstituteAttestationDetailComponent },
   { path: 'institute-consent', component: InstituteConsentComponent },
   { path: 'institute-teachers', component: InstituteTeachersComponent },
   { path: 'institute-students', component: InstiituteStudentsComponent },

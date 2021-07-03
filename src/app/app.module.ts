@@ -49,11 +49,16 @@ import { TeacherConsentComponent } from './components/teacher/teacher-consent/te
 import { BoardAttestationDetailsComponent } from './components/board/board-attestation-details/board-attestation-details.component';
 import { TeacherSignupComponent } from './components/teacher/teacher-signup/teacher-signup.component';
 import { DiscoveryComponent } from './components/discovery/discovery.component';
-import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry,} from "ngx-schema-form";
 import { KeycloakloginComponent } from './components/keyCloak/keycloaklogin/keycloaklogin.component';
+import { TeacherAttestationComponent } from './components/teacher/teacher-attestation/teacher-attestation/teacher-attestation.component';
+import { TeacherAttestationDetailComponent } from './components/teacher/teacher-attestation-detail/teacher-attestation-detail/teacher-attestation-detail.component';
+import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry,} from "ngx-schema-form";
 import { ToastrModule } from 'ngx-toastr';
 import { APP_INITIALIZER } from '@angular/core';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+
+import {NgxPaginationModule} from 'ngx-pagination';
+
 
 import { MatMenuModule } from '@angular/material/menu';
 // formly
@@ -104,6 +109,7 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
   return `should be equal to constant "${field.templateOptions.const}"`;
 }
 
+
 /* Service files */
 import { BoardInstituteService} from './services/board/board-institutes/board-institutes.service';
 import { AdminFormService } from './services/admin-form.service';
@@ -111,8 +117,9 @@ import { AdminFormService } from './services/admin-form.service';
 import { TeacherProfileService } from './services/teacher/teacher-profile.service';
 import { StudentProfileService} from './services/student/student-profile.service';
 import { InviteService} from './services/invite/invite.service';
-
+import { DiscoveryService } from './services/discovery/discovery.service';
 import { initializeKeycloak } from '../app/utility/app.init';
+import { AttestationService } from './services/attestation/attestation.service';
 
 import { FormsComponent } from './forms/forms.component';
 import { LayoutsComponent } from './layouts/layouts.component';
@@ -168,6 +175,10 @@ import { AddPanelComponent } from './layouts/modal/panels/add-panel/add-panel.co
     TeacherSignupComponent,
     DiscoveryComponent,
     KeycloakloginComponent,
+
+    TeacherAttestationComponent,
+    TeacherAttestationDetailComponent
+
 
     FormsComponent,
     ArrayTypeComponent,
@@ -242,7 +253,8 @@ import { AddPanelComponent } from './layouts/modal/panels/add-panel/add-panel.co
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-center',
     preventDuplicates: true,
-    })
+    }),
+    NgxPaginationModule
   ],
   schemas: [],
   entryComponents: [Test2Component],
@@ -254,12 +266,15 @@ import { AddPanelComponent } from './layouts/modal/panels/add-panel/add-panel.co
     TeacherProfileService,
     StudentProfileService,
     InviteService,
+    DiscoveryService,
     {
       provide: APP_INITIALIZER,
       useFactory: initializeKeycloak,
       multi: true,
       deps: [KeycloakService],
-    }
+    },
+    AttestationService
+    
   ]
 })
 export class AppModule {

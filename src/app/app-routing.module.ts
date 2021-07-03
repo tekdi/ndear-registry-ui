@@ -37,6 +37,9 @@ import{ TeacherSignupComponent } from './components/teacher/teacher-signup/teach
 import { AuthGuard } from '../app/utility/app.guard';
 import { DiscoveryComponent } from './components/discovery/discovery.component';
 import { KeycloakloginComponent } from './components/keyCloak/keycloaklogin/keycloaklogin.component';
+import { TeacherAttestationComponent } from './components/teacher/teacher-attestation/teacher-attestation/teacher-attestation.component';
+import { TeacherAttestationDetailComponent } from './components/teacher/teacher-attestation-detail/teacher-attestation-detail/teacher-attestation-detail.component';
+
 
 import { FormsComponent } from './forms/forms.component';
 import { LayoutsComponent } from './layouts/layouts.component';
@@ -64,7 +67,7 @@ const routes: Routes = [
   { path: 'institute-profile-select', component: InstituteProfileSelectComponent },
   { path: 'admin-institute-setup', component: AdminInstituteSetupComponent },
   { path: 'institute-attestation', component: InstituteAttestationsComponent },
-  { path: 'institute-attestation-detail/:id', component: InstituteAttestationDetailComponent },
+  { path: 'institute-attestation-detail', component: InstituteAttestationDetailComponent },
   { path: 'institute-consent', component: InstituteConsentComponent },
   { path: 'institute-teachers', component: InstituteTeachersComponent },
   { path: 'institute-students', component: InstiituteStudentsComponent },
@@ -88,6 +91,10 @@ const routes: Routes = [
 
   { path: 'discovery', component: DiscoveryComponent },
   { path: 'login', component: KeycloakloginComponent ,  canActivate: [AuthGuard]},
+
+  { path: 'teacher-attestation', component: TeacherAttestationComponent },
+  { path: 'teacher-attestation-detail', component: TeacherAttestationDetailComponent }
+
 
 
   // Forms

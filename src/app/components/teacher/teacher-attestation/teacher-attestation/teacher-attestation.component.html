@@ -13,9 +13,9 @@
       <ng-template ngFor let-item [ngForOf]="attestation" let-i="index">
         <tr *ngIf="item?.status == 'OPEN'">
           <td>{{item?.createdAt | date:'dd-MM-yyyy'}}</td>
-          <td>{{item?.entity}}</td>
+          <td>{{item?.requestorName}}</td>
           <td><a (click)="navToAttastationDeatil(item?.entityId, item?.id)"
-            class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td>
+              class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td>
         </tr>
       </ng-template>
     </tbody>

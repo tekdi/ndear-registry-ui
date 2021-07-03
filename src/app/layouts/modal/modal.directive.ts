@@ -134,6 +134,7 @@ import {
     @Input() skipLocationChange!: boolean;
     @Input() replaceUrl!: boolean;
     @Input() state?: { [k: string]: any };
+    @Input() identity: string;
     private commands: any[] = [];
     private subscription: Subscription;
     private preserve!: boolean;
@@ -144,6 +145,7 @@ import {
       private route: ActivatedRoute,
       private locationStrategy: LocationStrategy
     ) {
+      console.log("queryParams",this.identity)
       this.subscription = router.events.subscribe((s: any) => {
         // console.log('ssssssssss',s)
         if (s instanceof NavigationEnd) {

@@ -24,7 +24,7 @@ export class LayoutsComponent implements OnInit {
   identifier: any = null;
   model: any;
   Data: string[] = [];
-  property: string[] = [];
+  property: any[] = [];
   currentDialog = null;
   destroy = new Subject<any>();
 
@@ -36,7 +36,7 @@ export class LayoutsComponent implements OnInit {
     // this.identifier = localStorage.getItem('entity-osid')
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.route.params.subscribe(params => {
-      console.log(params)
+      console.log("-------------------",params)
       this.layout = (params['layout']).toLowerCase()
       if (params['claim']) {
         this.claim = params['claim']
@@ -70,36 +70,59 @@ export class LayoutsComponent implements OnInit {
           for (var element in this.model) {
             console.log("1", element, Array.isArray(this.model[element]))
             if (!Array.isArray(this.model[element])) {
-              for (const [key, value] of Object.entries(this.model[element])) {
-                // console.log("3",this.responseData['definitions'][block.definition]['properties'],element)
-                if (this.responseData['definitions'][block.definition]['properties'][element]) {
-                  if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
-                    var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
-                    temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
-
-                    // this.property[key] = this.responseData['definitions'][ref_defination]['properties'][key]
-                    if (temp_object != undefined) {
-                      temp_object['value'] = value
-                      // console.log("here", temp_object[key])
-                      this.property.push(temp_object)
+              if(typeof this.model[element] == 'string'){
+                temp_object = this.responseData['definitions'][block.definition]['properties'][element]
+                      if (temp_object != undefined) {
+                        temp_object['value'] = this.model[element]
+                        // console.log("here", temp_object[key])
+                        this.property.push(temp_object)
+                      }
+              }
+              else{
+                for (const [key, value] of Object.entries(this.model[element])) {
+                  console.log("3",this.model[element],key, value)
+                  if (this.responseData['definitions'][block.definition]['properties'][element]) {
+                    if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
+                      var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
+                      temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
+  
+                      // this.property[key] = this.responseData['definitions'][ref_defination]['properties'][key]
+                      if (temp_object != undefined) {
+                        temp_object['value'] = value
+                        // console.log("here", temp_object[key])
+                        this.property.push(temp_object)
+                      }
+  
+  
                     }
-
-
-                  }
-                  else {
-                    // console.log("eeeeee",element)
-                    temp_object = this.responseData['definitions'][block.definition]['properties'][element]['properties'][key]
-
-                    // this.property[key] = this.responseData['definitions'][block.definition]['properties'][element];
-                    if (temp_object != undefined) {
-                      temp_object['value'] = value
-                      // console.log("here", temp_object[key])
-                      this.property.push(temp_object)
+                    else {
+                      console.log("9",this.responseData['definitions'][block.definition]['properties'][element],value)
+                      if(this.responseData['definitions'][block.definition]['properties'][element]['properties'] != undefined) {
+                        temp_object = this.responseData['definitions'][block.definition]['properties'][element]['properties'][key]
+                        if (temp_object != undefined) {
+                          temp_object['value'] = value
+                          // console.log("here", temp_object[key])
+                          this.property.push(temp_object)
+                        }
+                      }
+                      else{
+                        temp_object = this.responseData['definitions'][block.definition]['properties'][element]
+                        if (temp_object != undefined) {
+                          temp_object['value'] = this.model[element]
+                          // console.log("here", temp_object[key])
+                          this.property.push(temp_object)
+                        }
+                      }
+                     
+  
+                      // this.property[key] = this.responseData['definitions'][block.definition]['properties'][element];
+                      
+  
                     }
-
                   }
                 }
               }
+              
             }
             else {
               if (block.fields.excludes && block.fields.excludes.length > 0 && !block.fields.excludes.includes(element)) {
@@ -142,8 +165,8 @@ export class LayoutsComponent implements OnInit {
         else {
           block.fields.includes.forEach(element => {
             console.log("4",Array.isArray(this.model[element]),element)
-            if (!Array.isArray(this.model[element])) {
-              console.log("8")
+            if (this.model[element] && !Array.isArray(this.model[element])) {
+              console.log("8",this.model[element])
               for (const [key, value] of Object.entries(this.model[element])) {
                 // console.log("3",this.responseData['definitions'][block.definition]['properties'],element)
                 if (this.responseData['definitions'][block.definition]['properties'][element]) {
@@ -153,6 +176,12 @@ export class LayoutsComponent implements OnInit {
 
                     // this.property[key] = this.responseData['definitions'][ref_defination]['properties'][key]
                     if (temp_object != undefined) {
+                      if(element.osid){
+                        temp_object['osid'] = element.osid
+                      }
+                      if(element.osid){
+                        temp_object['_osState'] = element._osState
+                      }
                       temp_object['value'] = value
                       // console.log("here", temp_object[key])
                       this.property.push(temp_object)
@@ -166,6 +195,12 @@ export class LayoutsComponent implements OnInit {
 
                     // this.property[key] = this.responseData['definitions'][block.definition]['properties'][element];
                     if (temp_object != undefined) {
+                      if(element.osid){
+                        temp_object['osid'] = element.osid
+                      }
+                      if(element.osid){
+                        temp_object['_osState'] = element._osState
+                      }
                       temp_object['value'] = value
                       // console.log("here", temp_object[key])
                       this.property.push(temp_object)
@@ -176,38 +211,78 @@ export class LayoutsComponent implements OnInit {
               }
             }
             else {
-              // if (block.fields.excludes && block.fields.excludes.length > 0 && !block.fields.excludes.includes(element)) {
-                this.model[element].forEach(objects => {
-                  console.log("2", objects)
-                  for (const [key, value] of Object.entries(objects)) {
+              if (this.model[element]) {
+                console.log("4.1",this.model[element])
+                // var temp_array2 = []
+                this.model[element].forEach((objects, i) => {
+                  console.log("4.1.1",objects)
+                  var osid;
+                  var osState;
+                  var temp_array = [];
+                  
+                  for (const [index, [key, value]] of Object.entries(Object.entries(objects))) {
+                    
+                    // var temp_object = {}
+                    // console.log("4.1.1",key, value, index)
                     if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
+                      console.log("4.1.2")
                       var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
                       temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
 
                       // this.property[key] = this.responseData['definitions'][ref_defination]['properties'][key]
                       if (temp_object != undefined) {
+                        if(objects.osid){
+                          temp_object['osid'] = objects.osid
+                        }
+                        if(objects.osid){
+                          temp_object['_osState'] = objects._osState
+                        }
                         temp_object['value'] = value
                         // console.log("here", temp_object[key])
-                        this.property.push(temp_object)
+                        temp_array.push(this.pushData(temp_object))
                       }
                     }
                     else {
-                      // console.log("eeeeee",element)
-                      temp_object = this.responseData['definitions'][block.definition]['properties'][element]['items']['properties'][key]
+                      // if(i==0){
+                         // console.log("eeeeee",element)
+                         temp_object = this.responseData['definitions'][block.definition]['properties'][element]['items']['properties'][key]
 
                       // this.property[key] = this.responseData['definitions'][block.definition]['properties'][element];
                       if (temp_object != undefined) {
+                        if(objects.osid){
+                          temp_object['osid'] = objects.osid
+                        }
+                        if(objects.osid){
+                          temp_object['_osState'] = objects._osState
+                        }
                         temp_object['value'] = value
                         // console.log("here", temp_object[key])
-                        this.property.push(temp_object)
+                        console.log("-4.1.2",value)
+                        temp_array.push(this.pushData(temp_object))
+                        
+                        // temp_array.push(temp_object)
+                        
                       }
+                      // }
+                     
 
                     }
+                    // this.property.push(temp_array)
+                    // console.log("4.1.3",temp_array)
                     // console.log((this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop())
                     // this.property[key] = value
+                    // key = '';
+                    // value = '';
+                    
                   }
+                  console.log("4.2",temp_array)
+                  this.property.push(temp_array)
+                  // this.property.push(temp_array)
+                  // console.log("4.3",this.property)
                 });
-              // }
+                // this.property = temp_array2
+                // console.log("4.3",temp_array2)
+              }
             }
           });
         }
@@ -229,6 +304,15 @@ export class LayoutsComponent implements OnInit {
     })
     console.log("main", this.Data)
   }
+
+pushData(data) {
+    var object ={};
+    for( var key in data ){
+        if(data.hasOwnProperty(key)) //ensure not adding inherited props
+        object[key]=data[key];
+    }
+    return object;
+}
 
   getData() {
     var get_url;

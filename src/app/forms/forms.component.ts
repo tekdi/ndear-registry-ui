@@ -83,12 +83,13 @@ export class FormsComponent implements OnInit {
     if (this.formSchema.type) {
       this.type = this.formSchema.type
     }
-    this.getData()
+    
     this.schemaService.getSchemas().subscribe((res) => {
       this.responseData = res;
       console.log("this.responseData", this.responseData);
       // console.log("formSchema",this.formSchema);
       this.formSchema.fieldsets.forEach(fieldset => {
+        this.getData(fieldset.definition)
         this.definations[fieldset.definition] = {}
         this.definations[fieldset.definition]['type'] = "object";
         if (fieldset.title) {
@@ -110,12 +111,16 @@ export class FormsComponent implements OnInit {
         }
         if (fieldset.fields[0] === "*") {
           this.definations = this.responseData.definitions;
-          this.property[fieldset.definition] = {
-            "title": fieldset.title,
-            "$ref": "#/definitions/" + fieldset.definition
-          };
+          this.property = this.definations[fieldset.definition].properties
+          // {
+          //   "title": fieldset.title,
+          //   "$ref": "#/definitions/" + fieldset.definition
+          // };
         } else {
           this.addFields(fieldset)
+        }
+        if(fieldset.except){
+          this.removeFields(fieldset)
         }
       });
       this.ordering = this.formSchema.order;
@@ -134,6 +139,7 @@ export class FormsComponent implements OnInit {
 
   loadSchema() {
     console.log("schema", this.schema)
+    
     this.form2 = new FormGroup({});
     this.options = {};
     this.fields = [this.formlyJsonschema.toFieldConfig(this.schema)];
@@ -141,6 +147,7 @@ export class FormsComponent implements OnInit {
       this.model = {};
     }
     this.schemaloaded = true;
+    console.log("mod", this.model)
   }
 
   addFields(fieldset) {
@@ -185,6 +192,15 @@ export class FormsComponent implements OnInit {
         }
         
       }
+    });
+  }
+
+  removeFields(fieldset) {
+    fieldset.except.forEach(field => {
+      
+      console.log("except",this.definations[fieldset.definition].properties[field])
+      delete this.definations[fieldset.definition].properties[field];
+
     });
   }
 
@@ -257,7 +273,7 @@ export class FormsComponent implements OnInit {
     
   }
 
-  getData() {
+  getData(definition) {
     var get_url;
     if(this.identifier){
       get_url = this.apiUrl+'/'+this.identifier
@@ -265,11 +281,14 @@ export class FormsComponent implements OnInit {
       get_url = this.apiUrl
     }
     // this.identifier = localStorage.getItem('entity-osid');
-    console.log("hereeeeeee",get_url)
+    
     this.generalService.getData(get_url).subscribe((res) => {
-      console.log({ res });
+      console.log({ res },definition);
+      // if(this.property[definition])
       this.model = res[0];
       this.identifier = res[0].osid;
+      console.log("hereeeeeee",this.model)
+      this.loadSchema()
     });
   }
 
@@ -280,6 +299,7 @@ export class FormsComponent implements OnInit {
     this.generalService.postData(this.apiUrl, this.model).subscribe((res) => {
       console.log({ res });
       if (res.params.status == 'SUCCESSFUL') {
+        
         this.router.navigate([this.redirectTo])
       }
       else{

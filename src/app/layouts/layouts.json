@@ -24,7 +24,8 @@
                         "add": true,
                         "addform":"affiliation",
                         "edit": false,
-                        "multiple": false,
+                        "editform":"affiliation",
+                        "multiple": true,
                         "fields": {
                             "includes": ["affiliation"]
                         }

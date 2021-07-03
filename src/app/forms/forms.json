@@ -4,7 +4,7 @@
     "forms": [
         {
             "institute-signup": {
-                "api": "/Institute",
+                "api": "/Institute/invite",
                 "type": "entity",
                 "formclass":"row",
                 "title": "Sign up / Create new account",
@@ -13,37 +13,20 @@
                         "definition": "Institute",
                         "fields": [
                             {
-                                "name":"identityDetails",
-                                "children": {
-                                    "definition": "IdentityDetails",
-                                    "title": false,
-                                    "fields": [
-                                        {
-                                            "name": "fullName",
-                                            "required": true
-                                        }
-                                    ]
-                                }
+                                "name": "instituteName",
+                                "required": true
                             },
                             {
-                                "name":"contactDetails",
-                                "children": {
-                                    "definition": "ContactDetails",
-                                    "title": false,
-                                    "fields": [
-                                        {
-                                            "name": "email",
-                                            "required": true
-                                        }
-                                    ]
-                                }
+                                "name": "email",
+                                "required": true
                             }
                         ]
                     }
                 ],
-                "redirectTo":"/profile/student"
+                "redirectTo":"/profile/institute"
             }
         },
+        
         {
             "institute-setup-short": {
                 "api": "/Institute",
@@ -119,7 +102,8 @@
                     {
                         "definition": "Institute",
                         "title": "Basic details",
-                        "fields": ["*"]
+                        "fields": ["*"],
+                        "except" : ["affiliation"]
                     }
                 ],
                 "redirectTo":"/profile/institute"
@@ -392,8 +376,7 @@
                             }
                         ]
                     }
-                ],
-                "nextstep": "otp-verify"
+                ]
             }
         },
         {

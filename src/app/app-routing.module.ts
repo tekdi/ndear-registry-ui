@@ -109,6 +109,10 @@ const routes: Routes = [
           {
             path: ':form',
             component: EditPanelComponent
+          },
+          {
+            path: ':form/:id',
+            component: EditPanelComponent
           }
         ]
       },

@@ -29,23 +29,24 @@ export class KeycloakloginComponent implements OnInit {
       localStorage.setItem('token', token);
       localStorage.setItem('loggedInUser', this.user);
      // alert(this.entity);
+     this.profileUrl = '/profile/'+this.entity;
 
-      switch(this.entity)
-      {
-        case 'Student' :
-        // this.profileUrl = '/student-profile';
-        this.profileUrl = '/profile/'+this.entity;
-        break;
+      // switch(this.entity)
+      // {
+      //   case 'Student' :
+      //   // this.profileUrl = '/student-profile';
+      //   this.profileUrl = '/profile/'+this.entity;
+      //   break;
 
-        case 'Teacher' : 
-        this.profileUrl = '/profile/'+this.entity;
-        break;
+      //   case 'Teacher' : 
+      //   this.profileUrl = '/profile/'+this.entity;
+      //   break;
 
-        case 'Institute' : 
-        this.profileUrl = '/institute-profile';
-        break;
+      //   case 'Institute' : 
+      //   this.profileUrl = '/institute-profile';
+      //   break;
 
-      }
+      // }
 
       this.router.navigate([this.profileUrl]);
 

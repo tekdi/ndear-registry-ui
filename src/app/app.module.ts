@@ -130,6 +130,7 @@ import { Test2Component } from './test/test2/test2.component';
 import { PanelsComponent } from './layouts/modal/panels/panels.component';
 import { EditPanelComponent } from './layouts/modal/panels/edit-panel/edit-panel.component';
 import { AddPanelComponent } from './layouts/modal/panels/add-panel/add-panel.component';
+import { TablesComponent } from './tables/tables.component';
 
 
 
@@ -177,7 +178,7 @@ import { AddPanelComponent } from './layouts/modal/panels/add-panel/add-panel.co
     KeycloakloginComponent,
 
     TeacherAttestationComponent,
-    TeacherAttestationDetailComponent
+    TeacherAttestationDetailComponent,
 
 
     FormsComponent,
@@ -189,7 +190,7 @@ import { AddPanelComponent } from './layouts/modal/panels/add-panel/add-panel.co
     ModalRouterEditLinkDirective,
     ModalRouterAddLinkDirective,
     Test2Component,
-    PanelsComponent, EditPanelComponent, AddPanelComponent,
+    PanelsComponent, EditPanelComponent, AddPanelComponent, TablesComponent,
 
 
   ],

@@ -263,8 +263,10 @@ export class FormsComponent implements OnInit {
       // this.identifier = localStorage.getItem('entity-osid');
       var property = this.type.split(":")[1];
       var url = [this.apiUrl,this.identifier,property];
-      this.apiUrl = url.join("/");
+      this.apiUrl = (url.join("/"))+'?send=true';
       this.model = this.model[property];
+      delete this.model[0][property];
+      console.log("modellll--",this.model);
       this.postData()
       // this.getData()
     }

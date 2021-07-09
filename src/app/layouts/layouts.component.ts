@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SchemaService } from '../services/data/schema.service';
 import * as LayoutSchemas from './layouts.json'
@@ -14,14 +14,15 @@ import { Subject } from 'rxjs';
   styleUrls: ['./layouts.component.scss']
 })
 export class LayoutsComponent implements OnInit {
-  layout: any;
+  @Input() layout;
+  @Input() identifier;
+  @Input() public: boolean = false;
   claim: any;
   responseData;
   tab: string = 'profile';
   schemaloaded = false;
   layoutSchema;
   apiUrl: any;
-  identifier: any = null;
   model: any;
   Data: string[] = [];
   property: any[] = [];
@@ -32,22 +33,26 @@ export class LayoutsComponent implements OnInit {
     public router: Router) { }
 
   ngOnInit(): void {
+    console.log("in layout----",this.layout, this.identifier, this.public)
     // this.identifier = '1-ad91e30d-9ad9-4172-ba27-3fd805ad8a75'
     // this.identifier = localStorage.getItem('entity-osid')
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.route.params.subscribe(params => {
-      console.log("-------------------",params)
-      this.layout = (params['layout']).toLowerCase()
+      
+      if (params['layout'] != undefined) {
+        this.layout = params['layout']
+      }
       if (params['claim']) {
         this.claim = params['claim']
       };
       if (params['tab']) {
         this.tab = params['tab']
       }
+      this.layout = this.layout.toLowerCase()
     });
     this.schemaService.getSchemas().subscribe(async (res) => {
       this.responseData = res;
-      console.log("this.responseData", this.responseData);
+      console.log("this.responseData",this.layout, this.responseData);
       var filtered = LayoutSchemas.layouts.filter(obj => {
         // console.log(Object.keys(obj)[0])
         return Object.keys(obj)[0] === this.layout
@@ -305,14 +310,14 @@ export class LayoutsComponent implements OnInit {
     console.log("main", this.Data)
   }
 
-pushData(data) {
-    var object ={};
-    for( var key in data ){
-        if(data.hasOwnProperty(key)) //ensure not adding inherited props
-        object[key]=data[key];
-    }
-    return object;
-}
+  pushData(data) {
+      var object ={};
+      for( var key in data ){
+          if(data.hasOwnProperty(key)) //ensure not adding inherited props
+          object[key]=data[key];
+      }
+      return object;
+  }
 
   getData() {
     var get_url;
@@ -322,9 +327,14 @@ pushData(data) {
       get_url = this.apiUrl
     }
     this.generalService.getData(get_url).subscribe((res) => {
-      // console.log("get",{ res });
-      this.model = res[0];
-      this.identifier = res[0].osid;
+      console.log("get 330",{ res });
+      if(this.identifier) {
+        this.model = res
+      }
+      else{
+        this.model = res[0];
+        this.identifier = res[0].osid;
+      }
       this.addData()
     });
   }
@@ -347,21 +357,12 @@ pushData(data) {
     const filteredArray = this.property.filter(function (x, i) {
       return commonFields.indexOf(x[i]) < 0;
     });
-    // console.log("f", filteredArray)
-    // commonFields.forEach(element => {
-    //   console.log("pro",this.property)
-    //   if(this.property.hasOwnProperty(element)){
-    //     console.log("pro",this.property)
-    //     // recentMovies.removeItem('Superman');
-    //     delete this.property[element];
-    //   }
-    // });
   }
 
   openModal() {
     this.route.params.pipe(takeUntil(this.destroy)).subscribe(params => {
       // When router navigates on this component is takes the params
-      // and opens up the photo detail modal
+      // and opens up the detail modal
       let options: NgbModalOptions = {
         scrollable: true
       };

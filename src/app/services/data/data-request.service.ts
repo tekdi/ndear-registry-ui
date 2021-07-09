@@ -73,7 +73,7 @@ export class DataService {
 
     return this.http.post(requestParam.url, requestParam.data, httpOptions).pipe(
       mergeMap((data: any) => {
-        if (data.responseCode !== 'OK') {
+        if (data.responseCode && data.responseCode !== 'OK') {
           return observableThrowError(data);
         }
         return observableOf(data);

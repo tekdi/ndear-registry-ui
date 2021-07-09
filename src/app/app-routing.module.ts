@@ -46,9 +46,10 @@ import { LayoutsComponent } from './layouts/layouts.component';
 import { PanelsComponent } from './layouts/modal/panels/panels.component';
 import { EditPanelComponent } from './layouts/modal/panels/edit-panel/edit-panel.component';
 import { AddPanelComponent } from './layouts/modal/panels/add-panel/add-panel.component';
+import { TablesComponent } from './tables/tables.component';
 
 const routes: Routes = [
-  { path: 'signup', component: HomeComponent },
+  { path: '', component: HomeComponent },
   { path: 'hod-mail', component: InstituteMailComponent },
   { path: 'verification', component: VerificationComponent },
 
@@ -72,7 +73,7 @@ const routes: Routes = [
   { path: 'institute-teachers', component: InstituteTeachersComponent },
   { path: 'institute-students', component: InstiituteStudentsComponent },
 
-  { path: '', component: DiscoveryComponent },
+  { path: 'search', component: DiscoveryComponent },
   { path: 'board-institutes', component: BoardInstitutesComponent },
   { path: 'board-attestation', component: BoardAttestationsComponent },
   { path: 'board-attestation-detail', component: BoardAttestationDetailsComponent },
@@ -93,7 +94,7 @@ const routes: Routes = [
   { path: 'login', component: KeycloakloginComponent ,  canActivate: [AuthGuard]},
 
   { path: 'teacher-attestation', component: TeacherAttestationComponent },
-  { path: 'teacher-attestation-detail', component: TeacherAttestationDetailComponent }
+  { path: 'teacher-attestation-detail', component: TeacherAttestationDetailComponent },
 
 
 
@@ -135,7 +136,13 @@ const routes: Routes = [
         ]
       }
     ]
-  }
+  },
+
+
+  // Tables
+  { path: ':entity/attestation/:table', component: TablesComponent, canActivate: [AuthGuard] },
+  { path: ':entity/attestation/:table/:id', component: TeacherAttestationDetailComponent, canActivate: [AuthGuard] },
+
 ];
 
 @NgModule({

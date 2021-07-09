@@ -80,14 +80,14 @@
                     </div>
                     <ul class="navbar-nav  mb-2 mb-lg-0" style="margin-left: 50px;">
                         <li class="nav-item active">
-                            <a class="nav-link active" (click)="redirectTo()">Profile</a>
+                            <a class="nav-link active" [routerLink]="['/profile/teacher']">Profile</a>
                             <ng-template [ngIf]="tab === 'profile'">
                                 <hr>
                             </ng-template>
 
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link notification" [routerLink]="['/teacher-attestation']">Attestations
+                            <a class="nav-link notification" [routerLink]="['/teacher/attestation/teacher-attestation']">Attestations
                                 <ng-template [ngIf]="tab != 'attestation' && attestation_count != 0">
                                     <span class="badge">{{attestation_count}}</span>
                                 </ng-template>
@@ -145,13 +145,13 @@
                     </div>
                     <ul class="navbar-nav  mb-2 mb-lg-0" style="margin-left: 50px;">
                         <li class="nav-item active">
-                            <a class="nav-link active" [routerLink]="['/institute-profile']">Profile</a>
+                            <a class="nav-link active" [routerLink]="['/profile/institute']">Profile</a>
                             <ng-template [ngIf]="tab === 'home'">
                                 <hr>
                             </ng-template>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link notification" [routerLink]="['/institute-attestation']">Attestations
+                            <a class="nav-link notification" [routerLink]="['/institute/attestation/institute-attestation']">Attestations
                                 <ng-template [ngIf]="tab != 'attestation' && attestation_count != 0">
                                     <span class="badge">{{attestation_count}}</span>
                                 </ng-template>

@@ -32,6 +32,7 @@
                 "api": "/Institute",
                 "type": "entity",
                 "title": "Institute Setup",
+                "redirectTo":"/profile/institute",
                 "fieldsets": [
                     {
                         "definition": "Institute",
@@ -114,6 +115,7 @@
                 "api": "/Institute",
                 "type": "property:affiliation",
                 "title": "Affiliation Details",
+                "redirectTo":"/profile/institute",
                 "fieldsets": [
                     {
                         "definition": "Institute",
@@ -223,6 +225,7 @@
             "teacher-education": {
                 "api": "/Teacher",
                 "type": "property:academicQualifications",
+                "redirectTo":"/profile/teacher",
                 "fieldsets": [
                     {
                         "definition": "Teacher",
@@ -239,6 +242,7 @@
             "teacher-experience": {
                 "api": "/Teacher",
                 "type": "property:experience",
+                "redirectTo":"/profile/teacher",
                 "fieldsets": [
                     {
                         "definition": "Teacher",
@@ -383,6 +387,7 @@
             "student-education": {
                 "api": "/Student",
                 "type": "property:educationDetails",
+                "redirectTo":"/profile/student",
                 "fieldsets": [
                     {
                         "definition": "Student",

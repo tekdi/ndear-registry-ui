@@ -58,6 +58,7 @@ import { APP_INITIALIZER } from '@angular/core';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 import {NgxPaginationModule} from 'ngx-pagination';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 
 
 import { MatMenuModule } from '@angular/material/menu';
@@ -209,7 +210,7 @@ import { TablesComponent } from './tables/tables.component';
     SuiModule,
 
     KeycloakAngularModule,
-
+    AutocompleteLibModule,
     FormlyBootstrapModule,
     MatMenuModule,
     FormlyModule.forRoot({

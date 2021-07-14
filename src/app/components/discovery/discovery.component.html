@@ -5,23 +5,72 @@
   <!-- ------------------ Institute Search ------------------------------------- -->
   <mat-tab label="Search Institute">
     <div *ngIf="searchInstitute" class="">
-      <json-schema-form [schema]="searchInstitute" [data]='data' [widgets]="yourWidgets" framework="bootstrap-4"
+      <!-- <json-schema-form [schema]="searchInstitute" [data]='data' [widgets]="yourWidgets" framework="bootstrap-4"
         (onChanges)="searchInstituteData($event)">
-      </json-schema-form>
-      <button (click)="resetData()" class="btn btn-info">Reset</button>
+      </json-schema-form> -->
+      <div class="card p-4">
+        <div class="card-body">
+          <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+            <div class="mb-2">
+              <label for="board">Board </label><br />
+              <input id="board" type="text" formControlName="board">
+            </div>
+            <div class="mb-2">
+              <!-- <label for="name">Institute Name </label><br /> -->
+              <input id="name" class="w-50" type="text" formControlName="name" placeholder="Search Institute">
+            </div>
 
+
+
+            <div class="d-flex mb-4">
+              <div>
+                <label for="state">State </label> <br />
+                <ng-autocomplete [data]="stateList" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                  [itemTemplate]="itemTemplate" (inputChanged)='onChangeState($event)' formControlName="state">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+              </div>
+              <div class="ml-2 ng-autocomplete">
+                <label for="district">District </label> <br />
+                <!-- <input id="district" type="text" formControlName="district"> -->
+                <ng-autocomplete [data]="city" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                  [itemTemplate]="itemTemplate" formControlName="district">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+              </div>
+              <div class="ml-2">
+                <label for="pincode">Pincode </label> <br />
+                <input id="pincode" type="text" formControlName="pincode">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-info mr-2">Search</button>
+            <button (click)="resetData()" class="btn btn-info">Reset</button>
+          </form>
+
+
+        </div>
+      </div>
     </div>
 
     <div class="mt-5">
       <p class="small"><b> <span *ngIf="instituteItems?.length">{{instituteItems.length}}</span> Institutes </b></p>
       <hr />
-      <div class="card p-2" *ngFor="let item of instituteItems | paginate: { id :'pageInstitute' , itemsPerPage: limit, currentPage: iCurrentPg }">
+      <div class="card p-2"
+        *ngFor="let item of instituteItems | paginate: { id :'pageInstitute' , itemsPerPage: limit, currentPage: iCurrentPg }">
         <div class="card-body" data-toggle="modal" data-target="#prewiewProfile"
           (click)="showDetails(item, 'institute')">
-          <span>{{item?.instituteName}}</span><br />
-          <span class="small text-muted">Bengaluru karnataka </span> <br />
-          <span>Visiting Faculty, Pragti Institute</span><br />
-          <span>B.Ed Mumbai University </span><br />
+          <span>{{item?.instituteName}} <br /></span>
+          <span *ngIf="item?.address?.district || item?.address?.state"
+            class="small text-muted">{{item?.address?.district}} {{item?.address?.state}} <br /></span>
+          <span *ngIf="item?.contactNumber">Contact: {{item?.contactNumber}} <br /></span>
+          <span *ngIf="item?.affiliation?.length">Affiliation
+            No:{{item?.affiliation[0]?.affiliationNumber}}</span><br />
         </div>
       </div>
       <table class="mx-5 my-5 w-50">
@@ -42,23 +91,71 @@
   <!-- ------------------  Teacher ------------------------------------- -->
   <mat-tab label="Search Teacher">
     <div *ngIf="searchInstitute">
-      <json-schema-form [schema]="searchInstitute" [data]='data' framework="bootstrap-4"
+      <!-- <json-schema-form [schema]="searchInstitute" [data]='data' framework="bootstrap-4"
         (onChanges)="searchTeacherData($event)">
       </json-schema-form>
-      <button (click)="resetData()" class="btn btn-info">Reset</button>
 
+      <button (click)="resetData()" class="btn btn-info">Reset</button> -->
+      <div class="card p-4">
+        <div class="card-body">
+          <form [formGroup]="searchForm" (ngSubmit)="submitTeacherData()">
+            <div class="mb-2">
+              <label for="board">Board </label><br />
+              <input id="board" type="text" formControlName="board">
+            </div>
+            <div class="mb-2">
+              <!-- <label for="instituteName">Institute Name </label><br /> -->
+              <input id="name" class="w-50" type="text" formControlName="name"
+                placeholder="Search Teacher">
+            </div>
+
+
+
+            <div class="d-flex mb-4">
+              <div>
+                <label for="state">State </label> <br />
+                <ng-autocomplete [data]="stateList" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                  [itemTemplate]="itemTemplate" (inputChanged)='onChangeState($event)' formControlName="state">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+              </div>
+              <div class="ml-2 ng-autocomplete">
+                <label for="district">District </label> <br />
+                <!-- <input id="district" type="text" formControlName="district"> -->
+                <ng-autocomplete [data]="city" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                  [itemTemplate]="itemTemplate" formControlName="district">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+              </div>
+              <div class="ml-2">
+                <label for="pincode">Pincode </label> <br />
+                <input id="pincode" type="text" formControlName="pincode">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-info mr-2">Search</button>
+            <button (click)="resetData()" class="btn btn-info">Reset</button>
+          </form>
+        </div>
+      </div>
     </div>
 
     <div class="mt-5">
       <p class="small"><b>{{teacherItems?.length}} Teachers </b></p>
-      <div class="card p-2" *ngFor="let item of teacherItems | paginate: { id:'pageTeacher', itemsPerPage: limit, currentPage: tCurrentPg }">
+      <div class="card p-2"
+        *ngFor="let item of teacherItems | paginate: { id:'pageTeacher', itemsPerPage: limit, currentPage: tCurrentPg }">
         <div class="card-body" data-toggle="modal" data-target="#prewiewProfile" (click)="showDetails(item, 'teacher')">
-          <span>{{item?.identityDetails?.fullName}}</span><br />
+          <span>{{item?.identityDetails?.fullName}} <br /></span>
           <span class="small text-muted"
-            *ngIf="item?.contactDetails?.address?.state">{{item?.contactDetails?.address?.state}}
-            {{item?.contactDetails?.address?.district}} </span> <br />
-          <span *ngFor="let e of item?.experience">{{e?.teacherType}}, {{e?.institute}}</span><br />
-          <span *ngFor="let a of item?.academicQualifications">{{a?.qualification}} </span><br />
+            *ngIf="item?.contactDetails?.address?.state || item?.contactDetails?.address?.district">{{item?.contactDetails?.address?.state}}
+            {{item?.contactDetails?.address?.district}} <br /></span> 
+          <span *ngIf="item?.experience">{{item?.experience[0]?.teacherType}} <br /></span>
+          <span *ngIf="item?.academicQualifications">{{item?.academicQualifications[0]?.qualification}} <br /> </span>
         </div>
       </div>
       <table class="mx-5 my-5 w-50">
@@ -79,24 +176,74 @@
   <!-- ------------------  Student ------------------------------------- -->
   <mat-tab label="Search Student">
     <div *ngIf="searchInstitute" class="">
-      <json-schema-form [schema]="searchInstitute" [data]='data' framework="bootstrap-4"
+      <!-- <json-schema-form [schema]="searchInstitute" [data]='data' framework="bootstrap-4"
         (onChanges)="searchStudentData($event)">
       </json-schema-form>
-      <button (click)="resetData()" class="btn btn-info">Reset</button>
+      <button (click)="resetData()" class="btn btn-info">Reset</button> -->
+
+      <div class="card p-4">
+        <div class="card-body">
+          <form [formGroup]="searchForm" (ngSubmit)="submitStudentData()">
+            <div class="mb-2">
+              <label for="board">Board </label><br />
+              <input id="board" type="text" formControlName="board">
+            </div>
+            <div class="mb-2">
+              <!-- <label for="instituteName">Institute Name </label><br /> -->
+              <input id="name" class="w-50" type="text" formControlName="name"
+                placeholder="Search Student">
+            </div>
+
+
+
+            <div class="d-flex mb-4">
+              <div>
+                <label for="state">State </label> <br />
+                <ng-autocomplete [data]="stateList" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                  [itemTemplate]="itemTemplate" (inputChanged)='onChangeState($event)' formControlName="state">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+              </div>
+              <div class="ml-2 ng-autocomplete">
+                <label for="district">District </label> <br />
+                <!-- <input id="district" type="text" formControlName="district"> -->
+                <ng-autocomplete [data]="city" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                  [itemTemplate]="itemTemplate" formControlName="district">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+              </div>
+              <div class="ml-2">
+                <label for="pincode">Pincode </label> <br />
+                <input id="pincode" type="text" formControlName="pincode">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-info mr-2">Search</button>
+            <button (click)="resetData()" class="btn btn-info">Reset</button>
+          </form>
+        </div>
+      </div>
 
     </div>
 
     <div class="mt-5">
       <p class="small"><b> {{studentItems?.length}} Student </b></p>
-      <div class="card p-2 h-20" *ngFor="let item of studentItems | paginate: { id:'pageStudent', itemsPerPage: limit, currentPage: sCurrentPg }">
+      <div class="card p-2 h-20"
+        *ngFor="let item of studentItems | paginate: { id:'pageStudent', itemsPerPage: limit, currentPage: sCurrentPg }">
         <div class="card-body" data-toggle="modal" data-target="#prewiewProfile" (click)="showDetails(item, 'student')">
           <span>{{item?.identityDetails?.fullName}} <br /> </span>
           <div *ngIf="item?.contactDetails?.address?.state">
             <span class="small text-muted"
-              *ngIf="item?.contactDetails?.address?.state">{{item?.contactDetails?.address?.state}}
-              {{item?.contactDetails?.address?.district}} </span> <br />
+              *ngIf="item?.contactDetails?.address?.state || item?.contactDetails?.address?.district">{{item?.contactDetails?.address?.state}}
+              {{item?.contactDetails?.address?.district}} <br /></span>
           </div>
-          <span *ngFor="let e of item?.experience">{{e?.teacherType}}, {{e?.institute}}</span><br />
+          <span *ngIf="item?.educationDetails?.length">Class: {{item?.educationDetails[0]?.class}} <br /></span>
+          <span *ngIf="item?.educationDetails">Institute: {{item?.educationDetails[0]?.institute}} <br /></span>
         </div>
       </div>
       <table class="mx-5 my-5 w-50">

@@ -11,46 +11,56 @@
       <div class="card p-4">
         <div class="card-body">
           <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-            <div class="mb-2">
+            <div class="mb-2 form-group">
               <label for="board">Board </label><br />
-              <input id="board" type="text" formControlName="board">
-            </div>
-            <div class="mb-2">
-              <!-- <label for="name">Institute Name </label><br /> -->
-              <input id="name" class="w-50" type="text" formControlName="name" placeholder="Search Institute">
+              <input id="board" type="text" class="form-control w-25" formControlName="board">
             </div>
 
+            <img (click)="filteShow();" *ngIf="!isfilterShow" class="float-end b-mt w-22"
+              src="../../../assets/images/arrowD.png" alt="">
+            <img (click)="filteShow();" *ngIf="isfilterShow" class="float-end b-mt w-20"
+              src="../../../assets/images/arrowU.png" alt="">
 
-
-            <div class="d-flex mb-4">
-              <div>
-                <label for="state">State </label> <br />
-                <ng-autocomplete [data]="stateList" [searchKeyword]="keyword" (selected)='selectEvent($event)'
-                  [itemTemplate]="itemTemplate" (inputChanged)='onChangeState($event)' formControlName="state">
-                </ng-autocomplete>
-
-                <ng-template #itemTemplate let-item>
-                  <a [innerHTML]="item.name"></a>
-                </ng-template>
+            <div *ngIf="isfilterShow">
+              <div class="mb-2">
+                <!-- <label for="name">Institute Name </label><br /> -->
+                <input id="name" type="text" class="form-control w-50" formControlName="name"
+                  placeholder="Search Institute">
               </div>
-              <div class="ml-2 ng-autocomplete">
-                <label for="district">District </label> <br />
-                <!-- <input id="district" type="text" formControlName="district"> -->
-                <ng-autocomplete [data]="city" [searchKeyword]="keyword" (selected)='selectEvent($event)'
-                  [itemTemplate]="itemTemplate" formControlName="district">
-                </ng-autocomplete>
 
-                <ng-template #itemTemplate let-item>
-                  <a [innerHTML]="item.name"></a>
-                </ng-template>
+
+
+              <div class="d-flex mb-4">
+                <div class="ng-autocomplete">
+                  <label for="state">State </label> <br />
+                  <ng-autocomplete [data]="stateList" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                    [itemTemplate]="itemTemplate" (inputChanged)='onChangeState($event)' formControlName="state">
+                  </ng-autocomplete>
+
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.name"></a>
+                  </ng-template>
+                </div>
+                <div class="ml-2 ng-autocomplete">
+                  <label for="district">District </label> <br />
+                  <!-- <input id="district" type="text" formControlName="district"> -->
+                  <ng-autocomplete [data]="city" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                    [itemTemplate]="itemTemplate" formControlName="district">
+                  </ng-autocomplete>
+
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.name"></a>
+                  </ng-template>
+                </div>
+                <div class="ml-2">
+                  <label for="pincode">Pincode </label> <br />
+                  <input id="pincode" class="form-control" type="text" formControlName="pincode">
+                </div>
               </div>
-              <div class="ml-2">
-                <label for="pincode">Pincode </label> <br />
-                <input id="pincode" type="text" formControlName="pincode">
-              </div>
+              <button type="submit" class="btn btn-info mr-2">Search</button>
+              <button (click)="resetData()" class="btn btn-info">Reset</button>
+
             </div>
-            <button type="submit" class="btn btn-info mr-2">Search</button>
-            <button (click)="resetData()" class="btn btn-info">Reset</button>
           </form>
 
 
@@ -69,8 +79,15 @@
           <span *ngIf="item?.address?.district || item?.address?.state"
             class="small text-muted">{{item?.address?.district}} {{item?.address?.state}} <br /></span>
           <span *ngIf="item?.contactNumber">Contact: {{item?.contactNumber}} <br /></span>
-          <span *ngIf="item?.affiliation?.length">Affiliation
-            No:{{item?.affiliation[0]?.affiliationNumber}}</span><br />
+          <span *ngIf="item?.affiliation">Affiliation
+            No: {{item?.affiliation[0]?.affiliationNumber}}
+            <i [ngClass]="item?.affiliation[0]?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle red'"
+              data-mdb-toggle="tooltip" title={{item?.affiliation[0]?._osState}}></i>
+
+            <img *ngIf="item?.affiliation[0]?._osState == 'ATTESTATION_REQUESTED'; else icons" style="width: 16px;"
+              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
+
+          </span><br />
         </div>
       </div>
       <table class="mx-5 my-5 w-50">
@@ -101,45 +118,52 @@
           <form [formGroup]="searchForm" (ngSubmit)="submitTeacherData()">
             <div class="mb-2">
               <label for="board">Board </label><br />
-              <input id="board" type="text" formControlName="board">
-            </div>
-            <div class="mb-2">
-              <!-- <label for="instituteName">Institute Name </label><br /> -->
-              <input id="name" class="w-50" type="text" formControlName="name"
-                placeholder="Search Teacher">
+              <input id="board" type="text" class="form-control w-25" formControlName="board">
             </div>
 
+            <img (click)="filteShow();" *ngIf="!isfilterShow" class="float-end b-mt w-22"
+              src="../../../assets/images/arrowD.png" alt="">
+            <img (click)="filteShow();" *ngIf="isfilterShow" class="float-end b-mt w-20"
+              src="../../../assets/images/arrowU.png" alt="">
 
-
-            <div class="d-flex mb-4">
-              <div>
-                <label for="state">State </label> <br />
-                <ng-autocomplete [data]="stateList" [searchKeyword]="keyword" (selected)='selectEvent($event)'
-                  [itemTemplate]="itemTemplate" (inputChanged)='onChangeState($event)' formControlName="state">
-                </ng-autocomplete>
-
-                <ng-template #itemTemplate let-item>
-                  <a [innerHTML]="item.name"></a>
-                </ng-template>
+            <div *ngIf="isfilterShow">
+              <div class="mb-2">
+                <!-- <label for="instituteName">Institute Name </label><br /> -->
+                <input id="name" class="w-50" type="text" formControlName="name" placeholder=" Search Teacher">
               </div>
-              <div class="ml-2 ng-autocomplete">
-                <label for="district">District </label> <br />
-                <!-- <input id="district" type="text" formControlName="district"> -->
-                <ng-autocomplete [data]="city" [searchKeyword]="keyword" (selected)='selectEvent($event)'
-                  [itemTemplate]="itemTemplate" formControlName="district">
-                </ng-autocomplete>
 
-                <ng-template #itemTemplate let-item>
-                  <a [innerHTML]="item.name"></a>
-                </ng-template>
+
+
+              <div class="d-flex mb-4">
+                <div>
+                  <label for="state">State </label> <br />
+                  <ng-autocomplete [data]="stateList" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                    [itemTemplate]="itemTemplate" (inputChanged)='onChangeState($event)' formControlName="state">
+                  </ng-autocomplete>
+
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.name"></a>
+                  </ng-template>
+                </div>
+                <div class="ml-2 ng-autocomplete">
+                  <label for="district">District </label> <br />
+                  <!-- <input id="district" type="text" formControlName="district"> -->
+                  <ng-autocomplete [data]="city" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                    [itemTemplate]="itemTemplate" formControlName="district">
+                  </ng-autocomplete>
+
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.name"></a>
+                  </ng-template>
+                </div>
+                <div class="ml-2">
+                  <label for="pincode">Pincode </label> <br />
+                  <input id="pincode" type="text" formControlName="pincode">
+                </div>
               </div>
-              <div class="ml-2">
-                <label for="pincode">Pincode </label> <br />
-                <input id="pincode" type="text" formControlName="pincode">
-              </div>
+              <button type="submit" class="btn btn-info mr-2">Search</button>
+              <button (click)="resetData()" class="btn btn-info">Reset</button>
             </div>
-            <button type="submit" class="btn btn-info mr-2">Search</button>
-            <button (click)="resetData()" class="btn btn-info">Reset</button>
           </form>
         </div>
       </div>
@@ -153,8 +177,28 @@
           <span>{{item?.identityDetails?.fullName}} <br /></span>
           <span class="small text-muted"
             *ngIf="item?.contactDetails?.address?.state || item?.contactDetails?.address?.district">{{item?.contactDetails?.address?.state}}
-            {{item?.contactDetails?.address?.district}} <br /></span> 
-          <span *ngIf="item?.experience">{{item?.experience[0]?.teacherType}} <br /></span>
+            {{item?.contactDetails?.address?.district}} <br /></span>
+          <span *ngIf="item?.experience">{{item?.experience[0]?.teacherType}}
+            <i [ngClass]="item?.experience[0]?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : ''"
+              data-mdb-toggle="tooltip" title={{item?.experience[0]?._osState}}></i>
+
+            <i [ngClass]="(item?.experience[0]?._osState != 'PUBLISHED' && item?.experience[0]?._osState != 'ATTESTATION_REQUESTED') ? 'fa fa-exclamation-circle red' : ''"
+              data-mdb-toggle="tooltip" title={{item?.experience[0]?._osState}}></i>
+            <img *ngIf="item?.experience[0]?._osState == 'ATTESTATION_REQUESTED'; else icons" style="width: 16px;"
+              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
+
+            <br /></span>
+          <span *ngIf="item?.academicQualifications">{{item?.academicQualifications[0]?.qualification}}
+            <i [ngClass]="item?.academicQualifications[0]?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : ''"
+              data-mdb-toggle="tooltip" title={{item?.academicQualifications[0]?._osState}}></i>
+
+            <i [ngClass]="(item?.academicQualifications[0]?._osState != 'PUBLISHED' && item?.academicQualifications[0]?._osState != 'ATTESTATION_REQUESTED') ? 'fa fa-exclamation-circle red' : ''"
+              data-mdb-toggle="tooltip" title={{item?.academicQualifications[0]?._osState}}></i>
+            <img *ngIf="item?.academicQualifications[0]?._osState == 'ATTESTATION_REQUESTED'; else icons"
+              style="width: 16px;"
+              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
+
+            <br /></span>
           <span *ngIf="item?.academicQualifications">{{item?.academicQualifications[0]?.qualification}} <br /> </span>
         </div>
       </div>
@@ -188,43 +232,50 @@
               <label for="board">Board </label><br />
               <input id="board" type="text" formControlName="board">
             </div>
-            <div class="mb-2">
-              <!-- <label for="instituteName">Institute Name </label><br /> -->
-              <input id="name" class="w-50" type="text" formControlName="name"
-                placeholder="Search Student">
+
+            <img (click)="filteShow();" *ngIf="!isfilterShow" class="float-end b-mt w-22"
+              src="../../../assets/images/arrowD.png" alt="">
+            <img (click)="filteShow();" *ngIf="isfilterShow" class="float-end b-mt w-20"
+              src="../../../assets/images/arrowU.png" alt="">
+
+            <div *ngIf="isfilterShow">
+              <div class="mb-2">
+                <!-- <label for="instituteName">Institute Name </label><br /> -->
+                <input id="name" class="w-50" type="text" formControlName="name" placeholder=" Search Student">
+              </div>
+
+
+
+              <div class="d-flex mb-4">
+                <div>
+                  <label for="state">State </label> <br />
+                  <ng-autocomplete [data]="stateList" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                    [itemTemplate]="itemTemplate" (inputChanged)='onChangeState($event)' formControlName="state">
+                  </ng-autocomplete>
+
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.name"></a>
+                  </ng-template>
+                </div>
+                <div class="ml-2 ng-autocomplete">
+                  <label for="district">District </label> <br />
+                  <!-- <input id="district" type="text" formControlName="district"> -->
+                  <ng-autocomplete [data]="city" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                    [itemTemplate]="itemTemplate" formControlName="district">
+                  </ng-autocomplete>
+
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.name"></a>
+                  </ng-template>
+                </div>
+                <div class="ml-2">
+                  <label for="pincode">Pincode </label> <br />
+                  <input id="pincode" type="text" formControlName="pincode">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-info mr-2">Search</button>
+              <button (click)="resetData()" class="btn btn-info">Reset</button>
             </div>
-
-
-
-            <div class="d-flex mb-4">
-              <div>
-                <label for="state">State </label> <br />
-                <ng-autocomplete [data]="stateList" [searchKeyword]="keyword" (selected)='selectEvent($event)'
-                  [itemTemplate]="itemTemplate" (inputChanged)='onChangeState($event)' formControlName="state">
-                </ng-autocomplete>
-
-                <ng-template #itemTemplate let-item>
-                  <a [innerHTML]="item.name"></a>
-                </ng-template>
-              </div>
-              <div class="ml-2 ng-autocomplete">
-                <label for="district">District </label> <br />
-                <!-- <input id="district" type="text" formControlName="district"> -->
-                <ng-autocomplete [data]="city" [searchKeyword]="keyword" (selected)='selectEvent($event)'
-                  [itemTemplate]="itemTemplate" formControlName="district">
-                </ng-autocomplete>
-
-                <ng-template #itemTemplate let-item>
-                  <a [innerHTML]="item.name"></a>
-                </ng-template>
-              </div>
-              <div class="ml-2">
-                <label for="pincode">Pincode </label> <br />
-                <input id="pincode" type="text" formControlName="pincode">
-              </div>
-            </div>
-            <button type="submit" class="btn btn-info mr-2">Search</button>
-            <button (click)="resetData()" class="btn btn-info">Reset</button>
           </form>
         </div>
       </div>
@@ -242,7 +293,15 @@
               *ngIf="item?.contactDetails?.address?.state || item?.contactDetails?.address?.district">{{item?.contactDetails?.address?.state}}
               {{item?.contactDetails?.address?.district}} <br /></span>
           </div>
-          <span *ngIf="item?.educationDetails?.length">Class: {{item?.educationDetails[0]?.class}} <br /></span>
+          <span *ngIf="item?.educationDetails?.length">Class: {{item?.educationDetails[0]?.class}}
+            <i [ngClass]="item?.educationDetails[0]?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : ''"
+              data-mdb-toggle="tooltip" title={{item?.educationDetails[0]?._osState}}></i>
+
+            <i [ngClass]="(item?.educationDetails[0]?._osState != 'PUBLISHED' && item?.educationDetails[0]?._osState != 'ATTESTATION_REQUESTED') ? 'fa fa-exclamation-circle red' : ''"
+              data-mdb-toggle="tooltip" title={{item?.educationDetails[0]?._osState}}></i>
+            <img *ngIf="item?.educationDetails[0]?._osState == 'ATTESTATION_REQUESTED'; else icons" style="width: 16px;"
+              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
+            <br /></span>
           <span *ngIf="item?.educationDetails">Institute: {{item?.educationDetails[0]?.institute}} <br /></span>
         </div>
       </div>

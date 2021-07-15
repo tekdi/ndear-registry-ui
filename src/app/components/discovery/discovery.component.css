@@ -119,6 +119,17 @@ color: #fff;
 .card {
     min-height: 150px;
 }
+.b-mt{
+    margin-top: -63px;
+}
+
+.w-20{
+    width: 25px;
+}
+
+.w-22{
+    width: 28px;
+}
 
 .ng-autocomplete {
     width: 200px;
@@ -127,4 +138,6 @@ color: #fff;
 button, input {
     overflow: visible;
     height: 40px;
+    border: 1px #8080803d solid;
+    box-shadow: 1px 1px #88888842;
 }

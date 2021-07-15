@@ -53,6 +53,7 @@ export class FormsComponent implements OnInit {
   options: FormlyFormOptions;
   fields: FormlyFieldConfig[];
   customFields = [];
+  header = null;
 
   type: string;
   apiUrl: string;
@@ -88,6 +89,9 @@ export class FormsComponent implements OnInit {
     if(this.formSchema.api){
       this.apiUrl = this.formSchema.api;
     }
+    if (this.formSchema.header) {
+      this.header = this.formSchema.header
+    }
     if(this.formSchema.redirectTo){
       this.redirectTo = this.formSchema.redirectTo;
     }
@@ -109,6 +113,7 @@ export class FormsComponent implements OnInit {
         if (fieldset.title) {
           this.definations[fieldset.definition]['title'] = fieldset.title
         }
+       
         if (fieldset.required && fieldset.required.length > 0) {
           this.definations[fieldset.definition]['required'] = fieldset.required
         }

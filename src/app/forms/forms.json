@@ -7,6 +7,7 @@
                 "api": "/Institute/invite",
                 "type": "entity",
                 "formclass":"row",
+                "header":"main",
                 "title": "Sign up / Create new account",
                 "fieldsets": [
                     {
@@ -178,6 +179,7 @@
                 "api": "/Teacher/invite",
                 "type": "entity",
                 "formclass":"row",
+                "header":"main",
                 "title": "Sign up / Create new account",
                 "fieldsets": [
                     {
@@ -347,6 +349,7 @@
                 "api": "/Student/invite",
                 "type": "entity",
                 "formclass":"row",
+                "header":"main",
                 "title": "Sign up / Create new account",
                 "fieldsets": [
                     {

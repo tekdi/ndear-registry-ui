@@ -28,7 +28,7 @@ export class DiscoveryComponent implements OnInit {
   tCurrentPg: number = 1;
   sCurrentPg: number = 1;
   type: string;
-  limit: number = 3;
+  limit: number = 10;
   yourWidgets = {
     submit: NoneComponent,
   }
@@ -44,12 +44,17 @@ export class DiscoveryComponent implements OnInit {
   data;
   stateList;
   city;
-
+  isfilterShow: boolean = false;
   constructor(
     public schemaService: SchemaService,
     public boardInstituteService: BoardInstituteService,
     public discoveryService: DiscoveryService
   ) { }
+
+  
+  filteShow(){
+    this.isfilterShow = !this.isfilterShow;
+  }
 
   ngOnInit(): void {
     this.stateList = State.getAllStates();

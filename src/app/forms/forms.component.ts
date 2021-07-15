@@ -301,8 +301,10 @@ export class FormsComponent implements OnInit {
         this.model = this.model[property];
       }
       console.log("modellll--",this.model);
-      if(this.model.hasOwnProperty('attest')){
-        this.apiUrl = (url.join("/"))+'?send='+this.model['attest'];
+      if(this.model.hasOwnProperty('attest') && this.model['attest']){
+        this.apiUrl = (url.join("/"))+'?send=true';
+      }else{
+        this.apiUrl = (url.join("/"))+'?send=false';
       }
       this.customFields.forEach(element => {
         delete this.model[element];

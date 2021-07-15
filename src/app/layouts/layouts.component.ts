@@ -59,8 +59,13 @@ export class LayoutsComponent implements OnInit {
       })
       console.log(filtered)
       this.layoutSchema = filtered[0][this.layout]
-      this.apiUrl = this.layoutSchema.api;
-      await this.getData();
+      if(this.layoutSchema.table){
+        var url = [this.layout,'attestation',this.layoutSchema.table]
+        this.router.navigate([url.join('/')])
+      }else{
+        this.apiUrl = this.layoutSchema.api;
+        await this.getData();
+      }
     })
   }
 
@@ -185,8 +190,12 @@ export class LayoutsComponent implements OnInit {
                         temp_object['osid'] = element.osid
                       }
                       if(element.osid){
-                        temp_object['_osState'] = element._osState
+                        temp_object['_osState'] = element._osState;
+                        // if(element.hasOwnProperty("_osClaimNotes")){
+                        //   temp_object['_osClaimNotes'] = element._osClaimNotes;
+                        // }
                       }
+                      
                       temp_object['value'] = value
                       // console.log("here", temp_object[key])
                       this.property.push(temp_object)

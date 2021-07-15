@@ -105,6 +105,10 @@ export class TeacherAttestationDetailComponent implements OnInit {
       this.table = (params['table']).toLowerCase()
       this.entity = (params['entity']).charAt(0).toUpperCase() + params['entity'].slice(1);
       this.claimId = params['id']
+      if((params['entity']).includes('board')){
+        console.log("board--",params['entity'])
+        this.entity = params['entity']
+      }
       this.apiUrl = `/${this.entity}/claims/${this.claimId}`;
       // await this.getData();
     });

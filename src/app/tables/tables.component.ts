@@ -36,7 +36,7 @@ export class TablesComponent implements OnInit {
         // console.log(Object.keys(obj)[0])
         return Object.keys(obj)[0] === this.table
       })
-      console.log(filtered)
+      // console.log(filtered)
       this.tableSchema = filtered[0][this.table]
       this.apiUrl = this.tableSchema.api;
       await this.getData();

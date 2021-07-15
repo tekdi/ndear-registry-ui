@@ -103,6 +103,11 @@
                     }
                 ]
             }
+        },
+        {
+            "board-cbse": {
+                "table": "board-cbse-attestation"
+            }
         }
     ]
 }

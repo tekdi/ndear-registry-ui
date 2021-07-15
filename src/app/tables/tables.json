@@ -48,6 +48,29 @@
                     }
                 ]
             }
+        },
+        {
+            "board-cbse-attestation": {
+                "api": "/board-cbse/claims",
+                "title": "CBSE Board Attestations",
+                "fields": [
+                    {
+                        "name": "createdAt",
+                        "title": "Submited Date"
+                    },
+                    {
+                        "name": "requestorName",
+                        "title": "Name"
+                    },
+                    {   
+                        "custom": true,
+                        "title": "Action",
+                        "type": "button",
+                        "buttonText": "Attest",
+                        "redirectTo": "/board-cbse/attestation/board-cbse-attestation/:id"
+                    }
+                ]
+            }
         }
     ]
 }

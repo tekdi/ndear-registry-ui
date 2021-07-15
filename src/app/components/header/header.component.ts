@@ -152,7 +152,8 @@ export class HeaderComponent implements OnInit {
     localStorage.clear();
 
     this.keycloakService.clearToken();
-    this.keycloakService.logout('http://localhost:4200');
+    // window.location.reload();
+    this.keycloakService.logout('http://20.198.64.128');
 
   }
 
@@ -161,7 +162,7 @@ export class HeaderComponent implements OnInit {
     localStorage.clear();
 
     this.keycloakService.clearToken();
-    this.keycloakService.logout('http://localhost:4200');
+    this.keycloakService.logout('http://20.198.64.128');
 
   }
 

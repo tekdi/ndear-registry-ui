@@ -28,7 +28,7 @@ export class TeacherMailComponent implements OnInit {
   }
 
   login(){
-    this.keycloakService.logout('http://localhost:4200/teacher-profile');
+    this.keycloakService.logout('http://20.198.64.128');
   }
 
   register()

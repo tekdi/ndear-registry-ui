@@ -22,7 +22,7 @@ export class StudentMailComponent implements OnInit {
   }
 
   login(){
-    this.keycloakService.logout('http://localhost:4200/student-profile');
+    this.keycloakService.logout('http://20.198.64.128/student-profile');
   }
 
   register()

@@ -58,6 +58,7 @@ import { APP_INITIALIZER } from '@angular/core';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 import {NgxPaginationModule} from 'ngx-pagination';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 
 
 import { MatMenuModule } from '@angular/material/menu';
@@ -214,6 +215,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     KeycloakAngularModule,
     MatAutocompleteModule,
 
+    AutocompleteLibModule,
     FormlyBootstrapModule,
     MatMenuModule,
     NgSelectModule,

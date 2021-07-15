@@ -3,6 +3,8 @@ import { NoneComponent } from 'angular6-json-schema-form';
 import { SchemaService } from 'src/app/services/data/schema.service';
 import { BoardInstituteService } from '../../services/board/board-institutes/board-institutes.service';
 import { DiscoveryService } from '../../services/discovery/discovery.service';
+import { FormGroup, FormControl } from '@angular/forms';
+import { State, City } from 'country-state-city'
 
 @Component({
   selector: 'app-discovery',
@@ -11,11 +13,17 @@ import { DiscoveryService } from '../../services/discovery/discovery.service';
 })
 
 export class DiscoveryComponent implements OnInit {
+  searchForm = new FormGroup({
+    board: new FormControl(''),
+    name: new FormControl(''),
+    state: new FormControl(''),
+    district: new FormControl(''),
+    pincode: new FormControl(''),
+  });
   header1: string = 'main';
   searchInstitute;
   schemaJson;
   boardList;
-  data;
   iCurrentPg: number = 1;
   tCurrentPg: number = 1;
   sCurrentPg: number = 1;
@@ -24,14 +32,19 @@ export class DiscoveryComponent implements OnInit {
   yourWidgets = {
     submit: NoneComponent,
   }
-  instituteItems : any[];
-  studentItems : any[];
+  instituteItems: any[];
+  studentItems: any[];
   teacherItems: any[];
   items;
   search;
   searchString;
   searchString1;
   user;
+  keyword = 'name';
+  data;
+  stateList;
+  city;
+
   constructor(
     public schemaService: SchemaService,
     public boardInstituteService: BoardInstituteService,
@@ -39,7 +52,8 @@ export class DiscoveryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+    this.stateList = State.getAllStates();
+    this.city = City.getAllCities();
 
     this.schemaService.getSchemas().subscribe((res) => {
       this.schemaJson = res;
@@ -47,71 +61,18 @@ export class DiscoveryComponent implements OnInit {
       this.searchInstitute = {
         "type": "object",
         "title": "Teacher",
-        "definitions": {
-          "Institute": {
-            "type": "object",
-            "properties": {
-              "instituteType": {
-                "type": "string",
-                "enum": [
-                  "Boys",
-                  "Girls",
-                  "Co-ed"
-                ]
-              },
-              "instituteName": {
-                "type": "string"
-              }
-            }
-          },
-          /* "Skills": {
-             "type": "object",
-             "properties": {
-               "year": {
-                 "title": "Year",
-                 "type": "string",
-                 "enum": [
-                   "2010",
-                   "2000",
-                   "1990"
-                 ]
-               },
-               "subject": {
-                 "title": "Subject",
-                 "type": "string",
-                 "enum": [
-                   "English",
-                   "Hindi",
-                   "Sanskrit"
-                 ]
-               }
-             }
-           },*/
-          "Management": {
-            "type": "object",
-            "properties": {
-              "year": {
-                "title": "Year",
-                "type": "string",
-                "enum": [
-                  "2010",
-                  "2000",
-                  "1990"
-                ]
-              },
-              "subject": {
-                "title": "Subject",
-                "type": "string",
-                "enum": [
-                  "English",
-                  "Hindi",
-                  "Sanskrit"
-                ]
-              }
-            }
-          }
-        },
+
         "properties": {
+          "board": {
+            "type": "string",
+            "enum": [
+              "CBSE"
+            ],
+            "title": "Board"
+          },
+          "name": {
+            "type": "string"
+          },
           "state": {
             "type": "string",
             "enum": [
@@ -130,23 +91,17 @@ export class DiscoveryComponent implements OnInit {
             ],
             "title": "District"
           },
-          "Institute": {
-            "$ref": "#/definitions/Institute"
-          },
-          // "Skills": {
-          //   "$ref": "#/definitions/Skills"
-          // },
-          "Management": {
-            "$ref": "#/definitions/Management"
+          "pincode": {
+            "type": "string",
+            "title": "pincode"
           }
         }
       };
     });
 
+    this.searchInstituteData('');
     this.searchTeacherData('');
     this.searchStudentData('');
-
-    this.searchInstituteData('');
 
 
     // this.boardInstituteService.getBordInstitute().subscribe(res => {
@@ -160,6 +115,36 @@ export class DiscoveryComponent implements OnInit {
     // });
   }
 
+  selectEvent(item) {
+    // do something with selected item
+
+    if (item.countryCode) {
+      this.city = City.getCitiesOfState(item.countryCode, item.isoCode);
+
+    } else {
+      this.city = City.getAllCities();
+    }
+  }
+
+  onChangeState(item) {
+    console.log(item);
+  }
+
+  onSubmit() {
+    this.searchInstituteData(this.searchForm.value);
+    console.log(this.searchForm.value);
+  }
+
+  submitTeacherData(){
+    this.searchTeacherData(this.searchForm.value);
+  }
+
+  submitStudentData(){
+    this.searchStudentData(this.searchForm.value);
+  }
+
+
+
   searchDataIN(event) {
 
     this.searchString = {
@@ -167,49 +152,40 @@ export class DiscoveryComponent implements OnInit {
       }
     }
 
-    if (event.hasOwnProperty('Institute')) {
-      if (event.Institute.hasOwnProperty('instituteName')) {
-        this.searchString.filters["instituteName"] = {
-          "eq": event.Institute.instituteName
-        };
-      }
 
-      if (event.Institute.hasOwnProperty('instituteType')) {
-        this.searchString.filters["schoolType"] = {
-          "eq": event.Institute.instituteType
-        };
-      }
+    if (event.name) {
+      this.searchString.filters["instituteName"] = {
+        "startsWith": event.name
+      };
     }
 
-    if (event.hasOwnProperty('state')) {
+    if (event.board) {
+      this.searchString.filters["board"] = {
+        "startsWith": event.board
+      };
+    }
+
+
+    if (event.state) {
       this.searchString.filters["address.state"] = {
-        "eq": event.state
+        "startsWith": event.state.name
       };
     }
 
-    if (event.hasOwnProperty('district')) {
+    if (event.pincode) {
+      this.searchString.filters["address.pincode"] = {
+        "startsWith": event.pincode
+      };
+    }
+
+    if (event.district) {
       this.searchString.filters["address.district"] = {
-        "eq": event.district
+        "startsWith": event.district.name
       };
-    }
-
-    if (event.hasOwnProperty('Management')) {
-      if (event.Management.hasOwnProperty('year')) {
-        this.searchString.filters["grantYear"] = {
-          "eq": event.Management.year
-        };
-      }
-
-      if (event.Management.hasOwnProperty('subject')) {
-        this.searchString.filters["medium"] = {
-          "eq": event.Management.subject
-        };
-      }
     }
 
 
     return this.searchString;
-    console.log(this.searchString);
 
   }
 
@@ -218,9 +194,9 @@ export class DiscoveryComponent implements OnInit {
 
     let filterData = this.searchDataIN(event);
 
-    this.discoveryService.searchInstitute(filterData).subscribe((err) => {
-    }, (res) => {
+    this.discoveryService.searchInstitute(filterData).subscribe((res) => {
       this.instituteItems = res;
+    }, (err) => {
     });
 
   }
@@ -229,9 +205,9 @@ export class DiscoveryComponent implements OnInit {
     this.tCurrentPg = 1;
     let filterData = this.searchData(event);
 
-    this.discoveryService.searchTeacher(filterData).subscribe((err) => {
-    }, (res) => {
+    this.discoveryService.searchTeacher(filterData).subscribe((res) => {
       this.teacherItems = res;
+    }, (err) => {
     });
   }
 
@@ -241,9 +217,9 @@ export class DiscoveryComponent implements OnInit {
 
     let filterData = this.searchData(event);
 
-    this.discoveryService.searchStudent(filterData).subscribe((err) => {
-    }, (res) => {
+    this.discoveryService.searchStudent(filterData).subscribe((res) => {
       this.studentItems = res;
+    }, (err) => {
     });
   }
 
@@ -255,7 +231,13 @@ export class DiscoveryComponent implements OnInit {
   }
 
   resetData() {
-    this.data = {}
+    this.searchForm = new FormGroup({
+      board: new FormControl(''),
+      name: new FormControl(''),
+      state: new FormControl(''),
+      district: new FormControl(''),
+      pincode: new FormControl(''),
+    });
 
   }
 
@@ -266,44 +248,28 @@ export class DiscoveryComponent implements OnInit {
       }
     }
 
-    if (event.hasOwnProperty('Institute')) {
-      if (event.Institute.hasOwnProperty('instituteName')) {
-        this.searchString1.filters["academicQualifications.institute"] = {
-          "eq": event.Institute.instituteName
+      if (event.name) {
+        this.searchString1.filters["identityDetails.fullName"] = {
+          "startsWith": event.name
         };
-      }
-
-      if (event.Institute.hasOwnProperty('instituteType')) {
-        this.searchString1.filters["schoolType"] = {
-          "eq": event.Institute.instituteType
-        };
-      }
     }
 
-    if (event.hasOwnProperty('state')) {
+    if (event.state) {
       this.searchString1.filters["contactDetails.address.state"] = {
-        "eq": event.state
+        "startsWith": event.state.name
       };
     }
 
-    if (event.hasOwnProperty('district')) {
+    if (event.district) {
       this.searchString1.filters["contactDetails.address.district"] = {
-        "eq": event.district
+        "startsWith": event.district.name
       };
     }
 
-    if (event.hasOwnProperty('Management')) {
-      if (event.Management.hasOwnProperty('year')) {
-        this.searchString1.filters["graduationYear.grantYear"] = {
-          "eq": event.Management.year
-        };
-      }
-
-      if (event.Management.hasOwnProperty('subject')) {
-        this.searchString1.filters["educationDetails.medium"] = {
-          "eq": event.Management.subject
-        };
-      }
+    if (event.pincode) {
+      this.searchString1.filters["contactDetails.address.pincode"] = {
+        "startsWith": event.pincode
+      };
     }
 
 

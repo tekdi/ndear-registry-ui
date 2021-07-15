@@ -58,50 +58,10 @@ export class DiscoveryComponent implements OnInit {
 
   ngOnInit(): void {
     this.stateList = State.getAllStates();
-    this.city = City.getAllCities();
+   //this.city = City.getAllCities();
 
     this.schemaService.getSchemas().subscribe((res) => {
       this.schemaJson = res;
-
-      this.searchInstitute = {
-        "type": "object",
-        "title": "Teacher",
-
-        "properties": {
-          "board": {
-            "type": "string",
-            "enum": [
-              "CBSE"
-            ],
-            "title": "Board"
-          },
-          "name": {
-            "type": "string"
-          },
-          "state": {
-            "type": "string",
-            "enum": [
-              "Maharashtra",
-              "Karnatka",
-              "Other"
-            ],
-            "title": "State"
-          },
-          "district": {
-            "type": "string",
-            "enum": [
-              "Nashik",
-              "Pune",
-              "Mumbai"
-            ],
-            "title": "District"
-          },
-          "pincode": {
-            "type": "string",
-            "title": "pincode"
-          }
-        }
-      };
     });
 
     this.searchInstituteData('');
@@ -120,7 +80,7 @@ export class DiscoveryComponent implements OnInit {
     // });
   }
 
-  selectEvent(item) {
+  selectStateEvent(item) {
     // do something with selected item
 
     if (item.countryCode) {
@@ -208,7 +168,7 @@ export class DiscoveryComponent implements OnInit {
 
   searchTeacherData(event) {
     this.tCurrentPg = 1;
-    let filterData = this.searchData(event);
+    let filterData = this.searchData(event, 'teacher');
 
     this.discoveryService.searchTeacher(filterData).subscribe((res) => {
       this.teacherItems = res;
@@ -220,7 +180,7 @@ export class DiscoveryComponent implements OnInit {
   searchStudentData(event) {
     this.sCurrentPg = 1;
 
-    let filterData = this.searchData(event);
+    let filterData = this.searchData(event, 'student');
 
     this.discoveryService.searchStudent(filterData).subscribe((res) => {
       this.studentItems = res;
@@ -243,17 +203,21 @@ export class DiscoveryComponent implements OnInit {
       district: new FormControl(''),
       pincode: new FormControl(''),
     });
-
   }
 
-  searchData(event) {
-
+  searchData(event, entity) {
     this.searchString1 = {
       "filters": {
       }
     }
 
-    if (event.board) {
+    if (event.board && entity == 'teacher') {
+      this.searchString1.filters["experience.subjects"] = {
+        "startsWith": event.board
+      };
+    }
+
+    if (event.board && entity == 'student') {
       this.searchString1.filters["educationDetails.board"] = {
         "startsWith": event.board
       };

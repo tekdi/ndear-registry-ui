@@ -1,5 +1,5 @@
 <app-header *ngIf="!public" [headerFor]='layout' [tab]='tab'></app-header>
-<div class="container" *ngIf="identifier != null">
+<div [ngClass]="public ? 'container noToBottom' : 'container'" *ngIf="identifier != null">
     <!-- <a class="text-end d-block text-primary-color blue-shade-btn" data-toggle="modal"
     data-target="#prewiewProfile">Preview Public Profile</a> -->
     <ng-template ngFor let-block [ngForOf]="Data" let-blockIndex="index">

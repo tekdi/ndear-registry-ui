@@ -216,10 +216,10 @@
             </div>
         </ng-template>
     </div> -->
-
-    <div class="card">
+    
+    <div class="card" style="background-color: #f2e39c99;">
         <div class="card-body">
-            <h5>Note for {{user?.identityDetails?.fullName}}</h5>
+            <h5>Add a Note for {{claimData?.requestorName}}</h5>
             <ng-template [ngIf]="noteAdded">
                 <div style="color: green;"><i class="fa fa-check"></i> Note Added!
                 </div>

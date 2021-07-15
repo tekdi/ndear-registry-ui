@@ -44,7 +44,7 @@ export class DiscoveryComponent implements OnInit {
   data;
   stateList;
   city;
-  isfilterShow: boolean = false;
+  isfilterShow: boolean = true;
   constructor(
     public schemaService: SchemaService,
     public boardInstituteService: BoardInstituteService,
@@ -165,7 +165,7 @@ export class DiscoveryComponent implements OnInit {
     }
 
     if (event.board) {
-      this.searchString.filters["board"] = {
+      this.searchString.filters["affiliation.board"] = {
         "startsWith": event.board
       };
     }
@@ -251,6 +251,12 @@ export class DiscoveryComponent implements OnInit {
     this.searchString1 = {
       "filters": {
       }
+    }
+
+    if (event.board) {
+      this.searchString1.filters["educationDetails.board"] = {
+        "startsWith": event.board
+      };
     }
 
       if (event.name) {

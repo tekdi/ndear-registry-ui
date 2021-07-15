@@ -13,5 +13,5 @@
     "**/*.ts",
     "**/*.json",
     "./assets/*.json"
-  ]
+, "app/forms/types/autocomplete-type.component"  ]
 }

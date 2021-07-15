@@ -32,6 +32,7 @@
     "@jsonforms/angular-material": "^2.5.0",
     "@jsonforms/core": "^2.5.0",
     "@ng-bootstrap/ng-bootstrap": "^8.0.4",
+    "@ng-select/ng-select": "^7.2.0",
     "@ngx-formly/bootstrap": "^5.10.21",
     "@ngx-formly/core": "^5.10.21",
     "ajv": "^6.10.2",

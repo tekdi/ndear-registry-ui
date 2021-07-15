@@ -1,5 +1,28 @@
+<header style="margin-bottom: 45px;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                data-mdb-target="#navbarExample01" aria-controls="navbarExample01" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarExample01">
+                <div class="nav-item active logo-text">
+                    <a class="nav-link" aria-current="page"  style="color: black;">Attest Details</a>
+                </div>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <button type="button" (click)="close()" class="close float-right"><span _ngcontent-fni-c481="" aria-hidden="true">×</span></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
 <div class="container">
+    
     <div class="mt-5">
+        
         <h5>Claims by {{claimData?.requestorName}}</h5>
     </div>
     <!-- <button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize"
@@ -38,7 +61,7 @@
     </ng-template> -->
 
     <div>
-        <h6>Attestations </h6>
+        <!-- <h6>Attestations </h6> -->
         <div class="card">
             <div  >
             <div class="card-body" style="height: 128px;">
@@ -60,7 +83,9 @@
         </div>
     </div>
         <hr>
-
+        <div class="mt-5">
+            <h5>Public Profile of {{claimData?.requestorName}}</h5>
+        </div>
         <ng-template [ngIf]="profile">
             <app-layouts layout={{claimEntity}} identifier={{claimEntityId}} public={{profile}}></app-layouts>
         </ng-template>

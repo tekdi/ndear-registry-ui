@@ -10,12 +10,26 @@ import { GeneralService } from '../services/general/general.service';
 import { PanelsComponent } from '../layouts/modal/panels/panels.component';
 import { Location } from '@angular/common'
 import { title } from 'process';
+import { combineLatest, startWith, switchMap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import { of } from 'rxjs';
+
+const states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado',
+  'Connecticut', 'Delaware', 'District Of Columbia', 'Federated States Of Micronesia', 'Florida', 'Georgia',
+  'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
+  'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana',
+  'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+  'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico', 'Rhode Island',
+  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Islands', 'Virginia',
+  'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
 
 @Component({
   selector: 'app-forms',
   templateUrl: './forms.component.html',
   styleUrls: ['./forms.component.scss']
 })
+
+
 export class FormsComponent implements OnInit {
   @Input() form;
   @Input() modal;
@@ -238,7 +252,25 @@ export class FormsComponent implements OnInit {
       }
     }
     if (field.type) {
-      this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['type'] = field.type
+      if(field.type == "autocomplete"){
+        // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['hooks']= {
+          // onInit: (field) => {
+          //   console.log("here",field)
+          //   field.templateOptions.filter$ = field.formControl.valueChanges
+          //     .pipe(
+          //       startWith(''),
+          //       combineLatest(this.selectedValue$),
+          //       switchMap(this.filterStates()),
+          //     )
+          // }
+        // }
+        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = "autocomplete";
+        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['filter'] = (term) => of(term ? this.filterStates(term) : states.slice())
+      }
+      else{
+        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['type'] = field.type
+      }
+      
     }
     if (field.disabled || field.disable) {
       this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['disabled'] = field.disabled
@@ -248,10 +280,11 @@ export class FormsComponent implements OnInit {
 
   submit() {
     console.log("model",this.model,this.type,this.identifier)
-    this.customFields.forEach(element => {
-      delete this.model[element];
-    });
+    
     if(this.type && this.type === 'entity'){
+      this.customFields.forEach(element => {
+        delete this.model[element];
+      });
       if (this.identifier != null) {
         this.updateData()
       } else {
@@ -263,16 +296,46 @@ export class FormsComponent implements OnInit {
       // this.identifier = localStorage.getItem('entity-osid');
       var property = this.type.split(":")[1];
       var url = [this.apiUrl,this.identifier,property];
-      this.apiUrl = (url.join("/"))+'?send=true';
-      this.model = this.model[property];
-      delete this.model[0][property];
+      this.apiUrl = (url.join("/"));
+      if(this.model[property]){
+        this.model = this.model[property];
+      }
       console.log("modellll--",this.model);
+      if(this.model.hasOwnProperty('attest')){
+        this.apiUrl = (url.join("/"))+'?send='+this.model['attest'];
+      }
+      this.customFields.forEach(element => {
+        delete this.model[element];
+      });
       this.postData()
       // this.getData()
     }
     // const url = this.router.createUrlTree(['/profile/institute'])
     // window.open(this.router.createUrlTree([this.redirectTo]).toString(), '_blank')
     
+  }
+
+  // filterStates() {
+  //   return ([term, states]) => {
+  //     return of(term
+  //     ? states.filter(state =>
+  //     state.toLowerCase().indexOf(term.toLowerCase()) === 0)
+  //     : states.slice());
+  //   }
+  //   ;
+  // }
+
+  // changeState(){
+  //   if(this.selectedValue$.value.length !== 3){
+  //     this.selectedValue$.next(states2);
+  //   } else {
+  //     this.selectedValue$.next(states);
+  //   }
+  // }
+
+  filterStates(name: string) {
+    return states.filter(state =>
+      state.toLowerCase().indexOf(name.toLowerCase()) === 0);
   }
 
   getData(definition) {
@@ -327,3 +390,5 @@ export class FormsComponent implements OnInit {
   //   // this.panel.close();
   // }
 }
+
+

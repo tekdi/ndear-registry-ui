@@ -22,8 +22,12 @@
                             <a [routerLink]="[td.redirectTo]" class="btn btn-primary text-end fw-bold text-capitalize">{{td?.buttonText}}</a>
                         </td>
                         <ng-template #normalTd>
-                            <td >{{td?.value}}</td>
+                            <td *ngIf="td?.formate && td.formate == 'date'; else notFormate">{{td?.value | date: 'dd/MM/yyyy'}}</td>
+                            <ng-template #notFormate>
+                                <td>{{td?.value}}</td>
+                            </ng-template>
                         </ng-template>
+                        
                         
                     </ng-template>
                 </tr>

@@ -85,6 +85,10 @@ export class TablesComponent implements OnInit {
           field['status'] = element['status']
           // console.log("field",field)
         }
+        if(field.formate){
+          field['formate'] = field.formate
+          // console.log("field",field)
+        }
         if(field.custom){
           if(field.type == "button"){
             var redirectUrl;

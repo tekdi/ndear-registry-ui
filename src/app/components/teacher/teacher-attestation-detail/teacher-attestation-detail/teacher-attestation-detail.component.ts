@@ -181,7 +181,7 @@ export class TeacherAttestationDetailComponent implements OnInit {
       "notes": this.note
   }
   console.log("data--",data);
-    var url = "/"+this.entity+"/"+this.osid+"/claims/"+this.claimId+"/attest"
+    var url = "/"+this.entity+"/claims/"+this.claimId+"/attest"
     this.generalService.postData(url, data).subscribe((res) => {
       // alert('success');
       console.log(res);
@@ -189,7 +189,7 @@ export class TeacherAttestationDetailComponent implements OnInit {
     });
     this.router.navigate([this.entity,'attestation',this.table]).then(() => {
       window.location.reload();
-    });;
+    });
 
 
     //this.noteAdded = true;
@@ -205,6 +205,11 @@ export class TeacherAttestationDetailComponent implements OnInit {
     this.note = event.note
     this.noteAdded = true;
 
+  }
+
+  close(){
+    console.log('here')
+    this.router.navigate([this.entity,'attestation',this.table]);
   }
 
 }

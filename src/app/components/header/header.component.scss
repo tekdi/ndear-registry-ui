@@ -76,3 +76,13 @@ hr{
     height: auto;
     max-width: 23%;
 }
+
+nav {
+    overflow: hidden;
+    // padding: 1em;
+    position: fixed;
+    top: 0px;
+    display: block;
+    width: 100%;
+    z-index: 1;
+}

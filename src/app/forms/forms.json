@@ -118,10 +118,55 @@
                 "redirectTo":"/profile/institute",
                 "fieldsets": [
                     {
-                        "definition": "Institute",
+                        "definition": "Affiliation",
                         "fields": [
                             {
-                                "name":"affiliation"
+                                "name":"affiliationNumber",
+                                "required": true
+                            },
+                            {
+                                "name":"board",
+                                "required": true
+                            },
+                            {
+                                "name":"grantYear",
+                                "required": true,
+                                "validation":{
+                                    "pattern": "^[0-9]{4}$",
+                                    "message": "Year is not valid. Ex: 2016"
+                                }
+                            },
+                            {
+                                "name":"expiryYear",
+                                "validation":{
+                                    "pattern": "^[0-9]{4}$",
+                                    "message": "Year is not valid. Ex: 2016"
+                                }
+                            },
+                            {
+                                "name":"medium",
+                                "required": true
+                            },
+                            {
+                                "name":"classes",
+                                "required": true
+                            },
+                            {
+                                "name":"attest",
+                                "custom":true,
+                                "element":{
+                                    "title": "Send for attestation?",
+                                    "widget": {
+                                      "formlyConfig": {
+                                        "type": "checkbox",
+                                        "fieldGroupClassName":"controls",
+                                        "className": "checkbox",
+                                        "templateOptions":{
+                                            "required": true
+                                        }
+                                      }
+                                    }
+                                  }
                             }
                         ]
                     }
@@ -245,12 +290,54 @@
                 "redirectTo":"/profile/teacher",
                 "fieldsets": [
                     {
-                        "definition": "Teacher",
+                        "definition": "ExperienceType",
                         "fields": [
                             {
-                                "name":"experience"
+                                "name":"institute",
+                                "required": true
+                            },
+                            {
+                                "name":"employmentType",
+                                "required": true
+                            },
+                            {
+                                "name":"start",
+                                "required": true,
+                                "type":"date"
+                            },
+                            {
+                                "name":"end",
+                                "type":"date"
+                            },
+                            {
+                                "name":"teacherType",
+                                "required": true
+                            },
+                            {
+                                "name":"subjects"
+                            },
+                            {
+                                "name":"grades"
+                            },
+                            {
+                                "name":"attest",
+                                "custom":true,
+                                "element":{
+                                    "title": "Send for attestation?",
+                                    "widget": {
+                                      "formlyConfig": {
+                                        "type": "checkbox",
+                                        "fieldGroupClassName":"controls",
+                                        "className": "checkbox",
+                                        "templateOptions":{
+                                            "required": true
+                                        }
+                                      }
+                                    }
+                                  }
                             }
-                        ]
+                        ] 
+                        
                     }
                 ]
             }
@@ -390,10 +477,40 @@
                 "redirectTo":"/profile/student",
                 "fieldsets": [
                     {
-                        "definition": "Student",
+                        "definition": "EducationType",
                         "fields": [
                             {
-                                "name":"educationDetails"
+                                "name":"institute",
+                                "required": true
+                            },
+                            {
+                                "name":"board",
+                                "required": true
+                            },
+                            {
+                                "name":"medium",
+                                "required": true
+                            },
+                            {
+                                "name":"class",
+                                "required": true
+                            },
+                            {
+                                "name":"attest",
+                                "custom":true,
+                                "element":{
+                                    "title": "Send for attestation?",
+                                    "widget": {
+                                      "formlyConfig": {
+                                        "type": "checkbox",
+                                        "fieldGroupClassName":"controls",
+                                        "className": "checkbox",
+                                        "templateOptions":{
+                                            "required": true
+                                        }
+                                      }
+                                    }
+                                  }
                             }
                         ]
                     }

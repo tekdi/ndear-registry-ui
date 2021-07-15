@@ -68,6 +68,7 @@ import { ArrayTypeComponent } from '../app/forms/types/array.type';
 import { ObjectTypeComponent } from '../app/forms/types/object.type';
 import { MultiSchemaTypeComponent } from '../app/forms/types/multischema.type';
 import { NullTypeComponent } from '../app/forms/types/null.type';
+import { AutocompleteTypeComponent } from '../app/forms/types/autocomplete.type';
 
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
   return `should NOT have fewer than ${field.templateOptions.minItems} items`;
@@ -131,7 +132,8 @@ import { PanelsComponent } from './layouts/modal/panels/panels.component';
 import { EditPanelComponent } from './layouts/modal/panels/edit-panel/edit-panel.component';
 import { AddPanelComponent } from './layouts/modal/panels/add-panel/add-panel.component';
 import { TablesComponent } from './tables/tables.component';
-
+import { NgSelectModule } from '@ng-select/ng-select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 
@@ -191,6 +193,7 @@ import { TablesComponent } from './tables/tables.component';
     ModalRouterAddLinkDirective,
     Test2Component,
     PanelsComponent, EditPanelComponent, AddPanelComponent, TablesComponent,
+    AutocompleteTypeComponent
 
 
   ],
@@ -209,9 +212,11 @@ import { TablesComponent } from './tables/tables.component';
     SuiModule,
 
     KeycloakAngularModule,
+    MatAutocompleteModule,
 
     FormlyBootstrapModule,
     MatMenuModule,
+    NgSelectModule,
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
       validationMessages: [
@@ -244,6 +249,7 @@ import { TablesComponent } from './tables/tables.component';
         { name: 'array', component: ArrayTypeComponent },
         { name: 'object', component: ObjectTypeComponent },
         { name: 'multischema', component: MultiSchemaTypeComponent },
+        { name: 'autocomplete', component: AutocompleteTypeComponent }
       ],
     }),
 
@@ -257,7 +263,7 @@ import { TablesComponent } from './tables/tables.component';
     }),
     NgxPaginationModule
   ],
-  schemas: [],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [Test2Component],
   bootstrap: [AppComponent],
   providers: [ 

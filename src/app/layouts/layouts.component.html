@@ -4,7 +4,7 @@
     data-target="#prewiewProfile">Preview Public Profile</a> -->
     <ng-template ngFor let-block [ngForOf]="Data" let-blockIndex="index">
         <div *ngIf="block.items[0].length > 0; else noData">
-            <div  class="d-flex flex-justify-between  mt-5">
+            <div [ngClass]="public ? 'd-flex flex-justify-between' : 'd-flex flex-justify-between mt-5'">
                 <div >
                     <h6 class="d-inline-block">{{block.title}}</h6>
                     <ng-template [ngIf]="block.edit">
@@ -135,7 +135,7 @@
             </ng-template>
         </div>
         <ng-template #noData>
-            <div >
+            <div *ngIf="!public">
                 <a panelAddLink="{{block.addform}}" class="text-end d-block text-primary-color blue-shade-btn"><i class="fa fa-plus pr-1"
                     aria-hidden="true"></i>{{block.title}}</a>
             </div>

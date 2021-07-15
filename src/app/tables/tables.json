@@ -9,7 +9,8 @@
                 "fields": [
                     {
                         "name": "createdAt",
-                        "title": "Submited Date"
+                        "title": "Submited Date",
+                        "formate": "date"
                     },
                     {
                         "name": "requestorName",

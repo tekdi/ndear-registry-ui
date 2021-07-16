@@ -1,4 +1,6 @@
-<app-header [headerFor]='header1'></app-header>
+<div class="app-toolbar mb-5">
+  <app-header [headerFor]='header1'></app-header>
+</div>
 
 <mat-tab-group class="mx-5">
 
@@ -76,7 +78,7 @@
           (click)="showDetails(item, 'institute')">
           <span>{{item?.instituteName}} <br /></span>
           <span *ngIf="item?.address?.district || item?.address?.state"
-            class="small text-muted">{{item?.address?.district}} {{item?.address?.state}} <br /></span>
+            class="small text-muted"><span *ngIf="item?.address?.district">{{item?.address?.district}}, </span> <span *ngIf="item?.address?.state">{{item?.address?.state}} </span> <br /></span>
           <span *ngIf="item?.contactNumber">Contact: {{item?.contactNumber}} <br /></span>
           
           <span *ngIf="item?.affiliation?.length">
@@ -180,8 +182,9 @@
         <div class="card-body" data-toggle="modal" data-target="#prewiewProfile" (click)="showDetails(item, 'teacher')">
           <span>{{item?.identityDetails?.fullName}} <br /></span>
           <span class="small text-muted"
-            *ngIf="item?.contactDetails?.address?.state || item?.contactDetails?.address?.district">{{item?.contactDetails?.address?.district}}
-            {{item?.contactDetails?.address?.state}} <br /></span>
+            *ngIf="item?.contactDetails?.address?.state || item?.contactDetails?.address?.district">
+            <span *ngIf="item?.address?.district">{{item?.contactDetails?.address?.district}}, </span>
+            <span *ngIf="item?.address?.state">{{item?.contactDetails?.address?.state}} </span><br /></span>
 
           <span *ngIf="item?.experience?.length">
             <span *ngIf="item?.experience[0]?.teacherType">
@@ -299,8 +302,9 @@
           <span>{{item?.identityDetails?.fullName}} <br /> </span>
           <div *ngIf="item?.contactDetails?.address?.state">
             <span class="small text-muted"
-              *ngIf="item?.contactDetails?.address?.state || item?.contactDetails?.address?.district">{{item?.contactDetails?.address?.district}}
-              {{item?.contactDetails?.address?.state}} <br /></span>
+              *ngIf="item?.contactDetails?.address?.state || item?.contactDetails?.address?.district">
+              <span *ngIf="item?.address?.district">{{item?.contactDetails?.address?.district}}, </span>
+              <span *ngIf="item?.address?.state">{{item?.contactDetails?.address?.state}}</span> <br /></span>
           </div>
           <span *ngIf="item?.educationDetails?.length">
             <span *ngIf="item?.educationDetails[0]?.class"> Class: {{item?.educationDetails[0]?.class}}

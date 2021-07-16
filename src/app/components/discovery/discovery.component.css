@@ -4,6 +4,12 @@ dl{
     flex-direction: column;
     height: 4em;
 }
+
+.app-toolbar {
+    position: sticky;
+    z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+}
+
 dt{
     font-weight: 500;
 }

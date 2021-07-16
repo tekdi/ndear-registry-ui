@@ -354,6 +354,53 @@
                 "fieldsets": [
                     {
                         "definition": "Student",
+                        "dependencies": {
+                            "above13": {
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                          "above13": {
+                                            "enum": [
+                                              "No"
+                                            ]
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "properties": {
+                                          "above13": {
+                                            "enum": [
+                                              "Yes"
+                                            ]
+                                          },
+                                          "guardianDetails": {
+                                            "type": "object",
+                                            "properties": {
+                                              "fullName": {
+                                                "$id": "#/properties/fullName",
+                                                "type": "string",
+                                                "title": "Full Name"
+                                              },
+                                              "relation": {
+                                                "$id": "#/properties/relation",
+                                                "type": "string",
+                                                "title": "Relation type"
+                                              },
+                                              "email": {
+                                                "$id": "#/properties/email",
+                                                "type": "string",
+                                                "title": "Email"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "required": [
+                                          "guardianDetails"
+                                        ]
+                                      }
+                                ]
+                            }
+                          },
                         "fields": [
                             {
                                 "name":"above13",
@@ -387,23 +434,6 @@
                                 }
                             },
                             {
-                                "name":"Guardian Full Name",
-                                "custom":true,
-                                "element":{
-                                    "title": "Guardian's Full Name",
-                                    "widget": {
-                                      "formlyConfig": {
-                                        "type": "input",
-                                        "fieldGroupClassName":"controls",
-                                        "className": "radio",
-                                        "expressionProperties": {
-                                            "hide": "!model.above13 || model.above13 === 'Yes'"
-                                          }
-                                      }
-                                    }
-                                  }
-                            },
-                            {
                                 "name":"contactDetails",
                                 "children": {
                                     "definition": "ContactDetails",
@@ -414,7 +444,7 @@
                                             "required": true
                                         },
                                         {
-                                            "name": "mobile",
+                                            "name": "mobile",   
                                             "required": true
                                         }
                                     ]

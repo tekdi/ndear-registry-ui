@@ -36,7 +36,7 @@ export class AutocompleteTypeComponent extends FieldType {
     this.filter = this.formControl.valueChanges
       .pipe(
         startWith(''),
-        switchMap(term => term),
+        switchMap(term => this.to.filter(term)),
       );
   }
 }

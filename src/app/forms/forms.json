@@ -363,15 +363,6 @@
                                             "enum": [
                                               "No"
                                             ]
-                                          }
-                                        }
-                                      },
-                                      {
-                                        "properties": {
-                                          "above13": {
-                                            "enum": [
-                                              "Yes"
-                                            ]
                                           },
                                           "guardianDetails": {
                                             "type": "object",
@@ -392,6 +383,15 @@
                                                 "title": "Email"
                                               }
                                             }
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "properties": {
+                                          "above13": {
+                                            "enum": [
+                                              "Yes"
+                                            ]
                                           }
                                         },
                                         "required": [

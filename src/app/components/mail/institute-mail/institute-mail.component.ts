@@ -20,7 +20,7 @@ export class InstituteMailComponent implements OnInit {
   }
 
   login(){
-    this.keycloakService.logout('http://20.198.64.128/institute-profile-setup');
+    this.keycloakService.logout('http://ndear.xiv.in/institute-profile-setup');
   }
 
   register()

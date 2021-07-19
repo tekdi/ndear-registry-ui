@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://20.198.64.128/registry/api/v1',
-  schemaUrl: 'http://20.198.64.128/registry/api/docs/swagger.json'
+  baseUrl: 'http://ndear.xiv.in/registry/api/v1',
+  schemaUrl: 'http://ndear.xiv.in/registry/api/docs/swagger.json'
 };
 
 export enum ApiPaths {

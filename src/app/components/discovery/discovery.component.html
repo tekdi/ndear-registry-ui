@@ -10,18 +10,18 @@
       <!-- <json-schema-form [schema]="searchInstitute" [data]='data' [widgets]="yourWidgets" framework="bootstrap-4"
         (onChanges)="searchInstituteData($event)">
       </json-schema-form> -->
-      <div class="card p-4">
+      <div class="card p-3">
         <div class="card-body">
           <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
             <div class="mb-2 form-group">
               <label for="board">Board </label><br />
-              <input id="board" type="text" class="form-control w-25" formControlName="board">
+              <input id="board" type="text" class="form-control w-25" formControlName="board" placeholder="Enter Board">
             </div>
 
-            <img (click)="filteShow();" *ngIf="!isfilterShow" class="float-end b-mt w-22"
-              src="../../../assets/images/arrowD.png" alt="">
-            <img (click)="filteShow();" *ngIf="isfilterShow" class="float-end b-mt w-20"
-              src="../../../assets/images/arrowU.png" alt="">
+            <span  (click)="filteShow();"  *ngIf="!isfilterShow" class="float-end b-mt"> <a class="text-primary fs-7">Filters </a><img
+              src="../../../assets/images/arrowD.png" alt="" class="w-22"></span>
+              <span (click)="filteShow();"  *ngIf="isfilterShow" class="float-end b-mt"> <a class="text-primary fs-7">Filters </a><img 
+              src="../../../assets/images/arrowU.png"class="w-22"></span>
 
             <div *ngIf="isfilterShow">
               <div class="mb-2">
@@ -34,7 +34,7 @@
                 <div class="ng-autocomplete">
                   <label for="state">State </label> <br />
                   <ng-autocomplete [data]="stateList" [searchKeyword]="keyword" (selected)='selectStateEvent($event)'
-                    [itemTemplate]="itemTemplate" (inputChanged)='onChangeState($event)' formControlName="state">
+                    [itemTemplate]="itemTemplate" (inputChanged)='onChangeState($event)' formControlName="state" placeholder=" Select State">
                   </ng-autocomplete>
 
                   <ng-template #itemTemplate let-item>
@@ -45,8 +45,8 @@
                 <div class="ml-2 ng-autocomplete">
                   <label for="district">District </label> <br />
                   <!-- <input id="district" type="text" formControlName="district"> -->
-                  <ng-autocomplete [data]="city" [searchKeyword]="keyword"
-                    [itemTemplate]="itemTemplate" formControlName="district">
+                  <ng-autocomplete [data]="city" [searchKeyword]="keyword" [itemTemplate]="itemTemplate"
+                    formControlName="district" placeholder="Select District">
                   </ng-autocomplete>
 
                   <ng-template #itemTemplate let-item>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="ml-2">
                   <label for="pincode">Pincode </label> <br />
-                  <input id="pincode" class="form-control" type="text" formControlName="pincode">
+                  <input id="pincode" class="form-control" type="text" formControlName="pincode" placeholder=" Enter Pincode">
                 </div>
               </div>
               <button type="submit" class="btn btn-info mr-2">Search</button>
@@ -77,23 +77,25 @@
         <div class="card-body" data-toggle="modal" data-target="#prewiewProfile"
           (click)="showDetails(item, 'institute')">
           <span>{{item?.instituteName}} <br /></span>
-          <span *ngIf="item?.address?.district || item?.address?.state"
-            class="small text-muted"><span *ngIf="item?.address?.district">{{item?.address?.district}}, </span> <span *ngIf="item?.address?.state">{{item?.address?.state}} </span> <br /></span>
+          <span *ngIf="item?.address?.district || item?.address?.state" class="small text-muted"><span
+              *ngIf="item?.address?.district">{{item?.address?.district}}, </span> <span
+              *ngIf="item?.address?.state">{{item?.address?.state}} </span> <br /></span>
           <span *ngIf="item?.contactNumber">Contact: {{item?.contactNumber}} <br /></span>
-          
+
           <span *ngIf="item?.affiliation?.length">
-           <span *ngIf="item?.affiliation[0]?.affiliationNumber">Affiliation No: {{item?.affiliation[0]?.affiliationNumber}}
-            
-  
+            <span *ngIf="item?.affiliation[0]?.affiliationNumber">Affiliation No:
+              {{item?.affiliation[0]?.affiliationNumber}}
+
+
               <i [ngClass]="item?.affiliation[0]?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : ''"
-              data-mdb-toggle="tooltip" title={{item?.affiliation[0]?._osState}}></i>
+                data-mdb-toggle="tooltip" title={{item?.affiliation[0]?._osState}}></i>
 
-            <i [ngClass]="(item?.affiliation[0]?._osState != 'PUBLISHED' && item?.affiliation[0]?._osState != 'ATTESTATION_REQUESTED') ? 'fa fa-exclamation-circle red' : ''"
-              data-mdb-toggle="tooltip" title={{item?.affiliation[0]?._osState}}></i>
-            <img *ngIf="item?.affiliation[0]?._osState == 'ATTESTATION_REQUESTED'" style="width: 16px;"
-              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
+              <i [ngClass]="(item?.affiliation[0]?._osState != 'PUBLISHED' && item?.affiliation[0]?._osState != 'ATTESTATION_REQUESTED') ? 'fa fa-exclamation-circle red' : ''"
+                data-mdb-toggle="tooltip" title={{item?.affiliation[0]?._osState}}></i>
+              <img *ngIf="item?.affiliation[0]?._osState == 'ATTESTATION_REQUESTED'" style="width: 16px;"
+                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
 
-         <br /></span> </span> 
+              <br /></span> </span>
         </div>
       </div>
       <table class="mx-5 my-5 w-50">
@@ -119,18 +121,18 @@
       </json-schema-form>
 
       <button (click)="resetData()" class="btn btn-info">Reset</button> -->
-      <div class="card p-4">
+      <div class="card p-3">
         <div class="card-body">
           <form [formGroup]="searchForm" (ngSubmit)="submitTeacherData()">
             <div class="mb-2">
               <label for="board">Subject </label><br />
-              <input id="board" type="text" class="form-control w-25" formControlName="board">
+              <input id="board" type="text" class="form-control w-25" formControlName="board" placeholder=" Enter Board">
             </div>
 
-            <img (click)="filteShow();" *ngIf="!isfilterShow" class="float-end b-mt w-22"
-              src="../../../assets/images/arrowD.png" alt="">
-            <img (click)="filteShow();" *ngIf="isfilterShow" class="float-end b-mt w-20"
-              src="../../../assets/images/arrowU.png" alt="">
+            <span  (click)="filteShow();"  *ngIf="!isfilterShow" class="float-end b-mt"> <a class="text-primary fs-7">Filters </a><img
+              src="../../../assets/images/arrowD.png" alt="" class="w-22"></span>
+              <span (click)="filteShow();"  *ngIf="isfilterShow" class="float-end b-mt"> <a class="text-primary fs-7">Filters </a><img 
+              src="../../../assets/images/arrowU.png"class="w-22"></span>
 
             <div *ngIf="isfilterShow">
               <div class="mb-2">
@@ -144,7 +146,7 @@
                 <div>
                   <label for="state">State </label> <br />
                   <ng-autocomplete [data]="stateList" [searchKeyword]="keyword" (selected)='selectStateEvent($event)'
-                    [itemTemplate]="itemTemplate" (inputChanged)='onChangeState($event)' formControlName="state">
+                    [itemTemplate]="itemTemplate" (inputChanged)='onChangeState($event)' formControlName="state" placeholder=" Select State">
                   </ng-autocomplete>
 
                   <ng-template #itemTemplate let-item>
@@ -154,8 +156,8 @@
                 <div class="ml-2 ng-autocomplete">
                   <label for="district">District </label> <br />
                   <!-- <input id="district" type="text" formControlName="district"> -->
-                  <ng-autocomplete [data]="city" [searchKeyword]="keyword" 
-                    [itemTemplate]="itemTemplate" formControlName="district">
+                  <ng-autocomplete [data]="city" [searchKeyword]="keyword" [itemTemplate]="itemTemplate"
+                    formControlName="district" placeholder=" Select District">
                   </ng-autocomplete>
 
                   <ng-template #itemTemplate let-item>
@@ -164,7 +166,7 @@
                 </div>
                 <div class="ml-2">
                   <label for="pincode">Pincode </label> <br />
-                  <input id="pincode" type="text" formControlName="pincode">
+                  <input id="pincode" type="text" formControlName="pincode" placeholder=" Enter Pincode">
                 </div>
               </div>
               <button type="submit" class="btn btn-info mr-2">Search</button>
@@ -188,27 +190,27 @@
 
           <span *ngIf="item?.experience?.length">
             <span *ngIf="item?.experience[0]?.teacherType">
-            {{item?.experience[0]?.teacherType}}
-            <i [ngClass]="item?.experience[0]?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : ''"
-              data-mdb-toggle="tooltip" title={{item?.experience[0]?._osState}}></i>
+              {{item?.experience[0]?.teacherType}}
+              <i [ngClass]="item?.experience[0]?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : ''"
+                data-mdb-toggle="tooltip" title={{item?.experience[0]?._osState}}></i>
 
-            <i [ngClass]="(item?.experience[0]?._osState != 'PUBLISHED' && item?.experience[0]?._osState != 'ATTESTATION_REQUESTED') ? 'fa fa-exclamation-circle red' : ''"
-              data-mdb-toggle="tooltip" title={{item?.experience[0]?._osState}}></i>
-            <img *ngIf="item?.experience[0]?._osState == 'ATTESTATION_REQUESTED'" style="width: 16px;"
-              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
+              <i [ngClass]="(item?.experience[0]?._osState != 'PUBLISHED' && item?.experience[0]?._osState != 'ATTESTATION_REQUESTED') ? 'fa fa-exclamation-circle red' : ''"
+                data-mdb-toggle="tooltip" title={{item?.experience[0]?._osState}}></i>
+              <img *ngIf="item?.experience[0]?._osState == 'ATTESTATION_REQUESTED'" style="width: 16px;"
+                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
 
-            <br /></span></span>
+              <br /></span></span>
 
           <span *ngIf="item?.academicQualifications?.length">
             <span *ngIf="item?.academicQualifications[0]?.qualification">
               Qualification: {{item?.academicQualifications[0]?.qualification}}
-            <i [ngClass]="item?.academicQualifications[0]?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : ''"
-              data-mdb-toggle="tooltip" title={{item?.academicQualifications[0]?._osState}}></i>
+              <i [ngClass]="item?.academicQualifications[0]?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : ''"
+                data-mdb-toggle="tooltip" title={{item?.academicQualifications[0]?._osState}}></i>
 
-            <i [ngClass]="(item?.academicQualifications[0]?._osState != 'PUBLISHED' && item?.academicQualifications[0]?._osState != 'ATTESTATION_REQUESTED') ? 'fa fa-exclamation-circle red' : ''"
-              data-mdb-toggle="tooltip" title={{item?.academicQualifications[0]?._osState}}></i>
-            <img *ngIf="item?.academicQualifications[0]?._osState == 'ATTESTATION_REQUESTED'" style="width: 16px;"
-              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
+              <i [ngClass]="(item?.academicQualifications[0]?._osState != 'PUBLISHED' && item?.academicQualifications[0]?._osState != 'ATTESTATION_REQUESTED') ? 'fa fa-exclamation-circle red' : ''"
+                data-mdb-toggle="tooltip" title={{item?.academicQualifications[0]?._osState}}></i>
+              <img *ngIf="item?.academicQualifications[0]?._osState == 'ATTESTATION_REQUESTED'" style="width: 16px;"
+                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
 
             <br /></span></span>
           <!-- <span *ngIf="item?.academicQualifications">{{item?.academicQualifications[0]?.qualification}} <br /> </span> -->
@@ -237,18 +239,26 @@
       </json-schema-form>
       <button (click)="resetData()" class="btn btn-info">Reset</button> -->
 
-      <div class="card p-4">
+      <div class="card p-3">
         <div class="card-body">
           <form [formGroup]="searchForm" (ngSubmit)="submitStudentData()">
             <div class="mb-2">
               <label for="board">Board </label><br />
-              <input id="board" type="text" formControlName="board">
+              <input id="board" type="text" formControlName="board" placeholder=" Enter Board">
             </div>
 
-            <img (click)="filteShow();" *ngIf="!isfilterShow" class="float-end b-mt w-22"
-              src="../../../assets/images/arrowD.png" alt="">
-            <img (click)="filteShow();" *ngIf="isfilterShow" class="float-end b-mt w-20"
-              src="../../../assets/images/arrowU.png" alt="">
+            <!-- <div class="mb-2">
+              <label for="board">Board </label><br />
+              <select  formControlName="board" class="w-25 select-b " id="choice">
+                <option value="" class="color-grey">Select Board</option>
+                <option value="cbse">CBSE</option>
+              </select>
+            </div> -->
+
+            <span  (click)="filteShow();"  *ngIf="!isfilterShow" class="float-end b-mt"> <a class="text-primary fs-7">Filters </a><img
+              src="../../../assets/images/arrowD.png" alt="" class="w-22"></span>
+              <span (click)="filteShow();"  *ngIf="isfilterShow" class="float-end b-mt"> <a class="text-primary fs-7">Filters </a><img 
+              src="../../../assets/images/arrowU.png"class="w-22"></span>
 
             <div *ngIf="isfilterShow">
               <div class="mb-2">
@@ -262,7 +272,7 @@
                 <div>
                   <label for="state">State </label> <br />
                   <ng-autocomplete [data]="stateList" [searchKeyword]="keyword" (selected)='selectStateEvent($event)'
-                    [itemTemplate]="itemTemplate" (inputChanged)='onChangeState($event)' formControlName="state">
+                    [itemTemplate]="itemTemplate" (inputChanged)='onChangeState($event)' formControlName="state" placeholder=" Select State">
                   </ng-autocomplete>
 
                   <ng-template #itemTemplate let-item>
@@ -272,8 +282,8 @@
                 <div class="ml-2 ng-autocomplete">
                   <label for="district">District </label> <br />
                   <!-- <input id="district" type="text" formControlName="district"> -->
-                  <ng-autocomplete [data]="city" [searchKeyword]="keyword" 
-                    [itemTemplate]="itemTemplate" formControlName="district">
+                  <ng-autocomplete [data]="city" [searchKeyword]="keyword" [itemTemplate]="itemTemplate"
+                    formControlName="district" placeholder="Select District">
                   </ng-autocomplete>
 
                   <ng-template #itemTemplate let-item>
@@ -282,7 +292,7 @@
                 </div>
                 <div class="ml-2">
                   <label for="pincode">Pincode </label> <br />
-                  <input id="pincode" type="text" formControlName="pincode">
+                  <input id="pincode" type="text" formControlName="pincode" placeholder=" Enter Pincode">
                 </div>
               </div>
               <button type="submit" class="btn btn-info mr-2">Search</button>
@@ -375,7 +385,7 @@
               </div>
               <div class="w-50" *ngIf="user?.identityDetails?.dob">
                 <dt class="fs-7 text-grey-color">Date of Birth</dt>
-                <dd>{{user?.identityDetails?.dob}} 
+                <dd>{{user?.identityDetails?.dob}}
                   <!-- <i class="fa fa-check-circle text-success"></i> -->
                 </dd>
               </div>
@@ -390,7 +400,7 @@
               </div>
               <div class="w-50" *ngIf="user?.contactDetails?.email">
                 <dt class="fs-7 text-grey-color">Email Id</dt>
-                <dd>{{user?.contactDetails?.email}} 
+                <dd>{{user?.contactDetails?.email}}
                   <!-- <i class="fa fa-check-circle text-success"></i> -->
                 </dd>
               </div>
@@ -428,7 +438,7 @@
               </div>
               <div class="w-50" *ngIf="user?.website">
                 <dt class="fs-7 text-grey-color">Website</dt>
-                <dd>{{user?.website}} 
+                <dd>{{user?.website}}
                   <!-- <i class="fa fa-check-circle text-success"></i> -->
                 </dd>
               </div>
@@ -443,7 +453,7 @@
               </div>
               <div class="w-50" *ngIf="user?.email">
                 <dt class="fs-7 text-grey-color">Email Id</dt>
-                <dd>{{user?.email}} 
+                <dd>{{user?.email}}
                   <!-- <i class="fa fa-check-circle text-success"></i> -->
                 </dd>
               </div>
@@ -478,7 +488,7 @@
             <div class="card-body">
 
               <span>
-                {{user?.identityDetails?.identityType}} 
+                {{user?.identityDetails?.identityType}}
                 <!-- <i class="fa fa-check-circle text-success"></i> -->
               </span>
             </div>
@@ -487,74 +497,76 @@
 
         <div class="mt-4" *ngIf="user?.experience">
           <h5>Experience</h5>
-          <div class="card">
-            <div class="card-body" *ngFor="let exp of user?.experience">
-              <div *ngIf="exp?._osState == 'PUBLISHED'">
-              <h6>{{exp?.teacherType}} 
-                <i [ngClass]="exp?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : ''"
-                data-mdb-toggle="tooltip" title={{exp?._osState}}></i>
-             
-              </h6>
-              <span class="fs-6" *ngIf="exp?.institute">{{exp?.institute}} <br /></span>
-              <span class="fs-7" *ngIf="exp?.employmentType || exp?.start">{{exp?.start}} - {{exp?.employmentType}} <br /></span>
-              <span class="fs-7 text-grey-color" *ngIf="exp?.subjects">Subject: {{exp?.subjects?.join(', ')}}
-                <br /></span>
-            </div>
+          <div *ngFor="let exp of user?.experience">
+            <div class="card" *ngIf="exp?._osState == 'PUBLISHED'">
+              <div class="card-body">
+
+                <h6>{{exp?.teacherType}}
+                  <i [ngClass]="exp?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : ''"
+                    data-mdb-toggle="tooltip" title={{exp?._osState}}></i>
+
+                </h6>
+                <span class="fs-6" *ngIf="exp?.institute">{{exp?.institute}} <br /></span>
+                <span class="fs-7" *ngIf="exp?.employmentType || exp?.start">{{exp?.start}} - {{exp?.employmentType}}
+                  <br /></span>
+                <span class="fs-7 text-grey-color" *ngIf="exp?.subjects">Subject: {{exp?.subjects?.join(', ')}}
+                  <br /></span>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="mt-4" *ngIf="user?.educationDetails">
           <h5>Education</h5>
-          <div class="card">
-            <div class="card-body" *ngFor="let education of user?.educationDetails">
-              <div *ngIf="education?._osState == 'PUBLISHED'">
-              <h6>
-                {{education?.institute}} 
-                <i [ngClass]="education?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : ''"
-                data-mdb-toggle="tooltip" title={{education?._osState}}></i>
-
-              </h6>
-              <span class="fs-6 text-grey-color" *ngIf="education?.program">{{education?.program}} <br /></span>
-              <span class="fs-7" *ngIf="education?.medium">{{education?.medium}} <br /></span>
-            </div>
+          <div *ngFor="let education of user?.educationDetails">
+          <div class="card" *ngIf="education?._osState == 'PUBLISHED'">
+            <div class="card-body">
+                <h6>
+                  {{education?.institute}}
+                  <i [ngClass]="education?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : ''"
+                    data-mdb-toggle="tooltip" title={{education?._osState}}></i>
+                </h6>
+                <span class="fs-6 text-grey-color" *ngIf="education?.program">{{education?.program}} <br /></span>
+                <span class="fs-7" *ngIf="education?.medium">{{education?.medium}} <br /></span>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="mt-4" *ngIf="user?.academicQualifications?.length">
           <h5>Education</h5>
-          <div class="card">
-            <div class="card-body" *ngFor="let academic of user?.academicQualifications">
-              <div *ngIf="academic?._osState == 'PUBLISHED'">
-              <h6>{{academic?.qualification}} 
-                <i [ngClass]="academic?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : ''"
-                data-mdb-toggle="tooltip" title={{academic?._osState}}></i>
-            
-              </h6>
-              <span class="fs-6 text-grey-color" *ngIf="academic?.institute">{{academic?.institute}} <br /></span>
-              <span class="fs-7" *ngIf="academic?.graduationYear">{{academic?.graduationYear}} <br /></span>
+          <div *ngFor="let academic of user?.academicQualifications">
+            <div class="card" *ngIf="academic?._osState == 'PUBLISHED'">
+              <div class="card-body">
+                <h6>{{academic?.qualification}}
+                  <i [ngClass]="academic?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : ''"
+                    data-mdb-toggle="tooltip" title={{academic?._osState}}></i>
+
+                </h6>
+                <span class="fs-6 text-grey-color" *ngIf="academic?.institute">{{academic?.institute}} <br /></span>
+                <span class="fs-7" *ngIf="academic?.graduationYear">{{academic?.graduationYear}} <br /></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4" *ngIf="user?.affiliation">
+          <h5>Affiliation</h5>
+          <div *ngFor="let affili of user?.affiliation">
+
+            <div class="card" *ngIf="affili?._osState == 'PUBLISHED'">
+              <div class="card-body">
+
+                <h6>Affiliation No: {{affili?.affiliationNumber}}
+                  <i [ngClass]="affili?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : ''"
+                    data-mdb-toggle="tooltip" title={{affili?._osState}}></i>
+
+                </h6>
+                <span class="fs-6" *ngIf="affili?.grantYear">Grant Year: {{affili?.grantYear}} <br /></span>
+                <span class="fs-7" *ngIf="affili?.medium">Medium: {{affili?.medium}} <br /></span>
+                <span class="fs-7 text-grey-color" *ngIf="affili?.board">Board: {{affili?.board}} <br /></span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <div class="mt-4" *ngIf="user?.affiliation">
-        <h5>Affiliation</h5>
-        <div class="card">
-          <div class="card-body" *ngFor="let affili of user?.affiliation">
-            <div *ngIf="affili?._osState == 'PUBLISHED'">
-
-            <h6>Affiliation No: {{affili?.affiliationNumber}} 
-              <i [ngClass]="affili?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : ''"
-              data-mdb-toggle="tooltip" title={{affili?._osState}}></i>
-           
-            </h6>
-            <span class="fs-6" *ngIf="affili?.grantYear">Grant Year: {{affili?.grantYear}} <br /></span>
-            <span class="fs-7" *ngIf="affili?.medium">Medium: {{affili?.medium}} <br /></span>
-            <span class="fs-7 text-grey-color" *ngIf="affili?.board">Board: {{affili?.board}} <br /></span>
-          </div>
-          </div>
-        </div>
-      </div>
-    </div>

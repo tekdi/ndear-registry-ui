@@ -44,13 +44,12 @@ export class DiscoveryComponent implements OnInit {
   data;
   stateList;
   city;
-  isfilterShow: boolean = true;
+  isfilterShow: boolean = false;
   constructor(
     public schemaService: SchemaService,
     public boardInstituteService: BoardInstituteService,
     public discoveryService: DiscoveryService
   ) { }
-
   
   filteShow(){
     this.isfilterShow = !this.isfilterShow;

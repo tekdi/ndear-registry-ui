@@ -5,7 +5,7 @@ export function initializeKeycloak(keycloak: KeycloakService): () => Promise<boo
     return () =>
         keycloak.init({
             config: {
-                url: 'http://ndear.xiv.in/auth',
+                url: 'https://ndear.xiv.in/auth',
                 realm: 'ndear',
                 clientId: 'registry-frontend',
             },

@@ -22,7 +22,7 @@ export class StudentMailComponent implements OnInit {
   }
 
   login(){
-    this.keycloakService.logout('http://ndear.xiv.in/student-profile');
+    this.keycloakService.logout('https://ndear.xiv.in/student-profile');
   }
 
   register()

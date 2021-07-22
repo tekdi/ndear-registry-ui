@@ -28,7 +28,7 @@ export class TeacherMailComponent implements OnInit {
   }
 
   login(){
-    this.keycloakService.logout('http://ndear.xiv.in');
+    this.keycloakService.logout('https://ndear.xiv.in');
   }
 
   register()

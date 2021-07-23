@@ -153,7 +153,7 @@ export class HeaderComponent implements OnInit {
 
     this.keycloakService.clearToken();
     // window.location.reload();
-    this.keycloakService.logout('http://ndear.xiv.in');
+    this.keycloakService.logout('https://ndear.xiv.in');
 
   }
 
@@ -162,7 +162,7 @@ export class HeaderComponent implements OnInit {
     localStorage.clear();
 
     this.keycloakService.clearToken();
-    this.keycloakService.logout('http://ndear.xiv.in');
+    this.keycloakService.logout('https://ndear.xiv.in');
 
   }
 

@@ -269,6 +269,12 @@ export class FormsComponent implements OnInit {
       }
       if (field.type) {
         if (field.type == "autocomplete") {
+        //   this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions'] = {
+        //     "required": true,
+        // "label": "Autocomplete",
+        // "placeholder": "Placeholder",
+        // "filter": term => of(term ? this.filterStates(term) : states.slice())
+        //   }
           // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['hooks']= {
           // onInit: (field) => {
           //   console.log("here",field)
@@ -282,7 +288,8 @@ export class FormsComponent implements OnInit {
           // }
       
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = "autocomplete";
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['filter'] = term => of(term ? this.filterStates(term) : states.slice())
+          // this.responseData.definitions[fieldset.definition].properties[field.name]['type'] = "autocomplete";
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['filter'] = term => of(term ? this.filterStates(term) : states.slice())
         }
         else {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['type'] = field.type
@@ -337,7 +344,6 @@ export class FormsComponent implements OnInit {
   }
 
   filterStates(name: string) {
-    console.log("name",name)
     return states.filter(
       state => state.toLowerCase().indexOf(name.toLowerCase()) === 0
     );

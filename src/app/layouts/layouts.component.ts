@@ -139,28 +139,30 @@ export class LayoutsComponent implements OnInit {
                 this.model[element].forEach(objects => {
                   console.log("2", objects)
                   for (const [key, value] of Object.entries(objects)) {
-                    if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
-                      var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
-                      temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
-
-                      // this.property[key] = this.responseData['definitions'][ref_defination]['properties'][key]
-                      if (temp_object != undefined) {
-                        temp_object['value'] = value
-                        // console.log("here", temp_object[key])
-                        this.property.push(temp_object)
+                    if(this.responseData['definitions'][block.definition]['properties'][element]){
+                      if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
+                        var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
+                        temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
+  
+                        // this.property[key] = this.responseData['definitions'][ref_defination]['properties'][key]
+                        if (temp_object != undefined) {
+                          temp_object['value'] = value
+                          // console.log("here", temp_object[key])
+                          this.property.push(temp_object)
+                        }
                       }
-                    }
-                    else {
-                      // console.log("eeeeee",element)
-                      temp_object = this.responseData['definitions'][block.definition]['properties'][element]['items']['properties'][key]
-
-                      // this.property[key] = this.responseData['definitions'][block.definition]['properties'][element];
-                      if (temp_object != undefined) {
-                        temp_object['value'] = value
-                        // console.log("here", temp_object[key])
-                        this.property.push(temp_object)
+                      else {
+                        // console.log("eeeeee",element)
+                        temp_object = this.responseData['definitions'][block.definition]['properties'][element]['items']['properties'][key]
+  
+                        // this.property[key] = this.responseData['definitions'][block.definition]['properties'][element];
+                        if (temp_object != undefined) {
+                          temp_object['value'] = value
+                          // console.log("here", temp_object[key])
+                          this.property.push(temp_object)
+                        }
+  
                       }
-
                     }
                     // console.log((this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop())
                     // this.property[key] = value

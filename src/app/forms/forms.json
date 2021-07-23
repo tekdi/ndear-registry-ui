@@ -507,8 +507,7 @@
                         "fields": [
                             {
                                 "name":"institute",
-                                "required": true,
-                                "type":"autocomplete"
+                                "required": true
                             },
                             {
                                 "name":"board",

@@ -368,19 +368,12 @@
                                             "type": "object",
                                             "properties": {
                                               "fullName": {
-                                                "$id": "#/properties/fullName",
                                                 "type": "string",
-                                                "title": "Full Name"
+                                                "title": "Guardian's Full Name"
                                               },
                                               "relation": {
-                                                "$id": "#/properties/relation",
                                                 "type": "string",
-                                                "title": "Relation type"
-                                              },
-                                              "email": {
-                                                "$id": "#/properties/email",
-                                                "type": "string",
-                                                "title": "Email"
+                                                "title": "Guardian's Relation type"
                                               }
                                             }
                                           }
@@ -514,7 +507,8 @@
                         "fields": [
                             {
                                 "name":"institute",
-                                "required": true
+                                "required": true,
+                                "type":"autocomplete"
                             },
                             {
                                 "name":"board",

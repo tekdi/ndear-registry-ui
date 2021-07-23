@@ -251,7 +251,11 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
         { name: 'array', component: ArrayTypeComponent },
         { name: 'object', component: ObjectTypeComponent },
         { name: 'multischema', component: MultiSchemaTypeComponent },
-        { name: 'autocomplete', component: AutocompleteTypeComponent }
+        {
+          name: 'autocomplete',
+          component: AutocompleteTypeComponent,
+          wrappers: ['form-field'],
+        }
       ],
     }),
 

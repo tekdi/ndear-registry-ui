@@ -280,8 +280,9 @@ export class FormsComponent implements OnInit {
           //     )
           // }
           // }
+      
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = "autocomplete";
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['filter'] = (term) => of(term ? this.filterStates(term) : states.slice())
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['filter'] = term => of(term ? this.filterStates(term) : states.slice())
         }
         else {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['type'] = field.type
@@ -335,6 +336,13 @@ export class FormsComponent implements OnInit {
 
   }
 
+  filterStates(name: string) {
+    console.log("name",name)
+    return states.filter(
+      state => state.toLowerCase().indexOf(name.toLowerCase()) === 0
+    );
+  }
+
   // filterStates() {
   //   return ([term, states]) => {
   //     return of(term
@@ -353,10 +361,6 @@ export class FormsComponent implements OnInit {
   //   }
   // }
 
-  filterStates(name: string) {
-    return states.filter(state =>
-      state.toLowerCase().indexOf(name.toLowerCase()) === 0);
-  }
 
   getData(definition) {
     var get_url;

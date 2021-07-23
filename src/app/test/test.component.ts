@@ -31,15 +31,17 @@ export class TestComponent {
       type: 'autocomplete',
       templateOptions: {
         required: true,
+        multiple: true,
         label: 'Autocomplete',
         placeholder: 'Placeholder',
-        filter: (term) => of(term ? this.filterStates(term) : states.slice()),
-      },
-    },
+        filter: term => of(term ? this.filterStates(term) : states.slice())
+      }
+    }
   ];
 
   filterStates(name: string) {
-    return states.filter(state =>
-      state.toLowerCase().indexOf(name.toLowerCase()) === 0);
+    return states.filter(
+      state => state.toLowerCase().indexOf(name.toLowerCase()) === 0
+    );
   }
 }

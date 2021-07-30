@@ -16,8 +16,8 @@
                     <a *ngIf="!public" panelAddLink="{{block.addform}}" class="fs-7 text-primary-color"><i
                             class="fa fa-plus pr-1" aria-hidden="true"></i>{{block.title}}</a>
                 </ng-template>
-                <a *ngIf="!public" class="text-end d-block text-primary-color blue-shade-btn float-end" data-toggle="modal"
-                data-target="#prewiewProfile">Preview Public Profile</a>
+                <!-- <a *ngIf="!public" class="text-end d-block text-primary-color blue-shade-btn float-end" data-toggle="modal"
+                data-target="#prewiewProfile">Preview Public Profile</a> -->
             </div>
             <div *ngIf="block.multiple; else singleBlock" class="card">
                 <div *ngIf="!public; else publicMultiBlock" class="card-body">

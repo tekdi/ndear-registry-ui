@@ -62,7 +62,8 @@ export class LayoutsComponent implements OnInit {
       if(this.layoutSchema.table){
         var url = [this.layout,'attestation',this.layoutSchema.table]
         this.router.navigate([url.join('/')])
-      }else{
+      }
+      if(this.layoutSchema.api){
         this.apiUrl = this.layoutSchema.api;
         await this.getData();
       }

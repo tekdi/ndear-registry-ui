@@ -50,7 +50,7 @@ export class VerificationComponent implements OnInit {
   onSubmit(){
     if(this.otp == 1234){
       this.error = false
-      localStorage.setItem('is_logedin', "true")
+      // localStorage.setItem('is_logedin', "true")
       console.log(this.for)
       if(this.for == 'student'){
         this.router.navigate(['login']);

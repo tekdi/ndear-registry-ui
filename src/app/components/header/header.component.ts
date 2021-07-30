@@ -39,9 +39,9 @@ export class HeaderComponent implements OnInit {
 
   async ngOnInit() {
     console.log(this.headerFor, this.tab);
-    this.loged_in = JSON.parse(localStorage.getItem('is_logedin'))
+    // this.loged_in = JSON.parse(localStorage.getItem('is_logedin'))
     // console.log(Boolean(localStorage.getItem('is_logedin')))
-    if (this.loged_in || this.keycloakService.isLoggedIn) {
+    if (this.keycloakService.isLoggedIn) {
       this.admin = JSON.parse(localStorage.getItem('admin'))
       this.admin_setup = JSON.parse(localStorage.getItem('admin-setup'))
 

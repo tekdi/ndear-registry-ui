@@ -1,49 +1,44 @@
-import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
-import { FieldType } from '@ngx-formly/material';
+
 import { MatInput } from '@angular/material/input';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
-import { startWith, switchMap } from 'rxjs/operators';
+import { startWith, switchMap, takeUntil, filter, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Component, EventEmitter, OnDestroy } from '@angular/core';
+import { FieldType } from '@ngx-formly/core';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'formly-autocomplete-type',
   template: `
-    <input matInput
-      [matAutocomplete]="auto"
-      [formControl]="formControl"
-      [formlyAttributes]="field"
-      [placeholder]="to.placeholder"
-      [errorStateMatcher]="errorStateMatcher">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let value of filter | async" [value]="value">
-        {{ value }}
-      </mat-option>
-    </mat-autocomplete>
+  <ng-select [items]="options$ | async"
+  bindLabel="instituteName"
+           autofocus
+           bindValue="osid"
+  [placeholder]="to.placeholder"
+  [typeahead]="search$"
+  [formControl]="formControl">
+</ng-select>
+<br>
   `,
 })
-export class AutocompleteTypeComponent extends FieldType implements OnInit, AfterViewInit {
-  @ViewChild(MatInput) formFieldControl: MatInput;
-  @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;
-
-  filter: Observable<any>;
+export class AutocompleteTypeComponent extends FieldType implements OnDestroy {
+  onDestroy$ = new Subject<void>();
+  search$ = new EventEmitter();
+  options$;
 
   ngOnInit() {
-    super.ngOnInit();
-    this.filter = this.formControl.valueChanges
-      .pipe(
-        startWith(''),
-        switchMap(term => this.to.filter(term)),
-      );
+    this.options$ = this.search$.pipe(
+      takeUntil(this.onDestroy$),
+      startWith(''),
+      filter(v => v !== null),
+      debounceTime(200),
+      distinctUntilChanged(),
+      switchMap(this.to.search$),
+    );
+
+    this.options$.subscribe();
   }
 
-  ngAfterViewInit() {
-    super.ngAfterViewInit();
-    // temporary fix for https://github.com/angular/material2/issues/6728
-    (<any> this.autocomplete)._formField = this.formField;
+  ngOnDestroy() {
+    this.onDestroy$.complete();
   }
 }
-
-
-/**  Copyright 2018 Google Inc. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at http://angular.io/license */

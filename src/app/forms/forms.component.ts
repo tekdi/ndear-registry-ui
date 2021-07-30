@@ -12,16 +12,11 @@ import { Location } from '@angular/common'
 import { title } from 'process';
 import { combineLatest, startWith, switchMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
-import { of } from 'rxjs';
+// import { of } from 'rxjs';
+import { of as observableOf } from 'rxjs';
+// import { Observable, of } from 'rxjs';
+import { delay, map } from 'rxjs/operators';
 
-const states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado',
-  'Connecticut', 'Delaware', 'District Of Columbia', 'Federated States Of Micronesia', 'Florida', 'Georgia',
-  'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
-  'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana',
-  'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-  'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico', 'Rhode Island',
-  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Islands', 'Virginia',
-  'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
 
 @Component({
   selector: 'app-forms',
@@ -60,6 +55,8 @@ export class FormsComponent implements OnInit {
   redirectTo: any;
   add: boolean;
   dependencies: any;
+  searchResult: any[];
+  states: any[] = [];
   constructor(private route: ActivatedRoute, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
 
   ngOnInit(): void {
@@ -269,12 +266,12 @@ export class FormsComponent implements OnInit {
       }
       if (field.type) {
         if (field.type == "autocomplete") {
-        //   this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions'] = {
-        //     "required": true,
-        // "label": "Autocomplete",
-        // "placeholder": "Placeholder",
-        // "filter": term => of(term ? this.filterStates(term) : states.slice())
-        //   }
+          //   this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions'] = {
+          //     "required": true,
+          // "label": "Autocomplete",
+          // "placeholder": "Placeholder",
+          // "filter": term => of(term ? this.filterStates(term) : states.slice())
+          //   }
           // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['hooks']= {
           // onInit: (field) => {
           //   console.log("here",field)
@@ -286,10 +283,38 @@ export class FormsComponent implements OnInit {
           //     )
           // }
           // }
-      
+
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = "autocomplete";
-          // this.responseData.definitions[fieldset.definition].properties[field.name]['type'] = "autocomplete";
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['filter'] = term => of(term ? this.filterStates(term) : states.slice())
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.responseData.definitions[fieldset.definition].properties[field.name]['title'];
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['search$'] = (term) => {
+            if (term || term != '') {
+              var formData = {
+                "filters": {
+                  "instituteName": {
+                    "contains": term
+                  }
+                },
+                "limit": 20,
+                "offset": 0
+              }
+              this.generalService.postData('/Institute/search', formData).subscribe(async (res) => {
+                console.log({ res });
+                // return observableOf(res);
+                let items = res;
+                items = await items.filter(x => x.instituteName.toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
+                if (items) {
+                  console.log("items--", items)
+                  this.states = items;
+                  // return observableOf(items);
+                  // return of(items).pipe(delay(500));
+                }
+        
+              });
+              return observableOf(this.states);
+            }
+  
+            return observableOf(this.states.filter(v => v.instituteName.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10));
+          }
         }
         else {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['type'] = field.type
@@ -343,10 +368,37 @@ export class FormsComponent implements OnInit {
 
   }
 
-  filterStates(name: string) {
-    return states.filter(
-      state => state.toLowerCase().indexOf(name.toLowerCase()) === 0
-    );
+  filterStates(term: string) {
+    console.log(term)
+    if (term && term != '') {
+      var formData = {
+        "filters": {
+          "instituteName": {
+            "contains": term
+          }
+        },
+        "limit": 20,
+        "offset": 0
+      }
+      this.generalService.postData('/Institute/search', formData).subscribe(async (res) => {
+        console.log({ res });
+        // return observableOf(res);
+        let items = res;
+        items = await items.filter(x => x.instituteName.toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
+        if (items) {
+          console.log("items--", items)
+          return items;
+          // return observableOf(items);
+          // return of(items).pipe(delay(500));
+        }
+
+      });
+
+
+    }
+    // return observableOf(this.searchResult.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10));
+    // return states.filter(state =>
+    //   state.toLowerCase().indexOf(name.toLowerCase()) === 0);
   }
 
   // filterStates() {

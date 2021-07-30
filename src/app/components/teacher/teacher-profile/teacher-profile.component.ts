@@ -125,7 +125,7 @@ export class TeacherProfileComponent implements OnInit {
 
     // setting datepicker popup to open above the input
     // config.placement = ['top-left', 'top-right'];
-    localStorage.setItem('is_logedin', "true")
+    // localStorage.setItem('is_logedin', "true")
     // localStorage.setItem('admin', 'false')
 
     // this.editUserform = fb.group({

@@ -275,10 +275,26 @@
                 "redirectTo":"/profile/teacher",
                 "fieldsets": [
                     {
-                        "definition": "Teacher",
+                        "definition": "AcademicQualification",
                         "fields": [
                             {
-                                "name":"academicQualifications"
+                                "name":"institute",
+                                "required": true,
+                                "type":"autocomplete"
+                            },
+                            {
+                                "name":"qualification",
+                                "required": true
+                            },
+                            {
+                                "name":"program"
+                            },
+                            {
+                                "name":"graduationYear",
+                                "required": true
+                            },
+                            {
+                                "name":"marks"
                             }
                         ]
                     }
@@ -296,7 +312,8 @@
                         "fields": [
                             {
                                 "name":"institute",
-                                "required": true
+                                "required": true,
+                                "type":"autocomplete"
                             },
                             {
                                 "name":"employmentType",
@@ -507,7 +524,8 @@
                         "fields": [
                             {
                                 "name":"institute",
-                                "required": true
+                                "required": true,
+                                "type":"autocomplete"
                             },
                             {
                                 "name":"board",

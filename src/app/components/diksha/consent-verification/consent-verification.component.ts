@@ -32,7 +32,7 @@ export class ConsentVerificationComponent implements OnInit {
   onSubmit(){
     if(this.otp == 1234){
       this.error = false
-      localStorage.setItem('is_logedin', "true")
+      // localStorage.setItem('is_logedin', "true")
       console.log(this.for)
 
       let item = {

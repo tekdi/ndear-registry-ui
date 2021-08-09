@@ -103,6 +103,7 @@
                 "fieldsets": [
                     {
                         "definition": "Institute",
+                        "privacyConfig" : "InstituteOsConfig",
                         "title": "Basic details",
                         "fields": ["*"],
                         "except" : ["affiliation"]
@@ -229,6 +230,7 @@
                 "fieldsets": [
                     {
                         "definition": "Teacher",
+                        "privacyConfig" : "TeacherOsConfig",
                         "fields": [
                             {
                                 "name":"contactDetails"
@@ -474,6 +476,7 @@
                 "fieldsets": [
                     {
                         "definition": "Student",
+                        "privacyConfig" : "StudentOsConfig",
                         "fields": [
                             {
                                 "name":"contactDetails"

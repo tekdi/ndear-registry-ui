@@ -12,10 +12,8 @@ import { Location } from '@angular/common'
 import { title } from 'process';
 import { combineLatest, startWith, switchMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
-// import { of } from 'rxjs';
-import { of as observableOf } from 'rxjs';
-// import { Observable, of } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { ToastMessageService } from '../services/toast-message/toast-message.service';
 
 
 @Component({
@@ -57,14 +55,15 @@ export class FormsComponent implements OnInit {
   dependencies: any;
   searchResult: any[];
   states: any[] = [];
-  constructor(private route: ActivatedRoute, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
+  constructor(private route: ActivatedRoute,
+    public toastMsg: ToastMessageService, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       console.log('params', params)
       // this.form = params['form']
       this.add = this.router.url.includes('add');
-      console.log(this.add);
+
       if (params['form'] != undefined) {
         this.form = params['form']
       }
@@ -79,7 +78,7 @@ export class FormsComponent implements OnInit {
 
     // console.log("modallll", this.modal)
     var filtered = FormSchemas.forms.filter(obj => {
-      console.log(Object.keys(obj)[0])
+
       return Object.keys(obj)[0] === this.form
     })
     this.formSchema = filtered[0][this.form]
@@ -102,8 +101,7 @@ export class FormsComponent implements OnInit {
 
     this.schemaService.getSchemas().subscribe((res) => {
       this.responseData = res;
-      console.log("this.responseData", this.responseData);
-      // console.log("formSchema",this.formSchema);
+
       this.formSchema.fieldsets.forEach(fieldset => {
         this.getData(fieldset.definition)
         this.definations[fieldset.definition] = {}
@@ -139,10 +137,12 @@ export class FormsComponent implements OnInit {
         } else {
           this.addFields(fieldset)
         }
+
         if (fieldset.except) {
           this.removeFields(fieldset)
         }
       });
+
       this.ordering = this.formSchema.order;
       this.schema["type"] = "object";
       this.schema["title"] = this.formSchema.title;
@@ -159,7 +159,6 @@ export class FormsComponent implements OnInit {
   }
 
   loadSchema() {
-    console.log("schema", this.schema)
 
     this.form2 = new FormGroup({});
     this.options = {};
@@ -218,8 +217,6 @@ export class FormsComponent implements OnInit {
 
   removeFields(fieldset) {
     fieldset.except.forEach(field => {
-
-      console.log("except", this.definations[fieldset.definition].properties[field])
       delete this.definations[fieldset.definition].properties[field];
 
     });
@@ -330,7 +327,6 @@ export class FormsComponent implements OnInit {
   }
 
   submit() {
-    console.log("model", this.model, this.type, this.identifier)
 
     if (this.type && this.type === 'entity') {
       this.customFields.forEach(element => {
@@ -351,7 +347,6 @@ export class FormsComponent implements OnInit {
       if (this.model[property]) {
         this.model = this.model[property];
       }
-      console.log("modellll--", this.model);
       if (this.model.hasOwnProperty('attest') && this.model['attest']) {
         this.apiUrl = (url.join("/")) + '?send=true';
       } else {
@@ -430,11 +425,9 @@ export class FormsComponent implements OnInit {
     // this.identifier = localStorage.getItem('entity-osid');
 
     this.generalService.getData(get_url).subscribe((res) => {
-      console.log({ res }, definition);
       // if(this.property[definition])
       this.model = res[0];
       this.identifier = res[0].osid;
-      console.log("hereeeeeee", this.model)
       this.loadSchema()
     });
   }
@@ -449,9 +442,12 @@ export class FormsComponent implements OnInit {
 
         this.router.navigate([this.redirectTo])
       }
-      else {
-        alert(res.params.status);
+      else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
+        this.toastMsg.error('error', res.params.errmsg)
       }
+    }, (err) => {
+      console.log({ err });
+      this.toastMsg.error('error', err.error.params.errmsg)
     });
 
   }
@@ -461,16 +457,14 @@ export class FormsComponent implements OnInit {
       if (res.params.status == 'SUCCESSFUL') {
         this.router.navigate([this.redirectTo])
       }
-      else {
-        alert(res.params.status);
+      else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
+        this.toastMsg.error('error', res.params.errmsg)
       }
+    }, (err) => {
+      console.log({ err });
+      this.toastMsg.error('error', err.error.params.errmsg)
     });
   }
-
-  // close() {
-  //   this.location.back()
-  //   // this.panel.close();
-  // }
 }
 
 

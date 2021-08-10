@@ -39,7 +39,7 @@ import { DiscoveryComponent } from './components/discovery/discovery.component';
 import { KeycloakloginComponent } from './components/keyCloak/keycloaklogin/keycloaklogin.component';
 import { TeacherAttestationComponent } from './components/teacher/teacher-attestation/teacher-attestation/teacher-attestation.component';
 import { TeacherAttestationDetailComponent } from './components/teacher/teacher-attestation-detail/teacher-attestation-detail/teacher-attestation-detail.component';
-
+import { FormDetailComponent } from '../app/tables/form-detail/form-detail/form-detail.component';
 
 import { FormsComponent } from './forms/forms.component';
 import { LayoutsComponent } from './layouts/layouts.component';
@@ -95,6 +95,7 @@ const routes: Routes = [
 
   { path: 'teacher-attestation', component: TeacherAttestationComponent },
   { path: 'teacher-attestation-detail', component: TeacherAttestationDetailComponent },
+  { path: 'form-detail', component: FormDetailComponent },
 
 
 
@@ -141,7 +142,7 @@ const routes: Routes = [
 
   // Tables
   { path: ':entity/attestation/:table', component: TablesComponent, canActivate: [AuthGuard] },
-  { path: ':entity/attestation/:table/:id', component: TeacherAttestationDetailComponent, canActivate: [AuthGuard] },
+  { path: ':entity/attestation/:table/:id', component: FormDetailComponent, canActivate: [AuthGuard] },
 
 ];
 

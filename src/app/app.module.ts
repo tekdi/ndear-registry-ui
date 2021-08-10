@@ -59,7 +59,7 @@ import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 import {NgxPaginationModule} from 'ngx-pagination';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
-
+import { FormDetailComponent } from '../app/tables/form-detail/form-detail/form-detail.component';
 
 import { MatMenuModule } from '@angular/material/menu';
 // formly
@@ -182,7 +182,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
     TeacherAttestationComponent,
     TeacherAttestationDetailComponent,
-
+    FormDetailComponent,
 
     FormsComponent,
     ArrayTypeComponent,

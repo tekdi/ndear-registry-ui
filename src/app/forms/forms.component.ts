@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SchemaService } from '../services/data/schema.service';
 import * as FormSchemas from './forms.json'
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { JSONSchema7 } from "json-schema";
@@ -10,12 +10,13 @@ import { GeneralService } from '../services/general/general.service';
 import { PanelsComponent } from '../layouts/modal/panels/panels.component';
 import { Location } from '@angular/common'
 import { title } from 'process';
-import { combineLatest, startWith, switchMap } from 'rxjs/operators';
+import { combineLatest, startWith, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 // import { of } from 'rxjs';
 import { of as observableOf } from 'rxjs';
 // import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+import { truncate } from 'fs';
 
 
 @Component({
@@ -55,8 +56,7 @@ export class FormsComponent implements OnInit {
   redirectTo: any;
   add: boolean;
   dependencies: any;
-  searchResult: any[];
-  states: any[] = [];
+  searchResult: any[] = [];
   constructor(private route: ActivatedRoute, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
 
   ngOnInit(): void {
@@ -264,13 +264,95 @@ export class FormsComponent implements OnInit {
           }
         }
       }
+      if (field.autofill) {
+        if (field.autofill.apiURL) {
+          console.log("autofill.1",field.autofill.apiURL)
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['modelOptions'] = {
+            updateOn: 'blur'
+          };
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'] = {}
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name] = {}
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['expression'] = (control: FormControl) => {
+            console.log("autofill.2",field.autofill.apiURL)
+            if(control.value != null) {
+              console.log("control.value------------"+control.value);
+              if(field.autofill.method === 'GET'){
+                var apiurl = field.autofill.apiURL.replace("{{value}}", control.value)
+                this.generalService.getPrefillData(apiurl).subscribe((res) => {
+                  console.log({ res });
+                  if (field.autofill.fields) {
+                    field.autofill.fields.forEach(element => {
+                      for (var [key1, value1] of Object.entries(element)) {
+                        this.createPath(this.model, key1, this.ObjectbyString(res, value1))
+                        this.form2.get(key1).setValue(this.ObjectbyString(res, value1))
+                        // console.log(`keyval -- ${JSON.stringify(this.model)}: ${this.ObjectbyString(res, value1)}`);
+                      }
+                    });
+                  }
+                  if (field.autofill.dropdowns) {
+                    field.autofill.dropdowns.forEach(element => {
+                      for (var [key1, value1] of Object.entries(element)) {
+                        console.log(Array.isArray(res))
+                        if (Array.isArray(res)){
+                          res = res[0]
+                        }
+                        this.schema["properties"][key1]['items']['enum'] = this.ObjectbyString(res, value1)
+                        // this.createPath(this.model, key1, this.ObjectbyString(res, value1))
+                        // this.form2.get(key1).setValue(this.ObjectbyString(res, value1))
+                        // console.log(`keyval -- ${JSON.stringify(this.model)}: ${this.ObjectbyString(res, value1)}`);
+                      }
+                    });
+                  }
+                });
+              }
+              else if(field.autofill.method === 'POST'){
+                var datapath = this.findPath(field.autofill.body, "{{value}}",'')
+                console.log('datapath',datapath)
+                if(datapath){
+                  var dataobject = this.setPathValue(field.autofill.body, datapath, control.value)
+                console.log("--datapath--",dataobject)
+                this.generalService.postPrefillData(field.autofill.apiURL,dataobject).subscribe((res) => {
+                  console.log({ res });
+                  if (field.autofill.fields) {
+                    field.autofill.fields.forEach(element => {
+                      for (var [key1, value1] of Object.entries(element)) {
+                        console.log("val1--",this.ObjectbyString(res, value1))
+                        this.createPath(this.model, key1, this.ObjectbyString(res, value1))
+                        this.form2.get(key1).setValue(this.ObjectbyString(res, value1))
+                        // console.log(`keyval -- ${JSON.stringify(this.model)}`);
+                      }
+                    });
+                  }
+                  if (field.autofill.dropdowns) {
+                    field.autofill.dropdowns.forEach(element => {
+                      for (var [key1, value1] of Object.entries(element)) {
+                        if (Array.isArray(res)){
+                          res = res[0]
+                        }
+                        console.log(this.ObjectbyString(res, value1));
+                       
+                        this.schema["properties"][key1]['items']['enum'] = this.ObjectbyString(res, value1)
+                        // this.createPath(this.model, key1, this.ObjectbyString(res, value1))
+                        // this.form2.get(key1).setValue(this.ObjectbyString(res, value1))
+                        console.log(`schema -- ${JSON.stringify(this.schema)}`);
+                      }
+                    });
+                  }
+                });
+                }
+                
+              }
+            }
+          }
+        }
+      }
       if (field.type) {
         if (field.type == "autocomplete") {
           //   this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions'] = {
           //     "required": true,
           // "label": "Autocomplete",
           // "placeholder": "Placeholder",
-          // "filter": term => of(term ? this.filterStates(term) : states.slice())
+          // "filter": term => of(term ? this.filtersearchResult(term) : searchResult.slice())
           //   }
           // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['hooks']= {
           // onInit: (field) => {
@@ -279,41 +361,40 @@ export class FormsComponent implements OnInit {
           //     .pipe(
           //       startWith(''),
           //       combineLatest(this.selectedValue$),
-          //       switchMap(this.filterStates()),
+          //       switchMap(this.filtersearchResult()),
           //     )
           // }
           // }
 
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = "autocomplete";
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.responseData.definitions[fieldset.definition].properties[field.name]['title'];
+          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['key$'] = (key) => {return observableOf(field.key);}
+          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['value$'] = (value) => {return observableOf(field.value);}
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['search$'] = (term) => {
             if (term || term != '') {
               var formData = {
-                "filters": {
-                  "instituteName": {
-                    "contains": term
-                  }
-                },
+                "filters": {},
                 "limit": 20,
                 "offset": 0
               }
-              this.generalService.postData('/Institute/search', formData).subscribe(async (res) => {
+              formData.filters[field.key] = {};
+              formData.filters[field.key]["contains"] = term
+              this.generalService.postData(field.api, formData).subscribe(async (res) => {
                 console.log({ res });
                 // return observableOf(res);
                 let items = res;
-                items = await items.filter(x => x.instituteName.toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
+                items = items.filter(x => x[field.key].toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
                 if (items) {
                   console.log("items--", items)
-                  this.states = items;
+                  this.searchResult = items;
+                  return observableOf(this.searchResult);
                   // return observableOf(items);
                   // return of(items).pipe(delay(500));
                 }
-        
               });
-              return observableOf(this.states);
+
             }
-  
-            return observableOf(this.states.filter(v => v.instituteName.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10));
+            return observableOf(this.searchResult.filter(v => v[field.key].toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10));
           }
         }
         else {
@@ -368,7 +449,7 @@ export class FormsComponent implements OnInit {
 
   }
 
-  filterStates(term: string) {
+  filtersearchResult(term: string) {
     console.log(term)
     if (term && term != '') {
       var formData = {
@@ -397,25 +478,25 @@ export class FormsComponent implements OnInit {
 
     }
     // return observableOf(this.searchResult.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10));
-    // return states.filter(state =>
+    // return searchResult.filter(state =>
     //   state.toLowerCase().indexOf(name.toLowerCase()) === 0);
   }
 
-  // filterStates() {
-  //   return ([term, states]) => {
+  // filtersearchResult() {
+  //   return ([term, searchResult]) => {
   //     return of(term
-  //     ? states.filter(state =>
+  //     ? searchResult.filter(state =>
   //     state.toLowerCase().indexOf(term.toLowerCase()) === 0)
-  //     : states.slice());
+  //     : searchResult.slice());
   //   }
   //   ;
   // }
 
   // changeState(){
   //   if(this.selectedValue$.value.length !== 3){
-  //     this.selectedValue$.next(states2);
+  //     this.selectedValue$.next(searchResult2);
   //   } else {
-  //     this.selectedValue$.next(states);
+  //     this.selectedValue$.next(searchResult);
   //   }
   // }
 
@@ -471,6 +552,83 @@ export class FormsComponent implements OnInit {
   //   this.location.back()
   //   // this.panel.close();
   // }
+
+  ObjectbyString = function (o, s) {
+    s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+    s = s.replace(/^\./, '');           // strip a leading dot
+    var a = s.split('.');
+    for (var i = 0, n = a.length; i < n; ++i) {
+      var k = a[i];
+      if (k in o) {
+        o = o[k];
+      } else {
+        return;
+      }
+    }
+    return o;
+  };
+
+  createPath = (obj, path, value = null) => {
+    path = typeof path === 'string' ? path.split('.') : path;
+    let current = obj;
+    while (path.length > 1) {
+      const [head, ...tail] = path;
+      path = tail;
+      if (current[head] === undefined) {
+        current[head] = {};
+      }
+      current = current[head];
+    }
+    current[path[0]] = value;
+    return obj;
+  };
+
+  findPath = (obj, value, path) => {
+    if (typeof obj !== 'object') {
+      return false;
+    }
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        var t = path;
+        var v = obj[key];
+        //SLICE is super important, otherwise newPath will reference path
+        var newPath = path ? path.slice() : [];
+        newPath.push(key);
+        if (v === value) {
+          return newPath;
+        } else if (typeof v !== 'object') {
+          newPath = t;
+        }
+        var res = this.findPath(v, value, newPath);
+        if (res) {
+          return res;
+        }
+      }
+    }
+    return false;
+  }
+
+  setPathValue(obj, path, value) {
+    var keys;
+    if(typeof path === 'string') {
+      keys = path.split(".");
+    }
+    else{
+      keys = path;
+    }
+    const propertyName = keys.pop();
+    let propertyParent = obj;
+    while (keys.length > 0) {
+      const key = keys.shift();
+      if (!(key in propertyParent)) {
+        propertyParent[key] = {};
+      }
+      propertyParent = propertyParent[key];
+    }
+    propertyParent[propertyName] = value;
+    return obj;
+  }
+
 }
 
 

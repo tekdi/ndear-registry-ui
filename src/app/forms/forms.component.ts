@@ -7,7 +7,14 @@ import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { JSONSchema7 } from "json-schema";
 import { GeneralService } from '../services/general/general.service';
 import { Location } from '@angular/common'
+import { title } from 'process';
+import { combineLatest, startWith, switchMap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import { of } from 'rxjs';
+import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { of as observableOf } from 'rxjs';
+// import { Observable, of } from 'rxjs';
+import { delay, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-forms',
@@ -20,6 +27,7 @@ export class FormsComponent implements OnInit {
   @Input() form;
   @Input() modal;
   @Input() identifier;
+  res: any;
   formSchema;
   responseData;
   schemaloaded = false;
@@ -46,12 +54,18 @@ export class FormsComponent implements OnInit {
   redirectTo: any;
   add: boolean;
   dependencies: any;
-  searchResult: any[] = [];
-  constructor(private route: ActivatedRoute, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
+  privateFields = [];
+  internalFields = [];
+  privacyCheck : boolean = false;
+  searchResult: any[];
+  states: any[] = [];
+  constructor(private route: ActivatedRoute,
+    public toastMsg: ToastMessageService, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.add = this.router.url.includes('add');
+
       if (params['form'] != undefined) {
         this.form = params['form']
       }
@@ -127,16 +141,17 @@ export class FormsComponent implements OnInit {
         this.schema["required"] = this.required;
         this.schema["dependencies"] = this.dependencies;
         this.loadSchema();
-        console.log(this.schema)
       },
         (error) => {
           //Schema Error callback
           console.error('Something went wrong with Schema URL or Path not found')
+          this.toastMsg.error('error', 'Something went wrong with Schema URL or Path not found')
         });
 
     }, (error) => {
       //Form Error callback
       console.error('forms.json not found in src/assets/config/ - You can refer to examples folder to create the file')
+      this.toastMsg.error('error', 'forms.json not found in src/assets/config/ - You can refer to examples folder to create the file')
     })
   }
 
@@ -150,48 +165,133 @@ export class FormsComponent implements OnInit {
     this.schemaloaded = true;
   }
 
-  addFields(fieldset) {
-    fieldset.fields.forEach(field => {
+  checkProperty(fieldset, field) {
+    this.definations[field.children.definition] = this.responseData.definitions[field.children.definition];
+    var ref_properties = {}
+    var ref_required = []
+    if (field.children.fields && field.children.fields.length > 0) {
+      field.children.fields.forEach(reffield => {
 
-      if (field.children) {
+        this.addWidget(field.children, reffield, field.name);
 
-        this.definations[field.children.definition] = this.responseData.definitions[field.children.definition];
-        var ref_properties = {}
-        var ref_required = []
-        if (field.children.fields && field.children.fields.length > 0) {
-          field.children.fields.forEach(reffield => {
-            this.addWidget(field.children, reffield)
-            if (reffield.required) {
-              ref_required.push(reffield.name)
-            }
-            ref_properties[reffield.name] = this.responseData.definitions[field.children.definition].properties[reffield.name];
-
-            // this.property[field.children.definition].properties[reffield.name] = this.responseData.definitions[field.children.definition].properties[reffield.name];
-          });
-          // this.property[field.name] = ref_properties;
-          this.responseData.definitions[fieldset.definition].properties[field.name].properties = ref_properties;
-          this.definations[field.children.definition].properties = ref_properties;
-          this.definations[field.children.definition].required = ref_required;
+        if (reffield.required) {
+          ref_required.push(reffield.name)
         }
-      }
-      if (field.custom && field.element) {
-        this.responseData.definitions[fieldset.definition].properties[field.name] = field.element;
-        this.customFields.push(field.name)
+
+        ref_properties[reffield.name] = this.responseData.definitions[field.children.definition].properties[reffield.name];
+
+        // this.property[field.children.definition].properties[reffield.name] = this.responseData.definitions[field.children.definition].properties[reffield.name];
+      });
+      // this.property[field.name] = ref_properties;
+
+      if (this.responseData.definitions[fieldset.definition].properties.hasOwnProperty(field.name)) {
+        this.responseData.definitions[fieldset.definition].properties[field.name].properties = ref_properties;
       } else {
-        this.addWidget(fieldset, field)
-      }
-
-      this.definations[fieldset.definition].properties[field.name] = this.responseData.definitions[fieldset.definition].properties[field.name];
-      if (field.children && !field.children.title) {
-        if (this.property[field.name].title) {
-          delete this.property[field.name].title;
-        }
-        if (this.property[field.name].description) {
-          delete this.property[field.name].description;
-        }
+        this.responseData.definitions[fieldset.definition].properties = ref_properties;
 
       }
-    });
+      this.definations[field.children.definition].properties = ref_properties;
+      this.definations[field.children.definition].required = ref_required;
+    }
+
+  }
+
+  nastedChild(fieldset, fieldName, res) {
+    let tempArr = res;
+
+    let temp_arr_fields = [];
+    let nastedArr = [];
+
+    for (const key in tempArr) {
+      if (tempArr[key].hasOwnProperty('type') && tempArr[key].type == 'string') {
+        if (tempArr[key].type == 'string') {
+          temp_arr_fields.push({ 'name': key, 'type': tempArr[key].type });
+        }
+      } else {
+        let res = this.responseData.definitions[fieldName.replace(/^./, fieldName[0].toUpperCase())].properties[key];
+        if (res.hasOwnProperty('properties') || res.hasOwnProperty('$ref')) {
+          this.responseData.definitions[fieldName.replace(/^./, fieldName[0].toUpperCase())].properties[key].properties = tempArr[key].properties;
+
+          for (const key1 in tempArr[key].properties) {
+            nastedArr.push({ 'name': key1, 'type': tempArr[key].properties[key1].type });
+          }; // {0:"a", 1:"b", 2:"c"}
+          delete this.responseData.definitions[fieldName.replace(/^./, fieldName[0].toUpperCase())].properties[key]['$ref'];
+
+          let temp2 = {
+            children: {
+              definition: fieldName.replace(/^./, fieldName[0].toUpperCase()) + '.properties.' + key, //fieldName,
+              fields: nastedArr
+            },
+            name: key.toLowerCase()
+          }
+
+
+          temp_arr_fields.push(temp2);
+
+          // this.checkProperty(fieldset, temp2);
+
+          temp2.children.fields.forEach(reffield => {
+            this.addChildWidget(reffield, fieldName, key);
+
+         });
+        } else {
+          delete this.responseData.definitions[fieldName.replace(/^./, fieldName[0].toUpperCase())].properties[key];
+        }
+      }
+    }
+    let temp_field = {
+      children: {
+        definition: fieldName.replace(/^./, fieldName[0].toUpperCase()),
+        fields: temp_arr_fields
+      },
+      name: fieldName
+    }
+    this.checkProperty(fieldset, temp_field);
+  }
+
+  addFields(fieldset) {
+
+    if (fieldset.fields.length) {
+
+      fieldset.fields.forEach(field => {
+        let res = this.responseData.definitions[fieldset.definition].properties;
+
+        if (field.children) {
+
+          this.checkProperty(fieldset, field);
+        } else if(res.hasOwnProperty(field.name) &&  res[field.name].hasOwnProperty('properties')){
+          let res = this.responseData.definitions[fieldset.definition].properties[field.name].properties;
+          this.nastedChild(fieldset, field.name, res);
+
+          // this.definations[fieldset.definition].properties[field.name] = this.responseData.definitions[fieldset.definition].properties[field.name];
+        }
+
+        if (field.custom && field.element) {
+          this.responseData.definitions[fieldset.definition].properties[field.name] = field.element;
+          this.customFields.push(field.name);
+        } else {
+          this.addWidget(fieldset, field, '')
+        }
+
+        this.definations[fieldset.definition].properties[field.name] = this.responseData.definitions[fieldset.definition].properties[field.name];
+
+        if (field.children && !field.children.title) {
+          if (this.property[field.name].title) {
+            delete this.property[field.name].title;
+          }
+          if (this.property[field.name].description) {
+            delete this.property[field.name].description;
+          }
+
+        }
+      });
+    } else {
+      // institute ----
+      let res = this.responseData.definitions[fieldset.definition].properties;
+
+      this.nastedChild(fieldset, fieldset.definition, res);
+      // this.definations[fieldset.definition].properties[field.name] = this.responseData.definitions[fieldset.definition].properties[field.name];
+    }
   }
 
   removeFields(fieldset) {
@@ -200,42 +300,81 @@ export class FormsComponent implements OnInit {
     });
   }
 
-  addWidget(fieldset, field) {
+  addLockIcon(responseData) {
+    if (responseData.access == 'private') {
+      responseData.widget.formlyConfig.templateOptions = {
+        addonRight : {
+          text: 'Only by consent',
+          class: "private-access"
+        }
+      }
+    } else if (responseData.access == 'internal') {
+      responseData.widget.formlyConfig.templateOptions = {
+       
+      addonRight : {
+        text: 'Only by me',
+        class: "internal-access"
+      }
+    }
+    }
+  }
+
+  addWidget(fieldset, field, childrenName) {
     if (field.widget) {
       this.responseData.definitions[fieldset.definition].properties[field.name]['widget'] = field.widget;
     }
     else {
-      this.responseData.definitions[fieldset.definition].properties[field.name]['widget'] = {
-        "formlyConfig": {
-          "templateOptions": {},
-          "validation": {},
-          "expressionProperties": {}
-        }
-      }
-      if (field.classGroup) {
-        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['fieldGroupClassName'] = field.classGroup;
-      }
-      if (field.expressionProperties) {
-        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionProperties'] = field.expressionProperties;
-      }
-      if (field.class) {
-        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['className'] = field.class;
-      }
-      if (field.required || field.children) {
-        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['required'] = field.required;
-      }
-      if (field.children) {
-        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['required'] = true;
-      }
-      if (field.validation) {
-        if (field.validation.message) {
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['validation'] = {
-            "messages": {
-              "pattern": field.validation.message
-            }
+      this.res = this.responseData.definitions[fieldset.definition].properties[field.name];
+
+      if (!this.res.hasOwnProperty('properties')) {
+        this.responseData.definitions[fieldset.definition].properties[field.name]['widget'] = {
+          "formlyConfig": {
+            "templateOptions": {
+            },
+            "validation": {},
+            "expressionProperties": {}
           }
-          if (field.validation.pattern) {
-            this.responseData.definitions[fieldset.definition].properties[field.name]['pattern'] = field.validation.pattern;
+
+        }
+
+        if(this.privacyCheck){
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']= {
+            addonRight : {
+              text: 'Anyone',
+              class: "public-access"
+            },
+            attributes: {
+              style: "width: 90%;"
+            },
+          }
+        }
+
+        if (field.classGroup) {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['fieldGroupClassName'] = field.classGroup;
+        }
+        if (field.expressionProperties) {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionProperties'] = field.expressionProperties;
+        }
+        if (field.class) {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['className'] = field.class;
+        }
+        if (field.required || field.children) {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['required'] = field.required;
+        }
+        if (field.children) {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['required'] = true;
+        }
+
+        if (field.validation) {
+          if (field.validation.message) {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['validation'] = {
+              "messages": {
+                "pattern": field.validation.message
+              }
+            }
+            if (field.validation.pattern) {
+              this.responseData.definitions[fieldset.definition].properties[field.name]['pattern'] = field.validation.pattern;
+            }
           }
         }
       }
@@ -308,23 +447,6 @@ export class FormsComponent implements OnInit {
       }
       if (field.type) {
         if (field.type == "autocomplete") {
-          //   this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions'] = {
-          //     "required": true,
-          // "label": "Autocomplete",
-          // "placeholder": "Placeholder",
-          // "filter": term => of(term ? this.filtersearchResult(term) : searchResult.slice())
-          //   }
-          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['hooks']= {
-          // onInit: (field) => {
-          //   field.templateOptions.filter$ = field.formControl.valueChanges
-          //     .pipe(
-          //       startWith(''),
-          //       combineLatest(this.selectedValue$),
-          //       switchMap(this.filtersearchResult()),
-          //     )
-          // }
-          // }
-
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = "autocomplete";
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.responseData.definitions[fieldset.definition].properties[field.name]['title'];
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['search$'] = (term) => {
@@ -345,18 +467,80 @@ export class FormsComponent implements OnInit {
                 }
               });
             }
-            return observableOf(this.searchResult.filter(v => v[field.key].toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10));
+            return observableOf(this.searchResult);
           }
         }
         else {
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['type'] = field.type
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['type'] = field.type
+          }
+        }
+        if (field.disabled || field.disable) {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['disabled'] = field.disabled
+        };
+
+        let temp_access_field = '$.' + childrenName + '.' + field.name;
+
+        if (this.privateFields.includes(temp_access_field)) {
+          this.responseData.definitions[fieldset.definition].properties[field.name].access = 'private';
+          this.addLockIcon(this.responseData.definitions[fieldset.definition].properties[field.name]);
+
+
+        } else if (this.internalFields.includes(temp_access_field)) {
+          this.responseData.definitions[fieldset.definition].properties[field.name].access = 'internal';
+          this.addLockIcon(this.responseData.definitions[fieldset.definition].properties[field.name]);
         }
       }
-      if (field.disabled || field.disable) {
-        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['disabled'] = field.disabled
-      };
     }
-  }
+
+  addChildWidget(field, ParentName, childrenName) {
+    this.res = this.responseData.definitions[ParentName.replace(/^./, ParentName[0].toUpperCase())].properties[childrenName];
+    if (field.widget) {
+      this.res.properties[field.name]['widget'] = field.widget;
+    }
+    else {
+
+      this.res.properties[field.name]['widget'] = {
+        "formlyConfig": {
+          "templateOptions": {
+            
+          },
+          "validation": {},
+          "expressionProperties": {}
+        }
+      }
+
+      if(this.privacyCheck){
+        this.res.properties[field.name]['widget']['formlyConfig']['templateOptions'] = {
+          addonRight : {
+            text: 'Anyone',
+            class: "public-access"
+          },
+          attributes: {
+            style: "width: 90%;"
+          }, 
+        }
+      }
+
+      if (field.disabled || field.disable) {
+        this.res.properties[field.name]['widget']['formlyConfig']['templateOptions']['disabled'] = field.disabled
+      };
+
+      let temp_access_field = '$.' + ParentName + '.' + childrenName + '.' + field.name;
+
+
+      if (this.privateFields.includes(temp_access_field)) {
+        this.res.properties[field.name].access = 'private';
+        this.addLockIcon(this.res.properties[field.name]);
+
+      } else if (this.internalFields.includes(temp_access_field)) {
+        this.res.properties[field.name].access = 'internal';
+        this.addLockIcon(this.res.properties[field.name]);
+      }
+
+      this.responseData.definitions[ParentName.replace(/^./, ParentName[0].toUpperCase())].properties[childrenName] = this.res;
+
+    }
+  };
 
   submit() {
     if (this.type && this.type === 'entity') {
@@ -423,6 +607,7 @@ export class FormsComponent implements OnInit {
       get_url = this.apiUrl
     }
     this.generalService.getData(get_url).subscribe((res) => {
+      // if(this.property[definition])
       this.model = res[0];
       this.identifier = res[0].osid;
       this.loadSchema()
@@ -437,9 +622,11 @@ export class FormsComponent implements OnInit {
       if (res.params.status == 'SUCCESSFUL') {
         this.router.navigate([this.redirectTo])
       }
-      else {
-        alert(res.params.status);
+      else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
+        this.toastMsg.error('error', res.params.errmsg)
       }
+    }, (err) => {
+      this.toastMsg.error('error', err.error.params.errmsg)
     });
 
   }
@@ -449,9 +636,11 @@ export class FormsComponent implements OnInit {
       if (res.params.status == 'SUCCESSFUL') {
         this.router.navigate([this.redirectTo])
       }
-      else {
-        alert(res.params.status);
+      else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
+        this.toastMsg.error('error', res.params.errmsg)
       }
+    }, (err) => {
+      this.toastMsg.error('error', err.error.params.errmsg)
     });
   }
 

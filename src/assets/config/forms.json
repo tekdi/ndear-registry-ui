@@ -474,6 +474,7 @@
                         "fields": [
                             {
                                 "name": "institute",
+                                "required": true,
                                 "type": "autocomplete",
                                 "api": "/Institute/search",
                                 "key": "instituteName",

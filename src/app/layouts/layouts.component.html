@@ -118,12 +118,18 @@
                                 <ng-template [ngIf]="item[elementIndex].value">
                                     <ng-template [ngIf]="elementIndex %2 == 0">
                                         <dl>
-                                            <dt class="fs-7 text-grey-color">{{item[elementIndex].title}}</dt>
-                                            <dd>{{item[elementIndex].value}}</dd>
+                                            <div class="d-flex">
+                                            <div class="w-50 ml-2">
+                                                <dt class="fs-7 text-grey-color">{{item[elementIndex].title}}</dt>
+                                                <dd>{{item[elementIndex].value}}</dd>
+                                            </div>
+                                            <div class="w-50">
                                             <ng-template [ngIf]="elementIndex + 1 != item.length">
                                                 <dt class="fs-7 text-grey-color">{{item[elementIndex + 1].title}}</dt>
                                                 <dd>{{item[elementIndex + 1].value}}</dd>
                                             </ng-template>
+                                            </div>
+                                        </div>
                                         </dl>
                                     </ng-template>
                                 </ng-template>

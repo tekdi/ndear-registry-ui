@@ -102,6 +102,8 @@
                 "fieldsets": [
                     {
                         "definition": "Institute",
+                        "privacyConfig": "InstituteOsConfig",
+                        "globalPrivacyConfig" : "public-access",
                         "title": "Basic details",
                         "fields": [
                             {
@@ -240,6 +242,7 @@
                 "fieldsets": [
                     {
                         "definition": "Affiliation",
+                        "privacyConfig": "AffiliationOsConfig",
                         "fields": [
                             {
                                 "name": "affiliationNumber",
@@ -349,6 +352,8 @@
                 "fieldsets": [
                     {
                         "definition": "Teacher",
+                        "privacyConfig": "TeacherOsConfig",
+                        "globalPrivacyConfig" : "internal-access",
                         "fields": [
                             {
                                 "name": "contactDetails"
@@ -396,6 +401,7 @@
                 "fieldsets": [
                     {
                         "definition": "AcademicQualification",
+                        "privacyConfig": "AffiliationOsConfig",
                         "fields": [
                             {
                                 "name": "institute",
@@ -471,6 +477,7 @@
                 "fieldsets": [
                     {
                         "definition": "ExperienceType",
+                        "privacyConfig": "AffiliationOsConfig",
                         "fields": [
                             {
                                 "name": "institute",
@@ -657,6 +664,8 @@
                 "fieldsets": [
                     {
                         "definition": "Student",
+                        "privacyConfig": "StudentOsConfig",
+                        "globalPrivacyConfig" : "private-access",
                         "fields": [
                             {
                                 "name": "contactDetails"
@@ -704,6 +713,7 @@
                 "fieldsets": [
                     {
                         "definition": "EducationType",
+                        "privacyConfig": "AffiliationOsConfig",
                         "fields": [
                             {
                                 "name": "institute",

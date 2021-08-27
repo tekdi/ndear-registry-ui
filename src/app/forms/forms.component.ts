@@ -57,6 +57,7 @@ export class FormsComponent implements OnInit {
   privateFields = [];
   internalFields = [];
   privacyCheck : boolean = false;
+  globalPrivacy;
   searchResult: any[];
   states: any[] = [];
   constructor(private route: ActivatedRoute,
@@ -100,47 +101,65 @@ export class FormsComponent implements OnInit {
         this.type = this.formSchema.type
       }
 
-      this.schemaService.getSchemas().subscribe((res) => {
-        this.responseData = res;
-        this.formSchema.fieldsets.forEach(fieldset => {
-          this.getData(fieldset.definition)
-          this.definations[fieldset.definition] = {}
-          this.definations[fieldset.definition]['type'] = "object";
-          if (fieldset.title) {
-            this.definations[fieldset.definition]['title'] = fieldset.title
-          }
+    this.schemaService.getSchemas().subscribe((res) => {
+      this.responseData = res;
+      this.formSchema.fieldsets.forEach(fieldset => {
 
-          if (fieldset.required && fieldset.required.length > 0) {
-            this.definations[fieldset.definition]['required'] = fieldset.required
-          }
-          if (fieldset.dependencies) {
-            this.dependencies = fieldset.dependencies
-          }
-          this.definations[fieldset.definition].properties = {}
-          this.property[fieldset.definition] = {}
+        if (fieldset.hasOwnProperty('globalPrivacyConfig') && fieldset.globalPrivacyConfig != '' ) {
+          this.globalPrivacy = fieldset.globalPrivacyConfig;
+        }else
+        if (fieldset.hasOwnProperty('privacyConfig')) {
+          this.privacyCheck = true;
+          this.privateFields = (this.responseData.definitions[fieldset.privacyConfig].hasOwnProperty('privateFields') ? this.responseData.definitions[fieldset.privacyConfig].privateFields : []);
+          this.internalFields = (this.responseData.definitions[fieldset.privacyConfig].hasOwnProperty('internalFields') ? this.responseData.definitions[fieldset.privacyConfig].internalFields : []);
+        }
+        this.getData(fieldset.definition);
+
+        this.definations[fieldset.definition] = {}
+        this.definations[fieldset.definition]['type'] = "object";
+        if (fieldset.title) {
+          this.definations[fieldset.definition]['title'] = fieldset.title;
+        }
+
+        if (fieldset.required && fieldset.required.length > 0) {
+          this.definations[fieldset.definition]['required'] = fieldset.required;
+        }
+        if (fieldset.dependencies) {
+          this.dependencies = fieldset.dependencies;
+        }
+
+        this.definations[fieldset.definition].properties = {}
+        this.property[fieldset.definition] = {}
+
+        this.property = this.definations[fieldset.definition].properties;
+        
+	if (fieldset.formclass) {
+          this.schema['widget'] = {};
+          this.schema['widget']['formlyConfig'] = { fieldGroupClassName: fieldset.formclass }
+        }
+
+        if (fieldset.fields[0] === "*") {
+          this.definations = this.responseData.definitions;
           this.property = this.definations[fieldset.definition].properties;
-          if (fieldset.formclass) {
-            this.schema['widget'] = {};
-            this.schema['widget']['formlyConfig'] = { fieldGroupClassName: fieldset.formclass }
-          }
-          if (fieldset.fields[0] === "*") {
-            this.definations = this.responseData.definitions;
-            this.property = this.definations[fieldset.definition].properties
-          } else {
-            this.addFields(fieldset)
-          }
-          if (fieldset.except) {
-            this.removeFields(fieldset)
-          }
-        });
-        this.ordering = this.formSchema.order;
-        this.schema["type"] = "object";
-        this.schema["title"] = this.formSchema.title;
-        this.schema["definitions"] = this.definations;
-        this.schema["properties"] = this.property;
-        this.schema["required"] = this.required;
-        this.schema["dependencies"] = this.dependencies;
-        this.loadSchema();
+          fieldset.fields = this.property;
+          this.addFields(fieldset);
+        } else {
+          this.addFields(fieldset);
+        }
+
+        if (fieldset.except) {
+          this.removeFields(fieldset)
+        }
+      });
+
+      this.ordering = this.formSchema.order;
+      this.schema["type"] = "object";
+      this.schema["title"] = this.formSchema.title;
+      this.schema["definitions"] = this.definations;
+      this.schema["properties"] = this.property;
+      this.schema["required"] = this.required;
+      this.schema["dependencies"] = this.dependencies;
+      this.loadSchema();
       },
         (error) => {
           //Schema Error callback
@@ -254,16 +273,16 @@ export class FormsComponent implements OnInit {
     if (fieldset.fields.length) {
 
       fieldset.fields.forEach(field => {
-        let res = this.responseData.definitions[fieldset.definition].properties;
 
-        if (field.children) {
-
-          this.checkProperty(fieldset, field);
-        } else if(res.hasOwnProperty(field.name) &&  res[field.name].hasOwnProperty('properties')){
-          let res = this.responseData.definitions[fieldset.definition].properties[field.name].properties;
-          this.nastedChild(fieldset, field.name, res);
-
-          // this.definations[fieldset.definition].properties[field.name] = this.responseData.definitions[fieldset.definition].properties[field.name];
+        if(this.responseData.definitions[fieldset.definition] && this.responseData.definitions[fieldset.definition].hasOwnProperty('properties'))
+        {
+          let res = this.responseData.definitions[fieldset.definition].properties;
+          if (field.children) {
+            this.checkProperty(fieldset, field);
+          } else if(this.responseData.definitions[fieldset.definition].properties.hasOwnProperty(field.name) &&  this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('properties')){
+            let res = this.responseData.definitions[fieldset.definition].properties[field.name].properties;
+            this.nastedChild(fieldset, field.name, res);
+          }
         }
 
         if (field.custom && field.element) {
@@ -326,7 +345,7 @@ export class FormsComponent implements OnInit {
     else {
       this.res = this.responseData.definitions[fieldset.definition].properties[field.name];
 
-      if (!this.res.hasOwnProperty('properties')) {
+      if ( this.res != undefined && !this.res.hasOwnProperty('properties')) {
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget'] = {
           "formlyConfig": {
             "templateOptions": {
@@ -447,6 +466,7 @@ export class FormsComponent implements OnInit {
       }
       if (field.type) {
         if (field.type == "autocomplete") {
+         
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = "autocomplete";
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.responseData.definitions[fieldset.definition].properties[field.name]['title'];
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['search$'] = (term) => {
@@ -545,7 +565,7 @@ export class FormsComponent implements OnInit {
   submit() {
     if (this.type && this.type === 'entity') {
       this.customFields.forEach(element => {
-        delete this.model[element];
+       // delete this.model[element];
       });
       if (this.identifier != null) {
         this.updateData()
@@ -567,7 +587,7 @@ export class FormsComponent implements OnInit {
         this.apiUrl = (url.join("/")) + '?send=false';
       }
       this.customFields.forEach(element => {
-        delete this.model[element];
+       // delete this.model[element];
       });
       this.postData()
       // this.getData()

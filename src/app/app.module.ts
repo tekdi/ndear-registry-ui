@@ -49,21 +49,94 @@ import { TeacherConsentComponent } from './components/teacher/teacher-consent/te
 import { BoardAttestationDetailsComponent } from './components/board/board-attestation-details/board-attestation-details.component';
 import { TeacherSignupComponent } from './components/teacher/teacher-signup/teacher-signup.component';
 import { DiscoveryComponent } from './components/discovery/discovery.component';
-import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry,} from "ngx-schema-form";
 import { KeycloakloginComponent } from './components/keyCloak/keycloaklogin/keycloaklogin.component';
+import { TeacherAttestationComponent } from './components/teacher/teacher-attestation/teacher-attestation/teacher-attestation.component';
+import { TeacherAttestationDetailComponent } from './components/teacher/teacher-attestation-detail/teacher-attestation-detail/teacher-attestation-detail.component';
+import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry,} from "ngx-schema-form";
 import { ToastrModule } from 'ngx-toastr';
 import { APP_INITIALIZER } from '@angular/core';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+
+import {NgxPaginationModule} from 'ngx-pagination';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { FormDetailComponent } from '../app/tables/form-detail/form-detail/form-detail.component';
+
+import { MatMenuModule } from '@angular/material/menu';
+// formly
+import { FormlyModule, FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
+import { ArrayTypeComponent } from '../app/forms/types/array.type';
+import { ObjectTypeComponent } from '../app/forms/types/object.type';
+import { MultiSchemaTypeComponent } from '../app/forms/types/multischema.type';
+import { NullTypeComponent } from '../app/forms/types/null.type';
+import { AutocompleteTypeComponent } from '../app/forms/types/autocomplete.type';
+
+export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
+  return `should NOT have fewer than ${field.templateOptions.minItems} items`;
+}
+
+export function maxItemsValidationMessage(err, field: FormlyFieldConfig) {
+  return `should NOT have more than ${field.templateOptions.maxItems} items`;
+}
+
+export function minlengthValidationMessage(err, field: FormlyFieldConfig) {
+  return `should NOT be shorter than ${field.templateOptions.minLength} characters`;
+}
+
+export function maxlengthValidationMessage(err, field: FormlyFieldConfig) {
+  return `should NOT be longer than ${field.templateOptions.maxLength} characters`;
+}
+
+export function minValidationMessage(err, field: FormlyFieldConfig) {
+  return `should be >= ${field.templateOptions.min}`;
+}
+
+export function maxValidationMessage(err, field: FormlyFieldConfig) {
+  return `should be <= ${field.templateOptions.max}`;
+}
+
+export function multipleOfValidationMessage(err, field: FormlyFieldConfig) {
+  return `should be multiple of ${field.templateOptions.step}`;
+}
+
+export function exclusiveMinimumValidationMessage(err, field: FormlyFieldConfig) {
+  return `should be > ${field.templateOptions.step}`;
+}
+
+export function exclusiveMaximumValidationMessage(err, field: FormlyFieldConfig) {
+  return `should be < ${field.templateOptions.step}`;
+}
+
+export function constValidationMessage(err, field: FormlyFieldConfig) {
+  return `should be equal to constant "${field.templateOptions.const}"`;
+}
 
 
 /* Service files */
 import { BoardInstituteService} from './services/board/board-institutes/board-institutes.service';
 import { AdminFormService } from './services/admin-form.service';
+
 import { TeacherProfileService } from './services/teacher/teacher-profile.service';
 import { StudentProfileService} from './services/student/student-profile.service';
 import { InviteService} from './services/invite/invite.service';
-
+import { DiscoveryService } from './services/discovery/discovery.service';
 import { initializeKeycloak } from '../app/utility/app.init';
+import { AttestationService } from './services/attestation/attestation.service';
+
+import { FormsComponent } from './forms/forms.component';
+import { LayoutsComponent } from './layouts/layouts.component';
+import { ModalRouterEditLinkDirective } from '../app/layouts/modal/modal.directive';
+import { ModalRouterAddLinkDirective } from '../app/layouts/modal/modal.directive';
+import { Test2Component } from './test/test2/test2.component';
+
+import { PanelsComponent } from './layouts/modal/panels/panels.component';
+import { EditPanelComponent } from './layouts/modal/panels/edit-panel/edit-panel.component';
+import { AddPanelComponent } from './layouts/modal/panels/add-panel/add-panel.component';
+import { TablesComponent } from './tables/tables.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
+
 
 @NgModule({
   declarations: [
@@ -102,9 +175,27 @@ import { initializeKeycloak } from '../app/utility/app.init';
     ConsentVerificationComponent,
     TeacherConsentComponent,
     BoardAttestationDetailsComponent,
+
     TeacherSignupComponent,
     DiscoveryComponent,
-    KeycloakloginComponent
+    KeycloakloginComponent,
+
+    TeacherAttestationComponent,
+    TeacherAttestationDetailComponent,
+    FormDetailComponent,
+
+    FormsComponent,
+    ArrayTypeComponent,
+    ObjectTypeComponent,
+    MultiSchemaTypeComponent,
+    NullTypeComponent,
+    LayoutsComponent,
+    ModalRouterEditLinkDirective,
+    ModalRouterAddLinkDirective,
+    Test2Component,
+    PanelsComponent, EditPanelComponent, AddPanelComponent, TablesComponent,
+    AutocompleteTypeComponent
+
 
   ],
   imports: [
@@ -120,16 +211,65 @@ import { initializeKeycloak } from '../app/utility/app.init';
     NgOtpInputModule,
     NgbModule,
     SuiModule,
+
     KeycloakAngularModule,
+    MatAutocompleteModule,
+
+    AutocompleteLibModule,
+    FormlyBootstrapModule,
+    MatMenuModule,
+    NgSelectModule,
+    FormlyModule.forRoot({
+      extras: { resetFieldOnHide: true },
+      validationMessages: [
+        { name: 'required', message: 'This field is required' },
+        
+      ],
+      types: [
+        { name: 'string', extends: 'input' },
+        {
+          name: 'number',
+          extends: 'input',
+          defaultOptions: {
+            templateOptions: {
+              type: 'number',
+            },
+          },
+        },
+        {
+          name: 'integer',
+          extends: 'input',
+          defaultOptions: {
+            templateOptions: {
+              type: 'number',
+            },
+          },
+        },
+        { name: 'boolean', extends: 'checkbox' },
+        { name: 'enum', extends: 'select' },
+        { name: 'null', component: NullTypeComponent, wrappers: ['form-field'] },
+        { name: 'array', component: ArrayTypeComponent },
+        { name: 'object', component: ObjectTypeComponent },
+        { name: 'multischema', component: MultiSchemaTypeComponent },
+        {
+          name: 'autocomplete',
+          component: AutocompleteTypeComponent
+        }
+      ],
+    }),
+
+    // MaterialDesignFrameworkModule,
+
     Bootstrap4FrameworkModule,
     SchemaFormModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-center',
     preventDuplicates: true,
-    })
+    }),
+    NgxPaginationModule
   ],
-  schemas: [],
-  entryComponents: [],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  entryComponents: [Test2Component],
   bootstrap: [AppComponent],
   providers: [ 
     { provide: WidgetRegistry, useClass: DefaultWidgetRegistry },
@@ -138,12 +278,15 @@ import { initializeKeycloak } from '../app/utility/app.init';
     TeacherProfileService,
     StudentProfileService,
     InviteService,
+    DiscoveryService,
     {
       provide: APP_INITIALIZER,
       useFactory: initializeKeycloak,
       multi: true,
       deps: [KeycloakService],
-    }
+    },
+    AttestationService
+    
   ]
 })
 export class AppModule {

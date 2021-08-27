@@ -1,0 +1,276 @@
+<header style="margin-bottom: 45px;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                data-mdb-target="#navbarExample01" aria-controls="navbarExample01" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarExample01">
+                <div class="nav-item active logo-text">
+                    <a class="nav-link" aria-current="page"  style="color: black;">Attest Details</a>
+                </div>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <button type="button" (click)="close()" class="close float-right"><span _ngcontent-fni-c481="" aria-hidden="true">×</span></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    
+    <div class="mt-5">
+        
+        <h5>Claims by {{claimData?.requestorName}}</h5>
+    </div>
+    <!-- <button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize"
+                        (click)="onAttestApproveReject()"><i class="fa fa-check-circle text-success"
+                                data-mdb-toggle="tooltip" title="Attested"></i>Approve</button>
+                        <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize"
+                            data-toggle="modal" data-target="#deny"><i
+                                class="fa fa-exclamation-circle red"></i>Deny</button> -->
+
+    <!-- <ng-template [ngIf]="type == 'experience'">
+        <h6>Experience</h6>
+        <div class="card">
+            <div class="card-body" style="height: 128px;">
+                <dl>
+                    <dd>
+                        <div><b>{{experienceDetail.TeacherType}}</b></div>
+                        <div>{{experienceDetail.institute}}</div>
+                        <div *ngIf="experienceDetail.enddate; else elseBlock1">{{experienceDetail.startdate}} -
+                            {{experienceDetail.enddate}}</div>
+                        <ng-template #elseBlock1>
+                            <div>{{experienceDetail.startdate}} - Current</div>
+                        </ng-template>
+                        <div class="fs-7 text-grey-color">{{experienceDetail.EmploymentType}}</div>
+                    </dd>
+                    <dd style="text-align-last: right;">
+                        <button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize"
+                            (click)="onAttest()"><i class="fa fa-check-circle text-success"></i>Approve</button>
+                        <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize"
+                            data-toggle="modal" data-target="#deny"><i
+                                class="fa fa-exclamation-circle red"></i>Deny</button>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <hr>
+    </ng-template> -->
+
+    <div>
+        <!-- <h6>Attestations </h6> -->
+        <div class="card">
+            <div  >
+            <div class="card-body" style="height: 128px;">
+                <dl >
+                    <dd>
+                        <div *ngFor="let item of propertyData">{{item?.title}} : <b>{{item?.value}}</b></div>
+                    </dd>
+                    <dd style="text-align-last: right;" class="float-end">
+                        <button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize"
+                        (click)="onAttestApproveReject('GRANT_CLAIM',$event)"><i class="fa fa-check-circle text-success"
+                                data-mdb-toggle="tooltip" title="Attested"></i>Approve</button>
+                        <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize"
+                            data-toggle="modal" data-target="#deny"><i
+                                class="fa fa-exclamation-circle red"></i>Deny</button>
+                    </dd>
+                </dl>
+            </div>
+            </div>
+        </div>
+    </div>
+        <hr>
+        <div class="mt-5">
+            <h5>Public Profile of {{claimData?.requestorName}}</h5>
+        </div>
+        <ng-template [ngIf]="profile">
+            <app-layouts layout={{claimEntity}} identifier={{claimEntityId}} public={{profile}}></app-layouts>
+        </ng-template>
+    
+
+    <!-- Preview Profile Modal -->
+    <!-- <div class="mt-5">
+        <div class="d-flex flex-justify-between">
+            <div>
+                <h6 class="d-inline-block">Public Profile of {{user?.identityDetails?.fullName}}</h6>
+                <a data-toggle="modal" data-target="#editProfile" class="pl-1 fs-7 text-primary-color">edit</a> -->
+            <!-- </div>
+            <div *ngIf="consent === 'granted'" style="color: blue;"><i class="fa fa-check"></i>Request to view full
+                profile is granted</div>
+            <div *ngIf="consent === 'denied'" style="color: rgb(255, 72, 0);"><i class="fa fa-cross"></i>Request to view
+                full profile is denied</div>
+            <div *ngIf="consent === true" style="color: blue;"><i class="fa fa-check"></i>Sent request to view full
+                profile</div>
+            <ng-template [ngIf]="consent === false || consent === 'denied'">
+                <button (click)="onConsent()"
+                    class="btn btn-primary text-end mb-10 pr-20 fw-bold text-capitalize">Request to view Full
+                    Profile</button>
+            </ng-template>
+
+        </div>
+    </div> -->
+    <!-- <div class="card">
+        <div class="card-body">
+            <dl>
+                <dt class="fs-7 text-grey-color">Full Name</dt>
+                <dd>{{user?.identityDetails?.fullName}}</dd>
+            </dl>
+            <ng-template [ngIf]="user?.identityDetails?.gender || user?.identityDetails?.dob">
+                <dl>
+                    <ng-template [ngIf]="user?.identityDetails?.gender">
+                        <dt class="fs-7 text-grey-color">Gender</dt>
+                        <dd>{{user?.identityDetails?.gender}}</dd>
+                    </ng-template>
+                    <ng-template [ngIf]="user?.identityDetails?.dob">
+                        <dt class="fs-7 text-grey-color">Date of Birth</dt>
+                        <dd>{{user?.identityDetails?.dob}}
+                            <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>
+                        </dd>
+                    </ng-template>
+                </dl>
+            </ng-template>
+            <dl>
+                <dt class="fs-7 text-grey-color">Email</dt>
+                <dd>{{user?.contactDetails?.email}}
+                    <i class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>
+                </dd>
+            </dl>
+            <ng-template [ngIf]="user?.contactDetails?.address">
+                <dl>
+                    <dt class="fs-7 text-grey-color">Address</dt>
+                    <dd>
+                        <span
+                            *ngIf="user?.contactDetails?.address?.plot">{{user?.contactDetails?.address?.plot}}, </span>
+                        <span
+                            *ngIf="user?.contactDetails?.address?.street">{{user?.contactDetails?.address?.street}}, </span>
+                        <span
+                            *ngIf="user?.contactDetails?.address?.landmark">{{user?.contactDetails?.address?.landmark}}, </span>
+                        <span
+                            *ngIf="user?.contactDetails?.address?.locality">{{user?.contactDetails?.address?.locality}}, </span>
+                        <span
+                            *ngIf="user?.contactDetails?.address?.village">{{user?.contactDetails?.address?.village}}, </span>
+                        <span
+                            *ngIf="user?.contactDetails?.address?.district">{{user?.contactDetails?.address?.district}}, </span>
+                        <span
+                            *ngIf="user?.contactDetails?.address?.pincode">{{user?.contactDetails?.address?.pincode}}, </span>
+                        <span
+                            *ngIf="user?.contactDetails?.address?.state">{{user?.contactDetails?.address?.state}}</span>
+
+                    </dd>
+                </dl>
+            </ng-template>
+        </div>
+    </div> -->
+
+    <!-- <div class="card"> 
+
+        <div *ngFor="let item of user?.educationDetails">
+            <div class="card-body" *ngIf="item?._osState === 'PUBLISHED'">
+
+                <h6>{{item?.institute}}
+                    <img *ngIf="item?._osState == 'ATTESTATION_REQUESTED'; else icons" style="width: 16px;"
+                        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
+                    <ng-template #icons>
+                        <i [ngClass]="item?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle red'"
+                            data-mdb-toggle="tooltip" title={{item?.note}}></i>
+                    </ng-template>
+
+                </h6>
+                <div>Board : {{item?.board}}</div>
+                <div>Medium: {{item?.medium}}</div>
+                <div class="fs-7 text-grey-color">Class: {{item?.class}}</div>
+                <hr>
+
+            </div>
+        </div>
+    </div> -->
+
+
+
+    <!-- <h6>Experience</h6>
+    <div class="card">
+        <ng-template ngFor let-item [ngForOf]="experience">
+            <div class="card-body" *ngIf="item?.attested === true">
+
+                <h6>{{item?.institute}}
+                    <img *ngIf="item?.attested == 'pending'; else icons" style="width: 16px;"
+                        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
+                    <ng-template #icons>
+                        <i [ngClass]="item?.attested == true ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle red'"
+                            data-mdb-toggle="tooltip" title={{item?.note}}></i>
+                    </ng-template>
+
+                </h6>
+                <div>{{item?.TeacherType}}</div>
+                <div *ngIf="!item?.working; else elseBlock1">{{item?.startdate}} -
+                    {{item?.enddate}}</div>
+                <ng-template #elseBlock1>
+                    <div>{{item?.startdate}} - Current</div>
+                </ng-template>
+                <div class="fs-7 text-grey-color">{{item?.EmploymentType}}</div>
+                <hr>
+
+            </div>
+        </ng-template>
+    </div> -->
+    
+    <div class="card" style="background-color: #f2e39c99;">
+        <div class="card-body">
+            <h5>Add a Note for {{claimData?.requestorName}}</h5>
+            <ng-template [ngIf]="noteAdded">
+                <div style="color: green;"><i class="fa fa-check"></i> Note Added!
+                </div>
+            </ng-template>
+            <json-schema-form [schema]="approveNoteSchema" [layout]="form" framework="bootstrap-4"
+                (onSubmit)="saveNote($event)">
+            </json-schema-form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- approve Modal -->
+<!-- <div class="modal right fade" id="approve" tabindex="-1" role="dialog" aria-labelledby="approve">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel2">Approve {{type}}</h5>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button> 
+            </div>
+
+            <div class="modal-body">
+                <json-schema-form [schema]="approveNoteSchema" [layout]="form" framework="bootstrap-4"
+                    (onSubmit)="onAttestApproveReject('GRANT_CLAIM',$event)">
+                </json-schema-form>
+            </div>
+
+        </div>
+    </div>
+</div> -->
+
+<!-- deny Modal -->
+<div class="modal right fade" id="deny" tabindex="-1" role="dialog" aria-labelledby="deny">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel2">Deny {{type}}</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button> -->
+            </div>
+
+            <div class="modal-body">
+                <json-schema-form [schema]="denyNoteSchema" [layout]="form" framework="bootstrap-4"
+                    (onSubmit)="onAttestApproveReject('REJECT_CLAIM',$event)">
+                </json-schema-form>
+            </div>
+
+        </div>
+    </div>
+</div>

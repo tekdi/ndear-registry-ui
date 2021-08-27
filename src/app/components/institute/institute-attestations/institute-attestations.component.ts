@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AttestationService } from '../../../services/attestation/attestation.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-institute-attestations',
@@ -12,27 +14,55 @@ export class InstituteAttestationsComponent implements OnInit {
   user;
   header1: string = 'institute';
   tab: string = 'attestation';
-  attestation;
-  constructor() { 
+  attestation: any;
+    constructor(
+    public attestationService: AttestationService,
+    public router: Router) {
   }
 
   ngOnInit(): void {
-    this.attestation = [];
-    this.user = JSON.parse(localStorage.getItem('user'));
-    this.education = JSON.parse(localStorage.getItem('education'));
-    console.log(this.attestation)
-    this.education.forEach((element, i) => {
-      element.index = i
-      element.type = 'education'
-      this.attestation.push(element)
 
+    this.getAttastations();
+  
+    //this.attestationService.getAttestations();
+
+    /*  if( this.education){
+        this.education.forEach((element, i) => {
+          element.index = i
+          element.type = 'education'
+          this.attestation.push(element)
+    
+        });
+      }
+   
+  
+      this.experience = JSON.parse(localStorage.getItem('experience'));
+      if( this.experience){
+      this.experience.forEach((element, i) =>{
+        element.index = i
+        element.type = 'experience'
+        this.attestation.push(element)
+      });
+    }*/
+
+
+  }
+
+  getAttastations() {
+    this.attestationService.getAttestations('Institute').subscribe((res) => {
+      this.attestation = res;
     });
-    this.experience = JSON.parse(localStorage.getItem('experience'));
-    this.experience.forEach((element, i) =>{
-      element.index = i
-      element.type = 'experience'
-      this.attestation.push(element)
-    });
+    
+  }
+
+  navToAttastationDeatil(entityId, claimId) {
+    let data = {
+      entityId: entityId,
+      claimId: claimId
+    }
+
+    console.log(btoa(JSON.stringify(data)));
+    this.router.navigate(['/institute-attestation-detail', { 'id': btoa(JSON.stringify(data)) }]);
   }
 
 }

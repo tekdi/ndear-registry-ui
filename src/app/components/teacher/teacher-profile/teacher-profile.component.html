@@ -61,23 +61,40 @@
                 </dl>
             </ng-template>
 
-            <ng-template [ngIf]="item?.contactDetails?.address">
-                <dl>
-                    <ng-template [ngIf]="item?.contactDetails?.address">
-                        <dt class="fs-7 text-grey-color">Address</dt>
-                        <dd>{{item?.contactDetails?.address}}</dd>
-                    </ng-template>
-                </dl>
-            </ng-template>
+            <dl>
+                <ng-template [ngIf]="item?.contactDetails?.address">
+                    <dt class="fs-7 text-grey-color">Address</dt>
+                    <dd>
+                        <span
+                            *ngIf="item?.contactDetails?.address?.plot">{{item?.contactDetails?.address?.plot}}, </span>
+                        <span
+                            *ngIf="item?.contactDetails?.address?.street">{{item?.contactDetails?.address?.street}}, </span>
+                        <span
+                            *ngIf="item?.contactDetails?.address?.landmark">{{item?.contactDetails?.address?.landmark}}, </span>
+                        <span
+                            *ngIf="item?.contactDetails?.address?.locality">{{item?.contactDetails?.address?.locality}}, </span>
+                        <span
+                            *ngIf="item?.contactDetails?.address?.village">{{item?.contactDetails?.address?.village}}, </span>
+                        <span
+                            *ngIf="item?.contactDetails?.address?.district">{{item?.contactDetails?.address?.district}}, </span>
+                        <span
+                            *ngIf="item?.contactDetails?.address?.pincode">{{item?.contactDetails?.address?.pincode}}, </span>
+                        <span
+                            *ngIf="item?.contactDetails?.address?.state">{{item?.contactDetails?.address?.state}}</span>
+
+                    </dd>
+                </ng-template>
+            </dl>
+
         </div>
     </div>
 
     <div class="d-flex justify-content-between mt-5">
-        <h6 class="d-inline-block">Experience</h6>
+        <h6 class="d-inline-block" *ngIf="item?.experience">Experience</h6>
         <a data-toggle="modal" data-target="#addExperience" class="fs-7 text-primary-color"><i
                 class="fa fa-plus pr-1"></i>Experience</a>
     </div>
-    <div class="card">
+    <div class="card" *ngIf="item?.experience">
         <div class="card-body">
             <ng-template ngFor let-item [ngForOf]="item?.experience">
                 <h6>{{item?.institute}}
@@ -98,18 +115,18 @@
                 <div class="fs-6">{{item?.employmentType}}</div>
                 <div class="fs-6">Grades: {{item?.grades?.join(', ')}}</div>
                 <div class="fs-6">Subject: {{item?.subjects?.join(', ')}}</div>
-                
+
                 <hr>
             </ng-template>
         </div>
     </div>
 
     <div class="d-flex justify-content-between mt-5">
-        <h6 class="d-inline-block">Academic Qualifications</h6>
+        <h6 class="d-inline-block" *ngIf="user?.educationDetails">Academic Qualifications</h6>
         <a data-toggle="modal" data-target="#addEducation" class="fs-7 text-primary-color"><i
                 class="fa fa-plus pr-1"></i>Academic Qualifications</a>
     </div>
-    <div class="card">
+    <div class="card" *ngIf="item?.academicQualifications">
         <div class="card-body">
             <ng-template ngFor let-item [ngForOf]="item?.academicQualifications" let-i="index">
                 <h6>{{item?.institute}}
@@ -218,13 +235,13 @@
             <div class="modal-body h-100">
                 <div class="modal-body h-100">
                     <div *ngIf="teacherSchema">
-                        <json-schema-form  [schema]="teacherSchema" [data]="item" [layout]="form1" framework="bootstrap-4"
-                        (onSubmit)="onEditProfileSubmit($event)">
-                    </json-schema-form>
+                        <json-schema-form [schema]="teacherSchema" [data]="item" [layout]="form1"
+                            framework="bootstrap-4" (onSubmit)="onEditProfileSubmit($event)">
+                        </json-schema-form>
                     </div>
-                    
+
                 </div>
-  
+
             </div>
 
         </div>
@@ -283,7 +300,8 @@
                             </dl>
                         </ng-template>
 
-                        <ng-template [ngIf]="item?.identityDetails?.identityType || item?.identityDetails?.identityValue">
+                        <ng-template
+                            [ngIf]="item?.identityDetails?.identityType || item?.identityDetails?.identityValue">
                             <dl>
                                 <ng-template [ngIf]="item?.identityDetails?.identityType">
                                     <dt class="fs-7 text-grey-color">ID Type</dt>
@@ -303,23 +321,42 @@
                         <dl>
                             <ng-template [ngIf]="item?.contactDetails?.address">
                                 <dt class="fs-7 text-grey-color">Address</dt>
-                                <dd>{{item?.contactDetails?.address}}</dd>
+                                <dd>
+                                    <span
+                                        *ngIf="item?.contactDetails?.address?.plot">{{item?.contactDetails?.address?.plot}}, </span>
+                                    <span
+                                        *ngIf="item?.contactDetails?.address?.street">{{item?.contactDetails?.address?.street}}, </span>
+                                    <span
+                                        *ngIf="item?.contactDetails?.address?.landmark">{{item?.contactDetails?.address?.landmark}}, </span>
+                                    <span
+                                        *ngIf="item?.contactDetails?.address?.locality">{{item?.contactDetails?.address?.locality}}, </span>
+                                    <span
+                                        *ngIf="item?.contactDetails?.address?.village">{{item?.contactDetails?.address?.village}}, </span>
+                                    <span
+                                        *ngIf="item?.contactDetails?.address?.district">{{item?.contactDetails?.address?.district}}, </span>
+                                    <span
+                                        *ngIf="item?.contactDetails?.address?.pincode">{{item?.contactDetails?.address?.pincode}}, </span>
+                                    <span
+                                        *ngIf="item?.contactDetails?.address?.state">{{item?.contactDetails?.address?.state}}</span>
+            
+                                </dd>
                             </ng-template>
 
                         </dl>
                     </div>
                 </div>
 
-                <h6 class="mt-5">Experience</h6>
-                <div class="card">
+                <h6 class="mt-5" *ngIf="item?.experience">Experience</h6>
+                <div class="card" *ngIf="item?.experience">
                     <div class="card-body">
                         <ng-template ngFor let-item [ngForOf]="item?.experience" let-i='index'>
-                            <!-- <ng-template [ngIf]="item?.attested == true"> -->
+                            <ng-template *ngIf="item?._osState == 'PUBLISHED'">
                                 <h6>{{item?.institute}}
-                                    <img *ngIf="attested == 'pending'; else icons" style="width: 16px;"
+                                    <img *ngIf="item?._osState == 'ATTESTATION_REQUESTED'; else icons"
+                                        style="width: 16px;"
                                         src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
                                     <ng-template #icons>
-                                        <i [ngClass]="item?.attested == true ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle red'"
+                                        <i [ngClass]="item?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle red'"
                                             data-mdb-toggle="tooltip" title={{item?.note}} data-mdb-toggle="tooltip"
                                             title={{item?.note}}></i>
                                     </ng-template>
@@ -329,28 +366,29 @@
                                 <div *ngIf="!item?.working; else elseBlock1">{{item?.start}} -
                                     {{item?.end}}</div>
                                 <ng-template #elseBlock1>
-                                    <div   *ngIf="item?.start">{{item?.start}} - Current</div>
+                                    <div *ngIf="item?.start">{{item?.start}} - Current</div>
                                 </ng-template>
                                 <div class="fs-6">{{item?.employmentType}}</div>
                                 <div class="fs-6">Grades: {{item?.grades?.join(', ')}}</div>
                                 <div class="fs-6">Subject: {{item?.subjects?.join(', ')}}</div>
 
                                 <hr>
-                            <!-- </ng-template> -->
+                            </ng-template>
                         </ng-template>
                     </div>
                 </div>
 
-                <h6 class="mt-5">Academic Qualifications</h6>
-                <div class="card">
+                <h6 class="mt-5" *ngIf="item?.academicQualifications">Academic Qualifications</h6>
+                <div class="card" *ngIf="item?.academicQualifications">
                     <div class="card-body">
                         <ng-template ngFor let-item [ngForOf]="item?.academicQualifications" let-i="index">
-                            <!-- <ng-template [ngIf]="item?.attested == true"> -->
+                            <ng-template *ngIf="item?._osState == 'PUBLISHED'">
                                 <h6>{{item?.institute}}
-                                    <img *ngIf="attested == 'pending'; else icons" style="width: 16px;"
+                                    <img *ngIf="item?._osState == 'ATTESTATION_REQUESTED'; else icons"
+                                        style="width: 16px;"
                                         src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
                                     <ng-template #icons>
-                                        <i [ngClass]="item?.attested == true ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle red'"
+                                        <i [ngClass]="item?._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle red'"
                                             data-mdb-toggle="tooltip" title={{item?.note}}></i>
                                     </ng-template>
 
@@ -364,7 +402,7 @@
                             </ng-template> -->
                                 <div class="fs-7 text-grey-color">Marks/Ranking/GPA : {{item?.marks}}</div>
                                 <hr>
-                            <!-- </ng-template> -->
+                            </ng-template>
                         </ng-template>
                     </div>
                 </div>
@@ -389,11 +427,11 @@
 
             <div class="modal-body">
                 <div *ngIf="educationSchema">
-                <json-schema-form [schema]="educationSchema" [layout]="form" framework="bootstrap-4"
-                    (onSubmit)="onEducationSubmit($event)">
-                </json-schema-form>
-            </div>
-               
+                    <json-schema-form [schema]="educationSchema" [layout]="form" framework="bootstrap-4"
+                        (onSubmit)="onEducationSubmit($event)">
+                    </json-schema-form>
+                </div>
+
             </div>
 
         </div>
@@ -413,9 +451,9 @@
 
             <div class="modal-body">
                 <div *ngIf="experianceSchema">
-                <json-schema-form [schema]="experianceSchema" [layout]="form" framework="bootstrap-4"
-                    (onSubmit)="onExperienceSubmit($event)">
-                </json-schema-form>
+                    <json-schema-form [schema]="experianceSchema" [layout]="form" framework="bootstrap-4"
+                        (onSubmit)="onExperienceSubmit($event)">
+                    </json-schema-form>
                 </div>
             </div>
 

@@ -21,6 +21,33 @@ export class SchemaService {
     return this.dataService.get(req);
   }
 
+  getFormJSON() {
+    let url = "./assets/config/forms.json";
+    const req = {
+      url: url
+    };
+
+    return this.dataService.get(req);
+  }
+
+  getLayoutJSON() {
+    let url = "./assets/config/layouts.json";
+    const req = {
+      url: url
+    };
+
+    return this.dataService.get(req);
+  }
+
+  getTableJSON() {
+    let url = "./assets/config/tables.json";
+    const req = {
+      url: url
+    };
+
+    return this.dataService.get(req);
+  }
+
 
 }
 

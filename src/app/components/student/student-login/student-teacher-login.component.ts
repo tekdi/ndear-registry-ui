@@ -53,7 +53,7 @@ export class StudentLoginComponent implements OnInit {
   }
 
   logout(): void {
-    this.keycloakService.logout('http://localhost:4200');
+    this.keycloakService.logout('https://ndear.xiv.in/');
   }
 
 

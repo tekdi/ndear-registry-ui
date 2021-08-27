@@ -30,7 +30,7 @@ export class StudentProfileComponent implements OnInit {
   startdate: NgbDateStruct;
   enddate: NgbDateStruct;
   working: Boolean = true;
-  studentId : string;
+  studentId: string;
   studentResult: any;
   fb;
   schemaJson: any;
@@ -74,7 +74,7 @@ export class StudentProfileComponent implements OnInit {
 
     // setting datepicker popup to open above the input
     // config.placement = ['top-left', 'top-right'];
-    localStorage.setItem('is_logedin', "true")
+    // localStorage.setItem('is_logedin', "true")
     // localStorage.setItem('admin', 'false')
     //this.user = JSON.parse(localStorage.getItem('user'));
 
@@ -83,11 +83,11 @@ export class StudentProfileComponent implements OnInit {
       this.schemaJson = res;
       console.log("res", this.schemaJson.definitions.IdentityDetails);
 
-      delete this.schemaJson.definitions.ContactDetails.properties.address;
-
+      delete this.schemaJson.definitions.Student.properties.educationDetails;
+      this.studentProfileSchema = this.schemaJson.definitions.Student;
 
       // console.log(this.schema.definitions)
-      this.studentProfileSchema = {
+     /* this.studentProfileSchema = {
         "type": "object",
         "title": "Student",
         "definitions": {
@@ -102,7 +102,7 @@ export class StudentProfileComponent implements OnInit {
           },
           "contactDetails": {
             "$ref": "#/definitions/contactDetails"
-          
+
           }
           // ,
           // "address": {
@@ -110,7 +110,9 @@ export class StudentProfileComponent implements OnInit {
           //   "$ref": "#/definitions/address"
           // }
         }
-      };
+      };*/
+
+      
 
       this.educationSchema = {
         "type": "object",
@@ -131,8 +133,6 @@ export class StudentProfileComponent implements OnInit {
 
     this.getStudentData(this.studentId);
 
-
-
     this.education = JSON.parse(localStorage.getItem('education'))
     this.educationForm = fb.group({
       institute: ['', Validators.required],
@@ -151,37 +151,37 @@ export class StudentProfileComponent implements OnInit {
     //  this.user = this.editUserform.value
     // this.router.navigate(['student-profile']);
 
-   // if (this.studentId &&  this.studentId != "null") {
-      event.osid = this.user.osid;
-      this.studentId = this.user.osid;
+    // if (this.studentId &&  this.studentId != "null") {
+    event.osid = this.user.osid;
+    this.studentId = this.user.osid;
 
-      event.identityDetails.osid = this.user.identityDetails.osid;
-      event.contactDetails.osid = this.user.contactDetails.osid;
-     // event.address.osid = this.user.address.osid;
-      const data = event; //this.editUserform.value;
+    event.identityDetails.osid = this.user.identityDetails.osid;
+    event.contactDetails.osid = this.user.contactDetails.osid;
+    // event.address.osid = this.user.address.osid;
+    const data = event; //this.editUserform.value;
 
-      this.studentProfileService.putStudentProfile(data, this.studentId).subscribe(res => {
-        if (res.responseCode == 'OK' && !res.params.errmsg) {
-       //   this.router.navigate(['/student-profile', { 'id': this.studentId }]);
-          this.getStudentData(this.studentId);
-          this.toastMsg.success('Success', 'Student Profile Updated Successfully');
-        } else {
-          this.toastMsg.error('Error', res.params.errmsg);
-        }
-      })
-   /* } else {
-      const data = event;
-      this.studentProfileService.postStudentProfile(data).subscribe(res => {
-        if (res.responseCode == 'OK' && !res.params.errmsg) {
-          // localStorage.setItem('student_id', res.result.Student.osid);
-        //  this.router.navigate(['/student-profile', { 'id': res.result.Student.osid }]);
-          this.getStudentData(res.result.Student.osid);
-          this.toastMsg.success('Success', 'Student Profile Added Successfully');
-        } else {
-          this.toastMsg.error('Error', res.params.errmsg);
-        }
-      })
-    }*/
+    this.studentProfileService.putStudentProfile(data, this.studentId).subscribe(res => {
+      if (res.responseCode == 'OK' && !res.params.errmsg) {
+        //   this.router.navigate(['/student-profile', { 'id': this.studentId }]);
+        this.getStudentData(this.studentId);
+        this.toastMsg.success('Success', 'Student Profile Updated Successfully');
+      } else {
+        this.toastMsg.error('Error', res.params.errmsg);
+      }
+    })
+    /* } else {
+       const data = event;
+       this.studentProfileService.postStudentProfile(data).subscribe(res => {
+         if (res.responseCode == 'OK' && !res.params.errmsg) {
+           // localStorage.setItem('student_id', res.result.Student.osid);
+         //  this.router.navigate(['/student-profile', { 'id': res.result.Student.osid }]);
+           this.getStudentData(res.result.Student.osid);
+           this.toastMsg.success('Success', 'Student Profile Added Successfully');
+         } else {
+           this.toastMsg.error('Error', res.params.errmsg);
+         }
+       })
+     }*/
   }
 
   onSubmit() {
@@ -208,32 +208,32 @@ export class StudentProfileComponent implements OnInit {
       );
     }
 
-    this.studentProfileService.postStudentProfile( event.EducationDetails, this.studentId).subscribe(res => {
+    this.studentProfileService.addProperty(event.EducationDetails, this.studentId).subscribe(res => {
       if (res.responseCode == 'OK' && !res.params.errmsg) {
         // localStorage.setItem('student_id', res.result.Student.osid);
-      //  this.router.navigate(['/student-profile', { 'id': this.studentId }]);
+        //  this.router.navigate(['/student-profile', { 'id': this.studentId }]);
 
-       // this.getStudentData(this.studentId);
-       this.studentProfileService.getStudentProfile(this.studentId).subscribe((res) => {
-        this.user = res[0];
-         let self = this;
-         this.toastMsg.success('Success', 'Educational Deatils Added Successfully');
+        // this.getStudentData(this.studentId);
+        this.studentProfileService.getStudentProfile(this.studentId).subscribe((res) => {
+          this.user = res[0];
+          let self = this;
+          this.toastMsg.success('Success', 'Educational Deatils Added Successfully');
 
-        for(let i= 0; i <=  self.user.educationDetails.length; i++){
+          for (let i = 0; i <= self.user.educationDetails.length; i++) {
 
-          console.log(self.user.educationDetails[i]._osState);
-          if( self.user.educationDetails[i]._osState == 'DRAFT'){
-          this.sendVerification(this.studentId,   self.user.educationDetails[i].osid);
-          this.getStudentData(this.studentId);
+            console.log(self.user.educationDetails[i]._osState);
+            if (self.user.educationDetails[i]._osState == 'DRAFT') {
+              this.sendVerification(this.studentId, self.user.educationDetails[i].osid);
+              this.getStudentData(this.studentId);
+            }
           }
-        }
-       // this.toastMsg.success('Success', 'Educational Deatils Added Successfully');
+          // this.toastMsg.success('Success', 'Educational Deatils Added Successfully');
 
-        console.log({ res });
-        this.studentResult = res[0];
-        console.log("this.user", this.user);
-      })
-       
+          console.log({ res });
+          this.studentResult = res[0];
+          console.log("this.user", this.user);
+        })
+
       } else {
         this.toastMsg.error('Error', res.params.errmsg);
       }
@@ -242,7 +242,7 @@ export class StudentProfileComponent implements OnInit {
 
   ngOnInit(): void {
     if (localStorage.getItem('institute-detail')) {
-     // this.institute = JSON.parse(localStorage.getItem('institute-detail')).BasicDetails.instituteName;
+      // this.institute = JSON.parse(localStorage.getItem('institute-detail')).BasicDetails.instituteName;
       //this.schema.properties.institute.enum.push(this.institute)
     }
 
@@ -254,23 +254,22 @@ export class StudentProfileComponent implements OnInit {
   }
 
 
-   getStudentData(studentId) {
-   
-      this.studentProfileService.getStudentProfile(studentId).subscribe((res) => {
-        this.user = res[0];
+  getStudentData(studentId) {
 
-        console.log({ res });
-        this.studentResult = res[0];
-        console.log("this.user", this.user);
-      })
-    
+    this.studentProfileService.getStudentProfile(studentId).subscribe((res) => {
+      this.user = res[0];
+
+      console.log({ res });
+      this.studentResult = res[0];
+      console.log("this.user", this.user);
+    })
   }
 
-  sendVerification(entityId, propertyId){
-    this.studentProfileService.updateStudentProperty( entityId, propertyId).subscribe(res => {
+  sendVerification(entityId, propertyId) {
+    this.studentProfileService.sendAttestedStudentProperty(entityId, propertyId).subscribe(res => {
       if (res.responseCode == 'OK' && !res.params.errmsg) {
         // localStorage.setItem('student_id', res.result.Student.osid);
-      //  this.router.navigate(['/student-profile', { 'id': this.studentId }]);
+        //  this.router.navigate(['/student-profile', { 'id': this.studentId }]);
 
         this.getStudentData(this.studentId);
       } else {

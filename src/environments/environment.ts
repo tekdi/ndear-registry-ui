@@ -6,7 +6,8 @@
 export const environment = {
   production: false,
   baseUrl: 'http://localhost:4200/registry/api/v1',
-  schemaUrl: 'https://ndear.xiv.in/registry/api/docs/swagger.json'
+  // baseUrl: 'https://ndear.xiv.in/registry/api/v1',
+  schemaUrl: 'http://localhost:4200/registry/api/docs/swagger.json'
 };
 
 export enum ApiPaths {
@@ -15,6 +16,13 @@ export enum ApiPaths {
   Student = 'Student',
   InviteStudent = 'Student/invite',
   InviteTeacher = 'Teacher/invite',
-  InviteInstitute = 'Institute/invite'
+  InviteInstitute = 'Institute/invite',
+  searchInstitute = 'Institute/search',
+  searchTeacher = 'Teacher/search',
+  searchStudent = 'Student/search',
+  //teacherGrantDenyClaims = 'Teacher/claims',
+  //studentGrantDenyClaims = 'Student/claims',
+  //instituteGrantDenyClaims = 'Institute/claims',
+  allClaims = ''
 }
 

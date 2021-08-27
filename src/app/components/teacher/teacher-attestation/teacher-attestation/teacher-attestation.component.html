@@ -1,0 +1,24 @@
+<app-header [headerFor]='header1' [tab]='tab'></app-header>
+<div class="container">
+  <h6 class="d-inline-block">Attestations</h6>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Submitted Date</th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-item [ngForOf]="attestation" let-i="index">
+        <tr *ngIf="item?.status == 'OPEN'">
+          <td>{{item?.createdAt | date:'dd-MM-yyyy'}}</td>
+          <td>{{item?.requestorName}}</td>
+          <td><a (click)="navToAttastationDeatil(item?.entityId, item?.id)"
+              class="btn btn-primary text-end fw-bold text-capitalize">Attest</a></td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+
+</div>

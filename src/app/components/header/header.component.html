@@ -9,7 +9,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarExample01">
                     <div class="nav-item active logo-text">
-                        <a class="nav-link" aria-current="page" href="#" style="color: black;">NDEAR</a>
+                        <img style="height: 35px;" src="assets/images/logo.png" />
                     </div>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
@@ -35,11 +35,12 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarExample01">
                     <div class="nav-item active logo-text">
-                        <a class="nav-link" aria-current="page" href="#" style="color: black;">NDEAR</a>
+                        <!-- <img style="height: 35px;" src="assets/images/logo.png" /> -->
+                        <img style="height: 35px;" src="assets/images/logo.png" />
                     </div>
                     <ul>
-                        <li class="nav-item active" >
-                            <a class="nav-link active" [routerLink]="['/student-profile']">My Profile</a>
+                        <li class="nav-item active">
+                            <a class="nav-link active" [routerLink]="['/student-profile']">Home</a>
                             <ng-template [ngIf]="tab === 'profile'">
                                 <hr>
                             </ng-template>
@@ -52,14 +53,14 @@
                         </li> -->
                         <li class="nav-item">
                             <a class="nav-link" (click)="logout1()">
-                                <img style="width: 25px;" src="assets/images/logout.png"/>
+                                <img style="width: 25px;" src="assets/images/logout.png" />
                             </a>
                         </li>
                         <!-- <li class="nav-item">
                             <a class="nav-link" href="#">Sign up</a>
                         </li> -->
                     </ul>
-                    
+
                 </div>
             </div>
         </nav>
@@ -76,17 +77,28 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarExample01">
                     <div class="nav-item active logo-text">
-                        <a class="nav-link" aria-current="page" href="#" style="color: black;">NDEAR</a>
+                        <img style="height: 35px;" src="assets/images/logo.png" />
                     </div>
                     <ul class="navbar-nav  mb-2 mb-lg-0" style="margin-left: 50px;">
-                        <li class="nav-item active" >
-                            <a class="nav-link active" (click)="redirectTo()">Home</a>
+                        <li class="nav-item active">
+                            <a class="nav-link active" [routerLink]="['/profile/teacher']">Home</a>
                             <ng-template [ngIf]="tab === 'profile'">
                                 <hr>
                             </ng-template>
 
                         </li>
                         <li class="nav-item active">
+                            <a class="nav-link notification" [routerLink]="['/teacher/attestation/teacher-attestation']">Attestations
+                                <ng-template [ngIf]="tab != 'attestation' && attestation_count != 0">
+                                    <span class="badge">{{attestation_count}}</span>
+                                </ng-template>
+
+                            </a>
+                            <ng-template [ngIf]="tab === 'attestation'">
+                                <hr>
+                            </ng-template>
+                        </li>
+                        <!-- <li class="nav-item active">
                             <a class="nav-link notification" [routerLink]="['/teacher-consent']">Consents
                                 <ng-template [ngIf]="tab != 'consent' && consent_count != 0">
                                     <span class="badge">{{consent_count}}</span>
@@ -96,19 +108,24 @@
                             <ng-template [ngIf]="tab === 'consent'">
                                 <hr>
                             </ng-template>
-                        </li>
+                        </li> -->
                     </ul>
                     <ul class="navbar-nav ms-auto">
-                        <!-- <li class="nav-item">
-                            <a class="nav-link active" href="#">{{user_name}}</a>
-                        </li> -->
+                        <li class="nav-item" *ngIf="instituteFlag && teacherFlag">
+                            <!-- <a class="nav-link active" href="#">{{user_name}}</a> -->
+                           
+                                    <a class="nav-link" data-toggle="modal" data-target="#switchAccount">
+                                        <img style="width: 20px;" src="assets/images/switchA.png" />
+                                    </a>
+
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" (click)="logout()">
-                                <img style="width: 25px;" src="assets/images/logout.png"/>
+                                <img style="width: 25px;" src="assets/images/logout.png" />
                             </a>
                         </li>
                     </ul>
-                    
+
                 </div>
             </div>
         </nav>
@@ -125,17 +142,17 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarExample01">
                     <div class="nav-item active logo-text">
-                        <a class="nav-link" aria-current="page" href="#" style="color: black;">NDEAR</a>
+                        <img style="height: 35px;" src="assets/images/logo.png" />
                     </div>
                     <ul class="navbar-nav  mb-2 mb-lg-0" style="margin-left: 50px;">
                         <li class="nav-item active">
-                            <a class="nav-link active" [routerLink]="['/institute-profile']">Home</a>
+                            <a class="nav-link active" [routerLink]="['/profile/institute']">Home</a>
                             <ng-template [ngIf]="tab === 'home'">
                                 <hr>
                             </ng-template>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link notification" [routerLink]="['/institute-attestation']">Attestations
+                            <a class="nav-link notification" [routerLink]="['/institute/attestation/institute-attestation']">Attestations
                                 <ng-template [ngIf]="tab != 'attestation' && attestation_count != 0">
                                     <span class="badge">{{attestation_count}}</span>
                                 </ng-template>
@@ -145,16 +162,16 @@
                                 <hr>
                             </ng-template>
                         </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" [routerLink]="['/institute-consent']">Consents
+                        <!-- <li class="nav-item active">
+                            <a class="nav-link" [routerLink]="['/institute-consent']">Consents -->
                                 <!-- <ng-template [ngIf]="tab != 'consent' && consent_count != 0">
                                     <span class="badge">{{consent_count}}</span>
                                 </ng-template> -->
-                            </a>
+                          <!--  </a>
                             <ng-template [ngIf]="tab === 'consent'">
                                 <hr>
                             </ng-template>
-                        </li>
+                        </li> -->
                         <li class="nav-item active">
                             <a class="nav-link" [routerLink]="['/institute-teachers']">Teachers</a>
                             <ng-template [ngIf]="tab === 'teachers'">
@@ -171,7 +188,7 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a class="nav-link active">{{institute?.BasicDetails?.instituteName}}</a>
-                            
+
                         </li>
                         <ng-template [ngIf]="institute?.BasicDetails?.logoUrl">
                             <li><img style="width: 50px;" src="{{institute?.BasicDetails?.logoUrl}}"></li>
@@ -181,16 +198,21 @@
                         </li> -->
                     </ul>
                     <ul class="navbar-nav ms-auto">
-                        <!-- <li class="nav-item">
-                            <a class="nav-link active" href="#">{{user_name}}</a>
-                        </li> -->
+                        <li class="nav-item" *ngIf="instituteFlag && teacherFlag">
+                            <!-- <a class="nav-link active" href="#">{{user_name}}</a> -->
+                           
+                                    <a class="nav-link" data-toggle="modal" data-target="#switchAccount">
+                                        <img style="width: 20px;" src="assets/images/switchA.png" />
+                                    </a>
+
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" (click)="logout()">
-                                <img style="width: 25px;" src="assets/images/logout.png"/>
+                                <img style="width: 25px;" src="assets/images/logout.png" />
                             </a>
                         </li>
                     </ul>
-                    
+
                 </div>
             </div>
         </nav>
@@ -207,16 +229,16 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarExample01">
                     <div class="nav-item active logo-text">
-                        <a class="nav-link" aria-current="page" href="#" style="color: black;">NDEAR</a>
+                        <img style="height: 35px;" src="assets/images/logo.png" />
                     </div>
                     <ul class="navbar-nav  mb-2 mb-lg-0" style="margin-left: 50px;">
                         <li class="nav-item active">
                             <a class="nav-link active">Home</a>
-                            <ng-template [ngIf]="tab === 'home'">
+                            <!-- <ng-template [ngIf]="tab === 'home'"> -->
                                 <hr>
-                            </ng-template>
+                            <!-- </ng-template> -->
                         </li>
-                        <li class="nav-item active">
+                        <!-- <li class="nav-item active">
                             <a class="nav-link" [routerLink]="['/board-attestation']">Attestations
                                 <ng-template [ngIf]="tab != 'attestation' && attestation_count != 0">
                                     <span class="badge">{{attestation_count}}</span>
@@ -225,8 +247,8 @@
                             <ng-template [ngIf]="tab === 'attestation'">
                                 <hr>
                             </ng-template>
-                        </li>
-                        <li class="nav-item active">
+                        </li> -->
+                        <!-- <li class="nav-item active">
                             <a class="nav-link" [routerLink]="['/board-institutes']">Institutes</a>
                             <ng-template [ngIf]="tab === 'institutes'">
                                 <hr>
@@ -237,19 +259,63 @@
                             <ng-template [ngIf]="tab === 'roles'">
                                 <hr>
                             </ng-template>
-                        </li>
+                        </li> -->
                     </ul>
                     <!-- <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a class="nav-link active" href="#">{{institute.BasicDetails.instituteName}}</a>
                         </li>
                     </ul> -->
-                    
+
                 </div>
             </div>
         </nav>
     </header>
 </ng-template>
+
+<ng-template [ngIf]="headerFor == 'board-cbse'">
+    <header class="header" style="margin-bottom: 45px;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                    data-mdb-target="#navbarExample01" aria-controls="navbarExample01" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarExample01">
+                    <div class="nav-item active logo-text">
+                        <!-- <img style="height: 35px;" src="assets/images/logo.png" /> -->
+                        <img style="height: 35px;" src="assets/images/logo.png" />
+                    </div>
+                    <!-- <ul>
+                        <li class="nav-item active">
+                            <a class="nav-link active" [routerLink]="['/student-profile']">Home</a>
+                            <ng-template [ngIf]="tab === 'profile'">
+                                <hr>
+                            </ng-template>
+
+                        </li>
+                    </ul> -->
+                    <ul class="navbar-nav ms-auto">
+                        <!-- <li class="nav-item">
+                            <a class="nav-link active" href="#">{{user_name}}</a>
+                        </li> -->
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="logout1()">
+                                <img style="width: 25px;" src="assets/images/logout.png" />
+                            </a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="#">Sign up</a>
+                        </li> -->
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+</ng-template>
+
 <ng-template [ngIf]="headerFor == 'plain'">
     <header class="header" style="margin-bottom: 45px;">
         <nav class="navbar navbar-expand-lg navbar-light bg-white">
@@ -261,8 +327,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarExample01">
                     <div class="nav-item active logo-text">
-                        <a class="nav-link" aria-current="page" href="#" style="color: black;">NDEAR</a>
-                    </div>   
+                        <img style="height: 35px;" src="assets/images/logo.png" />
+                    </div>
                 </div>
             </div>
         </nav>
@@ -280,8 +346,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarExample01">
                     <div class="nav-item active logo-text">
-                        <a class="nav-link" aria-current="page" [routerLink]="['/consent-login']">Login with NDEAR ID</a>
-                    </div> 
+                        <a class="nav-link" aria-current="page" [routerLink]="['/consent-login']">Login with NDEAR
+                            ID</a>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -300,7 +367,7 @@
                 <div class="collapse navbar-collapse" id="navbarExample01">
                     <div class="nav-item active logo-text">
                         <a class="nav-link" aria-current="page">NDEAR</a>
-                    </div> 
+                    </div>
                 </div>
 
                 <!-- <a class="nav-link text-primary" [routerLink]="['/diksha']" >Logout</a> -->
@@ -310,3 +377,63 @@
     </header>
 </ng-template>
 
+            <!-- Preview Profile Modal -->
+            <div class="modal right fade right-xl-modal" id="switchAccount" tabindex="-1" role="dialog"
+                aria-labelledby="switchAccount">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class=" m-4">
+                        <h5 class="mb-3">Switch Account</h5>
+                        <h6>Institute Profile</h6>
+                        <div class="card">
+                            <div class="card-body p-4">
+                             <!-- <span class="fs-5"> Pragti Institute</span><br />
+                             <span class="fs-7 text-grey-color">Kothrud, Pune</span> -->
+                             <div class="d-flex align-items-start justify-content-between">
+                                <div class="d-flex" (click)="navToInstitute()">
+                                  <img src="../../../assets/images/profile.png" alt="" class="w-20">
+                                  <div class="d-flex flex-column text-justify mt-2">
+                                   
+                                    <span class="ml-3 fs-5"> {{instituteProfile?.instituteName}} </span>
+                                    <span class="ml-3 fs-7 text-grey-color">
+                                        Kothrud, Pune
+                                        <span *ngIf="instituteProfile?.Address?.district">{{instituteProfile?.Address?.district}}</span>
+                                        <span *ngIf="instituteProfile?.Address?.state">{{instituteProfile?.Address?.state}}</span>
+
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <h6 class="mt-3">Teacher Profile</h6>
+                          <div class="card">
+                              <div class="card-body p-4">
+                                <div class="d-flex align-items-start justify-content-between">
+                                    <div class="d-flex" (click)="navToTeacher()">
+                                      <img src="../../../assets/images/profile.png" alt="" class="w-23">
+                                      <div class="d-flex flex-column text-justify mt-2">
+                                       
+                                        <span class="ml-3 fs-5">{{teacherProfile?.identityDetails?.fullName}}</span>
+                                        <span class="ml-3 fs-7 text-grey-color">{{teacherProfile?.contactDetails?.email}}</span>
+                                      </div>
+                                    </div>
+                                    <!-- <button type="submit" [routerLink]="['/teacher-profile']" class="btn btn-primary mt-3 fw-bold text-capitalize w-25">View</button> -->
+                                  </div>
+                            <!-- <div class="dflex">
+                                <div>
+                                    <span class="fs-5"> Alice Roberto</span><br />
+                                    <span class="fs-7 text-grey-color">aliceroberto@gmail.com</span>
+                                </div>
+
+                                <div class="float-end primary">
+                                    <button class="btn-primary">View</button>
+                                </div>
+                            </div> -->
+                              
+                              </div>
+                            </div>                          
+                          </div>
+                    </div>
+                </div>
+            </div>

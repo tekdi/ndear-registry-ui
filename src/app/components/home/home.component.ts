@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
   header1: string = 'main';
   constructor() { 
-    localStorage.setItem('is_logedin', 'false')
+    // localStorage.setItem('is_logedin', 'false')
   }
 
   ngOnInit(): void {
